@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "id": "hornero-focus-card",
+  "name": "Hornero Focus Card",
+  "version": "1.0.0",
+  "description": "A dashboard card with a rotating original one-line focus reminder and the date. Pure QML, no processes or network.",
+  "author": "HorneroOS contributors",
+  "license": "MIT",
+  "homepage": "https://github.com/HorneroOS/plugins",
+  "entrypoint": "Main.qml",
+  "files": ["Main.qml", "README.md", "LICENSE"],
+  "capabilities": {
+    "processCommands": [],
+    "networkHosts": [],
+    "settings": {}
+  },
+  "placement": "dashboard"
+}

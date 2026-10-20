@@ -1,0 +1,63 @@
+{
+  "schemaVersion": 1,
+  "generatedFrom": "HEAD",
+  "plugins": [
+    {
+      "id": "hornero-dual-clock",
+      "name": "Hornero Dual Clock",
+      "version": "1.0.0",
+      "description": "Local time next to UTC in the bar, for coordinating with people in other time zones. Pure QML, no processes or network.",
+      "author": "HorneroOS contributors",
+      "license": "MIT",
+      "homepage": "https://github.com/HorneroOS/plugins",
+      "placement": "bar",
+      "category": "utilities",
+      "capabilities": {
+        "processCommands": [],
+        "networkHosts": [],
+        "settings": {}
+      },
+      "trust": "official",
+      "path": "plugins/hornero-dual-clock",
+      "sha256": "d6c2f9deb740290088e348aa531d4286476556c32082219e18613cd9678dc2b2"
+    },
+    {
+      "id": "hornero-focus-card",
+      "name": "Hornero Focus Card",
+      "version": "1.0.0",
+      "description": "A dashboard card with a rotating original one-line focus reminder and the date. Pure QML, no processes or network.",
+      "author": "HorneroOS contributors",
+      "license": "MIT",
+      "homepage": "https://github.com/HorneroOS/plugins",
+      "placement": "dashboard",
+      "category": "utilities",
+      "capabilities": {
+        "processCommands": [],
+        "networkHosts": [],
+        "settings": {}
+      },
+      "trust": "official",
+      "path": "plugins/hornero-focus-card",
+      "sha256": "c1d1597662887127b7464897b22abea8e336c54820e73438e6a09ea9ab162249"
+    },
+    {
+      "id": "hornero-pomodoro",
+      "name": "Hornero Pomodoro",
+      "version": "1.0.0",
+      "description": "A 25-minute focus timer for the bar. Click to start or pause; it rings (visually) at zero and resets. No processes, no network, just time and discipline.",
+      "author": "HorneroOS contributors",
+      "license": "MIT",
+      "homepage": "https://github.com/HorneroOS/plugins",
+      "placement": "bar",
+      "category": "productivity",
+      "capabilities": {
+        "processCommands": [],
+        "networkHosts": [],
+        "settings": {}
+      },
+      "trust": "official",
+      "path": "plugins/hornero-pomodoro",
+      "sha256": "6bf8a1aff082cb4a00e529de0ca2be588ea7b162965a3eee54e6ce697119a736"
+    }
+  ]
+}
