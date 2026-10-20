@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedFrom": "HEAD",
+  "generatedFrom": "4a17b450dbd01d15ecf16fc06608c69af704aaa5",
   "plugins": [
     {
       "id": "hornero-dual-clock",
