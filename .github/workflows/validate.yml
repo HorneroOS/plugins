@@ -12,7 +12,12 @@ jobs:
   plugins:
     runs-on: ubuntu-latest
     steps:
+      # gen_catalog.py resolves generatedFrom from git history;
+      # a shallow (default depth-1) checkout makes that answer
+      # depend on the synthetic PR merge commit and breaks --check.
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
