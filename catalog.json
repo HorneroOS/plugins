@@ -58,6 +58,25 @@
       "trust": "official",
       "path": "plugins/hornero-pomodoro",
       "sha256": "6bf8a1aff082cb4a00e529de0ca2be588ea7b162965a3eee54e6ce697119a736"
+    },
+    {
+      "id": "hornero-quiet-notes",
+      "name": "Hornero Quiet Notes",
+      "version": "1.0.0",
+      "description": "A calm dashboard card for one short intention for this session. It keeps no history and writes nowhere; when the shell closes, the note is gone.",
+      "author": "HorneroOS contributors",
+      "license": "MIT",
+      "homepage": "https://github.com/HorneroOS/plugins",
+      "placement": "dashboard",
+      "category": "utilities",
+      "capabilities": {
+        "processCommands": [],
+        "networkHosts": [],
+        "settings": {}
+      },
+      "trust": "official",
+      "path": "plugins/hornero-quiet-notes",
+      "sha256": "b6f7a8fd127ba280f4ebdf35832ba8a80dd19a9be3c52d30f3bf61d4f6f1ba8f"
     }
   ]
 }
