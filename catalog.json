@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedFrom": "4a17b450dbd01d15ecf16fc06608c69af704aaa5",
+  "generatedFrom": "6872d671350f8c29aa958d04b91192b3c774a6a7",
   "plugins": [
     {
       "id": "hornero-dual-clock",
@@ -68,7 +68,7 @@
       "license": "MIT",
       "homepage": "https://github.com/HorneroOS/plugins",
       "placement": "dashboard",
-      "category": "utilities",
+      "category": "productivity",
       "capabilities": {
         "processCommands": [],
         "networkHosts": [],

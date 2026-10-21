@@ -26,6 +26,7 @@ CATEGORIES = {
     "hornero-pomodoro": "productivity",
     "hornero-dual-clock": "utilities",
     "hornero-focus-card": "utilities",
+    "hornero-quiet-notes": "productivity",
 }
 
 
@@ -62,10 +63,12 @@ def build() -> dict:
                 "sha256": payload_sha256(plugin_dir, manifest),
             }
         )
-    # Revision of the last commit that touched plugins/ — stable
-    # across catalog-only commits, so --check can pass in CI.
+    # Revision of the commit that generated this catalog (HEAD),
+    # stable across repeated --check runs in CI because checking
+    # never moves HEAD. Re-run the generator after plugin changes
+    # and commit catalog.json with the sources it describes.
     rev = subprocess.run(
-        ["git", "log", "-1", "--format=%H", "--", "plugins/"],
+        ["git", "rev-parse", "HEAD"],
         cwd=ROOT, capture_output=True, text=True,
     ).stdout.strip()
     return {"schemaVersion": 1, "generatedFrom": rev, "plugins": entries}
