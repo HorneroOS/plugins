@@ -63,12 +63,12 @@ def build() -> dict:
                 "sha256": payload_sha256(plugin_dir, manifest),
             }
         )
-    # Revision of the commit that generated this catalog (HEAD),
-    # stable across repeated --check runs in CI because checking
-    # never moves HEAD. Re-run the generator after plugin changes
-    # and commit catalog.json with the sources it describes.
+    # Revision of the last commit that touched plugins/ — stable
+    # across catalog-only commits, so --check can pass in CI.
+    # Workflow: commit plugin sources first, then regenerate and
+    # commit catalog.json on its own; never mix the two commits.
     rev = subprocess.run(
-        ["git", "rev-parse", "HEAD"],
+        ["git", "log", "-1", "--format=%H", "--", "plugins/"],
         cwd=ROOT, capture_output=True, text=True,
     ).stdout.strip()
     return {"schemaVersion": 1, "generatedFrom": rev, "plugins": entries}
