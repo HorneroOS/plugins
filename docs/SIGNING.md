@@ -1,6 +1,9 @@
 # Extension signing design (shell#251)
 
-Status: **design**. The local trust floor already ships
+Status: **phase 2 shipped** (author signature verification in
+HorneroOS/hornero#236, schema in HorneroOS/shell#286); phase 3
+(signed registry index) still gated on the human registry key.
+The local trust floor already ships
 (`horneroctl plugin trust`, hash-pinned, in HorneroOS/hornero).
 Signing adds *author identity* on top of hashes; it never replaces
 review, and it is never a sandbox.
@@ -33,12 +36,16 @@ local trust, author signature.
 
 ## Manifest and receipt changes (phase 2)
 
-- Manifest gains optional `author` object:
-  `{ "name": "...", "minisignPublicKey": "RW...", "signature": "..." }`
-  where `signature` is the minisign signature over the payload hash
-  hex string. Optional on purpose: unsigned community plugins remain
-  installable (local trust still required); signed ones gain a
-  *verified-author* trust state.
+- Manifest gains an optional top-level `signing` object:
+  `{ "publicKey": "RW...", "signature": "..." }` (the manifest's
+  existing `author` string stays the human-readable name). The
+  signature covers the **files-only payload hash** — same framing
+  over the manifest's `files` list, manifest.json itself excluded,
+  because the manifest carries the signature and cannot sign itself.
+  Optional on purpose: unsigned community plugins remain installable
+  (local trust still required); signed ones gain a *verified-author*
+  trust state. Shipped in HorneroOS/hornero#236 (verification) and
+  HorneroOS/shell#286 (schema/validator).
 - `horneroctl plugin list` trust states become:
   `official` > `signed` (signature verifies against the manifest's
   declared key *and* the payload hash) > `trusted` (local hash pin)
