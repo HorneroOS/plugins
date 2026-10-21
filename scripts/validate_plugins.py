@@ -23,7 +23,14 @@ BINARY_SUFFIXES = {".so", ".o", ".a", ".bin", ".exe", ".dll", ".pyc"}
 
 def main() -> int:
     errors = []
-    for plugin_dir in sorted(p for p in (ROOT / "plugins").iterdir() if p.is_dir()):
+    # Official plugins (plugins/) feed catalog.json. Community
+    # submissions (community/) pass the exact same contract gate but
+    # are never catalogued, endorsed, or distributed as official.
+    plugin_dirs = sorted(p for p in (ROOT / "plugins").iterdir() if p.is_dir())
+    community_root = ROOT / "community"
+    if community_root.is_dir():
+        plugin_dirs += sorted(p for p in community_root.iterdir() if p.is_dir())
+    for plugin_dir in plugin_dirs:
         tag = plugin_dir.name
         try:
             manifest = json.loads((plugin_dir / "manifest.json").read_text())
@@ -71,6 +78,9 @@ def main() -> int:
         print("\n".join(errors), file=sys.stderr)
         return 1
     print("plugins valid:", ", ".join(sorted(p.name for p in (ROOT / "plugins").iterdir() if p.is_dir())))
+    if community_root.is_dir():
+        community = sorted(p.name for p in community_root.iterdir() if p.is_dir())
+        print("community valid (unreviewed, not catalogued):", ", ".join(community) or "none")
     return 0
 
 
