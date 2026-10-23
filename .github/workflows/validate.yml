@@ -25,3 +25,7 @@ jobs:
         run: python3 scripts/validate_plugins.py
       - name: Catalog is fresh
         run: python3 scripts/gen_catalog.py --check
+      - name: Install minisign for isolated signature tests
+        run: sudo apt-get update && sudo apt-get install --yes minisign
+      - name: Community registry schema and signature tests
+        run: python3 -m unittest discover -s tests -v
