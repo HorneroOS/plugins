@@ -19,11 +19,12 @@ from community_registry import RegistryError, strict_json_loads, validate_index
 MAX_INDEX_BYTES = 16 * 1024 * 1024
 MAX_SIGNATURE_BYTES = 4 * 1024
 MAX_PUBLIC_KEY_BYTES = 1024
+MINISIGN_TIMEOUT_SECONDS = 30
 
 
 def _read_regular_file(path: Path, maximum: int) -> bytes:
     """Read one bounded, non-symlink regular file snapshot."""
-    flags = os.O_RDONLY | getattr(os, "O_NOFOLLOW", 0)
+    flags = os.O_RDONLY | getattr(os, "O_NOFOLLOW", 0) | getattr(os, "O_NONBLOCK", 0)
     try:
         descriptor = os.open(path, flags)
         with os.fdopen(descriptor, "rb") as stream:
@@ -65,12 +66,17 @@ def main() -> int:
         index_snapshot.write_bytes(index_bytes)
         signature_snapshot.write_bytes(signature_bytes)
         public_key_snapshot.write_bytes(public_key_bytes)
-        result = subprocess.run(
-            [minisign, "-V", "-m", str(index_snapshot), "-x", str(signature_snapshot), "-p", str(public_key_snapshot)],
-            capture_output=True,
-            text=True,
-            check=False,
-        )
+        try:
+            result = subprocess.run(
+                [minisign, "-V", "-m", str(index_snapshot), "-x", str(signature_snapshot), "-p", str(public_key_snapshot)],
+                capture_output=True,
+                text=True,
+                check=False,
+                timeout=MINISIGN_TIMEOUT_SECONDS,
+            )
+        except subprocess.TimeoutExpired:
+            print("community index: minisign signature verification timed out", file=sys.stderr)
+            return 1
         if result.returncode != 0:
             detail = result.stderr.strip() or result.stdout.strip() or "signature verification failed"
             print(f"community index: {detail}", file=sys.stderr)

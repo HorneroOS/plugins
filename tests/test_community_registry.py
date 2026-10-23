@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import os
 import shutil
 import subprocess
 import sys
@@ -171,6 +172,47 @@ class CommunityRegistryTests(unittest.TestCase):
 
         self.assertEqual(result, 0)
         self.assertIn("version 5", output.getvalue())
+
+    def test_regular_file_reader_does_not_block_on_a_fifo(self) -> None:
+        fifo = self.root / "index.fifo"
+        os.mkfifo(fifo)
+
+        with self.assertRaisesRegex(RegistryError, "not a regular file"):
+            verify_community_index._read_regular_file(fifo, 1024)
+
+    def test_verifier_fails_closed_when_minisign_times_out(self) -> None:
+        index_path = self.root / "index.json"
+        signature_path = self.root / "index.json.minisig"
+        public_key_path = self.root / "registry.pub"
+        index_path.write_text(json_text({
+            "schemaVersion": 1,
+            "indexVersion": 5,
+            "generatedFrom": "a" * 40,
+            "plugins": [],
+        }), encoding="utf-8")
+        signature_path.write_text("detached signature", encoding="utf-8")
+        public_key_path.write_text("trusted public key", encoding="utf-8")
+        errors = StringIO()
+
+        with (
+            patch.object(verify_community_index.shutil, "which", return_value="/usr/bin/minisign"),
+            patch.object(
+                verify_community_index.subprocess,
+                "run",
+                side_effect=subprocess.TimeoutExpired("minisign", 30),
+            ),
+            patch.object(sys, "argv", [
+                "verify_community_index.py",
+                "--index", str(index_path),
+                "--signature", str(signature_path),
+                "--public-key", str(public_key_path),
+            ]),
+            patch("sys.stderr", errors),
+        ):
+            result = verify_community_index.main()
+
+        self.assertEqual(result, 1)
+        self.assertIn("signature verification timed out", errors.getvalue())
 
     @unittest.skipUnless(shutil.which("minisign"), "minisign is installed in CI for detached-signature tests")
     def test_detached_signature_is_verified_before_payload_is_accepted(self) -> None:
