@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/HorneroOS/plugins/blob/main/schema/community-registry-index.schema.json",
+  "title": "HorneroOS Community Extension Index",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "indexVersion", "generatedFrom", "plugins"],
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "indexVersion": { "type": "integer", "minimum": 1 },
+    "generatedFrom": { "type": "string", "pattern": "^(?:[a-f0-9]{40}|[a-f0-9]{64})$" },
+    "plugins": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/plugin" },
+      "uniqueItems": true
+    }
+  },
+  "$defs": {
+    "plugin": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "repository", "revision", "sha256", "authorKeyFingerprint"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^[a-z0-9][a-z0-9-]{0,47}$" },
+        "repository": { "type": "string", "format": "uri", "pattern": "^https://" },
+        "revision": { "type": "string", "pattern": "^(?:[a-f0-9]{40}|[a-f0-9]{64})$" },
+        "sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+        "authorKeyFingerprint": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" }
+      }
+    }
+  }
+}

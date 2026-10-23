@@ -10,9 +10,12 @@ plugin_files_sha256 exactly: for each name in sorted(manifest
 Usage: scripts/sign_plugin.py <plugin-dir>
 Then sign the printed hash with minisign and paste the block:
     printf %s "<hash>" > /tmp/hash.txt
-    minisign -S -s ~/.minisign/hornero.key -m /tmp/hash.txt
+    minisign -Sl -s ~/.minisign/hornero.key -m /tmp/hash.txt
     # public key: the RW... line of your .pub file
-    # signature:  the second line of /tmp/hash.txt.sig
+    # signature:  the second line of /tmp/hash.txt.minisig
+
+The explicit -l selects Minisign's legacy Ed25519 framing for the
+fixed 64-byte hash text. horneroctl verifies this exact framing.
 """
 import hashlib
 import json
