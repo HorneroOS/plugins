@@ -6,12 +6,16 @@ import subprocess
 import sys
 import tempfile
 import unittest
+from contextlib import redirect_stdout
+from io import StringIO
 from pathlib import Path
+from unittest.mock import patch
 
 SCRIPTS = Path(__file__).resolve().parents[1] / "scripts"
 sys.path.insert(0, str(SCRIPTS))
 
 from community_registry import RegistryError, build_index, json_text, load_sources  # noqa: E402
+import verify_community_index  # noqa: E402
 
 
 class CommunityRegistryTests(unittest.TestCase):
@@ -122,6 +126,51 @@ class CommunityRegistryTests(unittest.TestCase):
         self.write_sources({"schemaVersion": 1, "indexVersion": 1, "plugins": [entry]})
         with self.assertRaisesRegex(RegistryError, "canonical minisign public key"):
             load_sources(self.sources)
+
+    def test_verifier_parses_the_exact_bytes_passed_to_minisign(self) -> None:
+        index_path = self.root / "index.json"
+        signature_path = self.root / "index.json.minisig"
+        public_key_path = self.root / "registry.pub"
+        original = json_text({
+            "schemaVersion": 1,
+            "indexVersion": 5,
+            "generatedFrom": "a" * 40,
+            "plugins": [],
+        }).encode("utf-8")
+        index_path.write_bytes(original)
+        signature_path.write_text("detached signature", encoding="utf-8")
+        public_key_path.write_text("trusted public key", encoding="utf-8")
+
+        def replace_caller_file(command: list[str], **_kwargs: object) -> subprocess.CompletedProcess[str]:
+            verified_snapshot = Path(command[command.index("-m") + 1])
+            self.assertEqual(verified_snapshot.read_bytes(), original)
+            index_path.write_text(
+                json_text({
+                    "schemaVersion": 1,
+                    "indexVersion": 999,
+                    "generatedFrom": "b" * 40,
+                    "plugins": [],
+                }),
+                encoding="utf-8",
+            )
+            return subprocess.CompletedProcess(command, 0, "", "")
+
+        output = StringIO()
+        with (
+            patch.object(verify_community_index.shutil, "which", return_value="/usr/bin/minisign"),
+            patch.object(verify_community_index.subprocess, "run", side_effect=replace_caller_file),
+            patch.object(sys, "argv", [
+                "verify_community_index.py",
+                "--index", str(index_path),
+                "--signature", str(signature_path),
+                "--public-key", str(public_key_path),
+            ]),
+            redirect_stdout(output),
+        ):
+            result = verify_community_index.main()
+
+        self.assertEqual(result, 0)
+        self.assertIn("version 5", output.getvalue())
 
     @unittest.skipUnless(shutil.which("minisign"), "minisign is installed in CI for detached-signature tests")
     def test_detached_signature_is_verified_before_payload_is_accepted(self) -> None:
