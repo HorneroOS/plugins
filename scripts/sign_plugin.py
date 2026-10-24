@@ -29,14 +29,17 @@ def payload_sha256(plugin: pathlib.Path) -> str:
     manifest_path = plugin / "manifest.json"
     manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
     files = manifest.get("files")
-    if not isinstance(files, list) or not all(isinstance(name, str) for name in files):
+    if not isinstance(files, list) or not files or not all(isinstance(name, str) for name in files):
         raise ValueError("manifest files must be a list of relative paths")
+    if not {"README.md", "LICENSE"}.issubset(files):
+        raise ValueError("manifest files must include README.md and LICENSE")
 
     names = sorted(set(files))
     digest = hashlib.sha256()
     for name in names:
         relative = pathlib.PurePosixPath(name)
-        if relative.is_absolute() or ".." in relative.parts or not name:
+        if (relative.is_absolute() or ".." in relative.parts
+                or not name or relative.as_posix() != name):
             raise ValueError(f"unsafe manifest path: {name!r}")
         path = plugin.joinpath(*relative.parts)
         current = plugin
