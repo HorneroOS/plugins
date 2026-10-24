@@ -35,6 +35,12 @@ class PayloadHashTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "unsafe manifest path"):
             payload_sha256(self.plugin)
 
+    def test_rejects_windows_parent_path(self):
+        manifest = {"files": ["README.md", "LICENSE", r"..\outside.qml"]}
+        (self.plugin / "manifest.json").write_text(json.dumps(manifest), encoding="utf-8")
+        with self.assertRaisesRegex(ValueError, "unsafe manifest path"):
+            payload_sha256(self.plugin)
+
     def test_rejects_absolute_path(self):
         manifest = {"files": ["README.md", "LICENSE", "/etc/passwd"]}
         (self.plugin / "manifest.json").write_text(json.dumps(manifest), encoding="utf-8")
@@ -76,6 +82,11 @@ class PayloadHashTests(unittest.TestCase):
         manifest = {"files": ["a.qml", "z.qml"]}
         (self.plugin / "manifest.json").write_text(json.dumps(manifest), encoding="utf-8")
         with self.assertRaisesRegex(ValueError, "README.md and LICENSE"):
+            payload_sha256(self.plugin)
+
+    def test_rejects_non_object_manifest(self):
+        (self.plugin / "manifest.json").write_text("null", encoding="utf-8")
+        with self.assertRaisesRegex(ValueError, "JSON object"):
             payload_sha256(self.plugin)
 
 

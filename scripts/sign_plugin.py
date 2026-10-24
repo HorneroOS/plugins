@@ -28,6 +28,8 @@ def payload_sha256(plugin: pathlib.Path) -> str:
     """Hash declared payload files using horneroctl's NUL-delimited framing."""
     manifest_path = plugin / "manifest.json"
     manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    if not isinstance(manifest, dict):
+        raise ValueError("manifest must be a JSON object")
     files = manifest.get("files")
     if not isinstance(files, list) or not files or not all(isinstance(name, str) for name in files):
         raise ValueError("manifest files must be a list of relative paths")
@@ -38,8 +40,10 @@ def payload_sha256(plugin: pathlib.Path) -> str:
     digest = hashlib.sha256()
     for name in names:
         relative = pathlib.PurePosixPath(name)
+        windows = pathlib.PureWindowsPath(name)
         if (relative.is_absolute() or ".." in relative.parts
-                or not name or relative.as_posix() != name):
+                or not name or "\\" in name or windows.drive or windows.root
+                or relative.as_posix() != name):
             raise ValueError(f"unsafe manifest path: {name!r}")
         path = plugin.joinpath(*relative.parts)
         current = plugin
