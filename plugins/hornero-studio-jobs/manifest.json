@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "id": "hornero-studio-jobs",
+  "name": "Hornero Studio Jobs",
+  "version": "1.0.0",
+  "description": "Render and export job monitor for HorneroOS Studio: shows queued, running, finished and interrupted jobs from the typed horneroctl studio jobs contract. Read-only; jobs are submitted and cancelled from the CLI or Control Center.",
+  "author": "HorneroOS contributors",
+  "license": "MIT",
+  "homepage": "https://github.com/HorneroOS/plugins",
+  "entrypoint": "Main.qml",
+  "files": ["Main.qml", "README.md", "LICENSE"],
+  "capabilities": {
+    "processCommands": ["horneroctl"],
+    "networkHosts": [],
+    "settings": {}
+  },
+  "placement": "dashboard"
+}
