@@ -14,8 +14,8 @@ Item {
     property bool available: false
     property string buffer: ""
 
-    implicitWidth: label.implicitWidth + 16
-    implicitHeight: label.implicitHeight + 8
+    implicitWidth: 44
+    implicitHeight: 34
 
     readonly property string shortMode: {
         if (root.mode === "low-latency")
@@ -68,12 +68,36 @@ Item {
         }
     }
 
-    Text {
-        id: label
-
+    // The bar is 64px wide: stack a small "ST" caption over the mode
+    // code so nothing clips (a single STUDIO line did).
+    Column {
         anchors.centerIn: parent
-        text: root.available ? `STUDIO ${root.shortMode}${root.performance ? " · PERF" : ""}` : "STUDIO ?"
-        opacity: root.available ? 1.0 : 0.5
+        spacing: 0
+
+        Text {
+            anchors.horizontalCenter: parent.horizontalCenter
+            text: "ST"
+            font.pixelSize: 8
+            opacity: 0.65
+        }
+
+        Text {
+            id: label
+
+            anchors.horizontalCenter: parent.horizontalCenter
+            text: root.available ? root.shortMode : "?"
+            font.bold: true
+            font.pixelSize: 11
+            opacity: root.available ? 1.0 : 0.5
+        }
+
+        Text {
+            anchors.horizontalCenter: parent.horizontalCenter
+            visible: root.performance
+            text: "PERF"
+            font.pixelSize: 8
+            opacity: 0.85
+        }
     }
 
     MouseArea {
