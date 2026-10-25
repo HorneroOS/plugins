@@ -13,6 +13,9 @@ Item {
         id: label
 
         anchors.centerIn: parent
+        color: palette.windowText
+        font.pixelSize: 11
+        horizontalAlignment: Text.AlignHCenter
         text: ""
 
         Timer {
@@ -22,7 +25,7 @@ Item {
             triggeredOnStart: true
             onTriggered: {
                 const now = new Date();
-                label.text = pad(now.getHours()) + ":" + pad(now.getMinutes()) + " · " + pad(now.getUTCHours()) + ":" + pad(now.getUTCMinutes()) + " UTC";
+                label.text = pad(now.getHours()) + ":" + pad(now.getMinutes()) + "\n" + pad(now.getUTCHours()) + ":" + pad(now.getUTCMinutes()) + " UTC";
             }
         }
     }

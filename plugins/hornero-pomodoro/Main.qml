@@ -50,6 +50,7 @@ Item {
     }
 
     Text {
+        color: palette.windowText
         id: label
 
         anchors.centerIn: parent

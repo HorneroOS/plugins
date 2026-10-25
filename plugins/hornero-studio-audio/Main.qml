@@ -75,6 +75,7 @@ Item {
         spacing: 0
 
         Text {
+            color: palette.windowText
             anchors.horizontalCenter: parent.horizontalCenter
             text: "ST"
             font.pixelSize: 8
@@ -82,6 +83,7 @@ Item {
         }
 
         Text {
+            color: palette.windowText
             id: label
 
             anchors.horizontalCenter: parent.horizontalCenter
@@ -92,6 +94,7 @@ Item {
         }
 
         Text {
+            color: palette.windowText
             anchors.horizontalCenter: parent.horizontalCenter
             visible: root.performance
             text: "PERF"

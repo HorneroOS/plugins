@@ -17,11 +17,13 @@ Item {
         spacing: 8
 
         Text {
+            color: palette.windowText
             text: "Session intention"
             font.bold: true
         }
 
         Text {
+            color: palette.windowText
             width: parent.width
             text: root.note.length > 0 ? root.note : "Click to write one line for this session. It is never saved."
             wrapMode: Text.Wrap
@@ -30,6 +32,7 @@ Item {
         }
 
         Text {
+            color: palette.windowText
             visible: root.note.length > 0
             text: "Session only — closing the shell erases this."
             font.pixelSize: 11
