@@ -2,13 +2,17 @@
   "schemaVersion": 1,
   "id": "hornero-quiet-notes",
   "name": "Hornero Quiet Notes",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A calm dashboard card for one short intention for this session. It keeps no history and writes nowhere; when the shell closes, the note is gone.",
   "author": "HorneroOS contributors",
   "license": "MIT",
   "homepage": "https://github.com/HorneroOS/plugins",
   "entrypoint": "Main.qml",
-  "files": ["Main.qml", "README.md", "LICENSE"],
+  "files": [
+    "Main.qml",
+    "README.md",
+    "LICENSE"
+  ],
   "capabilities": {
     "processCommands": [],
     "networkHosts": [],

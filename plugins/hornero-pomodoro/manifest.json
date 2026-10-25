@@ -2,13 +2,17 @@
   "schemaVersion": 1,
   "id": "hornero-pomodoro",
   "name": "Hornero Pomodoro",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A 25-minute focus timer for the bar. Click to start or pause; it rings (visually) at zero and resets. No processes, no network, just time and discipline.",
   "author": "HorneroOS contributors",
   "license": "MIT",
   "homepage": "https://github.com/HorneroOS/plugins",
   "entrypoint": "Main.qml",
-  "files": ["Main.qml", "README.md", "LICENSE"],
+  "files": [
+    "Main.qml",
+    "README.md",
+    "LICENSE"
+  ],
   "capabilities": {
     "processCommands": [],
     "networkHosts": [],

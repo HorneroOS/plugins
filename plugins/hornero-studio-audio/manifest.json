@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "id": "hornero-studio-audio",
   "name": "Hornero Studio Audio",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Bar indicator for the HorneroOS Studio audio mode (Balanced, Low Latency, Advanced) and Temporary Performance state, read from the typed horneroctl studio mode contract. Read-only; mode changes stay in the CLI and Control Center.",
   "author": "HorneroOS contributors",
   "license": "MIT",

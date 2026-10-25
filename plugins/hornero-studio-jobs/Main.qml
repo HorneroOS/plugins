@@ -79,17 +79,20 @@ Item {
         spacing: 4
 
         Text {
+            color: palette.windowText
             text: root.available ? (root.jobs.length > 0 ? "Studio jobs" : "No Studio jobs yet") : "Studio jobs unavailable"
             font.bold: true
         }
 
         Text {
+            color: palette.windowText
             visible: root.available && root.jobs.length === 0
             text: "Submit one: horneroctl studio jobs submit"
             opacity: 0.7
         }
 
         Text {
+            color: palette.windowText
             visible: !root.available
             text: "Is horneroctl installed?"
             opacity: 0.7
@@ -99,6 +102,7 @@ Item {
             model: root.jobs
 
             Text {
+                color: palette.windowText
                 required property var modelData
 
                 text: `${modelData.state} · ${modelData.adapter} · ${root.basename(modelData.output)}`

@@ -30,11 +30,13 @@ Item {
         spacing: 6
 
         Text {
+            color: palette.windowText
             text: Qt.formatDateTime(new Date(), "dddd d 'de' MMMM")
             font.bold: true
         }
 
         Text {
+            color: palette.windowText
             width: parent.width
             text: root.lines[root.lineIndex]
             wrapMode: Text.Wrap

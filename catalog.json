@@ -1,11 +1,11 @@
 {
   "schemaVersion": 1,
-  "generatedFrom": "12905bf25397c8858fd4da3b22eed532dc734cdd",
+  "generatedFrom": "d15d483e69866567d336ea80a7b43834f912f590",
   "plugins": [
     {
       "id": "hornero-dual-clock",
       "name": "Hornero Dual Clock",
-      "version": "1.0.0",
+      "version": "1.0.1",
       "description": "Local time next to UTC in the bar, for coordinating with people in other time zones. Pure QML, no processes or network.",
       "author": "HorneroOS contributors",
       "license": "MIT",
@@ -19,12 +19,12 @@
       },
       "trust": "official",
       "path": "plugins/hornero-dual-clock",
-      "sha256": "d6c2f9deb740290088e348aa531d4286476556c32082219e18613cd9678dc2b2"
+      "sha256": "10f917a853ebd048ea48beed4426eb1579909cb7d3be6a2bdb306f9129d005d7"
     },
     {
       "id": "hornero-focus-card",
       "name": "Hornero Focus Card",
-      "version": "1.0.0",
+      "version": "1.0.1",
       "description": "A dashboard card with a rotating original one-line focus reminder and the date. Pure QML, no processes or network.",
       "author": "HorneroOS contributors",
       "license": "MIT",
@@ -38,12 +38,12 @@
       },
       "trust": "official",
       "path": "plugins/hornero-focus-card",
-      "sha256": "c1d1597662887127b7464897b22abea8e336c54820e73438e6a09ea9ab162249"
+      "sha256": "02a597f32423f8851dc7da6e832d48bc97eb5d12d1cdebe29f076ec60bbb448c"
     },
     {
       "id": "hornero-pomodoro",
       "name": "Hornero Pomodoro",
-      "version": "1.0.0",
+      "version": "1.0.1",
       "description": "A 25-minute focus timer for the bar. Click to start or pause; it rings (visually) at zero and resets. No processes, no network, just time and discipline.",
       "author": "HorneroOS contributors",
       "license": "MIT",
@@ -57,12 +57,12 @@
       },
       "trust": "official",
       "path": "plugins/hornero-pomodoro",
-      "sha256": "6bf8a1aff082cb4a00e529de0ca2be588ea7b162965a3eee54e6ce697119a736"
+      "sha256": "9540ef7be072cc29ddf075f529c604d0ec08b952a15bf8e80d6a23541e51308c"
     },
     {
       "id": "hornero-quiet-notes",
       "name": "Hornero Quiet Notes",
-      "version": "1.0.0",
+      "version": "1.0.1",
       "description": "A calm dashboard card for one short intention for this session. It keeps no history and writes nowhere; when the shell closes, the note is gone.",
       "author": "HorneroOS contributors",
       "license": "MIT",
@@ -76,12 +76,12 @@
       },
       "trust": "official",
       "path": "plugins/hornero-quiet-notes",
-      "sha256": "b6f7a8fd127ba280f4ebdf35832ba8a80dd19a9be3c52d30f3bf61d4f6f1ba8f"
+      "sha256": "5f552fd0601675a3ddc95ccc27957e8e5d2514d9e0c739a9ed188f6eecc2476c"
     },
     {
       "id": "hornero-studio-audio",
       "name": "Hornero Studio Audio",
-      "version": "1.0.1",
+      "version": "1.0.2",
       "description": "Bar indicator for the HorneroOS Studio audio mode (Balanced, Low Latency, Advanced) and Temporary Performance state, read from the typed horneroctl studio mode contract. Read-only; mode changes stay in the CLI and Control Center.",
       "author": "HorneroOS contributors",
       "license": "MIT",
@@ -97,12 +97,12 @@
       },
       "trust": "official",
       "path": "plugins/hornero-studio-audio",
-      "sha256": "ba3c5c30da74db586b004dcb426b51e36c155242a8e42299ca1cdb48eb99153b"
+      "sha256": "5fb19c2256209483b95d542cd783adf5ac5bd10fd702083d1cded81b00f0f69a"
     },
     {
       "id": "hornero-studio-jobs",
       "name": "Hornero Studio Jobs",
-      "version": "1.0.0",
+      "version": "1.0.1",
       "description": "Render and export job monitor for HorneroOS Studio: shows queued, running, finished and interrupted jobs from the typed horneroctl studio jobs contract. Read-only; jobs are submitted and cancelled from the CLI or Control Center.",
       "author": "HorneroOS contributors",
       "license": "MIT",
@@ -118,7 +118,7 @@
       },
       "trust": "official",
       "path": "plugins/hornero-studio-jobs",
-      "sha256": "31a0b47397cadf5acdfbb3343428e1444b0ae4639d9f95bd76e29c9bdc3012c3"
+      "sha256": "7182f286d2ddb6bcd9a240acd9e15d8a1ccf16f3e2c3b440cc0d73e3b7fef458"
     }
   ]
 }
