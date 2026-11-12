@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedFrom": "c124dc1123d1f8f44ae4a49aeeda3be71a69e344",
+  "generatedFrom": "27c49d85590680ba0c9eeeb3209150481469dc94",
   "plugins": [
     {
       "id": "hornero-ai-usage",
@@ -21,7 +21,7 @@
       },
       "trust": "official",
       "path": "plugins/hornero-ai-usage",
-      "sha256": "c803b950a349c4e02ec39f2361c4bdf99e1267f2dc362a7dcb549ca0caa38bbb"
+      "sha256": "057c8febc3e122ae583d965aa3c8efefd44042126665003014febbe47590d410"
     },
     {
       "id": "hornero-calendar",
@@ -234,7 +234,7 @@
       },
       "trust": "official",
       "path": "plugins/hornero-weather",
-      "sha256": "258713af454e7c25bc6f47365fbcc6cdefeddbc35e98ba359eb58f33767e2012"
+      "sha256": "447bc6ad18b935fd936c4d0affc634f6368064969d562f64d7e3d089b01b9ce8"
     }
   ]
 }
