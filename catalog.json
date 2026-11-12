@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedFrom": "d7f956c8117f8d1e5f79b8052b0811577a7c92c6",
+  "generatedFrom": "89f7b2bf815ac3a8107064003d99747494b436f2",
   "plugins": [
     {
       "id": "hornero-ai-usage",
@@ -318,7 +318,7 @@
       "id": "hornero-world-clock",
       "name": "Hornero World Clock",
       "version": "1.0.0",
-      "description": "Dashboard card showing local time, UTC, and Buenos Aires, Madrid and Tokyo. Times are computed with the JS Date timeZone conversion when available; otherwise a labelled fixed UTC offset is shown. No processes or network.",
+      "description": "Dashboard card showing local time, UTC, and Buenos Aires, Madrid and Tokyo. Times use pure-JS offsets (Madrid follows the EU DST rule); each row is labelled with its applied UTC offset. No processes or network.",
       "author": "HorneroOS contributors",
       "license": "MIT",
       "homepage": "https://github.com/HorneroOS/plugins",
@@ -331,7 +331,7 @@
       },
       "trust": "official",
       "path": "plugins/hornero-world-clock",
-      "sha256": "53ff23f4c79aa6e9814f3251ad4b362aba4c3b6ae6e4f0d65c82bd39bf912a4d"
+      "sha256": "5c8dafd0dfca9ae442bb303e6e159d6246f4e053e8532c1e35743d678d76dc62"
     }
   ]
 }
