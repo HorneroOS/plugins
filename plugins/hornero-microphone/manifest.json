@@ -1,0 +1,14 @@
+{
+  "schemaVersion": 1,
+  "id": "hornero-microphone",
+  "name": "Hornero Microphone",
+  "version": "1.0.0",
+  "description": "Bar widget showing microphone volume and muted state from PluginKit Audio. Shows 'No input device' when no source is present. Privacy: shows only muted/volume state, never records audio.",
+  "author": "HorneroOS contributors",
+  "license": "MIT",
+  "homepage": "https://github.com/HorneroOS/plugins",
+  "entrypoint": "Main.qml",
+  "files": ["Main.qml", "README.md", "LICENSE"],
+  "capabilities": {"processCommands": [], "networkHosts": [], "settings": {}},
+  "placement": "bar"
+}
