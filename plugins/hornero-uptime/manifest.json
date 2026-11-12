@@ -1,0 +1,14 @@
+{
+  "schemaVersion": 1,
+  "id": "hornero-uptime",
+  "name": "Hornero Uptime",
+  "version": "1.0.0",
+  "description": "Bar widget showing system uptime read from /proc/uptime with the declared cat command, refreshed every 60 seconds. Shows an error state when uptime is unreadable instead of a fabricated zero.",
+  "author": "HorneroOS contributors",
+  "license": "MIT",
+  "homepage": "https://github.com/HorneroOS/plugins",
+  "entrypoint": "Main.qml",
+  "files": ["Main.qml", "README.md", "LICENSE"],
+  "capabilities": {"processCommands": ["cat"], "networkHosts": [], "settings": {}},
+  "placement": "bar"
+}

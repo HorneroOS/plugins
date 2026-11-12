@@ -1,0 +1,14 @@
+{
+  "schemaVersion": 1,
+  "id": "hornero-world-clock",
+  "name": "Hornero World Clock",
+  "version": "1.0.0",
+  "description": "Dashboard card showing local time, UTC, and Buenos Aires, Madrid and Tokyo. Times use pure-JS offsets (Madrid follows the EU DST rule); each row is labelled with its applied UTC offset. No processes or network.",
+  "author": "HorneroOS contributors",
+  "license": "MIT",
+  "homepage": "https://github.com/HorneroOS/plugins",
+  "entrypoint": "Main.qml",
+  "files": ["Main.qml", "README.md", "LICENSE"],
+  "capabilities": {"processCommands": [], "networkHosts": [], "settings": {}},
+  "placement": "dashboard"
+}

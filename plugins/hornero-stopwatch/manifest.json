@@ -1,0 +1,14 @@
+{
+  "schemaVersion": 1,
+  "id": "hornero-stopwatch",
+  "name": "Hornero Stopwatch",
+  "version": "1.0.0",
+  "description": "Bar stopwatch with start, pause and reset, showing elapsed time as mm:ss.t. Pure QML, no processes or network.",
+  "author": "HorneroOS contributors",
+  "license": "MIT",
+  "homepage": "https://github.com/HorneroOS/plugins",
+  "entrypoint": "Main.qml",
+  "files": ["Main.qml", "README.md", "LICENSE"],
+  "capabilities": {"processCommands": [], "networkHosts": [], "settings": {}},
+  "placement": "bar"
+}

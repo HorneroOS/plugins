@@ -1,0 +1,14 @@
+{
+  "schemaVersion": 1,
+  "id": "hornero-disk-usage",
+  "name": "Hornero Disk Usage",
+  "version": "1.0.0",
+  "description": "Dashboard card listing mounted disks from the PluginKit System service with used/total space and a percentage bar. Shows an empty state when no disks are reported. Read-only, no processes or network.",
+  "author": "HorneroOS contributors",
+  "license": "MIT",
+  "homepage": "https://github.com/HorneroOS/plugins",
+  "entrypoint": "Main.qml",
+  "files": ["Main.qml", "README.md", "LICENSE"],
+  "capabilities": {"processCommands": [], "networkHosts": [], "settings": {}},
+  "placement": "dashboard"
+}
