@@ -1,7 +1,26 @@
 {
   "schemaVersion": 1,
-  "generatedFrom": "caa8bcfca416b23da5b1c2324f1b1349df6e6db3",
+  "generatedFrom": "646bdef038b739beabc239c213f50d695fe1689e",
   "plugins": [
+    {
+      "id": "hornero-agenda",
+      "name": "Hornero Agenda",
+      "version": "1.0.0",
+      "description": "Desktop widget showing weekday, day and month, ISO week number, day of year and days remaining in the year, computed with pure Date math from PluginKit Time.",
+      "author": "HorneroOS contributors",
+      "license": "MIT",
+      "homepage": "https://github.com/HorneroOS/plugins",
+      "placement": "desktop",
+      "category": "utilities",
+      "capabilities": {
+        "processCommands": [],
+        "networkHosts": [],
+        "settings": {}
+      },
+      "trust": "official",
+      "path": "plugins/hornero-agenda",
+      "sha256": "0803c0d0dc7556bd2dc12e8e1511ff113a58746e0169bdb0bc77283d0c654e4d"
+    },
     {
       "id": "hornero-ai-usage",
       "name": "Hornero AI Usage",
@@ -41,6 +60,25 @@
       "trust": "official",
       "path": "plugins/hornero-battery",
       "sha256": "55537c2256c308c518741092ba6956b8bab50d51401632be9d17ee68a5ead6f8"
+    },
+    {
+      "id": "hornero-calculator",
+      "name": "Hornero Calculator",
+      "version": "1.0.0",
+      "description": "Dashboard calculator with a safe tokenizer and recursive-descent parser for +, -, *, /, %, parentheses, decimals and unary minus. Division by zero shows Error.",
+      "author": "HorneroOS contributors",
+      "license": "MIT",
+      "homepage": "https://github.com/HorneroOS/plugins",
+      "placement": "dashboard",
+      "category": "utilities",
+      "capabilities": {
+        "processCommands": [],
+        "networkHosts": [],
+        "settings": {}
+      },
+      "trust": "official",
+      "path": "plugins/hornero-calculator",
+      "sha256": "4ea95ef0c2f41d3045029c6586936a647c0c28834414952bdca081cd6bf3a24a"
     },
     {
       "id": "hornero-calendar",
@@ -138,6 +176,31 @@
       "sha256": "02a597f32423f8851dc7da6e832d48bc97eb5d12d1cdebe29f076ec60bbb448c"
     },
     {
+      "id": "hornero-metronome",
+      "name": "Hornero Metronome",
+      "version": "1.0.0",
+      "description": "Bar metronome with a flashing beat indicator. BPM is a persisted integer setting (default 96, clamped 40-208) with start/stop and BPM minus/plus controls.",
+      "author": "HorneroOS contributors",
+      "license": "MIT",
+      "homepage": "https://github.com/HorneroOS/plugins",
+      "placement": "bar",
+      "category": "utilities",
+      "capabilities": {
+        "processCommands": [],
+        "networkHosts": [],
+        "settings": {
+          "bpm": {
+            "type": "integer",
+            "default": 96,
+            "description": "Metronome tempo in beats per minute (40-208)."
+          }
+        }
+      },
+      "trust": "official",
+      "path": "plugins/hornero-metronome",
+      "sha256": "facb2374288948f4993066c9e1a21da91c861ac371ff40d7ec45d81b14d60383"
+    },
+    {
       "id": "hornero-microphone",
       "name": "Hornero Microphone",
       "version": "1.0.0",
@@ -233,6 +296,31 @@
       "sha256": "9540ef7be072cc29ddf075f529c604d0ec08b952a15bf8e80d6a23541e51308c"
     },
     {
+      "id": "hornero-quick-notes",
+      "name": "Hornero Quick Notes",
+      "version": "1.0.0",
+      "description": "Dashboard card with one persistent note saved through PluginKit Settings. Text is loaded on start, saved debounced, counted, and truncated at 4096 characters.",
+      "author": "HorneroOS contributors",
+      "license": "MIT",
+      "homepage": "https://github.com/HorneroOS/plugins",
+      "placement": "dashboard",
+      "category": "utilities",
+      "capabilities": {
+        "processCommands": [],
+        "networkHosts": [],
+        "settings": {
+          "note": {
+            "type": "string",
+            "default": "",
+            "description": "Persistent quick note text (max 4096 characters)."
+          }
+        }
+      },
+      "trust": "official",
+      "path": "plugins/hornero-quick-notes",
+      "sha256": "4a4766eab7f6a1024d541ef92bc067b6c6cb2077cd6976e4ccb3b95243bb6065"
+    },
+    {
       "id": "hornero-quiet-notes",
       "name": "Hornero Quiet Notes",
       "version": "1.0.1",
@@ -311,6 +399,25 @@
       "trust": "official",
       "path": "plugins/hornero-studio-jobs",
       "sha256": "7182f286d2ddb6bcd9a240acd9e15d8a1ccf16f3e2c3b440cc0d73e3b7fef458"
+    },
+    {
+      "id": "hornero-sun-card",
+      "name": "Hornero Sun Card",
+      "version": "1.0.0",
+      "description": "Dashboard card showing sunrise, sunset, temperature, description and humidity from PluginKit Weather. Shows a not-configured state when no location is set.",
+      "author": "HorneroOS contributors",
+      "license": "MIT",
+      "homepage": "https://github.com/HorneroOS/plugins",
+      "placement": "dashboard",
+      "category": "utilities",
+      "capabilities": {
+        "processCommands": [],
+        "networkHosts": [],
+        "settings": {}
+      },
+      "trust": "official",
+      "path": "plugins/hornero-sun-card",
+      "sha256": "6d371f11c43dc805413d7e31bbd997d9631102ca69f4f7b973cab533fcd5b3af"
     },
     {
       "id": "hornero-system-health",

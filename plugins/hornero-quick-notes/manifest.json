@@ -1,0 +1,14 @@
+{
+  "schemaVersion": 1,
+  "id": "hornero-quick-notes",
+  "name": "Hornero Quick Notes",
+  "version": "1.0.0",
+  "description": "Dashboard card with one persistent note saved through PluginKit Settings. Text is loaded on start, saved debounced, counted, and truncated at 4096 characters.",
+  "author": "HorneroOS contributors",
+  "license": "MIT",
+  "homepage": "https://github.com/HorneroOS/plugins",
+  "entrypoint": "Main.qml",
+  "files": ["Main.qml", "README.md", "LICENSE"],
+  "capabilities": {"processCommands": [], "networkHosts": [], "settings": {"note": {"type": "string", "default": "", "description": "Persistent quick note text (max 4096 characters)."}}},
+  "placement": "dashboard"
+}

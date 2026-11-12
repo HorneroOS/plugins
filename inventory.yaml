@@ -306,3 +306,38 @@ capabilities:
     classification: hornero-original
     hornero_equivalent: "plugins/hornero-system-health"
     status: implemented
+  - id: hornero-quick-notes
+    name: Hornero Quick Notes
+    category: dashboard
+    origin: {project: HorneroOS, url: "https://github.com/HorneroOS/plugins", license: MIT}
+    classification: hornero-original
+    hornero_equivalent: "plugins/hornero-quick-notes"
+    status: implemented
+  - id: hornero-calculator
+    name: Hornero Calculator
+    category: dashboard
+    origin: {project: HorneroOS, url: "https://github.com/HorneroOS/plugins", license: MIT}
+    classification: hornero-original
+    hornero_equivalent: "plugins/hornero-calculator"
+    status: implemented
+  - id: hornero-agenda
+    name: Hornero Agenda
+    category: desktop
+    origin: {project: HorneroOS, url: "https://github.com/HorneroOS/plugins", license: MIT}
+    classification: hornero-original
+    hornero_equivalent: "plugins/hornero-agenda"
+    status: implemented
+  - id: hornero-sun-card
+    name: Hornero Sun Card
+    category: dashboard
+    origin: {project: HorneroOS, url: "https://github.com/HorneroOS/plugins", license: MIT}
+    classification: hornero-original
+    hornero_equivalent: "plugins/hornero-sun-card"
+    status: implemented
+  - id: hornero-metronome
+    name: Hornero Metronome
+    category: bar
+    origin: {project: HorneroOS, url: "https://github.com/HorneroOS/plugins", license: MIT}
+    classification: hornero-original
+    hornero_equivalent: "plugins/hornero-metronome"
+    status: implemented
