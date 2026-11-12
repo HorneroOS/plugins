@@ -3,7 +3,7 @@
   "id": "hornero-world-clock",
   "name": "Hornero World Clock",
   "version": "1.0.0",
-  "description": "Dashboard card showing local time, UTC, and Buenos Aires, Madrid and Tokyo. Times are computed with the JS Date timeZone conversion when available; otherwise a labelled fixed UTC offset is shown. No processes or network.",
+  "description": "Dashboard card showing local time, UTC, and Buenos Aires, Madrid and Tokyo. Times use pure-JS offsets (Madrid follows the EU DST rule); each row is labelled with its applied UTC offset. No processes or network.",
   "author": "HorneroOS contributors",
   "license": "MIT",
   "homepage": "https://github.com/HorneroOS/plugins",

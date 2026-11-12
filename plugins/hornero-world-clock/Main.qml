@@ -2,14 +2,12 @@ import QtQuick
 import Hornero.PluginKit
 
 // Hornero World Clock - dashboard card over PluginKit Time.
-// Shows local time, UTC and three fixed cities. City times are
-// computed by round-tripping a JS Date through
-// toLocaleString('en-US', {timeZone}) so daylight-saving rules of
-// the named zone apply when the JS engine supports timeZone. When
-// that conversion is unavailable or yields an invalid date, a
-// fixed UTC offset is used instead and the row is labelled with
-// that offset (e.g. "UTC-03:00"); no DST behaviour is claimed for
-// the fallback path.
+// Shows local time, UTC and three fixed cities. Offsets are computed
+// in pure JS (Qt V4 Date ignores toLocaleString timeZone, so that API
+// is NOT used): Buenos Aires UTC-3 and Tokyo UTC+9 year-round;
+// Madrid follows the EU rule (UTC+1, UTC+2 from the last Sunday of
+// March 01:00 UTC to the last Sunday of October 01:00 UTC). Rows are
+// labelled with the offset actually applied.
 Item {
     id: root
 
@@ -18,7 +16,7 @@ Item {
     implicitWidth: 300
     implicitHeight: content.implicitHeight + 24
 
-    // city, IANA zone, fallback fixed offset in minutes
+    // city, IANA zone (Madrid rule handled in effectiveOffsetMin), base offset in minutes
     readonly property var cities: [
         { "name": "Buenos Aires", "zone": "America/Argentina/Buenos_Aires", "offsetMin": -180 },
         { "name": "Madrid", "zone": "Europe/Madrid", "offsetMin": 60 },
@@ -43,18 +41,29 @@ Item {
         return "UTC" + sign + pad(Math.floor(absMin / 60)) + ":" + pad(absMin % 60);
     }
 
-    // Returns {text, fallback} for a zone at instant `date`.
+    // Last Sunday of month (0-based) at 01:00 UTC, as epoch ms.
+    function lastSundayUtcMs(year, month) {
+        const last = new Date(Date.UTC(year, month + 1, 0, 1, 0, 0));
+        return last.getTime() - last.getUTCDay() * 86400000;
+    }
+
+    // Madrid EU DST rule; other cities use their fixed offset.
+    function effectiveOffsetMin(date, city) {
+        if (city.zone !== "Europe/Madrid")
+            return city.offsetMin;
+        const y = date.getUTCFullYear();
+        const start = lastSundayUtcMs(y, 2);
+        const end = lastSundayUtcMs(y, 9);
+        const t = date.getTime();
+        return (t >= start && t < end) ? 120 : 60;
+    }
+
+    // Returns {text, fallback} applying the rule-based offset.
     function zonedTime(date, zone, offsetMin) {
-        try {
-            const rendered = date.toLocaleString("en-US", { "timeZone": zone });
-            const zoned = new Date(rendered);
-            if (!isNaN(zoned.getTime()))
-                return { "text": pad(zoned.getHours()) + ":" + pad(zoned.getMinutes()) + ":" + pad(zoned.getSeconds()), "fallback": false };
-        } catch (e) {
-            // fall through to fixed offset
-        }
-        const shifted = new Date(date.getTime() + offsetMin * 60000);
-        return { "text": pad(shifted.getUTCHours()) + ":" + pad(shifted.getUTCMinutes()) + ":" + pad(shifted.getUTCSeconds()), "fallback": true };
+        const city = { "zone": zone, "offsetMin": offsetMin };
+        const eff = effectiveOffsetMin(date, city);
+        const shifted = new Date(date.getTime() + eff * 60000);
+        return { "text": pad(shifted.getUTCHours()) + ":" + pad(shifted.getUTCMinutes()) + ":" + pad(shifted.getUTCSeconds()), "fallback": false, "offsetMin": eff };
     }
 
     function localTime(date) {
@@ -98,7 +107,7 @@ Item {
                 color: Theme.onSurfaceVariant
                 text: {
                     const z = root.zonedTime(root.now, modelData.zone, modelData.offsetMin);
-                    return modelData.name + "  " + z.text + (z.fallback ? "  (" + root.offsetLabel(modelData.offsetMin) + ")" : "");
+                    return modelData.name + "  " + z.text + "  (" + root.offsetLabel(z.offsetMin) + ")";
                 }
             }
         }
