@@ -271,3 +271,17 @@ capabilities:
     classification: hornero-original
     hornero_equivalent: "plugins/hornero-moon-phase"
     status: implemented
+  - id: hornero-studio-audio
+    name: Hornero Studio Audio
+    category: bar
+    origin: {project: HorneroOS, url: "https://github.com/HorneroOS/plugins", license: MIT}
+    classification: hornero-original
+    hornero_equivalent: "plugins/hornero-studio-audio"
+    status: implemented
+  - id: hornero-studio-jobs
+    name: Hornero Studio Jobs
+    category: dashboard
+    origin: {project: HorneroOS, url: "https://github.com/HorneroOS/plugins", license: MIT}
+    classification: hornero-original
+    hornero_equivalent: "plugins/hornero-studio-jobs"
+    status: implemented
