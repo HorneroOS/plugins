@@ -1,0 +1,14 @@
+{
+  "schemaVersion": 1,
+  "id": "hornero-unit-converter",
+  "name": "Hornero Unit Converter",
+  "version": "1.0.0",
+  "description": "Dashboard unit converter for length (m, km, mi, ft), mass (kg, lb) and temperature (C, F, K). Pure-JS conversions computed live from a text field and unit selectors. No processes or network.",
+  "author": "HorneroOS contributors",
+  "license": "MIT",
+  "homepage": "https://github.com/HorneroOS/plugins",
+  "entrypoint": "Main.qml",
+  "files": ["Main.qml", "README.md", "LICENSE"],
+  "capabilities": {"processCommands": [], "networkHosts": [], "settings": {}},
+  "placement": "dashboard"
+}
