@@ -60,10 +60,14 @@ Item {
                 root.inputTokens = Number(data.inputTokens || 0);
                 root.outputTokens = Number(data.outputTokens || 0);
                 root.totalTokens = Number(data.totalTokens || (root.inputTokens + root.outputTokens));
-                let models = data.models || [];
-                if (!Array.isArray(models))
-                    models = Object.keys(models);
-                root.modelsText = models.map(m => (typeof m === "string" ? m : String(m.name || m.id || ""))).filter(s => s.length > 0).join(", ");
+                // horneroctl contract: models is a comma-joined string of
+                // "name:tokens" entries (map[string]string JSON), not an object.
+                let models = data.models || "";
+                if (Array.isArray(models))
+                    models = models.map(m => (typeof m === "string" ? m : String(m.name || m.id || ""))).join(",");
+                else if (typeof models !== "string")
+                    models = "";
+                root.modelsText = models.split(",").map(s => s.trim()).filter(s => s.length > 0).join(", ");
                 root.hasData = true;
                 root.errorText = "";
             } catch (e) {

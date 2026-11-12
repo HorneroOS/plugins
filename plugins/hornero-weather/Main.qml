@@ -14,8 +14,8 @@ Item {
         const parts = [];
         if (entry.date)
             parts.push(String(entry.date));
-        if (entry.tempMin !== undefined && entry.tempMax !== undefined)
-            parts.push(String(entry.tempMin) + " / " + String(entry.tempMax));
+        if (entry.minTempC !== undefined && entry.maxTempC !== undefined)
+            parts.push(String(entry.minTempC) + "\u00b0 / " + String(entry.maxTempC) + "\u00b0");
         else if (entry.temp !== undefined)
             parts.push(String(entry.temp));
         if (entry.description)
