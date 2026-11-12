@@ -285,3 +285,24 @@ capabilities:
     classification: hornero-original
     hornero_equivalent: "plugins/hornero-studio-jobs"
     status: implemented
+  - id: hornero-volume
+    name: Hornero Volume
+    category: bar
+    origin: {project: HorneroOS, url: "https://github.com/HorneroOS/plugins", license: MIT}
+    classification: hornero-original
+    hornero_equivalent: "plugins/hornero-volume"
+    status: implemented
+  - id: hornero-microphone
+    name: Hornero Microphone
+    category: bar
+    origin: {project: HorneroOS, url: "https://github.com/HorneroOS/plugins", license: MIT}
+    classification: hornero-original
+    hornero_equivalent: "plugins/hornero-microphone"
+    status: implemented
+  - id: hornero-system-health
+    name: Hornero System Health
+    category: dashboard
+    origin: {project: HorneroOS, url: "https://github.com/HorneroOS/plugins", license: MIT}
+    classification: hornero-original
+    hornero_equivalent: "plugins/hornero-system-health"
+    status: implemented

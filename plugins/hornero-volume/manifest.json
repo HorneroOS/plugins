@@ -1,0 +1,14 @@
+{
+  "schemaVersion": 1,
+  "id": "hornero-volume",
+  "name": "Hornero Volume",
+  "version": "1.0.0",
+  "description": "Bar widget showing output volume from PluginKit Audio. Shows 'Muted' when muted and 'No output device' when no sink is present, with mute, decrease and increase buttons.",
+  "author": "HorneroOS contributors",
+  "license": "MIT",
+  "homepage": "https://github.com/HorneroOS/plugins",
+  "entrypoint": "Main.qml",
+  "files": ["Main.qml", "README.md", "LICENSE"],
+  "capabilities": {"processCommands": [], "networkHosts": [], "settings": {}},
+  "placement": "bar"
+}

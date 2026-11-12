@@ -1,0 +1,14 @@
+{
+  "schemaVersion": 1,
+  "id": "hornero-system-health",
+  "name": "Hornero System Health",
+  "version": "1.0.0",
+  "description": "Dashboard card summarising system health from PluginKit System, Power and Network: CPU, memory and storage usage, battery (or 'No battery'), and network speeds. Each row shows an honest unavailable state when its service reports no data.",
+  "author": "HorneroOS contributors",
+  "license": "MIT",
+  "homepage": "https://github.com/HorneroOS/plugins",
+  "entrypoint": "Main.qml",
+  "files": ["Main.qml", "README.md", "LICENSE"],
+  "capabilities": {"processCommands": [], "networkHosts": [], "settings": {}},
+  "placement": "dashboard"
+}
