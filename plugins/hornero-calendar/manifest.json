@@ -1,0 +1,14 @@
+{
+  "schemaVersion": 1,
+  "id": "hornero-calendar",
+  "name": "Hornero Calendar",
+  "version": "1.0.0",
+  "description": "Desktop widget showing the current date and time from the PluginKit Time service. Read-only, no processes or network.",
+  "author": "HorneroOS contributors",
+  "license": "MIT",
+  "homepage": "https://github.com/HorneroOS/plugins",
+  "entrypoint": "Main.qml",
+  "files": ["Main.qml", "README.md", "LICENSE"],
+  "capabilities": {"processCommands": [], "networkHosts": [], "settings": {}},
+  "placement": "desktop"
+}

@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "id": "hornero-ai-usage",
+  "name": "Hornero AI Usage",
+  "version": "1.0.0",
+  "description": "Dashboard card for local AI assistant usage from horneroctl assistant usage --json: sessions, API calls and tokens. Quota is shown as unknown; the provider does not expose a limit.",
+  "author": "HorneroOS contributors",
+  "license": "MIT",
+  "homepage": "https://github.com/HorneroOS/plugins",
+  "entrypoint": "Main.qml",
+  "files": [
+    "Main.qml",
+    "README.md",
+    "LICENSE"
+  ],
+  "capabilities": {
+    "processCommands": [
+      "horneroctl"
+    ],
+    "networkHosts": [],
+    "settings": {}
+  },
+  "placement": "dashboard"
+}

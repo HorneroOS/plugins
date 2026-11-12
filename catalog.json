@@ -1,7 +1,47 @@
 {
   "schemaVersion": 1,
-  "generatedFrom": "d15d483e69866567d336ea80a7b43834f912f590",
+  "generatedFrom": "27c49d85590680ba0c9eeeb3209150481469dc94",
   "plugins": [
+    {
+      "id": "hornero-ai-usage",
+      "name": "Hornero AI Usage",
+      "version": "1.0.0",
+      "description": "Dashboard card for local AI assistant usage from horneroctl assistant usage --json: sessions, API calls and tokens. Quota is shown as unknown; the provider does not expose a limit.",
+      "author": "HorneroOS contributors",
+      "license": "MIT",
+      "homepage": "https://github.com/HorneroOS/plugins",
+      "placement": "dashboard",
+      "category": "utilities",
+      "capabilities": {
+        "processCommands": [
+          "horneroctl"
+        ],
+        "networkHosts": [],
+        "settings": {}
+      },
+      "trust": "official",
+      "path": "plugins/hornero-ai-usage",
+      "sha256": "057c8febc3e122ae583d965aa3c8efefd44042126665003014febbe47590d410"
+    },
+    {
+      "id": "hornero-calendar",
+      "name": "Hornero Calendar",
+      "version": "1.0.0",
+      "description": "Desktop widget showing the current date and time from the PluginKit Time service. Read-only, no processes or network.",
+      "author": "HorneroOS contributors",
+      "license": "MIT",
+      "homepage": "https://github.com/HorneroOS/plugins",
+      "placement": "desktop",
+      "category": "utilities",
+      "capabilities": {
+        "processCommands": [],
+        "networkHosts": [],
+        "settings": {}
+      },
+      "trust": "official",
+      "path": "plugins/hornero-calendar",
+      "sha256": "ca40592d7fed1b8c94ca5fb4f9f6e25f2678736c7173e4e5170089ddfb8a2026"
+    },
     {
       "id": "hornero-dual-clock",
       "name": "Hornero Dual Clock",
@@ -39,6 +79,44 @@
       "trust": "official",
       "path": "plugins/hornero-focus-card",
       "sha256": "02a597f32423f8851dc7da6e832d48bc97eb5d12d1cdebe29f076ec60bbb448c"
+    },
+    {
+      "id": "hornero-network-monitor",
+      "name": "Hornero Network Monitor",
+      "version": "1.0.0",
+      "description": "Dashboard card with download/upload speeds and session totals from the PluginKit Network service, formatted in human units. Read-only.",
+      "author": "HorneroOS contributors",
+      "license": "MIT",
+      "homepage": "https://github.com/HorneroOS/plugins",
+      "placement": "dashboard",
+      "category": "utilities",
+      "capabilities": {
+        "processCommands": [],
+        "networkHosts": [],
+        "settings": {}
+      },
+      "trust": "official",
+      "path": "plugins/hornero-network-monitor",
+      "sha256": "905d532d3426e9998aec87b2ea1b56ab75b148a90fea0ef4d6852eabe9136400"
+    },
+    {
+      "id": "hornero-now-playing",
+      "name": "Hornero Now Playing",
+      "version": "1.0.0",
+      "description": "Bar widget showing the active media player identity, title and artist from PluginKit Media, with previous, play/pause and next controls. Transport runs only on user click.",
+      "author": "HorneroOS contributors",
+      "license": "MIT",
+      "homepage": "https://github.com/HorneroOS/plugins",
+      "placement": "bar",
+      "category": "utilities",
+      "capabilities": {
+        "processCommands": [],
+        "networkHosts": [],
+        "settings": {}
+      },
+      "trust": "official",
+      "path": "plugins/hornero-now-playing",
+      "sha256": "d9127981cb5e2b3e82b87366a284a4a125500bfb5a0cf7728396ef5d2f580432"
     },
     {
       "id": "hornero-pomodoro",
@@ -119,6 +197,44 @@
       "trust": "official",
       "path": "plugins/hornero-studio-jobs",
       "sha256": "7182f286d2ddb6bcd9a240acd9e15d8a1ccf16f3e2c3b440cc0d73e3b7fef458"
+    },
+    {
+      "id": "hornero-system-monitor",
+      "name": "Hornero System Monitor",
+      "version": "1.0.0",
+      "description": "Dashboard card with CPU, memory, GPU and storage usage bars from the PluginKit System service. Read-only, no processes or network.",
+      "author": "HorneroOS contributors",
+      "license": "MIT",
+      "homepage": "https://github.com/HorneroOS/plugins",
+      "placement": "dashboard",
+      "category": "utilities",
+      "capabilities": {
+        "processCommands": [],
+        "networkHosts": [],
+        "settings": {}
+      },
+      "trust": "official",
+      "path": "plugins/hornero-system-monitor",
+      "sha256": "f7f5eb75eb4e9046a6ce452eb0da62c83c190cb8141e2a36c4bb6dff2d48a90f"
+    },
+    {
+      "id": "hornero-weather",
+      "name": "Hornero Weather",
+      "version": "1.0.0",
+      "description": "Dashboard card for current weather and forecast from the PluginKit Weather service. Shows a not-configured state instead of fake data when no location is set.",
+      "author": "HorneroOS contributors",
+      "license": "MIT",
+      "homepage": "https://github.com/HorneroOS/plugins",
+      "placement": "dashboard",
+      "category": "utilities",
+      "capabilities": {
+        "processCommands": [],
+        "networkHosts": [],
+        "settings": {}
+      },
+      "trust": "official",
+      "path": "plugins/hornero-weather",
+      "sha256": "447bc6ad18b935fd936c4d0affc634f6368064969d562f64d7e3d089b01b9ce8"
     }
   ]
 }

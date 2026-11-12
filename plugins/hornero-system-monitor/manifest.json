@@ -1,0 +1,14 @@
+{
+  "schemaVersion": 1,
+  "id": "hornero-system-monitor",
+  "name": "Hornero System Monitor",
+  "version": "1.0.0",
+  "description": "Dashboard card with CPU, memory, GPU and storage usage bars from the PluginKit System service. Read-only, no processes or network.",
+  "author": "HorneroOS contributors",
+  "license": "MIT",
+  "homepage": "https://github.com/HorneroOS/plugins",
+  "entrypoint": "Main.qml",
+  "files": ["Main.qml", "README.md", "LICENSE"],
+  "capabilities": {"processCommands": [], "networkHosts": [], "settings": {}},
+  "placement": "dashboard"
+}
