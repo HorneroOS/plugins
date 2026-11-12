@@ -250,3 +250,24 @@ capabilities:
     classification: hornero-original
     hornero_equivalent: "plugins/hornero-uptime"
     status: implemented
+  - id: hornero-battery
+    name: Hornero Battery
+    category: bar
+    origin: {project: HorneroOS, url: "https://github.com/HorneroOS/plugins", license: MIT}
+    classification: hornero-original
+    hornero_equivalent: "plugins/hornero-battery"
+    status: implemented
+  - id: hornero-unit-converter
+    name: Hornero Unit Converter
+    category: dashboard
+    origin: {project: HorneroOS, url: "https://github.com/HorneroOS/plugins", license: MIT}
+    classification: hornero-original
+    hornero_equivalent: "plugins/hornero-unit-converter"
+    status: implemented
+  - id: hornero-moon-phase
+    name: Hornero Moon Phase
+    category: desktop
+    origin: {project: HorneroOS, url: "https://github.com/HorneroOS/plugins", license: MIT}
+    classification: hornero-original
+    hornero_equivalent: "plugins/hornero-moon-phase"
+    status: implemented

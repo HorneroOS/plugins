@@ -1,0 +1,14 @@
+{
+  "schemaVersion": 1,
+  "id": "hornero-battery",
+  "name": "Hornero Battery",
+  "version": "1.0.0",
+  "description": "Bar widget showing battery percentage and charging state from PluginKit Power. Shows 'No battery' on machines without a battery instead of a fabricated percentage.",
+  "author": "HorneroOS contributors",
+  "license": "MIT",
+  "homepage": "https://github.com/HorneroOS/plugins",
+  "entrypoint": "Main.qml",
+  "files": ["Main.qml", "README.md", "LICENSE"],
+  "capabilities": {"processCommands": [], "networkHosts": [], "settings": {}},
+  "placement": "bar"
+}

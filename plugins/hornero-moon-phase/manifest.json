@@ -1,0 +1,14 @@
+{
+  "schemaVersion": 1,
+  "id": "hornero-moon-phase",
+  "name": "Hornero Moon Phase",
+  "version": "1.0.0",
+  "description": "Desktop widget showing the current moon phase name and approximate illumination from a pure-JS synodic approximation anchored on the 2000-01-06 new moon. Labelled approximate. No processes or network.",
+  "author": "HorneroOS contributors",
+  "license": "MIT",
+  "homepage": "https://github.com/HorneroOS/plugins",
+  "entrypoint": "Main.qml",
+  "files": ["Main.qml", "README.md", "LICENSE"],
+  "capabilities": {"processCommands": [], "networkHosts": [], "settings": {}},
+  "placement": "desktop"
+}
