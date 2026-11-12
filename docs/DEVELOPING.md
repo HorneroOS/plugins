@@ -141,12 +141,13 @@ import Hornero.PluginKit
 
 Members (exact names copied from the `.qml` sources on shell
 `main`): `Theme`, `Notifications`, `Desktop`, `System`, `Network`,
-`Media`, `Weather`, `Time` and `Power` are singletons; `Settings`
-is a regular (instantiable) type. All data facades are read-only
-except `Media` transport and `Settings.setValue`; they have no
-setters, no `Process` and no shell execution. They wrap the shell's
-existing `qs.services` singletons, plus Quickshell's `UPower`
-service for `Power`. No AI quota is exposed by PluginKit.
+`Media`, `Weather`, `Time`, `Power` and `Audio` are singletons;
+`Settings` is a regular (instantiable) type. All data facades are
+read-only except `Media` transport, `Audio` controls and
+`Settings.setValue`; they have no setters, no `Process` and no
+shell execution. They wrap the shell's existing `qs.services`
+singletons, plus Quickshell's `UPower` service for `Power`. No AI
+quota is exposed by PluginKit.
 
 ### `Theme` (singleton)
 
@@ -245,6 +246,21 @@ battery or state is known). This facade delegates to Quickshell's
 `UPower` service (`Quickshell.Services.UPower`, via
 `UPower.displayDevice` / `UPower.onBattery`) rather than a
 `qs.services` singleton.
+
+### `Audio` (singleton)
+
+Read-only: `volume`, `sourceVolume` (real), `muted`, `sourceMuted`,
+`hasSink`, `hasSource` (bool). `hasSink` / `hasSource` report
+whether a default output sink / input source is present; the
+volumes read `0` when there is none. Mutating calls —
+`setVolume(v: real)`, `incrementVolume()`, `decrementVolume()`,
+`toggleMute()` and `toggleSourceMute()` — which delegate to the
+shell's audio service: it clamps volume to
+`0`–`Config.services.maxVolume` (and clears the sink mute on
+`setVolume`), applies its configured step for the increment /
+decrement calls, and the mute toggles are no-ops when the device
+is absent. Call them only from a user-initiated handler;
+PluginKit never changes volume on load.
 
 Example (from HorneroOS/shell `examples/plugins/example-clock/`):
 
