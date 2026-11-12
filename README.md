@@ -68,6 +68,9 @@ horneroctl plugin validate ./plugins/my-plugin
 horneroctl plugin install https://github.com/<you>/my-plugin.git --dry-run
 ```
 
+For the full developer SDK guide (manifest, PluginKit API,
+validator rules, `horneroctl plugin` lifecycle), see
+[docs/DEVELOPING.md](docs/DEVELOPING.md).
 See [docs/CONTRIBUTING.md](docs/CONTRIBUTING.md) and
 [docs/SECURITY.md](docs/SECURITY.md).
 For the community registry trust and signing contract, see
