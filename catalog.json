@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedFrom": "9900f1c82804b28e203d753ae2b361f7fb9f80ed",
+  "generatedFrom": "adee390a743d8baebcdbdc57a4976c1c9a8e381b",
   "plugins": [
     {
       "id": "hornero-ai-usage",
@@ -136,6 +136,25 @@
       "trust": "official",
       "path": "plugins/hornero-focus-card",
       "sha256": "02a597f32423f8851dc7da6e832d48bc97eb5d12d1cdebe29f076ec60bbb448c"
+    },
+    {
+      "id": "hornero-microphone",
+      "name": "Hornero Microphone",
+      "version": "1.0.0",
+      "description": "Bar widget showing microphone volume and muted state from PluginKit Audio. Shows 'No input device' when no source is present. Privacy: shows only muted/volume state, never records audio.",
+      "author": "HorneroOS contributors",
+      "license": "MIT",
+      "homepage": "https://github.com/HorneroOS/plugins",
+      "placement": "bar",
+      "category": "utilities",
+      "capabilities": {
+        "processCommands": [],
+        "networkHosts": [],
+        "settings": {}
+      },
+      "trust": "official",
+      "path": "plugins/hornero-microphone",
+      "sha256": "5f495ac3681251bde113556e265549140604befdd9269a778a0aea56c59a7986"
     },
     {
       "id": "hornero-moon-phase",
@@ -294,6 +313,25 @@
       "sha256": "7182f286d2ddb6bcd9a240acd9e15d8a1ccf16f3e2c3b440cc0d73e3b7fef458"
     },
     {
+      "id": "hornero-system-health",
+      "name": "Hornero System Health",
+      "version": "1.0.0",
+      "description": "Dashboard card summarising system health from PluginKit System, Power and Network: CPU, memory and storage usage, battery (or 'No battery'), and network speeds. Each row shows an honest unavailable state when its service reports no data.",
+      "author": "HorneroOS contributors",
+      "license": "MIT",
+      "homepage": "https://github.com/HorneroOS/plugins",
+      "placement": "dashboard",
+      "category": "utilities",
+      "capabilities": {
+        "processCommands": [],
+        "networkHosts": [],
+        "settings": {}
+      },
+      "trust": "official",
+      "path": "plugins/hornero-system-health",
+      "sha256": "51fb45e6ce631ae4291b0a1d703fd924450015429d3c95648856c17012820f17"
+    },
+    {
       "id": "hornero-system-monitor",
       "name": "Hornero System Monitor",
       "version": "1.0.0",
@@ -351,6 +389,25 @@
       "trust": "official",
       "path": "plugins/hornero-uptime",
       "sha256": "7a8737f27940834da97b9f0171d529e5b9f32dc05b8a9f1fd2bdd99e9be9a049"
+    },
+    {
+      "id": "hornero-volume",
+      "name": "Hornero Volume",
+      "version": "1.0.0",
+      "description": "Bar widget showing output volume from PluginKit Audio. Shows 'Muted' when muted and 'No output device' when no sink is present, with mute, decrease and increase buttons.",
+      "author": "HorneroOS contributors",
+      "license": "MIT",
+      "homepage": "https://github.com/HorneroOS/plugins",
+      "placement": "bar",
+      "category": "utilities",
+      "capabilities": {
+        "processCommands": [],
+        "networkHosts": [],
+        "settings": {}
+      },
+      "trust": "official",
+      "path": "plugins/hornero-volume",
+      "sha256": "f9b8b96e8c190bf35fd4dbc773512a734bcd7e4e5ec91d86c467a4c3cbea7ba5"
     },
     {
       "id": "hornero-weather",
