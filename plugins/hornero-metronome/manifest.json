@@ -1,0 +1,14 @@
+{
+  "schemaVersion": 1,
+  "id": "hornero-metronome",
+  "name": "Hornero Metronome",
+  "version": "1.0.0",
+  "description": "Bar metronome with a flashing beat indicator. BPM is a persisted integer setting (default 96, clamped 40-208) with start/stop and BPM minus/plus controls.",
+  "author": "HorneroOS contributors",
+  "license": "MIT",
+  "homepage": "https://github.com/HorneroOS/plugins",
+  "entrypoint": "Main.qml",
+  "files": ["Main.qml", "README.md", "LICENSE"],
+  "capabilities": {"processCommands": [], "networkHosts": [], "settings": {"bpm": {"type": "integer", "default": 96, "description": "Metronome tempo in beats per minute (40-208)."}}},
+  "placement": "bar"
+}

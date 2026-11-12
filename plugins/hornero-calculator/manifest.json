@@ -1,0 +1,14 @@
+{
+  "schemaVersion": 1,
+  "id": "hornero-calculator",
+  "name": "Hornero Calculator",
+  "version": "1.0.0",
+  "description": "Dashboard calculator with a safe tokenizer and recursive-descent parser for +, -, *, /, %, parentheses, decimals and unary minus. Division by zero shows Error.",
+  "author": "HorneroOS contributors",
+  "license": "MIT",
+  "homepage": "https://github.com/HorneroOS/plugins",
+  "entrypoint": "Main.qml",
+  "files": ["Main.qml", "README.md", "LICENSE"],
+  "capabilities": {"processCommands": [], "networkHosts": [], "settings": {}},
+  "placement": "dashboard"
+}

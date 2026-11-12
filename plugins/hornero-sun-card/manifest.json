@@ -1,0 +1,14 @@
+{
+  "schemaVersion": 1,
+  "id": "hornero-sun-card",
+  "name": "Hornero Sun Card",
+  "version": "1.0.0",
+  "description": "Dashboard card showing sunrise, sunset, temperature, description and humidity from PluginKit Weather. Shows a not-configured state when no location is set.",
+  "author": "HorneroOS contributors",
+  "license": "MIT",
+  "homepage": "https://github.com/HorneroOS/plugins",
+  "entrypoint": "Main.qml",
+  "files": ["Main.qml", "README.md", "LICENSE"],
+  "capabilities": {"processCommands": [], "networkHosts": [], "settings": {}},
+  "placement": "dashboard"
+}

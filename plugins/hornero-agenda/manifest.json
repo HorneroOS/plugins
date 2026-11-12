@@ -1,0 +1,14 @@
+{
+  "schemaVersion": 1,
+  "id": "hornero-agenda",
+  "name": "Hornero Agenda",
+  "version": "1.0.0",
+  "description": "Desktop widget showing weekday, day and month, ISO week number, day of year and days remaining in the year, computed with pure Date math from PluginKit Time.",
+  "author": "HorneroOS contributors",
+  "license": "MIT",
+  "homepage": "https://github.com/HorneroOS/plugins",
+  "entrypoint": "Main.qml",
+  "files": ["Main.qml", "README.md", "LICENSE"],
+  "capabilities": {"processCommands": [], "networkHosts": [], "settings": {}},
+  "placement": "desktop"
+}
