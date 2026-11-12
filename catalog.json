@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedFrom": "89f7b2bf815ac3a8107064003d99747494b436f2",
+  "generatedFrom": "e249b91ad490ac38e4defa4a8820008ac852a374",
   "plugins": [
     {
       "id": "hornero-ai-usage",
@@ -22,6 +22,25 @@
       "trust": "official",
       "path": "plugins/hornero-ai-usage",
       "sha256": "057c8febc3e122ae583d965aa3c8efefd44042126665003014febbe47590d410"
+    },
+    {
+      "id": "hornero-battery",
+      "name": "Hornero Battery",
+      "version": "1.0.0",
+      "description": "Bar widget showing battery percentage and charging state from PluginKit Power. Shows 'No battery' on machines without a battery instead of a fabricated percentage.",
+      "author": "HorneroOS contributors",
+      "license": "MIT",
+      "homepage": "https://github.com/HorneroOS/plugins",
+      "placement": "bar",
+      "category": "utilities",
+      "capabilities": {
+        "processCommands": [],
+        "networkHosts": [],
+        "settings": {}
+      },
+      "trust": "official",
+      "path": "plugins/hornero-battery",
+      "sha256": "55537c2256c308c518741092ba6956b8bab50d51401632be9d17ee68a5ead6f8"
     },
     {
       "id": "hornero-calendar",
@@ -117,6 +136,25 @@
       "trust": "official",
       "path": "plugins/hornero-focus-card",
       "sha256": "02a597f32423f8851dc7da6e832d48bc97eb5d12d1cdebe29f076ec60bbb448c"
+    },
+    {
+      "id": "hornero-moon-phase",
+      "name": "Hornero Moon Phase",
+      "version": "1.0.0",
+      "description": "Desktop widget showing the current moon phase name and approximate illumination from a pure-JS synodic approximation anchored on the 2000-01-06 new moon. Labelled approximate. No processes or network.",
+      "author": "HorneroOS contributors",
+      "license": "MIT",
+      "homepage": "https://github.com/HorneroOS/plugins",
+      "placement": "desktop",
+      "category": "utilities",
+      "capabilities": {
+        "processCommands": [],
+        "networkHosts": [],
+        "settings": {}
+      },
+      "trust": "official",
+      "path": "plugins/hornero-moon-phase",
+      "sha256": "23f65bf3ecc07454793a67f4aaf12338905affa47dc99fc32d76783df1e8e213"
     },
     {
       "id": "hornero-network-monitor",
@@ -273,6 +311,25 @@
       "trust": "official",
       "path": "plugins/hornero-system-monitor",
       "sha256": "f7f5eb75eb4e9046a6ce452eb0da62c83c190cb8141e2a36c4bb6dff2d48a90f"
+    },
+    {
+      "id": "hornero-unit-converter",
+      "name": "Hornero Unit Converter",
+      "version": "1.0.0",
+      "description": "Dashboard unit converter for length (m, km, mi, ft), mass (kg, lb) and temperature (C, F, K). Pure-JS conversions computed live from a text field and unit selectors. No processes or network.",
+      "author": "HorneroOS contributors",
+      "license": "MIT",
+      "homepage": "https://github.com/HorneroOS/plugins",
+      "placement": "dashboard",
+      "category": "utilities",
+      "capabilities": {
+        "processCommands": [],
+        "networkHosts": [],
+        "settings": {}
+      },
+      "trust": "official",
+      "path": "plugins/hornero-unit-converter",
+      "sha256": "2843672c0334f6c8e2084982a3cb948c5b853c7b2a5e6496e8d5c60eba30ccad"
     },
     {
       "id": "hornero-uptime",
