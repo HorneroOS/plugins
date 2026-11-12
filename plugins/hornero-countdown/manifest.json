@@ -1,0 +1,14 @@
+{
+  "schemaVersion": 1,
+  "id": "hornero-countdown",
+  "name": "Hornero Countdown",
+  "version": "1.0.0",
+  "description": "Bar countdown timer with 5, 10 and 25 minute presets, start, pause and reset, and a visual ring and flashing text at zero. No sound. Pure QML, no processes or network.",
+  "author": "HorneroOS contributors",
+  "license": "MIT",
+  "homepage": "https://github.com/HorneroOS/plugins",
+  "entrypoint": "Main.qml",
+  "files": ["Main.qml", "README.md", "LICENSE"],
+  "capabilities": {"processCommands": [], "networkHosts": [], "settings": {}},
+  "placement": "bar"
+}

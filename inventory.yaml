@@ -215,3 +215,38 @@ capabilities:
     classification: implemented
     hornero_equivalent: "plugins/hornero-quiet-notes"
     status: implemented
+  - id: hornero-world-clock
+    name: Hornero World Clock
+    category: dashboard
+    origin: {project: HorneroOS, url: "https://github.com/HorneroOS/plugins", license: MIT}
+    classification: hornero-original
+    hornero_equivalent: "plugins/hornero-world-clock"
+    status: implemented
+  - id: hornero-disk-usage
+    name: Hornero Disk Usage
+    category: dashboard
+    origin: {project: HorneroOS, url: "https://github.com/HorneroOS/plugins", license: MIT}
+    classification: hornero-original
+    hornero_equivalent: "plugins/hornero-disk-usage"
+    status: implemented
+  - id: hornero-stopwatch
+    name: Hornero Stopwatch
+    category: bar
+    origin: {project: HorneroOS, url: "https://github.com/HorneroOS/plugins", license: MIT}
+    classification: hornero-original
+    hornero_equivalent: "plugins/hornero-stopwatch"
+    status: implemented
+  - id: hornero-countdown
+    name: Hornero Countdown
+    category: bar
+    origin: {project: HorneroOS, url: "https://github.com/HorneroOS/plugins", license: MIT}
+    classification: hornero-original
+    hornero_equivalent: "plugins/hornero-countdown"
+    status: implemented
+  - id: hornero-uptime
+    name: Hornero Uptime
+    category: bar
+    origin: {project: HorneroOS, url: "https://github.com/HorneroOS/plugins", license: MIT}
+    classification: hornero-original
+    hornero_equivalent: "plugins/hornero-uptime"
+    status: implemented
