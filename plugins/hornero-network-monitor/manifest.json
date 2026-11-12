@@ -1,0 +1,14 @@
+{
+  "schemaVersion": 1,
+  "id": "hornero-network-monitor",
+  "name": "Hornero Network Monitor",
+  "version": "1.0.0",
+  "description": "Dashboard card with download/upload speeds and session totals from the PluginKit Network service, formatted in human units. Read-only.",
+  "author": "HorneroOS contributors",
+  "license": "MIT",
+  "homepage": "https://github.com/HorneroOS/plugins",
+  "entrypoint": "Main.qml",
+  "files": ["Main.qml", "README.md", "LICENSE"],
+  "capabilities": {"processCommands": [], "networkHosts": [], "settings": {}},
+  "placement": "dashboard"
+}

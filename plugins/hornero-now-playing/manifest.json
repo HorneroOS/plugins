@@ -1,0 +1,14 @@
+{
+  "schemaVersion": 1,
+  "id": "hornero-now-playing",
+  "name": "Hornero Now Playing",
+  "version": "1.0.0",
+  "description": "Bar widget showing the active media player identity, title and artist from PluginKit Media, with previous, play/pause and next controls. Transport runs only on user click.",
+  "author": "HorneroOS contributors",
+  "license": "MIT",
+  "homepage": "https://github.com/HorneroOS/plugins",
+  "entrypoint": "Main.qml",
+  "files": ["Main.qml", "README.md", "LICENSE"],
+  "capabilities": {"processCommands": [], "networkHosts": [], "settings": {}},
+  "placement": "bar"
+}

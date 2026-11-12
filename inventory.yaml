@@ -1,0 +1,217 @@
+# HorneroOS extension capability inventory.
+# Researched entries describe competitive capabilities studied for
+# inspiration (see HorneroOS/docs competitive-capability-matrix.md);
+# no upstream code is copied. Implemented entries are plugins in
+# this repository under plugins/.
+schemaVersion: 1
+capabilities:
+  - id: omarchy-atomic-theme-swap
+    name: Atomic theme swap with generation token
+    category: theming
+    origin: {project: Omarchy, url: "https://github.com/omacom/omarchy", license: MIT}
+    classification: adapt-idea
+    hornero_equivalent: "Theme system (validated core); staged atomic swap not yet adopted"
+    status: researched
+  - id: omarchy-migrations-snapshots
+    name: Migration markers and snapshot-before-update
+    category: updates
+    origin: {project: Omarchy, url: "https://github.com/omacom/omarchy", license: MIT}
+    classification: adapt-idea
+    hornero_equivalent: "horneroctl updates; no OS snapshot/rollback story yet"
+    status: researched
+  - id: dms-unified-shell
+    name: Unified shell (bar, dashboard, launcher in one shell)
+    category: shell
+    origin: {project: DankMaterialShell, url: "https://github.com/AvengeMedia/DankMaterialShell", license: MIT}
+    classification: inspiration
+    hornero_equivalent: "Hornero Shell (bar, dashboard, desktop placements)"
+    status: researched
+  - id: dms-plugin-widgets
+    name: In-shell plugin/widget loader with manifest discipline
+    category: extensions
+    origin: {project: DankMaterialShell, url: "https://github.com/AvengeMedia/DankMaterialShell", license: MIT}
+    classification: adapt-idea
+    hornero_equivalent: "Hornero PluginKit runtime + this plugins catalogue"
+    status: researched
+  - id: caelestia-shell-launcher
+    name: Integrated shell with launcher and workspaces overview
+    category: shell
+    origin: {project: Caelestia, url: "https://github.com/caelestia-dots/shell", license: UNVERIFIED}
+    classification: inspiration
+    hornero_equivalent: "Hornero Shell launcher and dashboard"
+    status: researched
+  - id: caelestia-dynamic-scheme
+    name: Dynamic colour scheme generated from wallpaper
+    category: theming
+    origin: {project: Caelestia, url: "https://github.com/caelestia-dots/shell", license: UNVERIFIED}
+    classification: adapt-idea
+    hornero_equivalent: "Wallpaper-bound theme tokens (partial)"
+    status: researched
+  - id: noctalia-plugin-api
+    name: Plugin API with injected pluginApi and entry points
+    category: extensions
+    origin: {project: Noctalia, url: "https://github.com/noctalia-dev/noctalia", license: UNVERIFIED}
+    classification: adapt-idea
+    hornero_equivalent: "Hornero.PluginKit public QML module"
+    status: researched
+  - id: noctalia-configurable-widgets
+    name: Configurable panels and widget placement
+    category: shell
+    origin: {project: Noctalia, url: "https://github.com/noctalia-dev/noctalia", license: UNVERIFIED}
+    classification: inspiration
+    hornero_equivalent: "Manifest placement (bar/dashboard/desktop) chosen by users in Control Center"
+    status: researched
+  - id: hyprland-core-plugins
+    name: Compositor plugins loaded into Hyprland (hyprpm)
+    category: extensions
+    origin: {project: Hyprland, url: "https://github.com/hyprwm/Hyprland", license: BSD-3-Clause}
+    classification: inspiration
+    hornero_equivalent: "none (shell-level plugins only; compositor plugins out of scope)"
+    status: researched
+  - id: hyprland-plugin-ecosystem
+    name: Community plugin repository ecosystem
+    category: extensions
+    origin: {project: Hyprland community plugins, url: "https://github.com/hyprwm/hyprland-plugins", license: UNVERIFIED}
+    classification: inspiration
+    hornero_equivalent: "Community registry intake in this repository (unreviewed, not catalogued)"
+    status: researched
+  - id: waybar-builtin-modules
+    name: Built-in system modules (cpu, memory, network, battery, tray)
+    category: widgets
+    origin: {project: Waybar, url: "https://github.com/Alexays/Waybar", license: MIT}
+    classification: adapt-idea
+    hornero_equivalent: "hornero-system-monitor and hornero-network-monitor plugins"
+    status: researched
+  - id: waybar-custom-modules
+    name: User custom modules running arbitrary commands
+    category: widgets
+    origin: {project: Waybar, url: "https://github.com/Alexays/Waybar", license: MIT}
+    classification: adapt-idea
+    hornero_equivalent: "Declared processCommands in plugin manifests (review metadata, typed horneroctl contracts preferred)"
+    status: researched
+  - id: astal-service-libraries
+    name: Astal service libraries (battery, network, mpris, hyprland)
+    category: extensions
+    origin: {project: Astal, url: "https://github.com/Aylur/astal", license: UNVERIFIED}
+    classification: adapt-idea
+    hornero_equivalent: "PluginKit System/Network/Media/Time/Weather facades over shell services"
+    status: researched
+  - id: ags-widget-framework
+    name: AGS widget framework for custom shells
+    category: shell
+    origin: {project: AGS, url: "https://github.com/Aylur/ags", license: UNVERIFIED}
+    classification: inspiration
+    hornero_equivalent: "Quickshell-based Hornero Shell with PluginKit"
+    status: researched
+  - id: gnome-reviewed-store
+    name: Reviewed extension store with human review (extensions.gnome.org)
+    category: extensions
+    origin: {project: GNOME Shell, url: "https://extensions.gnome.org", license: "GPL-2.0-or-later (shell); extension licenses vary"}
+    classification: adapt-idea
+    hornero_equivalent: "Official catalogue in this repository plus signed community registry design"
+    status: researched
+  - id: gnome-extension-lifecycle
+    name: Extension lifecycle with shell-version compatibility checks
+    category: extensions
+    origin: {project: GNOME Shell, url: "https://gitlab.gnome.org/GNOME/gnome-shell", license: GPL-2.0-or-later}
+    classification: adapt-idea
+    hornero_equivalent: "horneroctl plugin enable/disable with revalidation on enable"
+    status: researched
+  - id: kde-store
+    name: KDE Store / Pling add-on distribution (UNVERIFIED - store terms and review process not verified from source in this pass)
+    category: extensions
+    origin: {project: KDE Store, url: "https://store.kde.org", license: UNVERIFIED}
+    classification: research-only
+    hornero_equivalent: "none (HorneroOS/plugins catalogue is git-based)"
+    status: researched
+  - id: kde-kwin-effects-store
+    name: KWin effects and scripts distributed via store (UNVERIFIED)
+    category: extensions
+    origin: {project: KDE KWin, url: "https://invent.kde.org/plasma/kwin", license: UNVERIFIED}
+    classification: research-only
+    hornero_equivalent: "none"
+    status: researched
+  - id: wallpaper-templating-matugen
+    name: Material You colour generation from wallpaper (matugen)
+    category: theming
+    origin: {project: matugen, url: "https://github.com/InioX/matugen", license: UNVERIFIED}
+    classification: adapt-idea
+    hornero_equivalent: "Wallpaper analysis and theme token binding in the shell (partial)"
+    status: researched
+  - id: wallpaper-templating-app-configs
+    name: Rendering generated palettes into per-app config templates
+    category: theming
+    origin: {project: matugen templates, url: "https://github.com/InioX/matugen", license: UNVERIFIED}
+    classification: adapt-idea
+    hornero_equivalent: "GTK/icon/wallpaper binding on theme apply (partial)"
+    status: researched
+  - id: hornero-ai-usage
+    name: Hornero AI Usage
+    category: dashboard
+    origin: {project: HorneroOS/plugins, url: "https://github.com/HorneroOS/plugins", license: MIT}
+    classification: implemented
+    hornero_equivalent: "plugins/hornero-ai-usage"
+    status: implemented
+  - id: hornero-system-monitor
+    name: Hornero System Monitor
+    category: dashboard
+    origin: {project: HorneroOS/plugins, url: "https://github.com/HorneroOS/plugins", license: MIT}
+    classification: implemented
+    hornero_equivalent: "plugins/hornero-system-monitor"
+    status: implemented
+  - id: hornero-network-monitor
+    name: Hornero Network Monitor
+    category: dashboard
+    origin: {project: HorneroOS/plugins, url: "https://github.com/HorneroOS/plugins", license: MIT}
+    classification: implemented
+    hornero_equivalent: "plugins/hornero-network-monitor"
+    status: implemented
+  - id: hornero-now-playing
+    name: Hornero Now Playing
+    category: bar
+    origin: {project: HorneroOS/plugins, url: "https://github.com/HorneroOS/plugins", license: MIT}
+    classification: implemented
+    hornero_equivalent: "plugins/hornero-now-playing"
+    status: implemented
+  - id: hornero-weather
+    name: Hornero Weather
+    category: dashboard
+    origin: {project: HorneroOS/plugins, url: "https://github.com/HorneroOS/plugins", license: MIT}
+    classification: implemented
+    hornero_equivalent: "plugins/hornero-weather"
+    status: implemented
+  - id: hornero-calendar
+    name: Hornero Calendar
+    category: desktop
+    origin: {project: HorneroOS/plugins, url: "https://github.com/HorneroOS/plugins", license: MIT}
+    classification: implemented
+    hornero_equivalent: "plugins/hornero-calendar"
+    status: implemented
+  - id: hornero-pomodoro
+    name: Hornero Pomodoro
+    category: productivity
+    origin: {project: HorneroOS/plugins, url: "https://github.com/HorneroOS/plugins", license: MIT}
+    classification: implemented
+    hornero_equivalent: "plugins/hornero-pomodoro"
+    status: implemented
+  - id: hornero-dual-clock
+    name: Hornero Dual Clock
+    category: utilities
+    origin: {project: HorneroOS/plugins, url: "https://github.com/HorneroOS/plugins", license: MIT}
+    classification: implemented
+    hornero_equivalent: "plugins/hornero-dual-clock"
+    status: implemented
+  - id: hornero-focus-card
+    name: Hornero Focus Card
+    category: utilities
+    origin: {project: HorneroOS/plugins, url: "https://github.com/HorneroOS/plugins", license: MIT}
+    classification: implemented
+    hornero_equivalent: "plugins/hornero-focus-card"
+    status: implemented
+  - id: hornero-quiet-notes
+    name: Hornero Quiet Notes
+    category: productivity
+    origin: {project: HorneroOS/plugins, url: "https://github.com/HorneroOS/plugins", license: MIT}
+    classification: implemented
+    hornero_equivalent: "plugins/hornero-quiet-notes"
+    status: implemented

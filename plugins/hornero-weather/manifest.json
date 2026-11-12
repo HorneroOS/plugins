@@ -1,0 +1,14 @@
+{
+  "schemaVersion": 1,
+  "id": "hornero-weather",
+  "name": "Hornero Weather",
+  "version": "1.0.0",
+  "description": "Dashboard card for current weather and forecast from the PluginKit Weather service. Shows a not-configured state instead of fake data when no location is set.",
+  "author": "HorneroOS contributors",
+  "license": "MIT",
+  "homepage": "https://github.com/HorneroOS/plugins",
+  "entrypoint": "Main.qml",
+  "files": ["Main.qml", "README.md", "LICENSE"],
+  "capabilities": {"processCommands": [], "networkHosts": [], "settings": {}},
+  "placement": "dashboard"
+}
