@@ -26,8 +26,8 @@ Item {
     property bool hostCompact: false
     property string hostScreenName: ""
 
-    implicitWidth: card.implicitWidth
-    implicitHeight: card.implicitHeight
+    implicitWidth: desktopVisible ? sizeClassWidth(sizeClass, hostAvailableWidth, 280) : showWidgetButton.implicitWidth
+    implicitHeight: desktopVisible ? card.implicitHeight : showWidgetButton.implicitHeight
 
     Subscription {
         domain: "time"
@@ -53,6 +53,89 @@ Item {
     readonly property bool showIsoWeek: pluginSettings.value("showIsoWeek", true) !== false
     readonly property bool showDayOfYear: pluginSettings.value("showDayOfYear", true) !== false
     readonly property bool showYearProgress: pluginSettings.value("showYearProgress", true) !== false
+    // DESKTOP-LOGIC-BEGIN (pure JS: slot and size-class normalization)
+    function desktopSlots() {
+        return ["top-left", "top-center", "top-right", "middle-left", "middle-center", "middle-right", "bottom-left", "bottom-center", "bottom-right"];
+    }
+    function normalizeSlot(slot) {
+        return desktopSlots().indexOf(slot) >= 0 ? slot : "bottom-right";
+    }
+    function normalizeSizeClass(value) {
+        return (value === "compact" || value === "wide") ? value : "standard";
+    }
+    function nextSizeClass(value) {
+        const current = normalizeSizeClass(value);
+        return current === "compact" ? "standard" : current === "standard" ? "wide" : "compact";
+    }
+    function sizeClassWidth(value, hostCap, standardWidth) {
+        const limit = hostCap > 0 ? hostCap : 300;
+        const current = normalizeSizeClass(value);
+        if (current === "compact")
+            return Math.min(220, limit);
+        if (current === "wide")
+            return limit;
+        return Math.min(standardWidth, limit);
+    }
+    function sizeClassCompact(value) {
+        return normalizeSizeClass(value) === "compact";
+    }
+    // DESKTOP-LOGIC-END
+
+    // Desktop Widgets 2.0 (#32): the shell owns the canonical slot
+    // (Desktop.position is read-only; users move widgets in Control
+    // Center), so this widget only reads its slot for the current
+    // display and persists its own size class and visibility as
+    // typed Settings. Unknown or malformed stored values normalize
+    // to the defaults above, and the hidden state always leaves a
+    // visible restore button, so content can never be trapped
+    // without a recovery path.
+    property string sizeClass: normalizeSizeClass(String(pluginSettings.value("sizeClass", "standard")))
+    property bool desktopVisible: pluginSettings.value("showOnDesktop", true) !== false
+    readonly property bool compactClass: sizeClassCompact(sizeClass)
+    readonly property string effectiveScreen: hostScreenName !== "" ? hostScreenName : Screen.name
+    readonly property string desktopSlot: normalizeSlot(Desktop.position("hornero-agenda", effectiveScreen))
+
+    function applySizeClass(value) {
+        const normalized = normalizeSizeClass(value);
+        sizeClass = normalized;
+        pluginSettings.setValue("sizeClass", normalized);
+    }
+    function applyDesktopVisible(value) {
+        desktopVisible = value;
+        pluginSettings.setValue("showOnDesktop", value);
+    }
+    function resetDesktopLayout() {
+        pluginSettings.resetValue("sizeClass");
+        pluginSettings.resetValue("showOnDesktop");
+        sizeClass = "standard";
+        desktopVisible = true;
+        Notifications.toast(i18n.tr("Desktop widget"), i18n.tr("Size and visibility reset to defaults."), "");
+    }
+    function slotLabel(slot) {
+        switch (normalizeSlot(slot)) {
+        case "top-left":
+            return i18n.tr("Top left");
+        case "top-center":
+            return i18n.tr("Top center");
+        case "top-right":
+            return i18n.tr("Top right");
+        case "middle-left":
+            return i18n.tr("Middle left");
+        case "middle-center":
+            return i18n.tr("Middle center");
+        case "middle-right":
+            return i18n.tr("Middle right");
+        case "bottom-left":
+            return i18n.tr("Bottom left");
+        case "bottom-center":
+            return i18n.tr("Bottom center");
+        default:
+            return i18n.tr("Bottom right");
+        }
+    }
+    function sizeClassLabel() {
+        return sizeClass === "compact" ? i18n.tr("Compact") : sizeClass === "wide" ? i18n.tr("Wide") : i18n.tr("Standard");
+    }
 
     // DATE-LOGIC-BEGIN (pure JS on calendar fields, UTC day math)
     function isLeap(year) { return (year % 4 === 0 && year % 100 !== 0) || year % 400 === 0; }
@@ -84,10 +167,12 @@ Item {
     UiCard {
         id: card
 
-        anchors.centerIn: parent
+        visible: root.desktopVisible
+        anchors.fill: parent
         Accessible.name: i18n.tr("Agenda: %1").arg(i18n.formatDateTime(Time.date, "dddd, d MMMM yyyy"))
 
         Column {
+            width: parent.width
             spacing: Theme.spacingSmall
 
             UiText {
@@ -105,7 +190,7 @@ Item {
             UiStack {
                 anchors.horizontalCenter: parent.horizontalCenter
                 orientation: root.hostOrientation
-                compact: root.hostCompact
+                compact: root.hostCompact || root.compactClass
 
                 UiMetric {
                     label: i18n.tr("Weekday")
@@ -155,7 +240,7 @@ Item {
             }
 
             Column {
-                visible: root.showYearProgress
+                visible: root.showYearProgress && !root.compactClass
                 width: parent.width
                 spacing: Theme.spacingSmall
 
@@ -173,10 +258,97 @@ Item {
             }
 
             UiText {
+                visible: !root.compactClass
                 anchors.horizontalCenter: parent.horizontalCenter
                 role: "caption"
                 text: i18n.tr("Date facts from the system clock; extensions have no calendar events source yet.")
             }
+
+            UiButton {
+                id: desktopControlsButton
+
+                anchors.horizontalCenter: parent.horizontalCenter
+                variant: "ghost"
+                text: i18n.tr("Placement & size")
+                tooltipText: i18n.tr("Placement, size and visibility")
+                accessibleName: i18n.tr("Desktop widget placement and size")
+                onClicked: desktopPopover.toggle()
+            }
+        }
+    }
+
+    UiButton {
+        id: showWidgetButton
+
+        visible: !root.desktopVisible
+        anchors.centerIn: parent
+        variant: "ghost"
+        text: i18n.tr("Show widget")
+        tooltipText: i18n.tr("Show hidden desktop widget")
+        accessibleName: i18n.tr("Show hidden desktop widget")
+        onClicked: root.applyDesktopVisible(true)
+    }
+
+    UiPopover {
+        id: desktopPopover
+
+        target: desktopControlsButton
+        accessibleName: i18n.tr("Desktop widget placement and size")
+
+        Column {
+            width: 260
+            spacing: Theme.spacingSmall
+
+            UiText {
+                role: "title"
+                text: i18n.tr("Desktop widget")
+            }
+
+            UiMetric {
+                label: i18n.tr("Display")
+                value: root.effectiveScreen !== "" ? root.effectiveScreen : i18n.tr("Unknown display")
+            }
+
+            UiMetric {
+                label: i18n.tr("Slot")
+                value: root.slotLabel(root.desktopSlot)
+            }
+
+            UiText {
+                width: parent.width
+                role: "caption"
+                text: i18n.tr("Move this widget from Control Center, Extensions. Extensions cannot move themselves; the saved slot is kept per display and a new or unknown display uses Bottom right.")
+            }
+
+            UiMetric {
+                label: i18n.tr("Size class")
+                value: root.sizeClassLabel()
+            }
+
+            UiButton {
+                text: i18n.tr("Use next size class")
+                tooltipText: i18n.tr("Use next size class")
+                accessibleName: i18n.tr("Use next size class")
+                onClicked: root.applySizeClass(nextSizeClass(root.sizeClass))
+            }
+
+            UiButton {
+                text: i18n.tr("Hide widget content")
+                tooltipText: i18n.tr("Hide widget content")
+                accessibleName: i18n.tr("Hide widget content")
+                onClicked: {
+                    root.applyDesktopVisible(false);
+                    desktopPopover.close();
+                }
+            }
+
+            UiButton {
+                text: i18n.tr("Reset size and visibility")
+                tooltipText: i18n.tr("Reset size and visibility")
+                accessibleName: i18n.tr("Reset size and visibility")
+                onClicked: root.resetDesktopLayout()
+            }
         }
     }
 }
+

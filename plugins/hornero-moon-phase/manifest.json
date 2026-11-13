@@ -2,14 +2,17 @@
   "schemaVersion": 2,
   "id": "hornero-moon-phase",
   "name": "Hornero Moon Phase",
-  "version": "2.0.0",
-  "description": "Moon Phase 2.0: desktop widget and contextual bar indicator for the current moon phase, approximate illumination and derived next new/full moons from the 1.x pure-JS synodic approximation. Always labelled approximate.",
+  "version": "2.1.0",
+  "description": "Moon Phase: desktop widget and bar indicator for the approximate moon phase and illumination from the 1.x synodic approximation, plus Desktop Widgets 2.0 size classes, per-display slot display and hide-with-restore. Always labelled approximate.",
   "author": "HorneroOS contributors",
   "license": "MIT",
   "homepage": "https://github.com/HorneroOS/plugins",
   "entrypoint": "Main.qml",
   "placement": "desktop",
   "surfaces": {
+    "desktop": {
+      "entrypoint": "Main.qml"
+    },
     "bar": {
       "entrypoint": "Bar.qml"
     }
@@ -26,6 +29,10 @@
       "minShellVersion": "1.0.0"
     },
     "changelog": [
+      {
+        "version": "2.1.0",
+        "notes": "Desktop Widgets 2.0 (#32): desktop surface redeclared on the same entrypoint alongside the bar surface, read-only Desktop.position slot and display shown in a host-owned popover, persisted compact/standard/wide size class and hide-with-restore visibility as typed settings (defaults standard/visible, so 2.0 content is unchanged; the bar surface is untouched), and reset for size and visibility. Moving stays in Control Center: PluginKit has no slot setter."
+      },
       {
         "version": "2.0.0",
         "notes": "Weather & Astronomy 2.0: same synodic approximation as 1.x, plus derived next new/full moon countdowns, illumination progress, contextual bar indicator, configurable density, typed settings, host-context layout and Spanish catalog. No PluginKit facade exposes lunar data; every value stays labelled approximate."
@@ -71,6 +78,21 @@
           "detailed"
         ],
         "description": "compact shows only the phase name; standard keeps the 1.x rows; detailed adds the approximation note."
+      },
+      "sizeClass": {
+        "type": "enum",
+        "default": "standard",
+        "options": [
+          "compact",
+          "standard",
+          "wide"
+        ],
+        "description": "Desktop widget size class within the host width cap (300 logical px today); standard keeps the 2.0 size. This sizes content, not the slot."
+      },
+      "showOnDesktop": {
+        "type": "boolean",
+        "default": true,
+        "description": "Show the widget content on the desktop (the 2.0 behaviour). Off leaves a visible Show widget button so the content can always be restored."
       }
     }
   }
