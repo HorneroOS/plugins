@@ -10,6 +10,18 @@ limits, capabilities, settings types) and the shell validator's QML
 rules that are decidable here (import allowlist, declared process
 commands and network hosts), without third-party deps.
 
+Provenance gate (HorneroOS/plugins#33): inventory.yaml records, for
+every researched capability and every first-party reimplementation,
+the upstream link, classification, license and license status, and
+inspiration notes. A license may be claimed only with
+license_status: verified plus recorded license_evidence; anything
+not verified from the upstream source must read license: UNVERIFIED
+with license_status: unverified, never a silently claimed license.
+Verified first-party entries are probed locally (the plugin's own
+LICENSE file must exist and its manifest license must match the
+inventory); verified upstream entries carry the recorded evidence
+URL a maintainer observed (this script performs no network access).
+
 Quality gate (HorneroOS/plugins#21): a maintained per-extension audit
 in quality-audit.json classifies every official plugin as
 premium-ready, needs-upgrade, consolidated, or
@@ -92,6 +104,24 @@ ISSUE_RE = re.compile(r"^(https://github\.com/HorneroOS/plugins/issues/\d+|Horne
 DATE_RE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
 INTERACTIVE_RE = re.compile(r"\b(Button|TextField|TextInput|TextArea|Slider|MouseArea|TapHandler|Switch|CheckBox|ComboBox|SpinBox|UiButton|UiToggle|UiSlider)\b")
 HARD_COLOR_RE = re.compile(r'color:\s*"(#[0-9A-Fa-f]{3,8}|red|white|black|gray|grey|blue|green|yellow|orange|purple|pink)"')
+
+INVENTORY_FILE = "inventory.yaml"
+INVENTORY_SCHEMA_VERSION = 2
+INVENTORY_ENTRY_FIELDS = {
+    "id", "name", "category", "origin", "classification",
+    "license_status", "license_evidence", "inspiration_notes",
+    "hornero_equivalent", "status",
+}
+INVENTORY_REQUIRED_FIELDS = INVENTORY_ENTRY_FIELDS - {"license_evidence"}
+# Researched upstream capabilities are inspiration/adapt-idea/
+# research-only; first-party reimplementations in plugins/ are
+# implemented/hornero-original. Status must agree with that split.
+RESEARCHED_CLASSIFICATIONS = {"inspiration", "adapt-idea", "research-only"}
+IMPLEMENTED_CLASSIFICATIONS = {"implemented", "hornero-original"}
+INVENTORY_CLASSIFICATIONS = RESEARCHED_CLASSIFICATIONS | IMPLEMENTED_CLASSIFICATIONS
+LICENSE_STATUSES = {"verified", "unverified"}
+UNVERIFIED_LICENSE = "UNVERIFIED"
+OFFICIAL_REPO_URL = "https://github.com/HorneroOS/plugins"
 
 
 def is_safe_relpath(value) -> bool:
@@ -671,6 +701,208 @@ def quality_probe(plugin_dir: Path, manifest: dict, code: str, root: Path) -> di
     return probe
 
 
+def parse_inventory_scalar(raw: str):
+    raw = raw.strip()
+    if raw.startswith('"') and raw.endswith('"') and len(raw) >= 2:
+        return raw[1:-1].replace('\\"', '"').replace("\\\\", "\\")
+    if raw.startswith("{") or raw.startswith("[") or raw.startswith('"'):
+        raise ValueError(f"unsupported scalar {raw!r}")
+    return raw
+
+
+def parse_inventory_flow_map(raw: str) -> dict:
+    raw = raw.strip()
+    if not (raw.startswith("{") and raw.endswith("}")):
+        raise ValueError("origin must be a flow mapping {project: ..., url: ..., license: ...}")
+    parts, current, in_quote = [], [], False
+    for char in raw[1:-1]:
+        if char == '"':
+            in_quote = not in_quote
+        if char == "," and not in_quote:
+            parts.append("".join(current))
+            current = []
+        else:
+            current.append(char)
+    if in_quote:
+        raise ValueError("unterminated quote in flow mapping")
+    if current:
+        parts.append("".join(current))
+    result = {}
+    for part in parts:
+        if not part.strip():
+            continue
+        key, sep, value = part.partition(":")
+        if not sep or not key.strip():
+            raise ValueError(f"malformed flow mapping entry {part!r}")
+        if key.strip() in result:
+            raise ValueError(f"duplicate flow mapping key {key.strip()!r}")
+        result[key.strip()] = parse_inventory_scalar(value)
+    return result
+
+
+def parse_inventory(text: str):
+    """Parse the restricted YAML subset inventory.yaml is written in.
+
+    Deliberately narrow (no third-party YAML dependency): top-level
+    schemaVersion/capabilities, one list of flat mappings, origin as
+    a flow mapping, plain or double-quoted scalars. Anything outside
+    the subset is an error, so new entries cannot smuggle shapes the
+    provenance gate does not check.
+    """
+    errors = []
+    data = {"schemaVersion": None, "capabilities": []}
+    current = None
+    in_capabilities = False
+    for lineno, line in enumerate(text.splitlines(), 1):
+        where = f"inventory: line {lineno}"
+        if not line.strip() or line.strip().startswith("#"):
+            continue
+        if line != line.rstrip():
+            errors.append(f"{where}: trailing whitespace is not allowed")
+            continue
+        if not in_capabilities:
+            if line.startswith("schemaVersion:"):
+                try:
+                    data["schemaVersion"] = int(line.partition(":")[2].strip())
+                except ValueError:
+                    errors.append(f"{where}: schemaVersion must be an integer")
+            elif line == "capabilities:":
+                in_capabilities = True
+            else:
+                errors.append(f"{where}: unsupported top-level content {line.strip()!r} (only schemaVersion and capabilities are allowed)")
+            continue
+        if line.startswith("  - "):
+            current = {}
+            data["capabilities"].append(current)
+            rest = line[4:]
+        elif line.startswith("    ") and current is not None:
+            rest = line[4:]
+        else:
+            errors.append(f"{where}: unsupported indentation or content {line.strip()!r}")
+            continue
+        key, sep, value = rest.partition(":")
+        if not sep or not re.fullmatch(r"[A-Za-z_][A-Za-z0-9_]*", key.strip()):
+            errors.append(f"{where}: malformed mapping entry {rest.strip()!r}")
+            continue
+        key = key.strip()
+        if key in current:
+            errors.append(f"{where}: duplicate field {key}")
+            continue
+        try:
+            current[key] = parse_inventory_flow_map(value) if key == "origin" else parse_inventory_scalar(value)
+        except ValueError as exc:
+            errors.append(f"{where}: {exc}")
+    if not in_capabilities:
+        errors.append("inventory: capabilities list is missing")
+    return data, errors
+
+
+def validate_inventory(root: Path, official_ids: set, manifests: dict):
+    """Provenance gate (#33). Return (errors, entries)."""
+    errors = []
+    path = root / INVENTORY_FILE
+    if not path.is_file():
+        return [f"inventory: {INVENTORY_FILE} missing (every capability and first-party plugin needs a provenance entry)"], []
+    data, parse_errors = parse_inventory(path.read_text())
+    errors += parse_errors
+    if data["schemaVersion"] != INVENTORY_SCHEMA_VERSION:
+        errors.append(f"inventory: schemaVersion must be {INVENTORY_SCHEMA_VERSION} (schema 1 entries carried no license status or inspiration notes)")
+    entries = data["capabilities"]
+    seen = {}
+    implemented_ids = set()
+    for entry in entries:
+        if not isinstance(entry, dict) or not isinstance(entry.get("id"), str):
+            errors.append("inventory: every entry needs a string id")
+            continue
+        if entry["id"] in seen:
+            errors.append(f"inventory: duplicate entry for {entry['id']}")
+        seen[entry["id"]] = entry
+    for pid, entry in sorted(seen.items()):
+        errors += validate_inventory_entry(root, pid, entry, official_ids, manifests)
+        if entry.get("status") == "implemented":
+            implemented_ids.add(pid)
+    for missing in sorted(set(official_ids) - implemented_ids):
+        errors.append(f"inventory: missing implemented provenance entry for official plugin {missing}")
+    for extra in sorted(implemented_ids - set(official_ids)):
+        errors.append(f"inventory: implemented entry {extra} does not name an official plugin in plugins/")
+    return errors, entries
+
+
+def validate_inventory_entry(root: Path, pid: str, entry: dict, official_ids: set, manifests: dict) -> list:
+    errors = []
+    tag = f"inventory: {pid}"
+    for field in sorted(set(entry) - INVENTORY_ENTRY_FIELDS):
+        errors.append(f"{tag}: unknown field {field}")
+    for field in sorted(INVENTORY_REQUIRED_FIELDS - set(entry)):
+        errors.append(f"{tag}: missing provenance field {field}")
+    if not ID_RE.match(pid):
+        errors.append(f"{tag}: id does not match {ID_RE.pattern}")
+    for field in ("name", "category", "hornero_equivalent"):
+        value = entry.get(field)
+        if not isinstance(value, str) or not value.strip():
+            errors.append(f"{tag}: {field} must be a non-blank string")
+    notes = entry.get("inspiration_notes")
+    if not isinstance(notes, str) or len(notes.strip()) < 10:
+        errors.append(f"{tag}: inspiration_notes must be a non-blank string of at least 10 chars")
+    classification = entry.get("classification")
+    if classification not in INVENTORY_CLASSIFICATIONS:
+        errors.append(f"{tag}: classification must be one of {sorted(INVENTORY_CLASSIFICATIONS)}")
+    status = entry.get("status")
+    if status not in ("researched", "implemented"):
+        errors.append(f"{tag}: status must be researched or implemented")
+    elif classification in RESEARCHED_CLASSIFICATIONS and status != "researched":
+        errors.append(f"{tag}: classification {classification} requires status researched")
+    elif classification in IMPLEMENTED_CLASSIFICATIONS and status != "implemented":
+        errors.append(f"{tag}: classification {classification} requires status implemented")
+    origin = entry.get("origin")
+    if not isinstance(origin, dict) or set(origin) != {"project", "url", "license"}:
+        errors.append(f"{tag}: origin must have exactly project, url and license")
+        origin = origin if isinstance(origin, dict) else {}
+    if not isinstance(origin.get("project"), str) or not str(origin.get("project", "")).strip():
+        errors.append(f"{tag}: origin.project must be a non-blank string")
+    url = origin.get("url")
+    if not isinstance(url, str) or not re.match(r"^https://[^\s/]+(/.*)?$", url) or len(url) > 500:
+        errors.append(f"{tag}: origin.url must be an https URI of at most 500 chars (the verified upstream link)")
+    license_value = origin.get("license")
+    if not isinstance(license_value, str) or not license_value.strip():
+        errors.append(f"{tag}: origin.license must be a non-blank string")
+    license_status = entry.get("license_status")
+    if license_status not in LICENSE_STATUSES:
+        errors.append(f"{tag}: license_status must be one of {sorted(LICENSE_STATUSES)}")
+    evidence = entry.get("license_evidence")
+    if license_status == "verified":
+        if license_value == UNVERIFIED_LICENSE:
+            errors.append(f"{tag}: license_status verified cannot claim license UNVERIFIED")
+        if status == "implemented":
+            # Probed locally below, not merely attested.
+            if evidence != f"plugins/{pid}/LICENSE":
+                errors.append(f"{tag}: implemented entries must record license_evidence plugins/{pid}/LICENSE (probed from this repository)")
+        elif not isinstance(evidence, str) or not re.match(r"^https://[^\s/]+(/.*)?$", evidence) or len(evidence) > 500:
+            errors.append(f"{tag}: license_status verified requires license_evidence: the https URL of the upstream license a maintainer observed")
+    elif license_status == "unverified":
+        if license_value != UNVERIFIED_LICENSE:
+            errors.append(f"{tag}: unverified licenses must be marked license: UNVERIFIED, never silently claimed (found {license_value!r})")
+        if evidence is not None:
+            errors.append(f"{tag}: license_evidence is only allowed with license_status verified")
+    if status == "implemented":
+        if pid not in official_ids:
+            return errors  # coverage error is reported by the caller
+        if entry.get("hornero_equivalent") != f"plugins/{pid}":
+            errors.append(f"{tag}: implemented entries must set hornero_equivalent to plugins/{pid}")
+        if url != OFFICIAL_REPO_URL:
+            errors.append(f"{tag}: implemented entries are first-party; origin.url must be {OFFICIAL_REPO_URL} (credit upstream inspiration in a separate researched entry)")
+        manifest = manifests.get(pid) or {}
+        if license_value != manifest.get("license"):
+            errors.append(f"{tag}: origin.license {license_value!r} does not match the plugin manifest license {manifest.get('license')!r}")
+        if not (root / "plugins" / pid / "LICENSE").is_file():
+            errors.append(f"{tag}: license probe failed: plugins/{pid}/LICENSE is missing")
+        if license_status != "verified":
+            errors.append(f"{tag}: implemented first-party entries must be license_status verified (their LICENSE ships in this repository)")
+    elif status == "researched" and pid in official_ids:
+        errors.append(f"{tag}: researched entry id must not reuse an official plugin id")
+    return errors
+
+
 def validate_audit(root: Path, official: dict):
     """official: {id: probe}. Return (errors, warnings, entries)."""
     errors, warnings = [], []
@@ -777,15 +1009,19 @@ def main(argv=None, root: Path = ROOT) -> int:
     community_root = root / "community"
     community_dirs = sorted(p for p in community_root.iterdir() if p.is_dir()) if community_root.is_dir() else []
     probes = {}
+    manifests = {}
     for plugin_dir in official_dirs + community_dirs:
         found, manifest, code = validate_plugin_dir(plugin_dir)
         errors += found
         if manifest is not None and plugin_dir in official_dirs:
             probes[plugin_dir.name] = quality_probe(plugin_dir, manifest, code, root)
-    warnings, entries = [], []
+            manifests[plugin_dir.name] = manifest
+    warnings, entries, inventory_entries = [], [], []
     if official_dirs:
         audit_errors, warnings, entries = validate_audit(root, probes)
         errors += audit_errors
+        inventory_errors, inventory_entries = validate_inventory(root, set(probes), manifests)
+        errors += inventory_errors
     if strict and warnings:
         errors += [f"strict: {w}" for w in warnings]
         warnings = []
@@ -799,6 +1035,10 @@ def main(argv=None, root: Path = ROOT) -> int:
     for entry in entries:
         counts[entry.get("classification")] = counts.get(entry.get("classification"), 0) + 1
     print("quality audit:", f"{len(entries)} official plugins classified:", ", ".join(f"{k}={counts[k]}" for k in sorted(counts)))
+    license_counts = {}
+    for entry in inventory_entries:
+        license_counts[entry.get("license_status")] = license_counts.get(entry.get("license_status"), 0) + 1
+    print("provenance inventory:", f"{len(inventory_entries)} entries:", ", ".join(f"license-{k}={license_counts[k]}" for k in sorted(license_counts, key=str)))
     for warning in warnings:
         print(warning)
     print("static quality gate only: NOT graphical acceptance (no plugin was rendered or run in a shell)")
