@@ -680,28 +680,28 @@
     {
       "id": "hornero-moon-phase",
       "classification": "needs-upgrade",
-      "valueProposition": "Desktop widget showing the current moon phase name and approximate illumination from a pure-JS synodic approximation anchored on the 2000-01-06 new moon. Labelled approximate. No processes or network.",
-      "nativeOverlap": "Overlaps hornero-sun-card and hornero-weather on sky/ambient data; distinct value is the lunar phase approximation.",
+      "valueProposition": "Moon Phase 2.0: desktop widget plus contextual bar indicator keeping the 1.x pure-JS synodic approximation (phase name, ~illumination, ~age) and adding approximate days to next new/full moons derived from the same age. Always labelled approximate.",
+      "nativeOverlap": "Overlaps hornero-sun-card and hornero-weather on sky/ambient data; distinct value is the lunar phase approximation. No PluginKit facade exposes lunar data, moonrise/moonset or an ephemeris, so those are not shown and no ephemeris accuracy is claimed.",
       "dimensions": {
         "tooltips": {
-          "status": "na",
-          "note": "No interactive controls in the entrypoint, so tooltips do not apply (static probe)."
+          "status": "pass",
+          "note": "The bar indicator carries PluginKit tooltipText (host-owned UiTooltip, static probe); it is the only interactive control."
         },
         "accessibility": {
-          "status": "na",
-          "note": "No interactive controls in the entrypoint; static text only (static probe)."
+          "status": "pass",
+          "note": "UiButton/UiPopover accessibleName on the bar control, UiProgress accessibleName and Accessible.name on the widget; no mouse-only MouseArea (static probe). Live AT-SPI behaviour is not verified."
         },
         "translation": {
-          "status": "fail",
-          "note": "User-visible string literals are not wrapped in qsTr/qsTrId (static probe)."
+          "status": "pass",
+          "note": "All user-visible literals, including the eight phase names, go through PluginKit Translations; es (Argentine Spanish) catalog declared in the manifest and checked complete for literal tr() strings (static probe)."
         },
         "settings": {
-          "status": "na",
-          "note": "No settings declared in the manifest; none are recorded as needed yet. Revisit if behaviour becomes user-configurable."
+          "status": "pass",
+          "note": "Typed showIllumination/showAge/showNextPhases (true) and dataDensity (standard) settings declared in the manifest and read via PluginKit Settings; the plugin stored no settings before 2.0 and 1.x rows stay visible by default (static probe)."
         },
         "themeTokens": {
           "status": "pass",
-          "note": "Visible colours come from PluginKit Theme tokens with no hard-coded chrome colours (static probe)."
+          "note": "Visible colours come from PluginKit Ui primitives/Theme tokens with no hard-coded chrome colours (static probe)."
         },
         "screenshots": {
           "status": "fail",
@@ -709,18 +709,18 @@
         },
         "orientation": {
           "status": "unverified",
-          "note": "Orientation/responsiveness across bar, dashboard and desktop placements has not had a graphical review; static checks cannot verify it."
+          "note": "Host context (hostOrientation/hostCompact/hostAvailableWidth) drives UiStack and the compact bar indicator, but orientation across desktop and bar placements has not had a graphical review."
         },
         "loadingErrorStates": {
           "status": "unverified",
-          "note": "Loading/error presentation has not been audited beyond the static probe; no graphical verification yet."
+          "note": "No external data source exists to load or fail; the approximation is labelled in every surface, but presentation has not been verified graphically in a live shell."
         },
         "performance": {
           "status": "unverified",
-          "note": "Not profiled. Static cadence only: timer intervals (ms)=['3600000'], process polling=no; runtime cost is unverified."
+          "note": "Not profiled. Static cadence only: the 1.x hourly (3600000ms) local recompute timer on each loaded surface, process polling=no; runtime cost is unverified."
         }
       },
-      "issue": "https://github.com/HorneroOS/plugins/issues/21"
+      "issue": "https://github.com/HorneroOS/plugins/issues/27"
     },
     {
       "id": "hornero-network-monitor",
@@ -1085,28 +1085,28 @@
     {
       "id": "hornero-sun-card",
       "classification": "needs-upgrade",
-      "valueProposition": "Dashboard card showing sunrise, sunset, temperature, description and humidity from PluginKit Weather. Shows a not-configured state when no location is set.",
-      "nativeOverlap": "Overlaps hornero-weather (same PluginKit Weather data) and hornero-moon-phase; distinct value is sunrise/sunset focus. Consolidation candidate to evaluate under the linked issue.",
+      "valueProposition": "Sun Card 2.0: compact dashboard astronomy card plus contextual bar indicator with the 1.x sunrise/sunset/temperature/humidity rows plus day length, sun progress and next sun event derived from the facade sunrise/sunset strings and PluginKit Time, labelled derived.",
+      "nativeOverlap": "Overlaps native Weather and hornero-weather on sunrise/sunset; distinct value is the derived astronomy detail. Solar noon, twilight, moonrise/moonset, the location name and multi-location are not exposed by the facade and are labelled unavailable; after sunset the next event reads unavailable because the facade reports today only.",
       "dimensions": {
         "tooltips": {
-          "status": "na",
-          "note": "No interactive controls in the entrypoint, so tooltips do not apply (static probe)."
+          "status": "pass",
+          "note": "The bar indicator carries PluginKit tooltipText (host-owned UiTooltip, static probe); it is the only interactive control."
         },
         "accessibility": {
-          "status": "na",
-          "note": "No interactive controls in the entrypoint; static text only (static probe)."
+          "status": "pass",
+          "note": "UiButton/UiPopover accessibleName on the bar control, UiProgress accessibleName and Accessible.name on the card; no mouse-only MouseArea (static probe). Live AT-SPI behaviour is not verified."
         },
         "translation": {
-          "status": "fail",
-          "note": "User-visible string literals are not wrapped in qsTr/qsTrId (static probe)."
+          "status": "pass",
+          "note": "All user-visible literals go through PluginKit Translations; es (Argentine Spanish) catalog declared in the manifest and checked complete for literal tr() strings (static probe). Facade-supplied temp/description/error strings stay in the shell's language."
         },
         "settings": {
-          "status": "na",
-          "note": "No settings declared in the manifest; none are recorded as needed yet. Revisit if behaviour becomes user-configurable."
+          "status": "pass",
+          "note": "Typed showTemperature/showHumidity/showAstronomy (true) and dataDensity (standard) settings declared in the manifest and read via PluginKit Settings; the plugin stored no settings before 2.0 and 1.x rows stay visible by default (static probe)."
         },
         "themeTokens": {
           "status": "pass",
-          "note": "Visible colours come from PluginKit Theme tokens with no hard-coded chrome colours (static probe)."
+          "note": "Visible colours come from PluginKit Ui primitives/Theme tokens with no hard-coded chrome colours (static probe)."
         },
         "screenshots": {
           "status": "fail",
@@ -1114,18 +1114,18 @@
         },
         "orientation": {
           "status": "unverified",
-          "note": "Orientation/responsiveness across bar, dashboard and desktop placements has not had a graphical review; static checks cannot verify it."
+          "note": "Host context (hostOrientation/hostCompact/hostAvailableWidth) drives UiStack and the compact bar indicator, but orientation across dashboard and bar placements has not had a graphical review."
         },
         "loadingErrorStates": {
           "status": "unverified",
-          "note": "Static probe finds error/empty-state text in the QML, but loading and error presentation have not been verified graphically."
+          "note": "UiState placeholders cover not-configured, loading and facade-error states and derived rows read Unavailable for unparseable sun times; presentation has not been verified graphically in a live shell."
         },
         "performance": {
           "status": "unverified",
-          "note": "Not profiled. Static cadence only: timer intervals (ms)=none, process polling=no; runtime cost is unverified."
+          "note": "Not profiled. Static cadence only: no own timer, process or network; reads the shared cached Weather and event Time singletons behind Subscription leases; runtime cost is unverified."
         }
       },
-      "issue": "https://github.com/HorneroOS/plugins/issues/21"
+      "issue": "https://github.com/HorneroOS/plugins/issues/27"
     },
     {
       "id": "hornero-system-health",
@@ -1400,28 +1400,28 @@
     {
       "id": "hornero-weather",
       "classification": "needs-upgrade",
-      "valueProposition": "Dashboard card for current weather and forecast from the PluginKit Weather service. Shows a not-configured state instead of fake data when no location is set.",
-      "nativeOverlap": "Overlaps hornero-sun-card (same PluginKit Weather data); distinct value is conditions plus forecast.",
+      "valueProposition": "Weather 2.0: dashboard card plus contextual bar indicator complementing native Weather with configurable density and forecast days, a derived forecast range and a local high-wind threshold alert (labelled not official), over the PluginKit Weather facade fields only.",
+      "nativeOverlap": "Overlaps the shell native Weather view and hornero-sun-card on current conditions; distinct value is the density/forecast controls, derived range and local wind threshold. Official alerts, multi-location, feels-like, UV, precipitation, hourly data, the location name and a unit preference are not exposed by the facade and are labelled unavailable; forecast temperatures use the facade °C fields.",
       "dimensions": {
         "tooltips": {
-          "status": "na",
-          "note": "No interactive controls in the entrypoint, so tooltips do not apply (static probe)."
+          "status": "pass",
+          "note": "The bar indicator carries PluginKit tooltipText (host-owned UiTooltip, static probe); it is the only interactive control."
         },
         "accessibility": {
-          "status": "na",
-          "note": "No interactive controls in the entrypoint; static text only (static probe)."
+          "status": "pass",
+          "note": "UiButton/UiPopover accessibleName on the bar control and Accessible.name on the card; no mouse-only MouseArea (static probe). Live AT-SPI behaviour is not verified."
         },
         "translation": {
-          "status": "fail",
-          "note": "User-visible string literals are not wrapped in qsTr/qsTrId (static probe)."
+          "status": "pass",
+          "note": "All user-visible literals go through PluginKit Translations; es (Argentine Spanish) catalog declared in the manifest and checked complete for literal tr() strings (static probe). Facade-supplied description/error/temp strings stay in the shell's language."
         },
         "settings": {
-          "status": "na",
-          "note": "No settings declared in the manifest; none are recorded as needed yet. Revisit if behaviour becomes user-configurable."
+          "status": "pass",
+          "note": "Typed forecastDays (3), showHumidity/showWind/showSunTimes (true), dataDensity (standard) and windAlertKmh (50) settings declared in the manifest and read via PluginKit Settings; defaults keep the 1.x rows and 3-entry forecast, no settings were stored before 2.0 (static probe)."
         },
         "themeTokens": {
           "status": "pass",
-          "note": "Visible colours come from PluginKit Theme tokens with no hard-coded chrome colours (static probe)."
+          "note": "Visible colours come from PluginKit Ui primitives/Theme tokens with no hard-coded chrome colours (static probe)."
         },
         "screenshots": {
           "status": "fail",
@@ -1429,18 +1429,18 @@
         },
         "orientation": {
           "status": "unverified",
-          "note": "Orientation/responsiveness across bar, dashboard and desktop placements has not had a graphical review; static checks cannot verify it."
+          "note": "Host context (hostOrientation/hostCompact/hostAvailableWidth) drives UiStack and the compact bar indicator, but orientation across dashboard and bar placements has not had a graphical review."
         },
         "loadingErrorStates": {
           "status": "unverified",
-          "note": "Static probe finds error/empty-state text in the QML, but loading and error presentation have not been verified graphically."
+          "note": "UiState placeholders cover not-configured, loading and facade-error states on both surfaces; presentation has not been verified graphically in a live shell."
         },
         "performance": {
           "status": "unverified",
-          "note": "Not profiled. Static cadence only: timer intervals (ms)=none, process polling=no; runtime cost is unverified."
+          "note": "Not profiled. Static cadence only: no own timer, process or network; reads the shared cached Weather singleton behind a Subscription lease; runtime cost is unverified."
         }
       },
-      "issue": "https://github.com/HorneroOS/plugins/issues/21"
+      "issue": "https://github.com/HorneroOS/plugins/issues/27"
     },
     {
       "id": "hornero-world-clock",

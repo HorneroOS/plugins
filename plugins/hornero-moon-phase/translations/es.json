@@ -1,0 +1,23 @@
+{
+  "Age (approximate)": "Edad (aproximada)",
+  "Approximate": "Aproximado",
+  "First Quarter": "Cuarto creciente",
+  "Full Moon": "Luna llena",
+  "Illumination (approximate)": "Iluminación (aproximada)",
+  "Last Quarter": "Cuarto menguante",
+  "Moon Phase (approximate)": "Fase lunar (aproximada)",
+  "Moon Phase details (approximate)": "Detalles de la fase lunar (aproximada)",
+  "Moon Phase: activate for details (approximate)": "Fase lunar: activá para ver los detalles (aproximada)",
+  "Moon phase %1, approximately %2 percent illuminated": "Fase lunar %1, aproximadamente %2 por ciento iluminada",
+  "Moon ~%1%": "Luna ~%1%",
+  "New Moon": "Luna nueva",
+  "Next full moon (approximate)": "Próxima luna llena (aproximada)",
+  "Next new moon (approximate)": "Próxima luna nueva (aproximada)",
+  "Synodic approximation from the 2000-01-06 new moon; it ignores orbital perturbation. No PluginKit facade exposes lunar data, moonrise/moonset or an ephemeris, so those are unavailable here.": "Aproximación sinódica desde la luna nueva del 2000-01-06; ignora las perturbaciones orbitales. Ninguna fachada de PluginKit expone datos lunares, salida/puesta de la luna ni una efeméride, así que no están disponibles acá.",
+  "Waning Crescent": "Menguante",
+  "Waning Gibbous": "Gibosa menguante",
+  "Waxing Crescent": "Creciente",
+  "Waxing Gibbous": "Gibosa creciente",
+  "in ~%1 days": "en ~%1 días",
+  "~%1 days": "~%1 días"
+}

@@ -1,14 +1,77 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 2,
   "id": "hornero-moon-phase",
   "name": "Hornero Moon Phase",
-  "version": "1.0.0",
-  "description": "Desktop widget showing the current moon phase name and approximate illumination from a pure-JS synodic approximation anchored on the 2000-01-06 new moon. Labelled approximate. No processes or network.",
+  "version": "2.0.0",
+  "description": "Moon Phase 2.0: desktop widget and contextual bar indicator for the current moon phase, approximate illumination and derived next new/full moons from the 1.x pure-JS synodic approximation. Always labelled approximate.",
   "author": "HorneroOS contributors",
   "license": "MIT",
   "homepage": "https://github.com/HorneroOS/plugins",
   "entrypoint": "Main.qml",
-  "files": ["Main.qml", "README.md", "LICENSE"],
-  "capabilities": {"processCommands": [], "networkHosts": [], "settings": {}},
-  "placement": "desktop"
+  "placement": "desktop",
+  "surfaces": {
+    "bar": {
+      "entrypoint": "Bar.qml"
+    }
+  },
+  "translations": {
+    "sourceLocale": "en",
+    "locales": [
+      "es"
+    ],
+    "directory": "translations"
+  },
+  "marketplace": {
+    "compatibility": {
+      "minShellVersion": "1.0.0"
+    },
+    "changelog": [
+      {
+        "version": "2.0.0",
+        "notes": "Weather & Astronomy 2.0: same synodic approximation as 1.x, plus derived next new/full moon countdowns, illumination progress, contextual bar indicator, configurable density, typed settings, host-context layout and Spanish catalog. No PluginKit facade exposes lunar data; every value stays labelled approximate."
+      },
+      {
+        "version": "1.0.0",
+        "notes": "Desktop widget showing the current moon phase name and approximate illumination from a pure-JS synodic approximation anchored on the 2000-01-06 new moon."
+      }
+    ]
+  },
+  "files": [
+    "Main.qml",
+    "Bar.qml",
+    "README.md",
+    "LICENSE",
+    "translations/es.json"
+  ],
+  "capabilities": {
+    "processCommands": [],
+    "networkHosts": [],
+    "settings": {
+      "showIllumination": {
+        "type": "boolean",
+        "default": true,
+        "description": "Show the approximate illumination percentage (the 1.x behaviour)."
+      },
+      "showAge": {
+        "type": "boolean",
+        "default": true,
+        "description": "Show the approximate moon age in days (the 1.x behaviour)."
+      },
+      "showNextPhases": {
+        "type": "boolean",
+        "default": true,
+        "description": "Show approximate days to the next new and full moons, derived from the same synodic approximation."
+      },
+      "dataDensity": {
+        "type": "enum",
+        "default": "standard",
+        "options": [
+          "compact",
+          "standard",
+          "detailed"
+        ],
+        "description": "compact shows only the phase name; standard keeps the 1.x rows; detailed adds the approximation note."
+      }
+    }
+  }
 }
