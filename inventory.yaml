@@ -341,3 +341,38 @@ capabilities:
     classification: hornero-original
     hornero_equivalent: "plugins/hornero-metronome"
     status: implemented
+  - id: hornero-text-tools
+    name: Hornero Text Tools
+    category: dashboard
+    origin: {project: HorneroOS, url: "https://github.com/HorneroOS/plugins", license: MIT}
+    classification: hornero-original
+    hornero_equivalent: "plugins/hornero-text-tools"
+    status: implemented
+  - id: hornero-color-converter
+    name: Hornero Color Converter
+    category: dashboard
+    origin: {project: HorneroOS, url: "https://github.com/HorneroOS/plugins", license: MIT}
+    classification: hornero-original
+    hornero_equivalent: "plugins/hornero-color-converter"
+    status: implemented
+  - id: hornero-json-tools
+    name: Hornero JSON Tools
+    category: dashboard
+    origin: {project: HorneroOS, url: "https://github.com/HorneroOS/plugins", license: MIT}
+    classification: hornero-original
+    hornero_equivalent: "plugins/hornero-json-tools"
+    status: implemented
+  - id: hornero-base-converter
+    name: Hornero Base Converter
+    category: dashboard
+    origin: {project: HorneroOS, url: "https://github.com/HorneroOS/plugins", license: MIT}
+    classification: hornero-original
+    hornero_equivalent: "plugins/hornero-base-converter"
+    status: implemented
+  - id: hornero-date-calculator
+    name: Hornero Date Calculator
+    category: dashboard
+    origin: {project: HorneroOS, url: "https://github.com/HorneroOS/plugins", license: MIT}
+    classification: hornero-original
+    hornero_equivalent: "plugins/hornero-date-calculator"
+    status: implemented

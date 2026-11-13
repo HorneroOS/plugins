@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "id": "hornero-date-calculator",
+  "name": "Hornero Date Calculator",
+  "version": "1.0.0",
+  "description": "Dashboard date calculator: validated YYYY-MM-DD real dates, days-between and add-days results using UTC math to avoid DST drift. Pure QML.",
+  "author": "HorneroOS contributors",
+  "license": "MIT",
+  "homepage": "https://github.com/HorneroOS/plugins",
+  "entrypoint": "Main.qml",
+  "files": [
+    "Main.qml",
+    "README.md",
+    "LICENSE"
+  ],
+  "capabilities": {
+    "processCommands": [],
+    "networkHosts": [],
+    "settings": {}
+  },
+  "placement": "dashboard"
+}

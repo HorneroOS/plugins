@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "id": "hornero-base-converter",
+  "name": "Hornero Base Converter",
+  "version": "1.0.0",
+  "description": "Dashboard base converter: validated decimal integer within safe range to binary, octal and hex, and hex back to decimal. Invalid digits show errors. Pure QML.",
+  "author": "HorneroOS contributors",
+  "license": "MIT",
+  "homepage": "https://github.com/HorneroOS/plugins",
+  "entrypoint": "Main.qml",
+  "files": [
+    "Main.qml",
+    "README.md",
+    "LICENSE"
+  ],
+  "capabilities": {
+    "processCommands": [],
+    "networkHosts": [],
+    "settings": {}
+  },
+  "placement": "dashboard"
+}

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedFrom": "646bdef038b739beabc239c213f50d695fe1689e",
+  "generatedFrom": "97898b946d25abe07d93bea37a25b895d06a775d",
   "plugins": [
     {
       "id": "hornero-agenda",
@@ -41,6 +41,25 @@
       "trust": "official",
       "path": "plugins/hornero-ai-usage",
       "sha256": "057c8febc3e122ae583d965aa3c8efefd44042126665003014febbe47590d410"
+    },
+    {
+      "id": "hornero-base-converter",
+      "name": "Hornero Base Converter",
+      "version": "1.0.0",
+      "description": "Dashboard base converter: validated decimal integer within safe range to binary, octal and hex, and hex back to decimal. Invalid digits show errors. Pure QML.",
+      "author": "HorneroOS contributors",
+      "license": "MIT",
+      "homepage": "https://github.com/HorneroOS/plugins",
+      "placement": "dashboard",
+      "category": "utilities",
+      "capabilities": {
+        "processCommands": [],
+        "networkHosts": [],
+        "settings": {}
+      },
+      "trust": "official",
+      "path": "plugins/hornero-base-converter",
+      "sha256": "4e3d01da0da8bbb3c9825c61ed9944be74c02c8fc06689d9010085f4a01ca310"
     },
     {
       "id": "hornero-battery",
@@ -100,6 +119,25 @@
       "sha256": "ca40592d7fed1b8c94ca5fb4f9f6e25f2678736c7173e4e5170089ddfb8a2026"
     },
     {
+      "id": "hornero-color-converter",
+      "name": "Hornero Color Converter",
+      "version": "1.0.0",
+      "description": "Dashboard color converter: validated #RGB/#RRGGBB hex to RGB and HSL, and RGB inputs back to hex. Invalid hex shows an error. Pure QML.",
+      "author": "HorneroOS contributors",
+      "license": "MIT",
+      "homepage": "https://github.com/HorneroOS/plugins",
+      "placement": "dashboard",
+      "category": "utilities",
+      "capabilities": {
+        "processCommands": [],
+        "networkHosts": [],
+        "settings": {}
+      },
+      "trust": "official",
+      "path": "plugins/hornero-color-converter",
+      "sha256": "2f5810ef3a1f5f659e77bbaa73a2f1b4e00d16c6c814855985c76147f62b62ea"
+    },
+    {
       "id": "hornero-countdown",
       "name": "Hornero Countdown",
       "version": "1.0.0",
@@ -117,6 +155,25 @@
       "trust": "official",
       "path": "plugins/hornero-countdown",
       "sha256": "964e22a13744d989f3b679ca287b0f46b39524f3a7f691a9c90e6a3c2e7efccb"
+    },
+    {
+      "id": "hornero-date-calculator",
+      "name": "Hornero Date Calculator",
+      "version": "1.0.0",
+      "description": "Dashboard date calculator: validated YYYY-MM-DD real dates, days-between and add-days results using UTC math to avoid DST drift. Pure QML.",
+      "author": "HorneroOS contributors",
+      "license": "MIT",
+      "homepage": "https://github.com/HorneroOS/plugins",
+      "placement": "dashboard",
+      "category": "utilities",
+      "capabilities": {
+        "processCommands": [],
+        "networkHosts": [],
+        "settings": {}
+      },
+      "trust": "official",
+      "path": "plugins/hornero-date-calculator",
+      "sha256": "1a0c5ae719a0f508efd35225722ad8d2dba90eda5daf4c38b1f72fcd4c4e3e29"
     },
     {
       "id": "hornero-disk-usage",
@@ -174,6 +231,25 @@
       "trust": "official",
       "path": "plugins/hornero-focus-card",
       "sha256": "02a597f32423f8851dc7da6e832d48bc97eb5d12d1cdebe29f076ec60bbb448c"
+    },
+    {
+      "id": "hornero-json-tools",
+      "name": "Hornero JSON Tools",
+      "version": "1.0.0",
+      "description": "Dashboard JSON tools: Format with 2-space indentation and Minify using JSON parse/stringify only. Parser errors are shown. Pure QML.",
+      "author": "HorneroOS contributors",
+      "license": "MIT",
+      "homepage": "https://github.com/HorneroOS/plugins",
+      "placement": "dashboard",
+      "category": "utilities",
+      "capabilities": {
+        "processCommands": [],
+        "networkHosts": [],
+        "settings": {}
+      },
+      "trust": "official",
+      "path": "plugins/hornero-json-tools",
+      "sha256": "8577ba8b6b0b1c2476a53e6061f38f8bf47ba3e158d5f7bc4debc5f4dd36353f"
     },
     {
       "id": "hornero-metronome",
@@ -456,6 +532,25 @@
       "trust": "official",
       "path": "plugins/hornero-system-monitor",
       "sha256": "f7f5eb75eb4e9046a6ce452eb0da62c83c190cb8141e2a36c4bb6dff2d48a90f"
+    },
+    {
+      "id": "hornero-text-tools",
+      "name": "Hornero Text Tools",
+      "version": "1.0.0",
+      "description": "Dashboard text tools: Uppercase, Lowercase, Title Case and Reverse transforms with live character, word and line counts. Pure QML.",
+      "author": "HorneroOS contributors",
+      "license": "MIT",
+      "homepage": "https://github.com/HorneroOS/plugins",
+      "placement": "dashboard",
+      "category": "utilities",
+      "capabilities": {
+        "processCommands": [],
+        "networkHosts": [],
+        "settings": {}
+      },
+      "trust": "official",
+      "path": "plugins/hornero-text-tools",
+      "sha256": "9aea9e9c2b73960e5d0064a49f399a902c34c98a5e413973d0176313cf915f10"
     },
     {
       "id": "hornero-unit-converter",
