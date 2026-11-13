@@ -1,14 +1,70 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 2,
   "id": "hornero-network-monitor",
   "name": "Hornero Network Monitor",
-  "version": "1.0.0",
-  "description": "Dashboard card with download/upload speeds and session totals from the PluginKit Network service, formatted in human units. Read-only.",
+  "version": "2.0.0",
+  "description": "Network Monitor 2.0: dashboard card over the shared PluginKit Network facade with the 1.x speeds and session totals plus in-card history, peak readouts and honest unavailable states. Read-only.",
   "author": "HorneroOS contributors",
   "license": "MIT",
   "homepage": "https://github.com/HorneroOS/plugins",
   "entrypoint": "Main.qml",
-  "files": ["Main.qml", "README.md", "LICENSE"],
-  "capabilities": {"processCommands": [], "networkHosts": [], "settings": {}},
-  "placement": "dashboard"
+  "placement": "dashboard",
+  "surfaces": {
+    "dashboard": {
+      "entrypoint": "Main.qml",
+      "size": "standard",
+      "category": "System"
+    }
+  },
+  "translations": {
+    "sourceLocale": "en",
+    "locales": [
+      "es"
+    ],
+    "directory": "translations"
+  },
+  "marketplace": {
+    "compatibility": {
+      "minShellVersion": "1.0.0"
+    },
+    "changelog": [
+      {
+        "version": "2.0.0",
+        "notes": "Dashboard card on the shared Network facade: 1.x speeds and session totals plus history sparkline, peak readouts, honest unavailable state, typed settings and Spanish catalog."
+      },
+      {
+        "version": "1.0.0",
+        "notes": "Dashboard card with download/upload speeds and session totals from the PluginKit Network service."
+      }
+    ]
+  },
+  "files": [
+    "Main.qml",
+    "README.md",
+    "LICENSE",
+    "translations/es.json"
+  ],
+  "capabilities": {
+    "processCommands": [],
+    "networkHosts": [],
+    "settings": {
+      "showSessionTotals": {
+        "type": "boolean",
+        "default": true,
+        "description": "Show downloaded/uploaded session totals from the Network service (the 1.x behaviour)."
+      },
+      "showHistory": {
+        "type": "boolean",
+        "default": true,
+        "description": "Show the in-card speed history sampled from the shared Network facade while the card is loaded."
+      },
+      "sampleSeconds": {
+        "type": "integer",
+        "default": 5,
+        "minimum": 1,
+        "maximum": 60,
+        "description": "Seconds between history samples read from the already-live shared Network facade."
+      }
+    }
+  }
 }

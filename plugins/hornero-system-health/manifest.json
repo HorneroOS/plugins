@@ -1,14 +1,77 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 2,
   "id": "hornero-system-health",
   "name": "Hornero System Health",
-  "version": "1.0.0",
-  "description": "Dashboard card summarising system health from PluginKit System, Power and Network: CPU, memory and storage usage, battery (or 'No battery'), and network speeds. Each row shows an honest unavailable state when its service reports no data.",
+  "version": "2.0.0",
+  "description": "System Health 2.0: dashboard health summary over the shared PluginKit System, Power and Network facades, with per-row health states, thresholds and troubleshooting hints. No invented SMART data.",
   "author": "HorneroOS contributors",
   "license": "MIT",
   "homepage": "https://github.com/HorneroOS/plugins",
   "entrypoint": "Main.qml",
-  "files": ["Main.qml", "README.md", "LICENSE"],
-  "capabilities": {"processCommands": [], "networkHosts": [], "settings": {}},
-  "placement": "dashboard"
+  "placement": "dashboard",
+  "surfaces": {
+    "dashboard": {
+      "entrypoint": "Main.qml",
+      "size": "standard",
+      "category": "System"
+    }
+  },
+  "translations": {
+    "sourceLocale": "en",
+    "locales": [
+      "es"
+    ],
+    "directory": "translations"
+  },
+  "marketplace": {
+    "compatibility": {
+      "minShellVersion": "1.0.0"
+    },
+    "changelog": [
+      {
+        "version": "2.0.0",
+        "notes": "Health summary on the shared System/Power/Network facades: per-row health states from typed thresholds, troubleshooting hints, honest unavailable states and Spanish catalog."
+      },
+      {
+        "version": "1.0.0",
+        "notes": "Dashboard card summarising CPU, memory, storage, battery and network with honest unavailable states."
+      }
+    ]
+  },
+  "files": [
+    "Main.qml",
+    "README.md",
+    "LICENSE",
+    "translations/es.json"
+  ],
+  "capabilities": {
+    "processCommands": [],
+    "networkHosts": [],
+    "settings": {
+      "warnPercent": {
+        "type": "integer",
+        "default": 90,
+        "minimum": 50,
+        "maximum": 100,
+        "description": "Usage percent at or above which a CPU, memory or storage row needs attention."
+      },
+      "batteryWarnPercent": {
+        "type": "integer",
+        "default": 20,
+        "minimum": 1,
+        "maximum": 50,
+        "description": "Battery percent at or below which a discharging battery needs attention."
+      },
+      "showNetwork": {
+        "type": "boolean",
+        "default": true,
+        "description": "Show the download/upload rows from the Network service (the 1.x behaviour)."
+      },
+      "showHints": {
+        "type": "boolean",
+        "default": true,
+        "description": "Show a short troubleshooting hint under rows that need attention."
+      }
+    }
+  }
 }

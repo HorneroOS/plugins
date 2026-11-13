@@ -410,8 +410,8 @@
     {
       "id": "hornero-disk-usage",
       "classification": "needs-upgrade",
-      "valueProposition": "Dashboard card listing mounted disks from the PluginKit System service with used/total space and a percentage bar. Shows an empty state when no disks are reported. Read-only, no processes or network.",
-      "nativeOverlap": "Overlaps the storage figures in hornero-system-monitor and hornero-system-health; distinct value is the per-disk listing.",
+      "valueProposition": "Disk Usage 2.0: dashboard card over the shared PluginKit System.disks facade with per-disk used/total/free space and bars (KiB values now formatted as KiB, correcting 1.x), a disk count, most-full summary and nearly-full alert at a typed threshold. Capacity only: the facade exposes no SMART/drive-health data and none is shown.",
+      "nativeOverlap": "Overlaps the aggregate storage percentage in hornero-system-monitor/-health and the native Performance storage gauge (one disk at a time); distinct value is every disk side by side with free space for cleanup triage.",
       "dimensions": {
         "tooltips": {
           "status": "na",
@@ -419,19 +419,19 @@
         },
         "accessibility": {
           "status": "na",
-          "note": "No interactive controls in the entrypoint; static text only (static probe)."
+          "note": "No interactive controls in the entrypoint; the card carries Accessible.name and each UiProgress an accessibleName (static probe classifies non-interactive surfaces as na)."
         },
         "translation": {
-          "status": "fail",
-          "note": "User-visible string literals are not wrapped in qsTr/qsTrId (static probe)."
+          "status": "pass",
+          "note": "All user-visible literals go through PluginKit Translations; es (Argentine Spanish) catalog declared in the manifest and checked complete for literal tr() strings (static probe). Facade-supplied labels (disk names, battery state text) stay in the shell's language."
         },
         "settings": {
-          "status": "na",
-          "note": "No settings declared in the manifest; none are recorded as needed yet. Revisit if behaviour becomes user-configurable."
+          "status": "pass",
+          "note": "Typed warnPercent (90) and showFreeSpace (true) settings declared in the manifest and read via PluginKit Settings; the plugin stored no settings before 2.0 and the 1.x per-disk rows are unchanged by default (static probe)."
         },
         "themeTokens": {
           "status": "pass",
-          "note": "Visible colours come from PluginKit Theme tokens with no hard-coded chrome colours (static probe)."
+          "note": "Visible colours come from PluginKit Ui primitives/Theme tokens with no hard-coded chrome colours (static probe)."
         },
         "screenshots": {
           "status": "fail",
@@ -439,18 +439,18 @@
         },
         "orientation": {
           "status": "unverified",
-          "note": "Orientation/responsiveness across bar, dashboard and desktop placements has not had a graphical review; static checks cannot verify it."
+          "note": "Host context (hostOrientation/hostCompact/hostAvailableWidth) drives UiStack and card width, but orientation across dashboard placements has not had a graphical review."
         },
         "loadingErrorStates": {
           "status": "unverified",
-          "note": "Static probe finds error/empty-state text in the QML, but loading and error presentation have not been verified graphically."
+          "note": "UiState empty placeholder covers the no-disks state and a caption states SMART is not exposed; presentation has not been verified graphically in a live shell."
         },
         "performance": {
           "status": "unverified",
-          "note": "Not profiled. Static cadence only: timer intervals (ms)=none, process polling=no; runtime cost is unverified."
+          "note": "Not profiled. Static cadence only: no timers or polling of its own; reads the shared System singleton behind a Subscription lease; runtime cost is unverified."
         }
       },
-      "issue": "https://github.com/HorneroOS/plugins/issues/21"
+      "issue": "https://github.com/HorneroOS/plugins/issues/26"
     },
     {
       "id": "hornero-dual-clock",
@@ -725,28 +725,28 @@
     {
       "id": "hornero-network-monitor",
       "classification": "needs-upgrade",
-      "valueProposition": "Dashboard card with download/upload speeds and session totals from the PluginKit Network service, formatted in human units. Read-only.",
-      "nativeOverlap": "Overlaps the network rows in hornero-system-health; distinct value is session download/upload totals.",
+      "valueProposition": "Network Monitor 2.0: dashboard card over the shared PluginKit Network facade keeping the 1.x download/upload speeds and session totals, plus an in-card speed history (download sparkline and download/upload peaks, sampled only while the card is loaded and labelled as such) and a reporting/unavailable health chip.",
+      "nativeOverlap": "Overlaps the network rows in hornero-system-health and native current-rate displays; distinct value is retained history/peaks alongside the shell-session totals. The facade exposes no interface, address or per-process traffic and none is shown.",
       "dimensions": {
         "tooltips": {
-          "status": "na",
-          "note": "No interactive controls in the entrypoint, so tooltips do not apply (static probe)."
+          "status": "pass",
+          "note": "The Clear history button carries PluginKit tooltipText (host-owned UiTooltip, static probe); it is the only interactive control."
         },
         "accessibility": {
-          "status": "na",
-          "note": "No interactive controls in the entrypoint; static text only (static probe)."
+          "status": "pass",
+          "note": "UiButton accessibleName plus Accessible.name on the card; the only action is a real button, no mouse-only MouseArea (static probe). Live AT-SPI behaviour is not verified."
         },
         "translation": {
-          "status": "fail",
-          "note": "User-visible string literals are not wrapped in qsTr/qsTrId (static probe)."
+          "status": "pass",
+          "note": "All user-visible literals go through PluginKit Translations; es (Argentine Spanish) catalog declared in the manifest and checked complete for literal tr() strings (static probe). Facade-supplied labels (disk names, battery state text) stay in the shell's language."
         },
         "settings": {
-          "status": "na",
-          "note": "No settings declared in the manifest; none are recorded as needed yet. Revisit if behaviour becomes user-configurable."
+          "status": "pass",
+          "note": "Typed showSessionTotals/showHistory (true) and sampleSeconds (5) settings declared in the manifest and read via PluginKit Settings; the plugin stored no settings before 2.0 and 1.x speeds/totals stay visible by default (static probe)."
         },
         "themeTokens": {
           "status": "pass",
-          "note": "Visible colours come from PluginKit Theme tokens with no hard-coded chrome colours (static probe)."
+          "note": "Visible colours come from PluginKit Ui primitives/Theme tokens with no hard-coded chrome colours (static probe)."
         },
         "screenshots": {
           "status": "fail",
@@ -754,18 +754,18 @@
         },
         "orientation": {
           "status": "unverified",
-          "note": "Orientation/responsiveness across bar, dashboard and desktop placements has not had a graphical review; static checks cannot verify it."
+          "note": "Host context (hostOrientation/hostCompact/hostAvailableWidth) drives UiStack and card width, but orientation across dashboard placements has not had a graphical review."
         },
         "loadingErrorStates": {
           "status": "unverified",
-          "note": "Loading/error presentation has not been audited beyond the static probe; no graphical verification yet."
+          "note": "UiState placeholders cover the unavailable-speeds and collecting-history states and totals stay as last reported; presentation has not been verified graphically in a live shell."
         },
         "performance": {
           "status": "unverified",
-          "note": "Not profiled. Static cadence only: timer intervals (ms)=none, process polling=no; runtime cost is unverified."
+          "note": "Not profiled. Static cadence only: one in-card sample tick every sampleSeconds (default 5s) reading the shared Network singleton behind a Subscription lease; no own network access or polling beyond that read; runtime cost is unverified."
         }
       },
-      "issue": "https://github.com/HorneroOS/plugins/issues/21"
+      "issue": "https://github.com/HorneroOS/plugins/issues/26"
     },
     {
       "id": "hornero-now-playing",
@@ -1130,8 +1130,8 @@
     {
       "id": "hornero-system-health",
       "classification": "needs-upgrade",
-      "valueProposition": "Dashboard card summarising system health from PluginKit System, Power and Network: CPU, memory and storage usage, battery (or 'No battery'), and network speeds. Each row shows an honest unavailable state when its service reports no data.",
-      "nativeOverlap": "Superset overlap with hornero-system-monitor, hornero-disk-usage, hornero-network-monitor and hornero-battery rows; distinct value is the combined health summary. Consolidation candidate to evaluate under the linked issue.",
+      "valueProposition": "System Health 2.0: dashboard health summary over the shared PluginKit System, Power and Network facades: the 1.x CPU/memory/storage/battery/network rows plus per-row health states and an overall verdict derived only from reported values and typed thresholds, with one-line troubleshooting hints. No SMART, battery-health or per-process data is exposed by PluginKit, so none is shown.",
+      "nativeOverlap": "Reads the same facades as the native Performance view and hornero-system-monitor/-disk-usage/-network-monitor/-battery; distinct value is the combined health judgement (states, verdict, hints). History belongs to System Monitor, per-disk detail to Disk Usage.",
       "dimensions": {
         "tooltips": {
           "status": "na",
@@ -1139,19 +1139,19 @@
         },
         "accessibility": {
           "status": "na",
-          "note": "No interactive controls in the entrypoint; static text only (static probe)."
+          "note": "No interactive controls in the entrypoint; the card carries Accessible.name and rows are static PluginKit text/metrics (static probe classifies non-interactive surfaces as na)."
         },
         "translation": {
-          "status": "fail",
-          "note": "User-visible string literals are not wrapped in qsTr/qsTrId (static probe)."
+          "status": "pass",
+          "note": "All user-visible literals go through PluginKit Translations; es (Argentine Spanish) catalog declared in the manifest and checked complete for literal tr() strings (static probe). Facade-supplied labels (disk names, battery state text) stay in the shell's language."
         },
         "settings": {
-          "status": "na",
-          "note": "No settings declared in the manifest; none are recorded as needed yet. Revisit if behaviour becomes user-configurable."
+          "status": "pass",
+          "note": "Typed warnPercent (90), batteryWarnPercent (20), showNetwork/showHints (true) settings declared in the manifest and read via PluginKit Settings; the plugin stored no settings before 2.0 and every 1.x row stays visible by default (static probe)."
         },
         "themeTokens": {
           "status": "pass",
-          "note": "Visible colours come from PluginKit Theme tokens with no hard-coded chrome colours (static probe)."
+          "note": "Visible colours come from PluginKit Ui primitives/Theme tokens with no hard-coded chrome colours (static probe)."
         },
         "screenshots": {
           "status": "fail",
@@ -1159,44 +1159,44 @@
         },
         "orientation": {
           "status": "unverified",
-          "note": "Orientation/responsiveness across bar, dashboard and desktop placements has not had a graphical review; static checks cannot verify it."
+          "note": "Host context (hostOrientation/hostCompact/hostAvailableWidth) drives UiStack and card width, but orientation across dashboard placements has not had a graphical review."
         },
         "loadingErrorStates": {
           "status": "unverified",
-          "note": "Static probe finds error/empty-state text in the QML, but loading and error presentation have not been verified graphically."
+          "note": "Honest per-row Unavailable states, a Partial data verdict and a UiState empty placeholder exist in QML; presentation has not been verified graphically in a live shell."
         },
         "performance": {
           "status": "unverified",
-          "note": "Not profiled. Static cadence only: timer intervals (ms)=none, process polling=no; runtime cost is unverified."
+          "note": "Not profiled. Static cadence only: no timers or polling of its own; System/Network are shared refCount-gated polling domains and Power is event-pushed, all held via Subscription leases; runtime cost is unverified."
         }
       },
-      "issue": "https://github.com/HorneroOS/plugins/issues/21"
+      "issue": "https://github.com/HorneroOS/plugins/issues/26"
     },
     {
       "id": "hornero-system-monitor",
       "classification": "needs-upgrade",
-      "valueProposition": "Dashboard card with CPU, memory, GPU and storage usage bars from the PluginKit System service. Read-only, no processes or network.",
-      "nativeOverlap": "Overlaps hornero-system-health and hornero-disk-usage; distinct value is CPU/GPU/memory/storage usage bars.",
+      "valueProposition": "System Monitor 2.0: dashboard card over the shared PluginKit System facade keeping the 1.x CPU/memory/GPU/storage bars and temperatures, plus an in-card session history (sparkline, CPU/memory peaks, CPU average, sampled only while the card is loaded and labelled as such) and a high-load alert at a typed threshold.",
+      "nativeOverlap": "Overlaps the shell native Performance view and hornero-system-health on instantaneous percentages; distinct value is retained in-card history and the threshold alert, which neither keeps for extensions. Per-process/per-core data is not exposed by PluginKit and is not shown.",
       "dimensions": {
         "tooltips": {
-          "status": "na",
-          "note": "No interactive controls in the entrypoint, so tooltips do not apply (static probe)."
+          "status": "pass",
+          "note": "The Clear history button carries PluginKit tooltipText (host-owned UiTooltip, static probe); it is the only interactive control."
         },
         "accessibility": {
-          "status": "na",
-          "note": "No interactive controls in the entrypoint; static text only (static probe)."
+          "status": "pass",
+          "note": "UiButton accessibleName, UiProgress accessibleName per row and Accessible.name on the card; the only action is a real button, no mouse-only MouseArea (static probe). Live AT-SPI behaviour is not verified."
         },
         "translation": {
-          "status": "fail",
-          "note": "User-visible string literals are not wrapped in qsTr/qsTrId (static probe)."
+          "status": "pass",
+          "note": "All user-visible literals go through PluginKit Translations; es (Argentine Spanish) catalog declared in the manifest and checked complete for literal tr() strings (static probe). Facade-supplied labels (disk names, battery state text) stay in the shell's language."
         },
         "settings": {
-          "status": "na",
-          "note": "No settings declared in the manifest; none are recorded as needed yet. Revisit if behaviour becomes user-configurable."
+          "status": "pass",
+          "note": "Typed warnPercent (90), showTemperatures/showHistory (true) and sampleSeconds (5) settings declared in the manifest and read via PluginKit Settings; the plugin stored no settings before 2.0 and 1.x rows stay visible by default (static probe)."
         },
         "themeTokens": {
           "status": "pass",
-          "note": "Visible colours come from PluginKit Theme tokens with no hard-coded chrome colours (static probe)."
+          "note": "Visible colours come from PluginKit Ui primitives/Theme tokens with no hard-coded chrome colours (static probe)."
         },
         "screenshots": {
           "status": "fail",
@@ -1204,18 +1204,18 @@
         },
         "orientation": {
           "status": "unverified",
-          "note": "Orientation/responsiveness across bar, dashboard and desktop placements has not had a graphical review; static checks cannot verify it."
+          "note": "Host context (hostOrientation/hostCompact/hostAvailableWidth) drives UiStack and card width, but orientation across dashboard placements has not had a graphical review."
         },
         "loadingErrorStates": {
           "status": "unverified",
-          "note": "Loading/error presentation has not been audited beyond the static probe; no graphical verification yet."
+          "note": "UiState loading placeholder covers the collecting-history state and unavailable facade values read as Unavailable; presentation has not been verified graphically in a live shell."
         },
         "performance": {
           "status": "unverified",
-          "note": "Not profiled. Static cadence only: timer intervals (ms)=none, process polling=no; runtime cost is unverified."
+          "note": "Not profiled. Static cadence only: one in-card sample tick every sampleSeconds (default 5s) reading the shared System singleton behind a Subscription lease; no own process, file poll or polling timer beyond that read; runtime cost is unverified."
         }
       },
-      "issue": "https://github.com/HorneroOS/plugins/issues/21"
+      "issue": "https://github.com/HorneroOS/plugins/issues/26"
     },
     {
       "id": "hornero-text-tools",
