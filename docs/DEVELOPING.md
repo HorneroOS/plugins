@@ -325,6 +325,72 @@ gate but are never catalogued). It checks:
 - No symlinks, no executable bits, no binary suffixes
   (`.so`, `.o`, `.a`, `.bin`, `.exe`, `.dll`, `.pyc`).
 - The `entrypoint` file exists.
+- Schema-aligned manifest rules (unknown top-level fields, text
+  length limits, `placement` enum, https `homepage`, safe relative
+  paths, `entrypoint` listed in `files`, exact `capabilities` shape,
+  forbidden shell/privilege `processCommands`, settings
+  type/default agreement) and the shell validator's decidable QML
+  rules (import allowlist above, literal `Process` argv whose
+  executable is declared, literal URL hosts declared in
+  `networkHosts`, `Settings` keys declared and used).
+
+### Quality gate and audit: `quality-audit.json` (#21)
+
+The same `scripts/validate_plugins.py` run also enforces the
+maintained per-extension quality audit in `quality-audit.json` at
+the repo root (official `plugins/` entries only; community
+submissions are not audited or catalogued). The audit is **not**
+generated and not part of any plugin payload, so it never changes
+`catalog.json`.
+
+Every official plugin must have exactly one entry with:
+
+- `classification`: `premium-ready`, `needs-upgrade`,
+  `consolidated`, or `deprecated-with-replacement`.
+  `needs-upgrade` requires a linked `issue`
+  (`HorneroOS/plugins#N` or its GitHub URL); `consolidated` and
+  `deprecated-with-replacement` require `replacement` to name
+  another official plugin.
+- `valueProposition` and `nativeOverlap`: what the extension is
+  for, and how it overlaps native shell features or other
+  catalogue entries.
+- `dimensions`: a `status` (`pass`, `fail`, `na`, `unverified`)
+  plus a `note` for each of `tooltips`, `accessibility`,
+  `translation`, `settings`, `themeTokens`, `orientation`,
+  `loadingErrorStates`, `performance`, and `screenshots`.
+
+Statically decidable dimensions are probed from the payload and
+the audit must match the probe exactly — an entry may neither
+over-claim nor go stale:
+
+| Dimension | Static probe for `pass` |
+| --- | --- |
+| `tooltips` | Interactive controls present ⇒ `ToolTip.text` used; no interactive controls ⇒ `na`. |
+| `accessibility` | Interactive controls present ⇒ `Accessible.name` used; no interactive controls ⇒ `na`. |
+| `translation` | Translatable string literals ⇒ wrapped via `qsTr(` / `qsTrId(`; none ⇒ `na`. |
+| `settings` | Settings declared ⇒ read through PluginKit `Settings`; none declared ⇒ `na`. |
+| `themeTokens` | Visible placement ⇒ PluginKit `Theme.` used and no hard-coded chrome `color:` literals; `background` ⇒ `na`. |
+| `screenshots` | A file exists at `docs/screenshots/<id>.png` (or `.jpg`/`.jpeg`/`.webp`), outside the payload. |
+
+`orientation`, `loadingErrorStates`, and `performance` cannot be
+decided statically; they are maintainer attestations with a
+required note. `orientation: pass` and any `premium-ready`
+classification additionally require a `graphicalReview`
+(`{reviewer, date}`), and `premium-ready` requires every
+dimension to be `pass` or `na`.
+
+Failing or unverified dimensions print as `quality:` warnings and
+do not fail the default run while an honest audit entry tracks
+them under a linked issue; `python3 scripts/validate_plugins.py
+--strict` turns them into errors. As of the #21 baseline all 33
+official extensions are `needs-upgrade` under
+HorneroOS/plugins#21 (none has translations wired, screenshots, or
+a graphical review yet). Adding a plugin now also means adding
+its audit entry in the same change.
+
+This gate is static only. Passing it is **not graphical
+acceptance**: nothing is rendered, screenshotted, or run in a
+shell, and the validator says so on every successful run.
 
 ### Shell validator: `scripts/validate_plugin.py <dir>` (HorneroOS/shell)
 
