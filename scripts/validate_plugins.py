@@ -37,7 +37,12 @@ ROOT = Path(__file__).resolve().parent.parent
 ID_RE = re.compile(r"^[a-z0-9][a-z0-9-]{0,47}$")
 SEMVER_RE = re.compile(r"^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(-[0-9A-Za-z.-]+)?(\+[0-9A-Za-z.-]+)?$")
 REQUIRED = ["schemaVersion", "id", "name", "version", "description", "author", "license", "entrypoint", "files", "capabilities"]
-ALLOWED_FIELDS = set(REQUIRED) | {"homepage", "placement", "signing", "surfaces", "translations"}
+ALLOWED_FIELDS = set(REQUIRED) | {"homepage", "placement", "signing", "surfaces", "translations", "marketplace"}
+DASHBOARD_CARD_SIZES = ("compact", "standard", "wide")
+ACTION_RE = re.compile(r"^[a-z][a-z0-9_]{0,63}$")
+MARKETPLACE_SCREENSHOT_SUFFIXES = (".png", ".jpg", ".jpeg", ".webp")
+MARKETPLACE_MAX_SCREENSHOTS = 6
+MARKETPLACE_MAX_CHANGELOG = 20
 SCHEMA_VERSIONS = (1, 2)
 # Manifest v2 surfaces (shell docs/PLUGINS.md): the first four have
 # runtime hosts today; launcher/settings are validated declarations
@@ -188,12 +193,105 @@ def validate_manifest_fields(tag: str, manifest: dict) -> list:
     safe_files = {f for f in (files or []) if isinstance(f, str)}
     errors += validate_surfaces(tag, manifest, safe_files)
     errors += validate_translations_declaration(tag, manifest, safe_files)
+    errors += validate_marketplace(tag, manifest, safe_files)
     caps = manifest.get("capabilities")
     if caps is not None:
-        if not isinstance(caps, dict) or set(caps) != {"processCommands", "networkHosts", "settings"}:
-            errors.append(f"{tag}: capabilities must have exactly processCommands, networkHosts, settings")
+        if not isinstance(caps, dict) or not {"processCommands", "networkHosts", "settings"} <= set(caps) <= {"processCommands", "networkHosts", "settings", "actions"}:
+            errors.append(f"{tag}: capabilities must contain processCommands, networkHosts, and settings, plus optional actions")
         else:
             errors += validate_capabilities(tag, caps)
+    return errors
+
+
+def semver_key(version: str):
+    core, _, prerelease = str(version).split("+", 1)[0].partition("-")
+    numbers = tuple(int(part) for part in core.split("."))
+    if not prerelease:
+        return (numbers, (1,))
+    parts = tuple((0, int(part), "") if part.isdigit() else (1, 0, part) for part in prerelease.split("."))
+    return (numbers, (0,) + parts)
+
+
+def validate_marketplace(tag: str, manifest: dict, safe_files: set) -> list:
+    """Marketplace metadata, mirroring the shell validator (#379)."""
+    errors = []
+    if "marketplace" not in manifest:
+        return errors
+    mp = manifest["marketplace"]
+    if not isinstance(mp, dict):
+        return [f"{tag}: marketplace must be an object"]
+    extra = set(mp) - {"screenshots", "compatibility", "changelog", "deprecation"}
+    if extra:
+        errors.append(f"{tag}: marketplace contains unknown fields: {', '.join(sorted(extra))}")
+    if not mp:
+        errors.append(f"{tag}: marketplace must declare at least one of screenshots, compatibility, changelog or deprecation")
+        return errors
+    if "screenshots" in mp:
+        shots = mp["screenshots"]
+        if not isinstance(shots, list) or not shots or len(shots) > MARKETPLACE_MAX_SCREENSHOTS:
+            errors.append(f"{tag}: marketplace.screenshots must list 1 to {MARKETPLACE_MAX_SCREENSHOTS} screenshots")
+        else:
+            seen = set()
+            for i, shot in enumerate(shots):
+                where = f"{tag}: marketplace.screenshots[{i}]"
+                if not isinstance(shot, dict):
+                    errors.append(f"{where} must be an object"); continue
+                if set(shot) - {"path", "alt"}:
+                    errors.append(f"{where} contains unknown fields: {', '.join(sorted(set(shot) - {'path', 'alt'}))}")
+                path = shot.get("path")
+                if not is_safe_relpath(path):
+                    errors.append(f"{where}.path must be a safe relative path")
+                elif not str(path).lower().endswith(MARKETPLACE_SCREENSHOT_SUFFIXES):
+                    errors.append(f"{where}.path must be a static image ({', '.join(MARKETPLACE_SCREENSHOT_SUFFIXES)})")
+                elif path not in safe_files:
+                    errors.append(f"{where}.path must be listed in files: {path}")
+                elif path in seen:
+                    errors.append(f"{tag}: marketplace.screenshots must not repeat a path")
+                else:
+                    seen.add(path)
+                if "alt" in shot and (not isinstance(shot["alt"], str) or not shot["alt"].strip() or len(shot["alt"]) > 160):
+                    errors.append(f"{where}.alt must be a non-empty string of at most 160 chars")
+    if "compatibility" in mp:
+        compat = mp["compatibility"]
+        if not isinstance(compat, dict) or not compat or set(compat) - {"minShellVersion", "maxShellVersion"}:
+            errors.append(f"{tag}: marketplace.compatibility must declare minShellVersion and/or maxShellVersion only")
+        else:
+            for bound in ("minShellVersion", "maxShellVersion"):
+                if bound in compat and (not isinstance(compat[bound], str) or len(compat[bound]) > 80 or not SEMVER_RE.match(compat[bound])):
+                    errors.append(f"{tag}: marketplace.compatibility.{bound} must be semantic versioning")
+            if "minShellVersion" in compat and "maxShellVersion" in compat and all(SEMVER_RE.match(str(compat[b])) for b in compat):
+                if semver_key(compat["minShellVersion"]) > semver_key(compat["maxShellVersion"]):
+                    errors.append(f"{tag}: marketplace.compatibility.minShellVersion must not exceed maxShellVersion")
+    if "changelog" in mp:
+        log = mp["changelog"]
+        if not isinstance(log, list) or not log or len(log) > MARKETPLACE_MAX_CHANGELOG:
+            errors.append(f"{tag}: marketplace.changelog must list 1 to {MARKETPLACE_MAX_CHANGELOG} entries")
+        else:
+            seen = set()
+            for i, entry in enumerate(log):
+                where = f"{tag}: marketplace.changelog[{i}]"
+                if not isinstance(entry, dict) or set(entry) != {"version", "notes"}:
+                    errors.append(f"{where} must contain only version and notes"); continue
+                if not isinstance(entry["version"], str) or not SEMVER_RE.match(entry["version"]):
+                    errors.append(f"{where}.version must be semantic versioning")
+                elif entry["version"] in seen:
+                    errors.append(f"{tag}: marketplace.changelog must not repeat a version")
+                else:
+                    seen.add(entry["version"])
+                if not isinstance(entry["notes"], str) or not entry["notes"].strip() or len(entry["notes"]) > 1000:
+                    errors.append(f"{where}.notes must be a non-empty string of at most 1000 chars")
+    if "deprecation" in mp:
+        dep = mp["deprecation"]
+        if not isinstance(dep, dict) or set(dep) - {"message", "replacedBy"}:
+            errors.append(f"{tag}: marketplace.deprecation must contain only optional message and replacedBy")
+        else:
+            if "message" in dep and (not isinstance(dep["message"], str) or not dep["message"].strip() or len(dep["message"]) > 280):
+                errors.append(f"{tag}: marketplace.deprecation.message must be a non-empty string of at most 280 chars")
+            if "replacedBy" in dep:
+                if not isinstance(dep["replacedBy"], str) or not ID_RE.match(dep["replacedBy"]):
+                    errors.append(f"{tag}: marketplace.deprecation.replacedBy must be a plugin id")
+                elif dep["replacedBy"] == manifest.get("id"):
+                    errors.append(f"{tag}: marketplace.deprecation.replacedBy must not name the plugin itself")
     return errors
 
 
@@ -219,9 +317,17 @@ def validate_surfaces(tag: str, manifest: dict, safe_files: set) -> list:
         if not isinstance(surface, dict):
             errors.append(f"{where} must be an object")
             continue
-        extra = set(surface) - {"entrypoint", "enabled"}
+        extra = set(surface) - {"entrypoint", "enabled", "size", "category"}
         if extra:
             errors.append(f"{where} contains unknown fields: {', '.join(sorted(extra))}")
+        if ("size" in surface or "category" in surface) and name != "dashboard":
+            errors.append(f"{where}.size/category are dashboard card hints and are only allowed on the dashboard surface")
+        if "size" in surface and surface["size"] not in DASHBOARD_CARD_SIZES:
+            errors.append(f"{where}.size must be one of {', '.join(DASHBOARD_CARD_SIZES)}")
+        if "category" in surface:
+            category = surface["category"]
+            if not isinstance(category, str) or not category.strip() or len(category) > 40 or category.strip().lower() == "pinned":
+                errors.append(f"{where}.category must be a non-empty grouping label of at most 40 chars (not the reserved \"Pinned\")")
         if "entrypoint" not in surface:
             errors.append(f"{where}.entrypoint is required")
             continue
@@ -342,6 +448,10 @@ def validate_translation_catalogs(tag: str, plugin_dir: Path, manifest: dict, co
 
 def validate_capabilities(tag: str, caps: dict) -> list:
     errors = []
+    if "actions" in caps:
+        actions = caps["actions"]
+        if not isinstance(actions, list) or len(actions) > 32 or any(not isinstance(a, str) or not ACTION_RE.match(a) for a in actions) or (all(isinstance(a, str) for a in actions) and len(actions) != len(set(actions))):
+            errors.append(f"{tag}: capabilities.actions must declare at most 32 unique snake_case action names")
     commands = caps["processCommands"]
     if not isinstance(commands, list) or not all(isinstance(c, str) for c in commands):
         errors.append(f"{tag}: capabilities.processCommands must be an array of strings")
