@@ -15,6 +15,7 @@ Usage:
 """
 import hashlib
 import json
+import re
 import subprocess
 import sys
 from pathlib import Path
@@ -63,10 +64,10 @@ def build() -> dict:
                 "sha256": payload_sha256(plugin_dir, manifest),
             }
         )
-    # Revision of the last commit that touched plugins/ — stable
-    # across catalog-only commits, so --check can pass in CI.
-    # Workflow: commit plugin sources first, then regenerate and
-    # commit catalog.json on its own; never mix the two commits.
+    # Revision of the last commit that touched plugins/ at generation
+    # time. It is provenance for the snapshot, not freshness: a squash
+    # merge rewrites that commit, so --check must not compare it (see
+    # catalog_is_current). Generation still stamps the current value.
     rev = subprocess.run(
         ["git", "log", "-1", "--format=%H", "--", "plugins/"],
         cwd=ROOT, capture_output=True, text=True,
@@ -74,12 +75,34 @@ def build() -> dict:
     return {"schemaVersion": 1, "generatedFrom": rev, "plugins": entries}
 
 
+def catalog_is_current(existing_text: str, built: dict) -> bool:
+    """Freshness compares plugin entries, never the generatedFrom stamp.
+
+    Squash merges rewrite the commit that last touched plugins/, so a
+    byte comparison would report a just-merged catalog as stale forever.
+    The stamp must still be present and be a full commit id.
+    """
+    try:
+        existing = json.loads(existing_text)
+    except json.JSONDecodeError:
+        return False
+    if not isinstance(existing, dict):
+        return False
+    stamp = existing.get("generatedFrom")
+    if not isinstance(stamp, str) or not re.fullmatch(r"[0-9a-f]{40}([0-9a-f]{24})?", stamp):
+        return False
+    return (
+        existing.get("schemaVersion") == built["schemaVersion"]
+        and existing.get("plugins") == built["plugins"]
+    )
+
+
 def main() -> int:
     check = "--check" in sys.argv
     catalog = build()
     text = json.dumps(catalog, indent=2, ensure_ascii=False) + "\n"
     if check:
-        if not CATALOG.exists() or CATALOG.read_text() != text:
+        if not CATALOG.exists() or not catalog_is_current(CATALOG.read_text(), catalog):
             print("catalog.json is stale; run scripts/gen_catalog.py", file=sys.stderr)
             return 1
         print(f"catalog OK: {len(catalog['plugins'])} plugins @ {catalog['generatedFrom'][:8]}")
