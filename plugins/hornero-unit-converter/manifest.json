@@ -1,14 +1,75 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 2,
   "id": "hornero-unit-converter",
   "name": "Hornero Unit Converter",
-  "version": "1.0.0",
-  "description": "Dashboard unit converter for length (m, km, mi, ft), mass (kg, lb) and temperature (C, F, K). Pure-JS conversions computed live from a text field and unit selectors. No processes or network.",
+  "version": "2.0.0",
+  "description": "Utility Tools 2.0 unit converter: bar quick action (10 km to mi) and compact dashboard detail for length (m, km, mi, ft), mass (kg, lb) and temperature (C, F, K). Pure JS, no processes or network.",
   "author": "HorneroOS contributors",
   "license": "MIT",
   "homepage": "https://github.com/HorneroOS/plugins",
   "entrypoint": "Main.qml",
-  "files": ["Main.qml", "README.md", "LICENSE"],
-  "capabilities": {"processCommands": [], "networkHosts": [], "settings": {}},
-  "placement": "dashboard"
+  "placement": "bar",
+  "surfaces": {
+    "dashboard": {
+      "entrypoint": "Dashboard.qml",
+      "size": "compact",
+      "category": "Utilities"
+    },
+    "launcher": {
+      "entrypoint": "Launcher.qml"
+    }
+  },
+  "translations": {
+    "sourceLocale": "en",
+    "locales": [
+      "es"
+    ],
+    "directory": "translations"
+  },
+  "marketplace": {
+    "compatibility": {
+      "minShellVersion": "1.0.0"
+    },
+    "changelog": [
+      {
+        "version": "2.0.0",
+        "notes": "Utility Tools 2.0 (plugins#30): bar quick action with popover, compact Utilities dashboard detail panel and a declaration-only launcher entrypoint (not loaded until shell#250) over one tested pure-JS logic block; typed settings default to 1.x behaviour; Spanish catalog."
+      },
+      {
+        "version": "1.0.0",
+        "notes": "Dashboard unit converter for length, mass and temperature, computed live from a text field and selectors."
+      }
+    ]
+  },
+  "files": [
+    "Main.qml",
+    "Dashboard.qml",
+    "Launcher.qml",
+    "README.md",
+    "LICENSE",
+    "translations/es.json"
+  ],
+  "capabilities": {
+    "processCommands": [],
+    "networkHosts": [],
+    "settings": {
+      "defaultCategory": {
+        "type": "enum",
+        "default": "length",
+        "options": [
+          "length",
+          "mass",
+          "temperature"
+        ],
+        "description": "Dashboard category shown first (Length, the 1.x initial category)."
+      },
+      "precision": {
+        "type": "integer",
+        "default": 6,
+        "minimum": 0,
+        "maximum": 10,
+        "description": "Decimal places kept when rounding results (6, the 1.x rounding)."
+      }
+    }
+  }
 }

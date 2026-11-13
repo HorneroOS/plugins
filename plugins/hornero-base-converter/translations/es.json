@@ -1,0 +1,22 @@
+{
+  "255 or 0xFF": "255 o 0xFF",
+  "Base Converter": "Conversor de bases",
+  "Base Converter quick action": "Acción rápida del conversor de bases",
+  "Base Converter: activate for a quick conversion": "Conversor de bases: activá para una conversión rápida",
+  "Convert": "Convertir",
+  "Convert decimal": "Convertir decimal",
+  "Convert decimal to binary, octal and hex": "Convertir decimal a binario, octal y hex",
+  "Convert hex": "Convertir hex",
+  "Convert hex to decimal": "Convertir hex a decimal",
+  "Convert hexadecimal": "Convertir hexadecimal",
+  "Decimal conversion result": "Resultado de la conversión decimal",
+  "Decimal input": "Entrada decimal",
+  "Decimal integer": "Entero decimal",
+  "Decimal integer within safe range": "Entero decimal dentro del rango seguro",
+  "Full controls are in the dashboard Utilities panel.": "Los controles completos están en el panel Utilidades del tablero.",
+  "Hex conversion result": "Resultado de la conversión hex",
+  "Hexadecimal digits to convert to decimal": "Dígitos hex para convertir a decimal",
+  "Hexadecimal input": "Entrada hexadecimal",
+  "Quick base conversion": "Conversión rápida de base",
+  "Type a decimal integer or a 0x-prefixed hex value and press Convert.": "Escribí un entero decimal o un valor hex con prefijo 0x y tocá Convertir."
+}

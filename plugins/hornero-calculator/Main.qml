@@ -2,18 +2,38 @@ import QtQuick
 import QtQuick.Controls
 import Hornero.PluginKit
 
-// Hornero Calculator - dashboard card with a safe expression
-// parser: tokenizer plus recursive descent for + - * / %,
-// parentheses, decimals and unary minus. No dynamic code
-// execution is used. Division or modulo by zero shows Error.
+// Calculator 2.0 bar surface (primary): a one-button quick action.
+// The button opens a host-owned UiPopover with one quick-query field
+// and the same pure logic as the dashboard detail panel; the full
+// controls stay there. This is the launcher-style quick action that
+// is hosted today. The declared launcher surface (Launcher.qml) is
+// a validated declaration only until the shell launcher provider
+// host (HorneroOS/shell#250) exists; no parallel launcher and no
+// invented PluginKit launcher member is used here. PluginKit has
+// no text-input primitive, so the query field is a QtQuick.Controls
+// TextField with an accessible name and tooltip.
 Item {
     id: root
 
-    implicitWidth: 300
-    implicitHeight: content.implicitHeight + 24
+    property string hostOrientation: "horizontal"
+    property string hostEdge: "top"
+    property string hostSurface: "bar"
+    property int hostAvailableWidth: 0
+    property int hostAvailableHeight: 0
+    property bool hostCompact: false
+    property string hostScreenName: ""
 
-    property string result: ""
+    implicitWidth: stack.implicitWidth
+    implicitHeight: stack.implicitHeight
 
+    property string quickText: ""
+
+    Translations { id: i18n; pluginId: "hornero-calculator" }
+    Settings { id: pluginSettings; pluginId: "hornero-calculator" }
+
+    readonly property bool liveResult: pluginSettings.value("liveResult", false) === true
+
+    // LOGIC-BEGIN
     function tokenize(input) {
         var tokens = [];
         var i = 0;
@@ -37,7 +57,6 @@ Item {
         }
         return tokens;
     }
-
     function calculate(input) {
         var tokens = tokenize(input);
         if (!tokens || tokens.length === 0) return { "ok": false };
@@ -87,65 +106,88 @@ Item {
         if (resultValue === null || pos !== tokens.length || !isFinite(resultValue)) return { "ok": false };
         return { "ok": true, "value": resultValue };
     }
-
-    function compute() {
-        var outcome = calculate(input.text);
-        if (!outcome.ok) { root.result = "Error"; return; }
+    function quickResult(query) {
+        var outcome = calculate(String(query));
+        if (!outcome.ok) return { "ok": false, "text": "Error" };
         var rounded = Math.round(outcome.value * 10000000000) / 10000000000;
-        root.result = String(rounded);
+        return { "ok": true, "text": String(rounded) };
+    }
+    // LOGIC-END
+
+    function runQuick() {
+        var outcome = quickResult(quickInput.text);
+        root.quickText = outcome.ok ? outcome.text : (outcome.error && outcome.error !== "" ? outcome.error : outcome.text);
     }
 
-    function press(key) {
-        if (key === "C") { input.text = ""; root.result = ""; return; }
-        if (key === "=") { root.compute(); return; }
-        input.text += key;
+    UiStack {
+        id: stack
+        orientation: root.hostOrientation
+        compact: root.hostCompact
+
+        UiButton {
+            id: indicator
+            variant: "ghost"
+            text: "="
+            tooltipText: i18n.tr("Calculator: activate for a quick expression")
+            accessibleName: i18n.tr("Calculator quick action")
+            onClicked: popover.toggle()
+        }
+
+        UiText {
+            visible: !root.hostCompact && root.hostOrientation !== "vertical" && root.quickText !== ""
+            width: 140
+            elide: Text.ElideRight
+            wrapMode: Text.NoWrap
+            text: root.quickText
+        }
     }
 
-    Column {
-        id: content
-        anchors.fill: parent
-        anchors.margins: 12
-        spacing: 8
+    UiPopover {
+        id: popover
+        target: indicator
+        accessibleName: i18n.tr("Calculator quick action")
 
-        Text { color: Theme.onSurface; text: "Calculator"; font.bold: true; font.pixelSize: 14 }
+        Column {
+            width: 300
+            spacing: Theme.spacingSmall
 
-        TextField {
-            id: input
-            width: parent.width
-            placeholderText: "e.g. (2 + 3) * 4"
-            Accessible.name: "Calculator expression"
-            ToolTip.text: "Calculator expression"
-            ToolTip.visible: hovered
-            onAccepted: root.compute()
-        }
+            UiText { role: "title"; text: i18n.tr("Calculator") }
 
-        Text {
-            width: parent.width
-            wrapMode: Text.Wrap
-            color: root.result === "Error" ? Theme.error : Theme.onSurface
-            font.pixelSize: 16
-            font.bold: true
-            Accessible.name: "Calculator result"
-            text: root.result === "" ? "Result" : (root.result === "Error" ? "Error" : "= " + root.result)
-        }
+            TextField {
+                id: quickInput
+                width: parent.width
+                placeholderText: i18n.tr("e.g. (2 + 3) * 4")
+                Accessible.name: i18n.tr("Quick calculator expression")
+                ToolTip.text: i18n.tr("Quick calculator expression")
+                ToolTip.visible: hovered
+                onAccepted: root.runQuick()
+                onTextChanged: { if (root.liveResult) root.runQuick(); }
+            }
 
-        Grid {
-            width: parent.width
-            columns: 4
-            spacing: 6
+            UiButton {
+                text: i18n.tr("Compute")
+                tooltipText: i18n.tr("Compute")
+                accessibleName: i18n.tr("Compute")
+                onClicked: root.runQuick()
+            }
 
-            Repeater {
-                model: ["7", "8", "9", "/", "4", "5", "6", "*", "1", "2", "3", "-", "0", ".", "%", "+", "(", ")", "C", "="]
+            UiState {
+                visible: root.quickText === ""
+                width: parent.width
+                kind: "empty"
+                message: i18n.tr("Type an expression and press Compute. Division by zero shows Error.")
+            }
 
-                delegate: Button {
-                    required property var modelData
-                    width: (parent.width - 18) / 4
-                    text: modelData
-                    Accessible.name: modelData === "C" ? "Clear calculator" : (modelData === "=" ? "Compute result" : "Calculator key " + modelData)
-                    ToolTip.text: modelData === "C" ? "Clear" : (modelData === "=" ? "Compute result" : "Insert " + modelData)
-                    ToolTip.visible: hovered
-                    onClicked: root.press(String(modelData))
-                }
+            UiText {
+                visible: root.quickText !== ""
+                width: parent.width
+                text: root.quickText
+            }
+
+            UiText {
+                width: parent.width
+                role: "caption"
+                text: i18n.tr("Full controls are in the dashboard Utilities panel.")
             }
         }
     }

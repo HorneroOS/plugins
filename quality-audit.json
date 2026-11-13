@@ -95,28 +95,28 @@
     {
       "id": "hornero-base-converter",
       "classification": "needs-upgrade",
-      "valueProposition": "Dashboard base converter: validated decimal integer within safe range to binary, octal and hex, and hex back to decimal. Invalid digits show errors. Pure QML.",
+      "valueProposition": "Base Converter 2.0: bar quick conversion with an explicit 0x hex prefix plus compact Utilities dashboard detail, over the preserved safe-range validated conversions; declared launcher entrypoint carries the same tested logic for shell#250.",
       "nativeOverlap": "Converter family overlap with hornero-unit-converter and hornero-color-converter; distinct value is numeric-base conversion.",
       "dimensions": {
         "tooltips": {
           "status": "pass",
-          "note": "Interactive controls carry ToolTip.text (static probe)."
+          "note": "Bar indicator, popover run button and dashboard action buttons carry PluginKit tooltipText; QtQuick.Controls fields (no PluginKit text-input primitive exists) carry ToolTip.text (static probe)."
         },
         "accessibility": {
           "status": "pass",
-          "note": "Interactive controls carry Accessible.name (static probe); screen-reader behaviour itself is unverified graphically."
+          "note": "UiButton/UiPopover accessibleName, Accessible.name on fields and the dashboard card; actions are real buttons, no mouse-only MouseArea (static probe). Live AT-SPI behaviour is not verified."
         },
         "translation": {
-          "status": "fail",
-          "note": "User-visible string literals are not wrapped in qsTr/qsTrId (static probe)."
+          "status": "pass",
+          "note": "Chrome literals go through PluginKit Translations; es (Argentine Spanish) catalog declared and checked complete for literal tr() strings (static probe). Computed result strings are values/units/parser output from the logic block."
         },
         "settings": {
-          "status": "na",
-          "note": "No settings declared in the manifest; none are recorded as needed yet. Revisit if behaviour becomes user-configurable."
+          "status": "pass",
+          "note": "Typed uppercaseHex (boolean, default true, the 1.x output) setting declared and read via PluginKit Settings (static probe)."
         },
         "themeTokens": {
           "status": "pass",
-          "note": "Visible colours come from PluginKit Theme tokens with no hard-coded chrome colours (static probe)."
+          "note": "Visible chrome colours come from PluginKit Ui primitives/Theme tokens; the color-converter preview fill is a computed user-color binding, not chrome (static probe)."
         },
         "screenshots": {
           "status": "fail",
@@ -124,18 +124,18 @@
         },
         "orientation": {
           "status": "unverified",
-          "note": "Orientation/responsiveness across bar, dashboard and desktop placements has not had a graphical review; static checks cannot verify it."
+          "note": "Host context (hostOrientation/hostCompact/hostAvailableWidth) drives UiStack, the compact bar label and dashboard card width, but bar edges, popover placement and dashboard rendering have had no graphical review in a live shell; the declared launcher surface is not loaded by any host yet (shell#250)."
         },
         "loadingErrorStates": {
           "status": "unverified",
-          "note": "Static probe finds error/empty-state text in the QML, but loading and error presentation have not been verified graphically."
+          "note": "UiState empty/error placeholders plus the 1.x explicit error strings cover empty and invalid input on bar popover and dashboard; presentation is not verified graphically in a live shell. The launcher declaration states honestly in the README that it runs nothing today."
         },
         "performance": {
           "status": "unverified",
-          "note": "Not profiled. Static cadence only: timer intervals (ms)=none, process polling=no; runtime cost is unverified."
+          "note": "Not profiled. Static cadence only: no timers, processes or polling; computation is pure JS on user input. Pure logic is oracle-checked in tests/test_utility_logic.py; runtime cost is unverified."
         }
       },
-      "issue": "https://github.com/HorneroOS/plugins/issues/21"
+      "issue": "https://github.com/HorneroOS/plugins/issues/30"
     },
     {
       "id": "hornero-battery",
@@ -185,28 +185,28 @@
     {
       "id": "hornero-calculator",
       "classification": "needs-upgrade",
-      "valueProposition": "Dashboard calculator with a safe tokenizer and recursive-descent parser for +, -, *, /, %, parentheses, decimals and unary minus. Division by zero shows Error.",
+      "valueProposition": "Calculator 2.0: bar quick expression with popover result plus compact Utilities dashboard panel with the 1.x keypad, over the preserved safe parser (no dynamic execution); declared launcher entrypoint carries the same tested logic for shell#250.",
       "nativeOverlap": "No native shell calculator identified; overlaps converter tools only as another dashboard utility.",
       "dimensions": {
         "tooltips": {
           "status": "pass",
-          "note": "Interactive controls carry ToolTip.text (static probe)."
+          "note": "Bar indicator, popover run button and dashboard action buttons carry PluginKit tooltipText; QtQuick.Controls fields (no PluginKit text-input primitive exists) carry ToolTip.text (static probe)."
         },
         "accessibility": {
           "status": "pass",
-          "note": "Interactive controls carry Accessible.name (static probe); screen-reader behaviour itself is unverified graphically."
+          "note": "UiButton/UiPopover accessibleName, Accessible.name on fields and the dashboard card; actions are real buttons, no mouse-only MouseArea (static probe). Live AT-SPI behaviour is not verified."
         },
         "translation": {
-          "status": "fail",
-          "note": "User-visible string literals are not wrapped in qsTr/qsTrId (static probe)."
+          "status": "pass",
+          "note": "Chrome literals go through PluginKit Translations; es (Argentine Spanish) catalog declared and checked complete for literal tr() strings (static probe). Computed result strings are values/units/parser output from the logic block."
         },
         "settings": {
-          "status": "na",
-          "note": "No settings declared in the manifest; none are recorded as needed yet. Revisit if behaviour becomes user-configurable."
+          "status": "pass",
+          "note": "Typed showKeypad (boolean, default true, the 1.x keypad) and liveResult (boolean, default false, the 1.x explicit compute) settings declared and read via PluginKit Settings (static probe)."
         },
         "themeTokens": {
           "status": "pass",
-          "note": "Visible colours come from PluginKit Theme tokens with no hard-coded chrome colours (static probe)."
+          "note": "Visible chrome colours come from PluginKit Ui primitives/Theme tokens; the color-converter preview fill is a computed user-color binding, not chrome (static probe)."
         },
         "screenshots": {
           "status": "fail",
@@ -214,18 +214,18 @@
         },
         "orientation": {
           "status": "unverified",
-          "note": "Orientation/responsiveness across bar, dashboard and desktop placements has not had a graphical review; static checks cannot verify it."
+          "note": "Host context (hostOrientation/hostCompact/hostAvailableWidth) drives UiStack, the compact bar label and dashboard card width, but bar edges, popover placement and dashboard rendering have had no graphical review in a live shell; the declared launcher surface is not loaded by any host yet (shell#250)."
         },
         "loadingErrorStates": {
           "status": "unverified",
-          "note": "Static probe finds error/empty-state text in the QML, but loading and error presentation have not been verified graphically."
+          "note": "UiState empty/error placeholders plus the 1.x explicit error strings cover empty and invalid input on bar popover and dashboard; presentation is not verified graphically in a live shell. The launcher declaration states honestly in the README that it runs nothing today."
         },
         "performance": {
           "status": "unverified",
-          "note": "Not profiled. Static cadence only: timer intervals (ms)=none, process polling=no; runtime cost is unverified."
+          "note": "Not profiled. Static cadence only: no timers, processes or polling; computation is pure JS on user input. Pure logic is oracle-checked in tests/test_utility_logic.py; runtime cost is unverified."
         }
       },
-      "issue": "https://github.com/HorneroOS/plugins/issues/21"
+      "issue": "https://github.com/HorneroOS/plugins/issues/30"
     },
     {
       "id": "hornero-calendar",
@@ -275,28 +275,28 @@
     {
       "id": "hornero-color-converter",
       "classification": "needs-upgrade",
-      "valueProposition": "Dashboard color converter: validated #RGB/#RRGGBB hex to RGB and HSL, and RGB inputs back to hex. Invalid hex shows an error. Pure QML.",
+      "valueProposition": "Color Converter 2.0: bar quick hex lookup plus compact Utilities dashboard panel with preview and RGB inputs, over the preserved validated conversions; declared launcher entrypoint carries the same tested logic for shell#250.",
       "nativeOverlap": "Converter family overlap with hornero-base-converter and hornero-unit-converter; distinct value is colour-space conversion.",
       "dimensions": {
         "tooltips": {
           "status": "pass",
-          "note": "Interactive controls carry ToolTip.text (static probe)."
+          "note": "Bar indicator, popover run button and dashboard action buttons carry PluginKit tooltipText; QtQuick.Controls fields (no PluginKit text-input primitive exists) carry ToolTip.text (static probe)."
         },
         "accessibility": {
           "status": "pass",
-          "note": "Interactive controls carry Accessible.name (static probe); screen-reader behaviour itself is unverified graphically."
+          "note": "UiButton/UiPopover accessibleName, Accessible.name on fields and the dashboard card; actions are real buttons, no mouse-only MouseArea (static probe). Live AT-SPI behaviour is not verified."
         },
         "translation": {
-          "status": "fail",
-          "note": "User-visible string literals are not wrapped in qsTr/qsTrId (static probe)."
+          "status": "pass",
+          "note": "Chrome literals go through PluginKit Translations; es (Argentine Spanish) catalog declared and checked complete for literal tr() strings (static probe). Computed result strings are values/units/parser output from the logic block."
         },
         "settings": {
-          "status": "na",
-          "note": "No settings declared in the manifest; none are recorded as needed yet. Revisit if behaviour becomes user-configurable."
+          "status": "pass",
+          "note": "Typed defaultHex (string, default #336699, the 1.x initial color) and showPreview (boolean, default true) settings declared and read via PluginKit Settings (static probe)."
         },
         "themeTokens": {
           "status": "pass",
-          "note": "Visible colours come from PluginKit Theme tokens with no hard-coded chrome colours (static probe)."
+          "note": "Visible chrome colours come from PluginKit Ui primitives/Theme tokens; the color-converter preview fill is a computed user-color binding, not chrome (static probe)."
         },
         "screenshots": {
           "status": "fail",
@@ -304,18 +304,18 @@
         },
         "orientation": {
           "status": "unverified",
-          "note": "Orientation/responsiveness across bar, dashboard and desktop placements has not had a graphical review; static checks cannot verify it."
+          "note": "Host context (hostOrientation/hostCompact/hostAvailableWidth) drives UiStack, the compact bar label and dashboard card width, but bar edges, popover placement and dashboard rendering have had no graphical review in a live shell; the declared launcher surface is not loaded by any host yet (shell#250)."
         },
         "loadingErrorStates": {
           "status": "unverified",
-          "note": "Static probe finds error/empty-state text in the QML, but loading and error presentation have not been verified graphically."
+          "note": "UiState empty/error placeholders plus the 1.x explicit error strings cover empty and invalid input on bar popover and dashboard; presentation is not verified graphically in a live shell. The launcher declaration states honestly in the README that it runs nothing today."
         },
         "performance": {
           "status": "unverified",
-          "note": "Not profiled. Static cadence only: timer intervals (ms)=none, process polling=no; runtime cost is unverified."
+          "note": "Not profiled. Static cadence only: no timers, processes or polling; computation is pure JS on user input. Pure logic is oracle-checked in tests/test_utility_logic.py; runtime cost is unverified."
         }
       },
-      "issue": "https://github.com/HorneroOS/plugins/issues/21"
+      "issue": "https://github.com/HorneroOS/plugins/issues/30"
     },
     {
       "id": "hornero-countdown",
@@ -365,28 +365,28 @@
     {
       "id": "hornero-date-calculator",
       "classification": "needs-upgrade",
-      "valueProposition": "Dashboard date calculator: validated YYYY-MM-DD real dates, days-between and add-days results using UTC math to avoid DST drift. Pure QML.",
+      "valueProposition": "Date Calculator 2.0: one-line bar date math plus compact Utilities dashboard detail, over the preserved UTC-only real-date validation; declared launcher entrypoint carries the same tested logic for shell#250.",
       "nativeOverlap": "Overlaps hornero-agenda on date arithmetic display; distinct value is days-between and add-days calculation.",
       "dimensions": {
         "tooltips": {
           "status": "pass",
-          "note": "Interactive controls carry ToolTip.text (static probe)."
+          "note": "Bar indicator, popover run button and dashboard action buttons carry PluginKit tooltipText; QtQuick.Controls fields (no PluginKit text-input primitive exists) carry ToolTip.text (static probe)."
         },
         "accessibility": {
           "status": "pass",
-          "note": "Interactive controls carry Accessible.name (static probe); screen-reader behaviour itself is unverified graphically."
+          "note": "UiButton/UiPopover accessibleName, Accessible.name on fields and the dashboard card; actions are real buttons, no mouse-only MouseArea (static probe). Live AT-SPI behaviour is not verified."
         },
         "translation": {
-          "status": "fail",
-          "note": "User-visible string literals are not wrapped in qsTr/qsTrId (static probe)."
+          "status": "pass",
+          "note": "Chrome literals go through PluginKit Translations; es (Argentine Spanish) catalog declared and checked complete for literal tr() strings (static probe). Computed result strings are values/units/parser output from the logic block."
         },
         "settings": {
-          "status": "na",
-          "note": "No settings declared in the manifest; none are recorded as needed yet. Revisit if behaviour becomes user-configurable."
+          "status": "pass",
+          "note": "Typed showUtcNote (boolean, default true, the 1.x note) setting declared and read via PluginKit Settings (static probe)."
         },
         "themeTokens": {
           "status": "pass",
-          "note": "Visible colours come from PluginKit Theme tokens with no hard-coded chrome colours (static probe)."
+          "note": "Visible chrome colours come from PluginKit Ui primitives/Theme tokens; the color-converter preview fill is a computed user-color binding, not chrome (static probe)."
         },
         "screenshots": {
           "status": "fail",
@@ -394,18 +394,18 @@
         },
         "orientation": {
           "status": "unverified",
-          "note": "Orientation/responsiveness across bar, dashboard and desktop placements has not had a graphical review; static checks cannot verify it."
+          "note": "Host context (hostOrientation/hostCompact/hostAvailableWidth) drives UiStack, the compact bar label and dashboard card width, but bar edges, popover placement and dashboard rendering have had no graphical review in a live shell; the declared launcher surface is not loaded by any host yet (shell#250)."
         },
         "loadingErrorStates": {
           "status": "unverified",
-          "note": "Static probe finds error/empty-state text in the QML, but loading and error presentation have not been verified graphically."
+          "note": "UiState empty/error placeholders plus the 1.x explicit error strings cover empty and invalid input on bar popover and dashboard; presentation is not verified graphically in a live shell. The launcher declaration states honestly in the README that it runs nothing today."
         },
         "performance": {
           "status": "unverified",
-          "note": "Not profiled. Static cadence only: timer intervals (ms)=none, process polling=no; runtime cost is unverified."
+          "note": "Not profiled. Static cadence only: no timers, processes or polling; computation is pure JS on user input. Pure logic is oracle-checked in tests/test_utility_logic.py; runtime cost is unverified."
         }
       },
-      "issue": "https://github.com/HorneroOS/plugins/issues/21"
+      "issue": "https://github.com/HorneroOS/plugins/issues/30"
     },
     {
       "id": "hornero-disk-usage",
@@ -545,28 +545,28 @@
     {
       "id": "hornero-json-tools",
       "classification": "needs-upgrade",
-      "valueProposition": "Dashboard JSON tools: Format with 2-space indentation and Minify using JSON parse/stringify only. Parser errors are shown. Pure QML.",
+      "valueProposition": "JSON Tools 2.0: bar quick format/validate plus compact Utilities dashboard Format/Minify detail, over the preserved JSON.parse/stringify-only logic; declared launcher entrypoint carries the same tested logic for shell#250.",
       "nativeOverlap": "Developer-tool overlap with hornero-text-tools and hornero-base-converter; distinct value is JSON format/minify.",
       "dimensions": {
         "tooltips": {
           "status": "pass",
-          "note": "Interactive controls carry ToolTip.text (static probe)."
+          "note": "Bar indicator, popover run button and dashboard action buttons carry PluginKit tooltipText; QtQuick.Controls fields (no PluginKit text-input primitive exists) carry ToolTip.text (static probe)."
         },
         "accessibility": {
           "status": "pass",
-          "note": "Interactive controls carry Accessible.name (static probe); screen-reader behaviour itself is unverified graphically."
+          "note": "UiButton/UiPopover accessibleName, Accessible.name on fields and the dashboard card; actions are real buttons, no mouse-only MouseArea (static probe). Live AT-SPI behaviour is not verified."
         },
         "translation": {
-          "status": "fail",
-          "note": "User-visible string literals are not wrapped in qsTr/qsTrId (static probe)."
+          "status": "pass",
+          "note": "Chrome literals go through PluginKit Translations; es (Argentine Spanish) catalog declared and checked complete for literal tr() strings (static probe). Computed result strings are values/units/parser output from the logic block."
         },
         "settings": {
-          "status": "na",
-          "note": "No settings declared in the manifest; none are recorded as needed yet. Revisit if behaviour becomes user-configurable."
+          "status": "pass",
+          "note": "Typed indentSpaces (integer 0-8, default 2, the 1.x formatting) and defaultAction (enum, default format) settings declared and read via PluginKit Settings (static probe)."
         },
         "themeTokens": {
           "status": "pass",
-          "note": "Visible colours come from PluginKit Theme tokens with no hard-coded chrome colours (static probe)."
+          "note": "Visible chrome colours come from PluginKit Ui primitives/Theme tokens; the color-converter preview fill is a computed user-color binding, not chrome (static probe)."
         },
         "screenshots": {
           "status": "fail",
@@ -574,18 +574,18 @@
         },
         "orientation": {
           "status": "unverified",
-          "note": "Orientation/responsiveness across bar, dashboard and desktop placements has not had a graphical review; static checks cannot verify it."
+          "note": "Host context (hostOrientation/hostCompact/hostAvailableWidth) drives UiStack, the compact bar label and dashboard card width, but bar edges, popover placement and dashboard rendering have had no graphical review in a live shell; the declared launcher surface is not loaded by any host yet (shell#250)."
         },
         "loadingErrorStates": {
           "status": "unverified",
-          "note": "Static probe finds error/empty-state text in the QML, but loading and error presentation have not been verified graphically."
+          "note": "UiState empty/error placeholders plus the 1.x explicit error strings cover empty and invalid input on bar popover and dashboard; presentation is not verified graphically in a live shell. The launcher declaration states honestly in the README that it runs nothing today."
         },
         "performance": {
           "status": "unverified",
-          "note": "Not profiled. Static cadence only: timer intervals (ms)=none, process polling=no; runtime cost is unverified."
+          "note": "Not profiled. Static cadence only: no timers, processes or polling; computation is pure JS on user input. Pure logic is oracle-checked in tests/test_utility_logic.py; runtime cost is unverified."
         }
       },
-      "issue": "https://github.com/HorneroOS/plugins/issues/21"
+      "issue": "https://github.com/HorneroOS/plugins/issues/30"
     },
     {
       "id": "hornero-metronome",
@@ -1220,28 +1220,28 @@
     {
       "id": "hornero-text-tools",
       "classification": "needs-upgrade",
-      "valueProposition": "Dashboard text tools: Uppercase, Lowercase, Title Case and Reverse transforms with live character, word and line counts. Pure QML.",
+      "valueProposition": "Text Tools 2.0: bar quick transform (configured default mode) plus compact Utilities dashboard panel with all 1.x transforms and counts; declared launcher entrypoint carries the same tested logic for shell#250.",
       "nativeOverlap": "Developer-tool overlap with hornero-json-tools; distinct value is case/reverse transforms with counts.",
       "dimensions": {
         "tooltips": {
           "status": "pass",
-          "note": "Interactive controls carry ToolTip.text (static probe)."
+          "note": "Bar indicator, popover run button and dashboard action buttons carry PluginKit tooltipText; QtQuick.Controls fields (no PluginKit text-input primitive exists) carry ToolTip.text (static probe)."
         },
         "accessibility": {
           "status": "pass",
-          "note": "Interactive controls carry Accessible.name (static probe); screen-reader behaviour itself is unverified graphically."
+          "note": "UiButton/UiPopover accessibleName, Accessible.name on fields and the dashboard card; actions are real buttons, no mouse-only MouseArea (static probe). Live AT-SPI behaviour is not verified."
         },
         "translation": {
-          "status": "fail",
-          "note": "User-visible string literals are not wrapped in qsTr/qsTrId (static probe)."
+          "status": "pass",
+          "note": "Chrome literals go through PluginKit Translations; es (Argentine Spanish) catalog declared and checked complete for literal tr() strings (static probe). Computed result strings are values/units/parser output from the logic block."
         },
         "settings": {
-          "status": "na",
-          "note": "No settings declared in the manifest; none are recorded as needed yet. Revisit if behaviour becomes user-configurable."
+          "status": "pass",
+          "note": "Typed defaultMode (enum, default uppercase, the 1.x preselected transform) and showCounts (boolean, default true) settings declared and read via PluginKit Settings (static probe)."
         },
         "themeTokens": {
           "status": "pass",
-          "note": "Visible colours come from PluginKit Theme tokens with no hard-coded chrome colours (static probe)."
+          "note": "Visible chrome colours come from PluginKit Ui primitives/Theme tokens; the color-converter preview fill is a computed user-color binding, not chrome (static probe)."
         },
         "screenshots": {
           "status": "fail",
@@ -1249,44 +1249,44 @@
         },
         "orientation": {
           "status": "unverified",
-          "note": "Orientation/responsiveness across bar, dashboard and desktop placements has not had a graphical review; static checks cannot verify it."
+          "note": "Host context (hostOrientation/hostCompact/hostAvailableWidth) drives UiStack, the compact bar label and dashboard card width, but bar edges, popover placement and dashboard rendering have had no graphical review in a live shell; the declared launcher surface is not loaded by any host yet (shell#250)."
         },
         "loadingErrorStates": {
           "status": "unverified",
-          "note": "Loading/error presentation has not been audited beyond the static probe; no graphical verification yet."
+          "note": "UiState empty/error placeholders plus the 1.x explicit error strings cover empty and invalid input on bar popover and dashboard; presentation is not verified graphically in a live shell. The launcher declaration states honestly in the README that it runs nothing today."
         },
         "performance": {
           "status": "unverified",
-          "note": "Not profiled. Static cadence only: timer intervals (ms)=none, process polling=no; runtime cost is unverified."
+          "note": "Not profiled. Static cadence only: no timers, processes or polling; computation is pure JS on user input. Pure logic is oracle-checked in tests/test_utility_logic.py; runtime cost is unverified."
         }
       },
-      "issue": "https://github.com/HorneroOS/plugins/issues/21"
+      "issue": "https://github.com/HorneroOS/plugins/issues/30"
     },
     {
       "id": "hornero-unit-converter",
       "classification": "needs-upgrade",
-      "valueProposition": "Dashboard unit converter for length (m, km, mi, ft), mass (kg, lb) and temperature (C, F, K). Pure-JS conversions computed live from a text field and unit selectors. No processes or network.",
+      "valueProposition": "Unit Converter 2.0: one-line bar quick conversion plus compact Utilities dashboard selectors, over the preserved base-unit formulas; declared launcher entrypoint carries the same tested logic for shell#250.",
       "nativeOverlap": "Converter family overlap with hornero-base-converter and hornero-color-converter; distinct value is physical-unit conversion.",
       "dimensions": {
         "tooltips": {
-          "status": "fail",
-          "note": "Interactive controls present but no ToolTip.text found (static probe)."
+          "status": "pass",
+          "note": "Bar indicator, popover run button and dashboard action buttons carry PluginKit tooltipText; QtQuick.Controls fields (no PluginKit text-input primitive exists) carry ToolTip.text (static probe)."
         },
         "accessibility": {
           "status": "pass",
-          "note": "Interactive controls carry Accessible.name (static probe); screen-reader behaviour itself is unverified graphically."
+          "note": "UiButton/UiPopover accessibleName, Accessible.name on fields and the dashboard card; actions are real buttons, no mouse-only MouseArea (static probe). Live AT-SPI behaviour is not verified."
         },
         "translation": {
-          "status": "fail",
-          "note": "User-visible string literals are not wrapped in qsTr/qsTrId (static probe)."
+          "status": "pass",
+          "note": "Chrome literals go through PluginKit Translations; es (Argentine Spanish) catalog declared and checked complete for literal tr() strings (static probe). Computed result strings are values/units/parser output from the logic block."
         },
         "settings": {
-          "status": "na",
-          "note": "No settings declared in the manifest; none are recorded as needed yet. Revisit if behaviour becomes user-configurable."
+          "status": "pass",
+          "note": "Typed defaultCategory (enum, default length, the 1.x first category) and precision (integer 0-10, default 6, the 1.x rounding) settings declared and read via PluginKit Settings (static probe)."
         },
         "themeTokens": {
           "status": "pass",
-          "note": "Visible colours come from PluginKit Theme tokens with no hard-coded chrome colours (static probe)."
+          "note": "Visible chrome colours come from PluginKit Ui primitives/Theme tokens; the color-converter preview fill is a computed user-color binding, not chrome (static probe)."
         },
         "screenshots": {
           "status": "fail",
@@ -1294,18 +1294,18 @@
         },
         "orientation": {
           "status": "unverified",
-          "note": "Orientation/responsiveness across bar, dashboard and desktop placements has not had a graphical review; static checks cannot verify it."
+          "note": "Host context (hostOrientation/hostCompact/hostAvailableWidth) drives UiStack, the compact bar label and dashboard card width, but bar edges, popover placement and dashboard rendering have had no graphical review in a live shell; the declared launcher surface is not loaded by any host yet (shell#250)."
         },
         "loadingErrorStates": {
           "status": "unverified",
-          "note": "Loading/error presentation has not been audited beyond the static probe; no graphical verification yet."
+          "note": "UiState empty/error placeholders plus the 1.x explicit error strings cover empty and invalid input on bar popover and dashboard; presentation is not verified graphically in a live shell. The launcher declaration states honestly in the README that it runs nothing today."
         },
         "performance": {
           "status": "unverified",
-          "note": "Not profiled. Static cadence only: timer intervals (ms)=none, process polling=no; runtime cost is unverified."
+          "note": "Not profiled. Static cadence only: no timers, processes or polling; computation is pure JS on user input. Pure logic is oracle-checked in tests/test_utility_logic.py; runtime cost is unverified."
         }
       },
-      "issue": "https://github.com/HorneroOS/plugins/issues/21"
+      "issue": "https://github.com/HorneroOS/plugins/issues/30"
     },
     {
       "id": "hornero-uptime",

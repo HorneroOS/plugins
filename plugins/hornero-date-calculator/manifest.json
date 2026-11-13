@@ -1,22 +1,63 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 2,
   "id": "hornero-date-calculator",
   "name": "Hornero Date Calculator",
-  "version": "1.0.0",
-  "description": "Dashboard date calculator: validated YYYY-MM-DD real dates, days-between and add-days results using UTC math to avoid DST drift. Pure QML.",
+  "version": "2.0.0",
+  "description": "Utility Tools 2.0 date calculator: bar quick action and compact dashboard detail for days-between and add-days on validated YYYY-MM-DD dates, using UTC math to avoid DST drift.",
   "author": "HorneroOS contributors",
   "license": "MIT",
   "homepage": "https://github.com/HorneroOS/plugins",
   "entrypoint": "Main.qml",
+  "placement": "bar",
+  "surfaces": {
+    "dashboard": {
+      "entrypoint": "Dashboard.qml",
+      "size": "compact",
+      "category": "Utilities"
+    },
+    "launcher": {
+      "entrypoint": "Launcher.qml"
+    }
+  },
+  "translations": {
+    "sourceLocale": "en",
+    "locales": [
+      "es"
+    ],
+    "directory": "translations"
+  },
+  "marketplace": {
+    "compatibility": {
+      "minShellVersion": "1.0.0"
+    },
+    "changelog": [
+      {
+        "version": "2.0.0",
+        "notes": "Utility Tools 2.0 (plugins#30): bar quick action with popover, compact Utilities dashboard detail panel and a declaration-only launcher entrypoint (not loaded until shell#250) over one tested pure-JS logic block; typed settings default to 1.x behaviour; Spanish catalog."
+      },
+      {
+        "version": "1.0.0",
+        "notes": "Dashboard date calculator: days-between and add-days with UTC math."
+      }
+    ]
+  },
   "files": [
     "Main.qml",
+    "Dashboard.qml",
+    "Launcher.qml",
     "README.md",
-    "LICENSE"
+    "LICENSE",
+    "translations/es.json"
   ],
   "capabilities": {
     "processCommands": [],
     "networkHosts": [],
-    "settings": {}
-  },
-  "placement": "dashboard"
+    "settings": {
+      "showUtcNote": {
+        "type": "boolean",
+        "default": true,
+        "description": "Show the UTC-math note in the dashboard panel (the 1.x behaviour)."
+      }
+    }
+  }
 }

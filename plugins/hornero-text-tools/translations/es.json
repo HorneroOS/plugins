@@ -1,0 +1,20 @@
+{
+  "Counts": "Conteos",
+  "Full controls are in the dashboard Utilities panel.": "Los controles completos están en el panel Utilidades del tablero.",
+  "Quick text to transform": "Texto rápido a transformar",
+  "Show transformed output": "Mostrar salida transformada",
+  "Text Tools": "Herramientas de texto",
+  "Text Tools quick action": "Acción rápida de herramientas de texto",
+  "Text Tools: activate for a quick transform": "Herramientas de texto: activá para una transformación rápida",
+  "Text input": "Texto de entrada",
+  "Text to transform": "Texto a transformar",
+  "Transform": "Transformar",
+  "Transformed text (read-only, selectable)": "Texto transformado (solo lectura, seleccionable)",
+  "Transformed text output": "Salida de texto transformado",
+  "Type or paste text...": "Escribí o pegá texto...",
+  "Type text and press Transform.": "Escribí texto y tocá Transformar.",
+  "characters": "caracteres",
+  "lines": "líneas",
+  "output:": "salida:",
+  "words": "palabras"
+}

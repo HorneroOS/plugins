@@ -1,22 +1,69 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 2,
   "id": "hornero-color-converter",
   "name": "Hornero Color Converter",
-  "version": "1.0.0",
-  "description": "Dashboard color converter: validated #RGB/#RRGGBB hex to RGB and HSL, and RGB inputs back to hex. Invalid hex shows an error. Pure QML.",
+  "version": "2.0.0",
+  "description": "Utility Tools 2.0 color converter: bar quick hex action and compact dashboard detail converting validated #RGB/#RRGGBB to RGB and HSL and RGB back to hex. Invalid hex shows an error.",
   "author": "HorneroOS contributors",
   "license": "MIT",
   "homepage": "https://github.com/HorneroOS/plugins",
   "entrypoint": "Main.qml",
+  "placement": "bar",
+  "surfaces": {
+    "dashboard": {
+      "entrypoint": "Dashboard.qml",
+      "size": "compact",
+      "category": "Utilities"
+    },
+    "launcher": {
+      "entrypoint": "Launcher.qml"
+    }
+  },
+  "translations": {
+    "sourceLocale": "en",
+    "locales": [
+      "es"
+    ],
+    "directory": "translations"
+  },
+  "marketplace": {
+    "compatibility": {
+      "minShellVersion": "1.0.0"
+    },
+    "changelog": [
+      {
+        "version": "2.0.0",
+        "notes": "Utility Tools 2.0 (plugins#30): bar quick action with popover, compact Utilities dashboard detail panel and a declaration-only launcher entrypoint (not loaded until shell#250) over one tested pure-JS logic block; typed settings default to 1.x behaviour; Spanish catalog."
+      },
+      {
+        "version": "1.0.0",
+        "notes": "Dashboard color converter: validated hex to RGB/HSL and RGB inputs back to hex."
+      }
+    ]
+  },
   "files": [
     "Main.qml",
+    "Dashboard.qml",
+    "Launcher.qml",
     "README.md",
-    "LICENSE"
+    "LICENSE",
+    "translations/es.json"
   ],
   "capabilities": {
     "processCommands": [],
     "networkHosts": [],
-    "settings": {}
-  },
-  "placement": "dashboard"
+    "settings": {
+      "defaultHex": {
+        "type": "string",
+        "default": "#336699",
+        "maxLength": 7,
+        "description": "Hex color pre-filled in the dashboard (#336699, the 1.x initial color)."
+      },
+      "showPreview": {
+        "type": "boolean",
+        "default": true,
+        "description": "Show the color preview swatch in the dashboard (the 1.x behaviour)."
+      }
+    }
+  }
 }

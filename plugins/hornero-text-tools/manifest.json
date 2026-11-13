@@ -1,22 +1,74 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 2,
   "id": "hornero-text-tools",
   "name": "Hornero Text Tools",
-  "version": "1.0.0",
-  "description": "Dashboard text tools: Uppercase, Lowercase, Title Case and Reverse transforms with live character, word and line counts. Pure QML.",
+  "version": "2.0.0",
+  "description": "Utility Tools 2.0 text tools: bar quick transform and compact dashboard detail with Uppercase, Lowercase, Title Case and Reverse plus character, word and line counts. Pure QML.",
   "author": "HorneroOS contributors",
   "license": "MIT",
   "homepage": "https://github.com/HorneroOS/plugins",
   "entrypoint": "Main.qml",
+  "placement": "bar",
+  "surfaces": {
+    "dashboard": {
+      "entrypoint": "Dashboard.qml",
+      "size": "compact",
+      "category": "Utilities"
+    },
+    "launcher": {
+      "entrypoint": "Launcher.qml"
+    }
+  },
+  "translations": {
+    "sourceLocale": "en",
+    "locales": [
+      "es"
+    ],
+    "directory": "translations"
+  },
+  "marketplace": {
+    "compatibility": {
+      "minShellVersion": "1.0.0"
+    },
+    "changelog": [
+      {
+        "version": "2.0.0",
+        "notes": "Utility Tools 2.0 (plugins#30): bar quick action with popover, compact Utilities dashboard detail panel and a declaration-only launcher entrypoint (not loaded until shell#250) over one tested pure-JS logic block; typed settings default to 1.x behaviour; Spanish catalog."
+      },
+      {
+        "version": "1.0.0",
+        "notes": "Dashboard text tools: four transforms with live character, word and line counts."
+      }
+    ]
+  },
   "files": [
     "Main.qml",
+    "Dashboard.qml",
+    "Launcher.qml",
     "README.md",
-    "LICENSE"
+    "LICENSE",
+    "translations/es.json"
   ],
   "capabilities": {
     "processCommands": [],
     "networkHosts": [],
-    "settings": {}
-  },
-  "placement": "dashboard"
+    "settings": {
+      "defaultMode": {
+        "type": "enum",
+        "default": "uppercase",
+        "options": [
+          "uppercase",
+          "lowercase",
+          "title-case",
+          "reverse"
+        ],
+        "description": "Transform preselected in the dashboard and used by the quick action (Uppercase, the 1.x default)."
+      },
+      "showCounts": {
+        "type": "boolean",
+        "default": true,
+        "description": "Show character, word and line counts in the dashboard (the 1.x behaviour)."
+      }
+    }
+  }
 }

@@ -2,53 +2,147 @@ import QtQuick
 import QtQuick.Controls
 import Hornero.PluginKit
 
-// Hornero Date Calculator - UTC math only to avoid DST drift.
+// Date Calculator 2.0 bar surface (primary): a one-button quick action.
+// The button opens a host-owned UiPopover with one quick-query field
+// and the same pure logic as the dashboard detail panel; the full
+// controls stay there. This is the launcher-style quick action that
+// is hosted today. The declared launcher surface (Launcher.qml) is
+// a validated declaration only until the shell launcher provider
+// host (HorneroOS/shell#250) exists; no parallel launcher and no
+// invented PluginKit launcher member is used here. PluginKit has
+// no text-input primitive, so the query field is a QtQuick.Controls
+// TextField with an accessible name and tooltip.
 Item {
     id: root
-    implicitWidth: 320
-    implicitHeight: content.implicitHeight + 24
-    property string errorText: ""
-    property string resultText: ""
+
+    property string hostOrientation: "horizontal"
+    property string hostEdge: "top"
+    property string hostSurface: "bar"
+    property int hostAvailableWidth: 0
+    property int hostAvailableHeight: 0
+    property bool hostCompact: false
+    property string hostScreenName: ""
+
+    implicitWidth: stack.implicitWidth
+    implicitHeight: stack.implicitHeight
+
+    property string quickText: ""
+
+    Translations { id: i18n; pluginId: "hornero-date-calculator" }
+    Settings { id: pluginSettings; pluginId: "hornero-date-calculator" }
+
+    readonly property bool showUtcNote: pluginSettings.value("showUtcNote", true) !== false
+
+    // LOGIC-BEGIN
     function parseDate(t) {
-        var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(t.trim());
+        var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(String(t).trim());
         if (!m) return null;
         var y = Number(m[1]), mo = Number(m[2]), d = Number(m[3]);
-        var dt = new Date(Date.UTC(y, mo-1, d));
-        if (dt.getUTCFullYear()!==y || dt.getUTCMonth()!==mo-1 || dt.getUTCDate()!==d) return null;
+        var dt = new Date(Date.UTC(y, mo - 1, d));
+        if (dt.getUTCFullYear() !== y || dt.getUTCMonth() !== mo - 1 || dt.getUTCDate() !== d) return null;
         return dt;
     }
-    function fmt(dt) {
-        function p(v){ return v<10 ? "0"+v : String(v); }
-        return dt.getUTCFullYear() + "-" + p(dt.getUTCMonth()+1) + "-" + p(dt.getUTCDate());
+    function fmtDate(dt) {
+        function p(v) { return v < 10 ? "0" + v : String(v); }
+        return dt.getUTCFullYear() + "-" + p(dt.getUTCMonth() + 1) + "-" + p(dt.getUTCDate());
     }
-    function daysBetween() {
-        var a = root.parseDate(startInput.text), b = root.parseDate(endInput.text);
-        if (!a || !b) { root.errorText="Enter real dates as YYYY-MM-DD (e.g. 2026-02-30 is rejected)."; root.resultText=""; return; }
-        root.errorText="";
+    function daysBetweenText(aText, bText) {
+        var a = parseDate(aText), b = parseDate(bText);
+        if (!a || !b) return { "ok": false, "text": "", "error": "Enter real dates as YYYY-MM-DD (e.g. 2026-02-30 is rejected)." };
         var days = Math.round((b.getTime() - a.getTime()) / 86400000);
-        root.resultText = "Days between: " + days;
+        return { "ok": true, "text": "Days between: " + days, "error": "" };
     }
-    function addDays() {
-        var a = root.parseDate(baseInput.text);
-        var n = Number(daysInput.text.trim());
-        if (!a) { root.errorText="Enter a real base date as YYYY-MM-DD."; root.resultText=""; return; }
-        if (daysInput.text.trim()==="" || !isFinite(n) || Math.floor(n)!==n) { root.errorText="Enter an integer number of days to add."; root.resultText=""; return; }
-        root.errorText="";
+    function addDaysText(baseText, daysText) {
+        var a = parseDate(baseText);
+        if (!a) return { "ok": false, "text": "", "error": "Enter a real base date as YYYY-MM-DD." };
+        var s = String(daysText).trim();
+        var n = Number(s);
+        if (s === "" || !isFinite(n) || Math.floor(n) !== n) return { "ok": false, "text": "", "error": "Enter an integer number of days to add." };
         var dt = new Date(a.getTime() + n * 86400000);
-        root.resultText = "Resulting date: " + root.fmt(dt);
+        return { "ok": true, "text": "Resulting date: " + fmtDate(dt), "error": "" };
     }
-    Column {
-        id: content
-        anchors.fill: parent; anchors.margins: 12; spacing: 8
-        Text { color: Theme.onSurface; text: "Date Calculator"; font.bold: true; font.pixelSize: 14 }
-        Text { width: parent.width; wrapMode: Text.Wrap; color: Theme.onSurfaceVariant; font.pixelSize: 11; text: "All math uses UTC to avoid DST drift." }
-        TextField { id: startInput; width: parent.width; placeholderText: "Start YYYY-MM-DD"; Accessible.name: "Start date"; ToolTip.text: "Start date YYYY-MM-DD"; ToolTip.visible: hovered }
-        TextField { id: endInput; width: parent.width; placeholderText: "End YYYY-MM-DD"; Accessible.name: "End date"; ToolTip.text: "End date YYYY-MM-DD"; ToolTip.visible: hovered }
-        Button { text: "Days between"; Accessible.name: "Calculate days between"; ToolTip.text: "Days between start and end dates (UTC)"; ToolTip.visible: hovered; onClicked: root.daysBetween() }
-        TextField { id: baseInput; width: parent.width; placeholderText: "Base YYYY-MM-DD"; Accessible.name: "Base date"; ToolTip.text: "Base date YYYY-MM-DD"; ToolTip.visible: hovered }
-        TextField { id: daysInput; width: parent.width; placeholderText: "Days to add (integer)"; Accessible.name: "Days to add"; ToolTip.text: "Integer days to add, may be negative"; ToolTip.visible: hovered }
-        Button { text: "Add days"; Accessible.name: "Add days to base date"; ToolTip.text: "Add days to base date (UTC)"; ToolTip.visible: hovered; onClicked: root.addDays() }
-        Text { visible: root.errorText!==""; width: parent.width; wrapMode: Text.Wrap; color: Theme.error; font.pixelSize: 12; Accessible.name: "Date error"; text: root.errorText }
-        Text { visible: root.resultText!==""; width: parent.width; wrapMode: Text.Wrap; color: Theme.onSurface; font.pixelSize: 13; Accessible.name: "Date result"; text: root.resultText }
+    function quickResult(query) {
+        var parts = String(query).trim().split(/\s+/);
+        if (parts.length === 2 && parseDate(parts[0]) && parseDate(parts[1])) return daysBetweenText(parts[0], parts[1]);
+        if (parts.length === 2) return addDaysText(parts[0], parts[1]);
+        return { "ok": false, "text": "", "error": "Enter real dates as YYYY-MM-DD (e.g. 2026-02-30 is rejected)." };
+    }
+    // LOGIC-END
+
+    function runQuick() {
+        var outcome = quickResult(quickInput.text);
+        root.quickText = outcome.ok ? outcome.text : (outcome.error && outcome.error !== "" ? outcome.error : outcome.text);
+    }
+
+    UiStack {
+        id: stack
+        orientation: root.hostOrientation
+        compact: root.hostCompact
+
+        UiButton {
+            id: indicator
+            variant: "ghost"
+            text: "31"
+            tooltipText: i18n.tr("Date Calculator: activate for a quick date calculation")
+            accessibleName: i18n.tr("Date Calculator quick action")
+            onClicked: popover.toggle()
+        }
+
+        UiText {
+            visible: !root.hostCompact && root.hostOrientation !== "vertical" && root.quickText !== ""
+            width: 140
+            elide: Text.ElideRight
+            wrapMode: Text.NoWrap
+            text: root.quickText
+        }
+    }
+
+    UiPopover {
+        id: popover
+        target: indicator
+        accessibleName: i18n.tr("Date Calculator quick action")
+
+        Column {
+            width: 300
+            spacing: Theme.spacingSmall
+
+            UiText { role: "title"; text: i18n.tr("Date Calculator") }
+
+            TextField {
+                id: quickInput
+                width: parent.width
+                placeholderText: i18n.tr("2026-01-01 2026-02-01")
+                Accessible.name: i18n.tr("Quick date calculation")
+                ToolTip.text: i18n.tr("Quick date calculation")
+                ToolTip.visible: hovered
+                onAccepted: root.runQuick()
+            }
+
+            UiButton {
+                text: i18n.tr("Calculate")
+                tooltipText: i18n.tr("Calculate")
+                accessibleName: i18n.tr("Calculate")
+                onClicked: root.runQuick()
+            }
+
+            UiState {
+                visible: root.quickText === ""
+                width: parent.width
+                kind: "empty"
+                message: i18n.tr("Type two dates, or a date and days to add, and press Calculate.")
+            }
+
+            UiText {
+                visible: root.quickText !== ""
+                width: parent.width
+                text: root.quickText
+            }
+
+            UiText {
+                width: parent.width
+                role: "caption"
+                text: i18n.tr("Full controls are in the dashboard Utilities panel.")
+            }
+        }
     }
 }
