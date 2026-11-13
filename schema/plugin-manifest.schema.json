@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://horneroos.com/schemas/shell-plugin-manifest-v1.json",
   "title": "Hornero Shell Plugin Manifest",
-  "description": "Metadata contract for community-authored Hornero Shell extensions. This schema does not define a sandbox or runtime loader.",
+  "description": "Metadata contract for community-authored Hornero Shell extensions. This schema does not define a sandbox or runtime loader. Cross-field rules that JSON Schema cannot express (surfaces requires schemaVersion 2, a redeclared primary surface must reuse the top-level entrypoint, translation catalog completeness for literal tr() strings, setting constraint consistency) are enforced by scripts/validate_plugins.py and the shell validator.",
   "type": "object",
   "additionalProperties": false,
   "required": [
@@ -18,7 +18,7 @@
     "capabilities"
   ],
   "properties": {
-    "schemaVersion": { "const": 1 },
+    "schemaVersion": { "enum": [1, 2] },
     "id": {
       "type": "string",
       "pattern": "^[a-z0-9][a-z0-9-]{0,47}$"
@@ -44,6 +44,41 @@
       "description": "Optional author signature (minisign framing) over the files-only payload hash; verified by horneroctl (trust state 'signed'). Absence is fine: local hash-pinned trust applies instead."
     },
     "placement": { "type": "string", "enum": ["background", "bar", "dashboard", "desktop"], "default": "background", "description": "Where the entrypoint runs: background (headless, default), bar (rendered in the bar end group) or dashboard (rendered as a card in the dashboard Extensions tab) or desktop (rendered as a widget on the desktop background layer)." },
+    "surfaces": {
+      "type": "object",
+      "minProperties": 1,
+      "propertyNames": { "enum": ["background", "bar", "dashboard", "desktop", "launcher", "settings"] },
+      "additionalProperties": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["entrypoint"],
+        "properties": {
+          "entrypoint": {
+            "type": "string",
+            "maxLength": 240,
+            "pattern": "^(?!/)(?!\\.{1,2}(?:/|$))(?!.*\\/\\.{1,2}(?:/|$))(?!.*//)[A-Za-z0-9._/-]+\\.qml$"
+          },
+          "enabled": { "type": "boolean", "default": true }
+        }
+      },
+      "description": "Manifest v2 only (schemaVersion 2): additional per-surface entry points. The top-level entrypoint/placement pair stays the primary surface; redeclaring it here requires the same entrypoint. launcher/settings are validated declarations whose hosts do not load them yet."
+    },
+    "translations": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["sourceLocale", "locales"],
+      "properties": {
+        "sourceLocale": { "type": "string", "pattern": "^[a-z]{2,3}(_[A-Z]{2})?$" },
+        "locales": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "type": "string", "pattern": "^[a-z]{2,3}(_[A-Z]{2})?$" }
+        },
+        "directory": { "type": "string", "maxLength": 240, "default": "translations" }
+      },
+      "description": "Optional PluginKit Translations declaration: one flat JSON catalog per locale at <directory>/<locale>.json, each listed in files. Plugin QML reads strings through Translations.tr(); qsTr() is rejected because the shell installs no QTranslator for plugins."
+    },
     "entrypoint": {
       "type": "string",
       "maxLength": 240,
@@ -92,15 +127,28 @@
             "additionalProperties": false,
             "required": ["type", "default"],
             "properties": {
-              "type": { "enum": ["boolean", "integer", "number", "string"] },
+              "type": { "enum": ["boolean", "integer", "number", "string", "enum"] },
               "default": { "type": ["boolean", "integer", "number", "string"] },
-              "description": { "type": "string", "maxLength": 160, "pattern": "\\S" }
+              "description": { "type": "string", "maxLength": 160, "pattern": "\\S" },
+              "minimum": { "type": "number" },
+              "maximum": { "type": "number" },
+              "minLength": { "type": "integer", "minimum": 0, "maximum": 4096 },
+              "maxLength": { "type": "integer", "minimum": 0, "maximum": 4096 },
+              "options": {
+                "type": "array",
+                "minItems": 1,
+                "maxItems": 32,
+                "uniqueItems": true,
+                "items": { "type": "string", "minLength": 1, "maxLength": 64 }
+              }
             },
+            "description": "Typed setting (shell #374): constraints belong to their type only (minimum/maximum for integer/number, minLength/maxLength for string, options required for enum) and the default must satisfy them; the validator enforces the cross-field rules.",
             "oneOf": [
               { "properties": { "type": { "const": "boolean" }, "default": { "type": "boolean" } } },
               { "properties": { "type": { "const": "integer" }, "default": { "type": "integer" } } },
               { "properties": { "type": { "const": "number" }, "default": { "type": "number" } } },
-              { "properties": { "type": { "const": "string" }, "default": { "type": "string" } } }
+              { "properties": { "type": { "const": "string" }, "default": { "type": "string" } } },
+              { "properties": { "type": { "const": "enum" }, "default": { "type": "string" } } }
             ]
           }
         }

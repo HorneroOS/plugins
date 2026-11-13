@@ -1,24 +1,47 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 2,
   "id": "hornero-ai-usage",
   "name": "Hornero AI Usage",
-  "version": "1.0.0",
-  "description": "Dashboard card for local AI assistant usage from horneroctl assistant usage --json: sessions, API calls and tokens. Quota is shown as unknown; the provider does not expose a limit.",
+  "version": "2.0.0",
+  "description": "AI Usage 2.0: bar indicator, provider switcher popover and dashboard card over the normalized horneroctl agent usage records. Quota is shown only when a provider record carries it; otherwise it is unknown.",
   "author": "HorneroOS contributors",
   "license": "MIT",
   "homepage": "https://github.com/HorneroOS/plugins",
   "entrypoint": "Main.qml",
+  "placement": "dashboard",
+  "surfaces": {
+    "bar": {
+      "entrypoint": "Bar.qml"
+    }
+  },
+  "translations": {
+    "sourceLocale": "en",
+    "locales": [
+      "es"
+    ],
+    "directory": "translations"
+  },
   "files": [
     "Main.qml",
+    "Bar.qml",
+    "UsageData.qml",
     "README.md",
-    "LICENSE"
+    "LICENSE",
+    "translations/es.json"
   ],
   "capabilities": {
     "processCommands": [
       "horneroctl"
     ],
     "networkHosts": [],
-    "settings": {}
-  },
-  "placement": "dashboard"
+    "settings": {
+      "refreshSeconds": {
+        "type": "integer",
+        "default": 60,
+        "minimum": 15,
+        "maximum": 3600,
+        "description": "Seconds between AI usage refreshes."
+      }
+    }
+  }
 }

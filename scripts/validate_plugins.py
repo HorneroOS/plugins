@@ -27,6 +27,7 @@ This is a static gate only. Passing it is NOT graphical acceptance:
 no plugin is rendered, screenshotted, or exercised in a shell here.
 """
 import json
+import math
 import re
 import stat
 import sys
@@ -36,7 +37,16 @@ ROOT = Path(__file__).resolve().parent.parent
 ID_RE = re.compile(r"^[a-z0-9][a-z0-9-]{0,47}$")
 SEMVER_RE = re.compile(r"^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(-[0-9A-Za-z.-]+)?(\+[0-9A-Za-z.-]+)?$")
 REQUIRED = ["schemaVersion", "id", "name", "version", "description", "author", "license", "entrypoint", "files", "capabilities"]
-ALLOWED_FIELDS = set(REQUIRED) | {"homepage", "placement", "signing"}
+ALLOWED_FIELDS = set(REQUIRED) | {"homepage", "placement", "signing", "surfaces", "translations"}
+SCHEMA_VERSIONS = (1, 2)
+# Manifest v2 surfaces (shell docs/PLUGINS.md): the first four have
+# runtime hosts today; launcher/settings are validated declarations
+# only. Mirrors the shell validator's SURFACES.
+SURFACES = ("background", "bar", "dashboard", "desktop", "launcher", "settings")
+LOCALE_TAG_RE = re.compile(r"^[a-z]{2,3}(_[A-Z]{2})?$")
+TR_LITERAL_RE = re.compile(r'\btr\(\s*"((?:[^"\\]|\\.)*)"')
+QSTR_RE = re.compile(r"\bqsTr(?:Id)?\s*\(")
+PLACEHOLDER_RE = re.compile(r"%\d+")
 BINARY_SUFFIXES = {".so", ".o", ".a", ".bin", ".exe", ".dll", ".pyc"}
 PLACEMENTS = {"background", "bar", "dashboard", "desktop"}
 TEXT_LIMITS = {"name": 64, "description": 280, "author": 120, "license": 80}
@@ -48,7 +58,17 @@ FORBIDDEN_COMMANDS = {"sh", "bash", "dash", "zsh", "fish", "sudo", "doas", "su"}
 COMMAND_RE = re.compile(r"^[A-Za-z0-9_.+-]+$")
 HOST_RE = re.compile(r"^(?:[A-Za-z0-9](?:[A-Za-z0-9-]{0,61}[A-Za-z0-9])?\.)*[A-Za-z0-9](?:[A-Za-z0-9-]{0,61}[A-Za-z0-9])?$")
 SETTING_KEY_RE = re.compile(r"^[a-z][a-zA-Z0-9]{0,47}$")
-SETTING_TYPES = {"boolean", "integer", "number", "string"}
+SETTING_TYPES = {"boolean", "integer", "number", "string", "enum"}
+SETTING_FIELDS = {"type", "default", "description", "minimum", "maximum", "minLength", "maxLength", "options"}
+SETTING_CONSTRAINTS = {
+    "boolean": frozenset(),
+    "integer": frozenset({"minimum", "maximum"}),
+    "number": frozenset({"minimum", "maximum"}),
+    "string": frozenset({"minLength", "maxLength"}),
+    "enum": frozenset({"options"}),
+}
+SETTING_STRING_MAX = 4096
+SETTING_ENUM_MAX_OPTIONS = 32
 NETWORK_APIS = ["XMLHttpRequest", "WebSocket", "NetworkRequest", "TcpSocket"]
 
 AUDIT_FILE = "quality-audit.json"
@@ -65,7 +85,7 @@ PROBED_DIMENSIONS = ["tooltips", "accessibility", "translation", "settings", "th
 DIMENSION_STATUSES = {"pass", "fail", "na", "unverified"}
 ISSUE_RE = re.compile(r"^(https://github\.com/HorneroOS/plugins/issues/\d+|HorneroOS/plugins#\d+)$")
 DATE_RE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
-INTERACTIVE_RE = re.compile(r"\b(Button|TextField|TextInput|TextArea|Slider|MouseArea|TapHandler|Switch|CheckBox|ComboBox|SpinBox)\b")
+INTERACTIVE_RE = re.compile(r"\b(Button|TextField|TextInput|TextArea|Slider|MouseArea|TapHandler|Switch|CheckBox|ComboBox|SpinBox|UiButton|UiToggle|UiSlider)\b")
 HARD_COLOR_RE = re.compile(r'color:\s*"(#[0-9A-Fa-f]{3,8}|red|white|black|gray|grey|blue|green|yellow|orange|purple|pink)"')
 
 
@@ -85,10 +105,34 @@ def default_matches(declared, value) -> bool:
     if declared == "integer":
         return isinstance(value, int) and not isinstance(value, bool)
     if declared == "number":
-        return isinstance(value, (int, float)) and not isinstance(value, bool)
+        return isinstance(value, (int, float)) and not isinstance(value, bool) and math.isfinite(value)
     if declared == "string":
         return isinstance(value, str)
+    if declared == "enum":
+        return isinstance(value, str)
     return False
+
+
+def setting_value_valid(spec: dict, value) -> bool:
+    """Whether value satisfies a typed setting declaration (shell #374)."""
+    kind = spec.get("type")
+    if not default_matches(kind, value):
+        return False
+    if kind == "string":
+        if len(value) > SETTING_STRING_MAX:
+            return False
+        if "minLength" in spec and len(value) < spec["minLength"]:
+            return False
+        if "maxLength" in spec and len(value) > spec["maxLength"]:
+            return False
+    elif kind == "enum":
+        return value in spec.get("options", [])
+    elif kind in ("integer", "number"):
+        if "minimum" in spec and value < spec["minimum"]:
+            return False
+        if "maximum" in spec and value > spec["maximum"]:
+            return False
+    return True
 
 
 def validate_manifest_fields(tag: str, manifest: dict) -> list:
@@ -98,8 +142,8 @@ def validate_manifest_fields(tag: str, manifest: dict) -> list:
             errors.append(f"{tag}: missing required field {field}")
     for field in sorted(set(manifest) - ALLOWED_FIELDS):
         errors.append(f"{tag}: unknown top-level field {field} (schema is additionalProperties: false)")
-    if manifest.get("schemaVersion") != 1:
-        errors.append(f"{tag}: schemaVersion must be 1")
+    if type(manifest.get("schemaVersion")) is not int or manifest.get("schemaVersion") not in SCHEMA_VERSIONS:
+        errors.append(f"{tag}: schemaVersion must be 1 or 2")
     if not ID_RE.match(str(manifest.get("id", ""))):
         errors.append(f"{tag}: id does not match {ID_RE.pattern}")
     if not SEMVER_RE.match(str(manifest.get("version", ""))):
@@ -141,12 +185,158 @@ def validate_manifest_fields(tag: str, manifest: dict) -> list:
                 errors.append(f"{tag}: files entry is not a safe relative path: {name}")
         if entrypoint is not None and entrypoint not in files:
             errors.append(f"{tag}: entrypoint must be listed in files")
+    safe_files = {f for f in (files or []) if isinstance(f, str)}
+    errors += validate_surfaces(tag, manifest, safe_files)
+    errors += validate_translations_declaration(tag, manifest, safe_files)
     caps = manifest.get("capabilities")
     if caps is not None:
         if not isinstance(caps, dict) or set(caps) != {"processCommands", "networkHosts", "settings"}:
             errors.append(f"{tag}: capabilities must have exactly processCommands, networkHosts, settings")
         else:
             errors += validate_capabilities(tag, caps)
+    return errors
+
+
+def validate_surfaces(tag: str, manifest: dict, safe_files: set) -> list:
+    """Manifest v2 surfaces, mirroring the shell validator (#373)."""
+    errors = []
+    if "surfaces" not in manifest:
+        return errors
+    if manifest.get("schemaVersion") != 2:
+        errors.append(f"{tag}: surfaces requires schemaVersion 2 (schemaVersion 1 supports only the single placement/entrypoint surface)")
+        return errors
+    surfaces = manifest["surfaces"]
+    if not isinstance(surfaces, dict) or not surfaces:
+        errors.append(f"{tag}: surfaces must be a non-empty object")
+        return errors
+    placement = manifest.get("placement", "background")
+    entrypoint = manifest.get("entrypoint")
+    for name, surface in surfaces.items():
+        where = f"{tag}: surfaces.{name}"
+        if name not in SURFACES:
+            errors.append(f"{where}: unknown surface (known surfaces: {', '.join(SURFACES)})")
+            continue
+        if not isinstance(surface, dict):
+            errors.append(f"{where} must be an object")
+            continue
+        extra = set(surface) - {"entrypoint", "enabled"}
+        if extra:
+            errors.append(f"{where} contains unknown fields: {', '.join(sorted(extra))}")
+        if "entrypoint" not in surface:
+            errors.append(f"{where}.entrypoint is required")
+            continue
+        surface_entry = surface["entrypoint"]
+        if not is_safe_relpath(surface_entry) or not str(surface_entry).endswith(".qml"):
+            errors.append(f"{where}.entrypoint must be a safe relative .qml path")
+        elif surface_entry not in safe_files:
+            errors.append(f"{where}.entrypoint must be listed in files: {surface_entry}")
+        if name == placement and surface_entry != entrypoint:
+            errors.append(f"{where}.entrypoint conflicts with the top-level entrypoint for the primary placement {placement!r}")
+        if "enabled" in surface and not isinstance(surface["enabled"], bool):
+            errors.append(f"{where}.enabled must be a boolean")
+    return errors
+
+
+def translations_declaration(manifest: dict):
+    """(directory, locales) for a shape-valid declaration, else None."""
+    decl = manifest.get("translations")
+    if not isinstance(decl, dict):
+        return None
+    directory = decl.get("directory", "translations")
+    locales = decl.get("locales")
+    if not isinstance(directory, str) or not isinstance(locales, list):
+        return None
+    return directory, locales
+
+
+def validate_translations_declaration(tag: str, manifest: dict, safe_files: set) -> list:
+    """Translations declaration shape, mirroring the shell validator (#375)."""
+    errors = []
+    if "translations" not in manifest:
+        return errors
+    decl = manifest["translations"]
+    if not isinstance(decl, dict):
+        return [f"{tag}: translations must be an object"]
+    extra = set(decl) - {"sourceLocale", "locales", "directory"}
+    if extra:
+        errors.append(f"{tag}: translations contains unknown fields: {', '.join(sorted(extra))}")
+    if not {"sourceLocale", "locales"} <= set(decl):
+        errors.append(f"{tag}: translations must contain sourceLocale and locales (directory is optional)")
+        return errors
+    if not isinstance(decl["sourceLocale"], str) or not LOCALE_TAG_RE.match(decl["sourceLocale"]):
+        errors.append(f"{tag}: translations.sourceLocale must be a locale tag like \"en\" or \"es_AR\"")
+    locales = decl["locales"]
+    if (
+        not isinstance(locales, list) or not locales
+        or any(not isinstance(loc, str) or not LOCALE_TAG_RE.match(loc) for loc in locales)
+        or len(locales) != len(set(locales))
+    ):
+        errors.append(f"{tag}: translations.locales must be a non-empty list of unique locale tags")
+        return errors
+    directory = decl.get("directory", "translations")
+    if not is_safe_relpath(directory) or str(directory).endswith("/"):
+        errors.append(f"{tag}: translations.directory must be a safe relative path")
+        return errors
+    for locale in locales:
+        catalog = f"{directory}/{locale}.json"
+        if catalog not in safe_files:
+            errors.append(f"{tag}: translations declares locale {locale!r} but files does not list {catalog!r}")
+    return errors
+
+
+def unescape_qml_string(raw: str) -> str:
+    out, i = [], 0
+    escapes = {"n": "\n", "t": "\t", "r": "\r", '"': '"', "'": "'", "\\": "\\"}
+    while i < len(raw):
+        if raw[i] == "\\" and i + 1 < len(raw) and raw[i + 1] in escapes:
+            out.append(escapes[raw[i + 1]])
+            i += 2
+        else:
+            out.append(raw[i])
+            i += 1
+    return "".join(out)
+
+
+def validate_translation_catalogs(tag: str, plugin_dir: Path, manifest: dict, code: str) -> list:
+    """Catalog completeness for literal tr() strings (shell #375 rules)."""
+    errors = []
+    decl = translations_declaration(manifest)
+    if decl is None:
+        return errors
+    directory, locales = decl
+    used = {unescape_qml_string(raw) for raw in TR_LITERAL_RE.findall(code)}
+
+    def unique_object(pairs):
+        result = {}
+        for key, value in pairs:
+            if key in result:
+                raise ValueError(f"duplicate key {key!r}")
+            result[key] = value
+        return result
+
+    for locale in locales:
+        relative = f"{directory}/{locale}.json"
+        path = plugin_dir / relative
+        if not path.is_file():
+            continue  # missing catalog already reported as payload/files error
+        try:
+            catalog = json.loads(path.read_text(), object_pairs_hook=unique_object)
+        except Exception as exc:  # noqa: BLE001
+            errors.append(f"{tag}: {relative} is not readable JSON: {exc}")
+            continue
+        if not isinstance(catalog, dict):
+            errors.append(f"{tag}: {relative} must be a JSON object mapping source strings to translations")
+            continue
+        for source_text, translated in catalog.items():
+            if not source_text.strip() or len(source_text) > 4000:
+                errors.append(f"{tag}: {relative} contains an empty or overlong source string key")
+            if not isinstance(translated, str) or not translated.strip() or len(translated) > 4000:
+                errors.append(f"{tag}: {relative} entry for {source_text!r} must be a non-empty translated string")
+            elif set(PLACEHOLDER_RE.findall(source_text)) != set(PLACEHOLDER_RE.findall(translated)):
+                errors.append(f"{tag}: {relative} entry for {source_text!r} must keep the same %1/%2 placeholders as the source string")
+        missing = sorted(used - set(catalog))
+        if missing:
+            errors.append(f"{tag}: {relative} is missing translations for strings passed to Translations.tr(): " + ", ".join(repr(t) for t in missing))
     return errors
 
 
@@ -177,13 +367,49 @@ def validate_capabilities(tag: str, caps: dict) -> list:
         for key, spec in settings.items():
             if not SETTING_KEY_RE.match(key):
                 errors.append(f"{tag}: settings key does not match {SETTING_KEY_RE.pattern}: {key}")
-            if not isinstance(spec, dict) or not set(spec) <= {"type", "default", "description"} or not {"type", "default"} <= set(spec):
-                errors.append(f"{tag}: settings.{key} must have type and default (description optional)")
+            if not isinstance(spec, dict) or not set(spec) <= SETTING_FIELDS or not {"type", "default"} <= set(spec):
+                errors.append(f"{tag}: settings.{key} must have type and default (description and type constraints optional)")
                 continue
             if spec["type"] not in SETTING_TYPES:
                 errors.append(f"{tag}: settings.{key}.type must be one of {sorted(SETTING_TYPES)}")
-            elif not default_matches(spec["type"], spec["default"]):
-                errors.append(f"{tag}: settings.{key}.default does not match declared type {spec['type']}")
+                continue
+            kind = spec["type"]
+            misplaced = (set(spec) - {"type", "default", "description"}) - SETTING_CONSTRAINTS[kind]
+            if misplaced:
+                errors.append(f"{tag}: settings.{key} of type {kind} cannot declare {', '.join(sorted(misplaced))}")
+                continue
+            if kind == "integer":
+                bad = [b for b in ("minimum", "maximum") if b in spec and not (isinstance(spec[b], int) and not isinstance(spec[b], bool))]
+                if bad:
+                    errors.append(f"{tag}: settings.{key} {'/'.join(bad)} must be an integer")
+                    continue
+            if kind == "number":
+                bad = [b for b in ("minimum", "maximum") if b in spec and not default_matches("number", spec[b])]
+                if bad:
+                    errors.append(f"{tag}: settings.{key} {'/'.join(bad)} must be a finite number")
+                    continue
+            if kind in ("integer", "number") and "minimum" in spec and "maximum" in spec and spec["minimum"] > spec["maximum"]:
+                errors.append(f"{tag}: settings.{key} minimum must not exceed maximum")
+                continue
+            if kind == "string":
+                bad = [b for b in ("minLength", "maxLength") if b in spec and not (isinstance(spec[b], int) and not isinstance(spec[b], bool) and 0 <= spec[b] <= SETTING_STRING_MAX)]
+                if bad:
+                    errors.append(f"{tag}: settings.{key} {'/'.join(bad)} must be an integer between 0 and {SETTING_STRING_MAX}")
+                    continue
+                if "minLength" in spec and "maxLength" in spec and spec["minLength"] > spec["maxLength"]:
+                    errors.append(f"{tag}: settings.{key} minLength must not exceed maxLength")
+                    continue
+            if kind == "enum":
+                options = spec.get("options")
+                if (
+                    not isinstance(options, list) or not options or len(options) > SETTING_ENUM_MAX_OPTIONS
+                    or any(not isinstance(o, str) or not o or len(o) > 64 for o in options)
+                    or len(options) != len(set(options))
+                ):
+                    errors.append(f"{tag}: settings.{key} of type enum must declare options: 1 to {SETTING_ENUM_MAX_OPTIONS} unique non-empty strings of at most 64 chars")
+                    continue
+            if not setting_value_valid(spec, spec["default"]):
+                errors.append(f"{tag}: settings.{key}.default does not match declared type {spec['type']} or its constraints")
             desc = spec.get("description")
             if desc is not None and (not isinstance(desc, str) or not desc.strip() or len(desc) > 160):
                 errors.append(f"{tag}: settings.{key}.description must be non-blank, at most 160 chars")
@@ -231,6 +457,8 @@ def validate_qml_contract(tag: str, manifest: dict, code: str) -> list:
     for plugin_id in sorted(set(re.findall(r'pluginId:\s*"([^"]+)"', code))):
         if plugin_id != manifest.get("id"):
             errors.append(f"{tag}: Settings pluginId {plugin_id} does not equal manifest id")
+    if QSTR_RE.search(code):
+        errors.append(f"{tag}: qsTr()/qsTrId() is never translated for plugins (the shell installs no QTranslator for extension catalogs); use PluginKit Translations and tr() instead")
     return errors
 
 
@@ -277,6 +505,7 @@ def validate_plugin_dir(plugin_dir: Path):
             code += (plugin_dir / name).read_text(errors="replace") + "\n"
     if code:
         errors += validate_qml_contract(tag, manifest, code)
+        errors += validate_translation_catalogs(tag, plugin_dir, manifest, code)
     return errors, manifest, code
 
 
@@ -298,12 +527,26 @@ def quality_probe(plugin_dir: Path, manifest: dict, code: str, root: Path) -> di
     declared_settings = caps.get("settings") or {}
     interactive = bool(INTERACTIVE_RE.search(code))
     probe = {}
-    probe["tooltips"] = "na" if not interactive else ("pass" if "ToolTip.text" in code else "fail")
-    probe["accessibility"] = "na" if not interactive else ("pass" if "Accessible.name" in code else "fail")
+    # PluginKit controls expose tooltips/accessible names through the
+    # kit properties (tooltipText/accessibleName, backed by UiTooltip
+    # and Accessible.* inside the kit); plain Qt controls use the
+    # attached ToolTip.text/Accessible.name properties. Both are real.
+    has_tooltip = "ToolTip.text" in code or "tooltipText" in code or "UiTooltip" in code
+    has_a11y_name = "Accessible.name" in code or "accessibleName" in code
+    probe["tooltips"] = "na" if not interactive else ("pass" if has_tooltip else "fail")
+    probe["accessibility"] = "na" if not interactive else ("pass" if has_a11y_name else "fail")
     if not translatable_literals(code):
         probe["translation"] = "na"
     else:
-        probe["translation"] = "pass" if ("qsTr(" in code or "qsTrId(" in code) else "fail"
+        # The shell rejects qsTr() in plugins (no QTranslator is
+        # installed for them); PluginKit Translations + tr() is the
+        # only mechanism that actually translates.
+        has_translations = (
+            "Translations" in code
+            and bool(TR_LITERAL_RE.search(code))
+            and translations_declaration(manifest) is not None
+        )
+        probe["translation"] = "pass" if has_translations else "fail"
     if not declared_settings:
         probe["settings"] = "na"
     else:

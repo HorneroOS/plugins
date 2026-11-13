@@ -1,132 +1,207 @@
 import QtQuick
-import Quickshell.Io
 import Hornero.PluginKit
 
-// Hornero AI Usage - dashboard card reading the typed contract
-// `horneroctl assistant usage --json` every 60 seconds. Read-only.
-// The provider does not expose a quota/limit, so quota is reported
-// as unknown rather than invented. Failures show an error state,
-// never fabricated zeros.
+// AI Usage 2.0 dashboard surface (primary): one block per provider
+// from the normalized horneroctl agent usage records. Providers
+// degrade independently — an unavailable or failed collector is
+// labelled as such beside the healthy ones. Quota is shown only
+// when the provider's own record carries an official snapshot.
 Item {
     id: root
 
-    property bool hasData: false
-    property string errorText: ""
-    property int sessions: 0
-    property int apiCalls: 0
-    property int inputTokens: 0
-    property int outputTokens: 0
-    property int totalTokens: 0
-    property string modelsText: ""
-    property string buffer: ""
+    // Host context (opt-in): defaults keep the roomy 1.x dashboard
+    // layout when no host values are injected.
+    property string hostOrientation: "horizontal"
+    property bool hostCompact: false
+    property int hostAvailableWidth: 0
 
-    implicitWidth: 300
-    implicitHeight: content.implicitHeight + 24
+    implicitWidth: hostAvailableWidth > 0 ? Math.min(360, hostAvailableWidth) : 320
+    implicitHeight: card.implicitHeight
 
-    function refresh(): void {
-        if (!usageProc.running) {
-            root.buffer = "";
-            usageProc.running = true;
-        }
+    Translations {
+        id: i18n
+
+        pluginId: "hornero-ai-usage"
     }
 
-    Component.onCompleted: refresh()
-
-    Timer {
-        interval: 60000
-        repeat: true
-        running: true
-        onTriggered: root.refresh()
+    UsageData {
+        id: usage
     }
 
-    Process {
-        id: usageProc
-
-        command: ["horneroctl", "assistant", "usage", "--json"]
-
-        stdout: SplitParser {
-            onRead: data => {
-                root.buffer += data;
-            }
-        }
-        onExited: exitCode => {
-            try {
-                const parsed = JSON.parse(root.buffer.trim());
-                const data = (parsed && parsed.data) || parsed || {};
-                if (parsed && parsed.ok === false)
-                    throw new Error("horneroctl reported failure");
-                root.sessions = Number(data.sessions || 0);
-                root.apiCalls = Number(data.apiCalls || 0);
-                root.inputTokens = Number(data.inputTokens || 0);
-                root.outputTokens = Number(data.outputTokens || 0);
-                root.totalTokens = Number(data.totalTokens || (root.inputTokens + root.outputTokens));
-                // horneroctl contract: models is a comma-joined string of
-                // "name:tokens" entries (map[string]string JSON), not an object.
-                let models = data.models || "";
-                if (Array.isArray(models))
-                    models = models.map(m => (typeof m === "string" ? m : String(m.name || m.id || ""))).join(",");
-                else if (typeof models !== "string")
-                    models = "";
-                root.modelsText = models.split(",").map(s => s.trim()).filter(s => s.length > 0).join(", ");
-                root.hasData = true;
-                root.errorText = "";
-            } catch (e) {
-                root.hasData = false;
-                root.errorText = "AI usage unavailable: horneroctl assistant usage returned no usable data.";
-            }
-        }
+    function statusText(status: string): string {
+        if (status === "ok")
+            return i18n.tr("Available");
+        if (status === "error")
+            return i18n.tr("Error");
+        return i18n.tr("Unavailable");
     }
 
-    Column {
-        id: content
+    function freshnessText(freshness: string): string {
+        if (freshness === "fresh")
+            return i18n.tr("Fresh");
+        if (freshness === "stale")
+            return i18n.tr("Stale");
+        return i18n.tr("Freshness unknown");
+    }
+
+    UiCard {
+        id: card
 
         anchors.fill: parent
-        anchors.margins: 12
-        spacing: 6
-
-        Text {
-            color: Theme.onSurface
-            text: "AI Usage"
-            font.bold: true
-            font.pixelSize: 14
-        }
-
-        Text {
-            visible: !root.hasData
-            width: parent.width
-            wrapMode: Text.Wrap
-            color: Theme.error
-            text: root.errorText.length > 0 ? root.errorText : "Loading AI usage..."
-        }
+        Accessible.name: i18n.tr("AI Usage")
 
         Column {
-            visible: root.hasData
             width: parent.width
-            spacing: 4
+            spacing: Theme.spacingSmall
 
-            Text { color: Theme.onSurface; text: "Sessions: " + root.sessions }
-            Text { color: Theme.onSurface; text: "API calls: " + root.apiCalls }
-            Text { color: Theme.onSurface; text: "Input tokens: " + root.inputTokens }
-            Text { color: Theme.onSurface; text: "Output tokens: " + root.outputTokens }
-            Text { color: Theme.onSurface; text: "Total tokens: " + root.totalTokens }
-            Text {
-                width: parent.width
-                wrapMode: Text.Wrap
-                color: Theme.onSurfaceVariant
-                visible: root.modelsText.length > 0
-                text: "Models: " + root.modelsText
+            UiText {
+                role: "title"
+                text: i18n.tr("AI Usage")
             }
-            Text {
+
+            UiState {
+                visible: usage.loading && !usage.hasData
                 width: parent.width
-                wrapMode: Text.Wrap
-                color: Theme.onSurfaceVariant
-                text: "Quota: unknown - the provider does not expose a limit."
+                kind: "loading"
+                message: i18n.tr("Loading AI usage...")
+            }
+
+            UiState {
+                visible: usage.failed
+                width: parent.width
+                kind: "error"
+                message: i18n.tr("AI usage unavailable: horneroctl returned no usable data.")
+            }
+
+            Repeater {
+                model: usage.records
+
+                Column {
+                    required property var modelData
+
+                    width: parent.width
+                    spacing: Theme.spacingSmall
+
+                    UiStack {
+                        orientation: root.hostOrientation
+                        compact: root.hostCompact
+
+                        UiText {
+                            role: "body"
+                            text: modelData.provider
+                        }
+
+                        UiChip {
+                            text: root.statusText(String(modelData.status || ""))
+                            tone: modelData.status === "ok" ? "primary" : modelData.status === "error" ? "error" : "neutral"
+                        }
+
+                        UiChip {
+                            visible: modelData.status === "ok"
+                            text: root.freshnessText(String(modelData.freshness || ""))
+                        }
+                    }
+
+                    UiStack {
+                        visible: modelData.status === "ok"
+                        orientation: root.hostOrientation
+                        compact: root.hostCompact
+
+                        UiMetric {
+                            label: i18n.tr("Total tokens")
+                            value: i18n.formatNumber(Number(modelData.totalTokens || 0))
+                        }
+
+                        UiMetric {
+                            visible: !root.hostCompact
+                            label: i18n.tr("Input tokens")
+                            value: i18n.formatNumber(Number(modelData.inputTokens || 0))
+                        }
+
+                        UiMetric {
+                            visible: !root.hostCompact
+                            label: i18n.tr("Output tokens")
+                            value: i18n.formatNumber(Number(modelData.outputTokens || 0))
+                        }
+                    }
+
+                    UiText {
+                        visible: modelData.status === "ok" && modelData.sessions !== undefined
+                        role: "caption"
+                        text: i18n.tr("Sessions: %1").arg(i18n.formatNumber(Number(modelData.sessions || 0)))
+                    }
+
+                    UiText {
+                        visible: modelData.status === "ok" && modelData.apiCalls !== undefined
+                        role: "caption"
+                        text: i18n.tr("API calls: %1").arg(i18n.formatNumber(Number(modelData.apiCalls || 0)))
+                    }
+
+                    UiText {
+                        visible: modelData.status === "ok" && typeof modelData.models === "string" && modelData.models.length > 0
+                        width: parent.width
+                        role: "caption"
+                        text: i18n.tr("Models: %1").arg(String(modelData.models || ""))
+                    }
+
+                    UiText {
+                        visible: modelData.status === "ok" && typeof modelData.periodStart === "string" && modelData.periodStart.length > 0
+                        width: parent.width
+                        role: "caption"
+                        text: i18n.tr("Period: %1 to %2").arg(String(modelData.periodStart || "")).arg(String(modelData.periodEnd || ""))
+                    }
+
+                    Column {
+                        visible: modelData.status === "ok" && modelData.quota === "available"
+                        width: parent.width
+                        spacing: Theme.spacingSmall
+
+                        UiText {
+                            role: "caption"
+                            text: i18n.tr("Quota used: %1%").arg(i18n.formatNumber(Math.round(Number(modelData.quotaUsedPercent || 0))))
+                        }
+
+                        UiProgress {
+                            width: parent.width
+                            value: Math.max(0, Math.min(1, Number(modelData.quotaUsedPercent || 0) / 100))
+                        }
+
+                        UiText {
+                            visible: Number(modelData.quotaResetsAtUnix || 0) > 0
+                            role: "caption"
+                            text: i18n.tr("Quota resets: %1").arg(i18n.formatDateTime(new Date(Number(modelData.quotaResetsAtUnix || 0) * 1000), "yyyy-MM-dd HH:mm"))
+                        }
+                    }
+
+                    UiText {
+                        visible: modelData.status === "ok" && modelData.quota !== "available"
+                        width: parent.width
+                        role: "caption"
+                        text: i18n.tr("Quota: unknown - the provider does not expose a limit.")
+                    }
+
+                    UiText {
+                        visible: modelData.status === "ok" && typeof modelData.balance === "string" && modelData.balance !== "unknown" && modelData.balance.length > 0
+                        role: "caption"
+                        text: i18n.tr("Balance: %1").arg(String(modelData.balance || ""))
+                    }
+
+                    UiText {
+                        visible: modelData.status !== "ok"
+                        width: parent.width
+                        role: "caption"
+                        text: i18n.tr("Unavailable: %1").arg(Array.isArray(modelData.errors) && modelData.errors.length > 0 ? modelData.errors.join("; ") : root.statusText(String(modelData.status || "")))
+                    }
+                }
+            }
+
+            UiButton {
+                text: i18n.tr("Refresh")
+                variant: "ghost"
+                tooltipText: i18n.tr("Reload AI usage from horneroctl")
+                accessibleName: i18n.tr("Refresh AI usage")
+                onClicked: usage.refresh()
             }
         }
-    }
-
-    MouseArea {
-        anchors.fill: parent
-        onClicked: root.refresh()
     }
 }
