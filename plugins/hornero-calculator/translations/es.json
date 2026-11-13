@@ -1,0 +1,19 @@
+{
+  "Calculator": "Calculadora",
+  "Calculator expression": "Expresión de la calculadora",
+  "Calculator key": "Tecla de calculadora",
+  "Calculator quick action": "Acción rápida de la calculadora",
+  "Calculator result": "Resultado de la calculadora",
+  "Calculator: activate for a quick expression": "Calculadora: activá para una expresión rápida",
+  "Clear": "Borrar",
+  "Clear calculator": "Borrar calculadora",
+  "Compute": "Calcular",
+  "Compute result": "Calcular resultado",
+  "Error": "Error",
+  "Full controls are in the dashboard Utilities panel.": "Los controles completos están en el panel Utilidades del tablero.",
+  "Insert": "Insertar",
+  "Quick calculator expression": "Expresión rápida de calculadora",
+  "Result": "Resultado",
+  "Type an expression and press Compute. Division by zero shows Error.": "Escribí una expresión y tocá Calcular. La división por cero muestra Error.",
+  "e.g. (2 + 3) * 4": "ej. (2 + 3) * 4"
+}

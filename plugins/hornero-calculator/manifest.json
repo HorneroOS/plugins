@@ -1,14 +1,68 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 2,
   "id": "hornero-calculator",
   "name": "Hornero Calculator",
-  "version": "1.0.0",
-  "description": "Dashboard calculator with a safe tokenizer and recursive-descent parser for +, -, *, /, %, parentheses, decimals and unary minus. Division by zero shows Error.",
+  "version": "2.0.0",
+  "description": "Utility Tools 2.0 calculator: bar quick action and compact dashboard detail over a safe tokenizer/recursive-descent parser (+ - * / %, parentheses, decimals, unary minus). Division by zero shows Error.",
   "author": "HorneroOS contributors",
   "license": "MIT",
   "homepage": "https://github.com/HorneroOS/plugins",
   "entrypoint": "Main.qml",
-  "files": ["Main.qml", "README.md", "LICENSE"],
-  "capabilities": {"processCommands": [], "networkHosts": [], "settings": {}},
-  "placement": "dashboard"
+  "placement": "bar",
+  "surfaces": {
+    "dashboard": {
+      "entrypoint": "Dashboard.qml",
+      "size": "compact",
+      "category": "Utilities"
+    },
+    "launcher": {
+      "entrypoint": "Launcher.qml"
+    }
+  },
+  "translations": {
+    "sourceLocale": "en",
+    "locales": [
+      "es"
+    ],
+    "directory": "translations"
+  },
+  "marketplace": {
+    "compatibility": {
+      "minShellVersion": "1.0.0"
+    },
+    "changelog": [
+      {
+        "version": "2.0.0",
+        "notes": "Utility Tools 2.0 (plugins#30): bar quick action with popover, compact Utilities dashboard detail panel and a declaration-only launcher entrypoint (not loaded until shell#250) over one tested pure-JS logic block; typed settings default to 1.x behaviour; Spanish catalog."
+      },
+      {
+        "version": "1.0.0",
+        "notes": "Dashboard calculator with a safe tokenizer and recursive-descent parser; division by zero showed Error."
+      }
+    ]
+  },
+  "files": [
+    "Main.qml",
+    "Dashboard.qml",
+    "Launcher.qml",
+    "README.md",
+    "LICENSE",
+    "translations/es.json"
+  ],
+  "capabilities": {
+    "processCommands": [],
+    "networkHosts": [],
+    "settings": {
+      "showKeypad": {
+        "type": "boolean",
+        "default": true,
+        "description": "Show the keypad grid in the dashboard panel (the 1.x behaviour)."
+      },
+      "liveResult": {
+        "type": "boolean",
+        "default": false,
+        "description": "Recompute the bar quick action as you type; off keeps 1.x explicit compute on Enter or =."
+      }
+    }
+  }
 }

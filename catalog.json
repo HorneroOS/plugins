@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedFrom": "6585f83fa8712672b2a86c3c2efba00e21bc9d32",
+  "generatedFrom": "4be1bbe8731d30aa908b3352214cab19031b3d3e",
   "plugins": [
     {
       "id": "hornero-agenda",
@@ -69,21 +69,27 @@
     {
       "id": "hornero-base-converter",
       "name": "Hornero Base Converter",
-      "version": "1.0.0",
-      "description": "Dashboard base converter: validated decimal integer within safe range to binary, octal and hex, and hex back to decimal. Invalid digits show errors. Pure QML.",
+      "version": "2.0.0",
+      "description": "Utility Tools 2.0 base converter: bar quick action (decimal or 0x hex) and compact dashboard detail converting decimal integers to binary/octal/hex and hex back. Invalid digits show errors.",
       "author": "HorneroOS contributors",
       "license": "MIT",
       "homepage": "https://github.com/HorneroOS/plugins",
-      "placement": "dashboard",
+      "placement": "bar",
       "category": "utilities",
       "capabilities": {
         "processCommands": [],
         "networkHosts": [],
-        "settings": {}
+        "settings": {
+          "uppercaseHex": {
+            "type": "boolean",
+            "default": true,
+            "description": "Show hexadecimal output in uppercase (the 1.x behaviour)."
+          }
+        }
       },
       "trust": "official",
       "path": "plugins/hornero-base-converter",
-      "sha256": "4e3d01da0da8bbb3c9825c61ed9944be74c02c8fc06689d9010085f4a01ca310"
+      "sha256": "0789307a9e58f79073d061691823b537a4fd74639750ae19470a25e4330c01fb"
     },
     {
       "id": "hornero-battery",
@@ -107,21 +113,32 @@
     {
       "id": "hornero-calculator",
       "name": "Hornero Calculator",
-      "version": "1.0.0",
-      "description": "Dashboard calculator with a safe tokenizer and recursive-descent parser for +, -, *, /, %, parentheses, decimals and unary minus. Division by zero shows Error.",
+      "version": "2.0.0",
+      "description": "Utility Tools 2.0 calculator: bar quick action and compact dashboard detail over a safe tokenizer/recursive-descent parser (+ - * / %, parentheses, decimals, unary minus). Division by zero shows Error.",
       "author": "HorneroOS contributors",
       "license": "MIT",
       "homepage": "https://github.com/HorneroOS/plugins",
-      "placement": "dashboard",
+      "placement": "bar",
       "category": "utilities",
       "capabilities": {
         "processCommands": [],
         "networkHosts": [],
-        "settings": {}
+        "settings": {
+          "showKeypad": {
+            "type": "boolean",
+            "default": true,
+            "description": "Show the keypad grid in the dashboard panel (the 1.x behaviour)."
+          },
+          "liveResult": {
+            "type": "boolean",
+            "default": false,
+            "description": "Recompute the bar quick action as you type; off keeps 1.x explicit compute on Enter or =."
+          }
+        }
       },
       "trust": "official",
       "path": "plugins/hornero-calculator",
-      "sha256": "4ea95ef0c2f41d3045029c6586936a647c0c28834414952bdca081cd6bf3a24a"
+      "sha256": "eab8a6b5e3d0e2ea62e88fb6325295d55a8b9d16b6982ae23fee2a5cb50b3ac6"
     },
     {
       "id": "hornero-calendar",
@@ -170,21 +187,33 @@
     {
       "id": "hornero-color-converter",
       "name": "Hornero Color Converter",
-      "version": "1.0.0",
-      "description": "Dashboard color converter: validated #RGB/#RRGGBB hex to RGB and HSL, and RGB inputs back to hex. Invalid hex shows an error. Pure QML.",
+      "version": "2.0.0",
+      "description": "Utility Tools 2.0 color converter: bar quick hex action and compact dashboard detail converting validated #RGB/#RRGGBB to RGB and HSL and RGB back to hex. Invalid hex shows an error.",
       "author": "HorneroOS contributors",
       "license": "MIT",
       "homepage": "https://github.com/HorneroOS/plugins",
-      "placement": "dashboard",
+      "placement": "bar",
       "category": "utilities",
       "capabilities": {
         "processCommands": [],
         "networkHosts": [],
-        "settings": {}
+        "settings": {
+          "defaultHex": {
+            "type": "string",
+            "default": "#336699",
+            "maxLength": 7,
+            "description": "Hex color pre-filled in the dashboard (#336699, the 1.x initial color)."
+          },
+          "showPreview": {
+            "type": "boolean",
+            "default": true,
+            "description": "Show the color preview swatch in the dashboard (the 1.x behaviour)."
+          }
+        }
       },
       "trust": "official",
       "path": "plugins/hornero-color-converter",
-      "sha256": "2f5810ef3a1f5f659e77bbaa73a2f1b4e00d16c6c814855985c76147f62b62ea"
+      "sha256": "94d63bcba0532c2ab8c2351e502684d076385aa97741655b41947a285b61b2d0"
     },
     {
       "id": "hornero-countdown",
@@ -236,21 +265,27 @@
     {
       "id": "hornero-date-calculator",
       "name": "Hornero Date Calculator",
-      "version": "1.0.0",
-      "description": "Dashboard date calculator: validated YYYY-MM-DD real dates, days-between and add-days results using UTC math to avoid DST drift. Pure QML.",
+      "version": "2.0.0",
+      "description": "Utility Tools 2.0 date calculator: bar quick action and compact dashboard detail for days-between and add-days on validated YYYY-MM-DD dates, using UTC math to avoid DST drift.",
       "author": "HorneroOS contributors",
       "license": "MIT",
       "homepage": "https://github.com/HorneroOS/plugins",
-      "placement": "dashboard",
+      "placement": "bar",
       "category": "utilities",
       "capabilities": {
         "processCommands": [],
         "networkHosts": [],
-        "settings": {}
+        "settings": {
+          "showUtcNote": {
+            "type": "boolean",
+            "default": true,
+            "description": "Show the UTC-math note in the dashboard panel (the 1.x behaviour)."
+          }
+        }
       },
       "trust": "official",
       "path": "plugins/hornero-date-calculator",
-      "sha256": "1a0c5ae719a0f508efd35225722ad8d2dba90eda5daf4c38b1f72fcd4c4e3e29"
+      "sha256": "2fd8823f1f85e77a1bf770f0b963d2407c7e796e2ddddd033f1f5a6c1cfc28c0"
     },
     {
       "id": "hornero-disk-usage",
@@ -374,21 +409,38 @@
     {
       "id": "hornero-json-tools",
       "name": "Hornero JSON Tools",
-      "version": "1.0.0",
-      "description": "Dashboard JSON tools: Format with 2-space indentation and Minify using JSON parse/stringify only. Parser errors are shown. Pure QML.",
+      "version": "2.0.0",
+      "description": "Utility Tools 2.0 JSON tools: bar quick format/validate action and compact dashboard detail with Format and Minify using JSON parse/stringify only. Parser errors are shown.",
       "author": "HorneroOS contributors",
       "license": "MIT",
       "homepage": "https://github.com/HorneroOS/plugins",
-      "placement": "dashboard",
+      "placement": "bar",
       "category": "utilities",
       "capabilities": {
         "processCommands": [],
         "networkHosts": [],
-        "settings": {}
+        "settings": {
+          "indentSpaces": {
+            "type": "integer",
+            "default": 2,
+            "minimum": 0,
+            "maximum": 8,
+            "description": "Spaces per indent level for Format (2, the 1.x formatting)."
+          },
+          "defaultAction": {
+            "type": "enum",
+            "default": "format",
+            "options": [
+              "format",
+              "minify"
+            ],
+            "description": "Action run by the bar quick action (Format, the 1.x primary button)."
+          }
+        }
       },
       "trust": "official",
       "path": "plugins/hornero-json-tools",
-      "sha256": "8577ba8b6b0b1c2476a53e6061f38f8bf47ba3e158d5f7bc4debc5f4dd36353f"
+      "sha256": "2dd8e98bd5553462f13dca936e42a45a753844d3b2f70b9baacdf790e0582f06"
     },
     {
       "id": "hornero-metronome",
@@ -916,40 +968,75 @@
     {
       "id": "hornero-text-tools",
       "name": "Hornero Text Tools",
-      "version": "1.0.0",
-      "description": "Dashboard text tools: Uppercase, Lowercase, Title Case and Reverse transforms with live character, word and line counts. Pure QML.",
+      "version": "2.0.0",
+      "description": "Utility Tools 2.0 text tools: bar quick transform and compact dashboard detail with Uppercase, Lowercase, Title Case and Reverse plus character, word and line counts. Pure QML.",
       "author": "HorneroOS contributors",
       "license": "MIT",
       "homepage": "https://github.com/HorneroOS/plugins",
-      "placement": "dashboard",
+      "placement": "bar",
       "category": "utilities",
       "capabilities": {
         "processCommands": [],
         "networkHosts": [],
-        "settings": {}
+        "settings": {
+          "defaultMode": {
+            "type": "enum",
+            "default": "uppercase",
+            "options": [
+              "uppercase",
+              "lowercase",
+              "title-case",
+              "reverse"
+            ],
+            "description": "Transform preselected in the dashboard and used by the quick action (Uppercase, the 1.x default)."
+          },
+          "showCounts": {
+            "type": "boolean",
+            "default": true,
+            "description": "Show character, word and line counts in the dashboard (the 1.x behaviour)."
+          }
+        }
       },
       "trust": "official",
       "path": "plugins/hornero-text-tools",
-      "sha256": "9aea9e9c2b73960e5d0064a49f399a902c34c98a5e413973d0176313cf915f10"
+      "sha256": "2f541a54e57e6b8e22141a91c5f032442e171285654a608b4b8017c58f23e15c"
     },
     {
       "id": "hornero-unit-converter",
       "name": "Hornero Unit Converter",
-      "version": "1.0.0",
-      "description": "Dashboard unit converter for length (m, km, mi, ft), mass (kg, lb) and temperature (C, F, K). Pure-JS conversions computed live from a text field and unit selectors. No processes or network.",
+      "version": "2.0.0",
+      "description": "Utility Tools 2.0 unit converter: bar quick action (10 km to mi) and compact dashboard detail for length (m, km, mi, ft), mass (kg, lb) and temperature (C, F, K). Pure JS, no processes or network.",
       "author": "HorneroOS contributors",
       "license": "MIT",
       "homepage": "https://github.com/HorneroOS/plugins",
-      "placement": "dashboard",
+      "placement": "bar",
       "category": "utilities",
       "capabilities": {
         "processCommands": [],
         "networkHosts": [],
-        "settings": {}
+        "settings": {
+          "defaultCategory": {
+            "type": "enum",
+            "default": "length",
+            "options": [
+              "length",
+              "mass",
+              "temperature"
+            ],
+            "description": "Dashboard category shown first (Length, the 1.x initial category)."
+          },
+          "precision": {
+            "type": "integer",
+            "default": 6,
+            "minimum": 0,
+            "maximum": 10,
+            "description": "Decimal places kept when rounding results (6, the 1.x rounding)."
+          }
+        }
       },
       "trust": "official",
       "path": "plugins/hornero-unit-converter",
-      "sha256": "2843672c0334f6c8e2084982a3cb948c5b853c7b2a5e6496e8d5c60eba30ccad"
+      "sha256": "d04680ce811b30749f979b880c957866e7699a6051236c0e5cd033387931f1e0"
     },
     {
       "id": "hornero-uptime",

@@ -1,0 +1,19 @@
+{
+  "Format": "Formatear",
+  "Format JSON": "Formatear JSON",
+  "Full controls are in the dashboard Utilities panel.": "Los controles completos están en el panel Utilidades del tablero.",
+  "JSON Tools": "Herramientas JSON",
+  "JSON Tools quick action": "Acción rápida de herramientas JSON",
+  "JSON Tools: activate for a quick format check": "Herramientas JSON: activá para formatear rápido",
+  "JSON input": "JSON de entrada",
+  "JSON output": "Salida JSON",
+  "JSON output (read-only, selectable)": "Salida JSON (solo lectura, seleccionable)",
+  "JSON to format": "JSON a formatear",
+  "JSON to format or minify": "JSON a formatear o minificar",
+  "Minify": "Minificar",
+  "Minify JSON": "Minificar JSON",
+  "Output": "Salida",
+  "Paste JSON and press Run.": "Pegá JSON y tocá Ejecutar.",
+  "Quick JSON input": "JSON rápido de entrada",
+  "Run": "Ejecutar"
+}

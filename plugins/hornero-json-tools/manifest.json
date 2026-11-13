@@ -1,22 +1,74 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 2,
   "id": "hornero-json-tools",
   "name": "Hornero JSON Tools",
-  "version": "1.0.0",
-  "description": "Dashboard JSON tools: Format with 2-space indentation and Minify using JSON parse/stringify only. Parser errors are shown. Pure QML.",
+  "version": "2.0.0",
+  "description": "Utility Tools 2.0 JSON tools: bar quick format/validate action and compact dashboard detail with Format and Minify using JSON parse/stringify only. Parser errors are shown.",
   "author": "HorneroOS contributors",
   "license": "MIT",
   "homepage": "https://github.com/HorneroOS/plugins",
   "entrypoint": "Main.qml",
+  "placement": "bar",
+  "surfaces": {
+    "dashboard": {
+      "entrypoint": "Dashboard.qml",
+      "size": "compact",
+      "category": "Utilities"
+    },
+    "launcher": {
+      "entrypoint": "Launcher.qml"
+    }
+  },
+  "translations": {
+    "sourceLocale": "en",
+    "locales": [
+      "es"
+    ],
+    "directory": "translations"
+  },
+  "marketplace": {
+    "compatibility": {
+      "minShellVersion": "1.0.0"
+    },
+    "changelog": [
+      {
+        "version": "2.0.0",
+        "notes": "Utility Tools 2.0 (plugins#30): bar quick action with popover, compact Utilities dashboard detail panel and a declaration-only launcher entrypoint (not loaded until shell#250) over one tested pure-JS logic block; typed settings default to 1.x behaviour; Spanish catalog."
+      },
+      {
+        "version": "1.0.0",
+        "notes": "Dashboard JSON tools: Format with 2-space indentation and Minify; parser errors were shown."
+      }
+    ]
+  },
   "files": [
     "Main.qml",
+    "Dashboard.qml",
+    "Launcher.qml",
     "README.md",
-    "LICENSE"
+    "LICENSE",
+    "translations/es.json"
   ],
   "capabilities": {
     "processCommands": [],
     "networkHosts": [],
-    "settings": {}
-  },
-  "placement": "dashboard"
+    "settings": {
+      "indentSpaces": {
+        "type": "integer",
+        "default": 2,
+        "minimum": 0,
+        "maximum": 8,
+        "description": "Spaces per indent level for Format (2, the 1.x formatting)."
+      },
+      "defaultAction": {
+        "type": "enum",
+        "default": "format",
+        "options": [
+          "format",
+          "minify"
+        ],
+        "description": "Action run by the bar quick action (Format, the 1.x primary button)."
+      }
+    }
+  }
 }

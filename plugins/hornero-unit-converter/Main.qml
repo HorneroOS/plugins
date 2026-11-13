@@ -2,34 +2,48 @@ import QtQuick
 import QtQuick.Controls
 import Hornero.PluginKit
 
-// Hornero Unit Converter - dashboard card, pure-JS conversions.
-// Length via metres, mass via kilograms, temperature via Celsius:
-//   F = C * 9/5 + 32, K = C + 273.15, mi = km * 0.621371,
-//   lb = kg * 2.20462 (via base-unit factors below).
+// Unit Converter 2.0 bar surface (primary): a one-button quick action.
+// The button opens a host-owned UiPopover with one quick-query field
+// and the same pure logic as the dashboard detail panel; the full
+// controls stay there. This is the launcher-style quick action that
+// is hosted today. The declared launcher surface (Launcher.qml) is
+// a validated declaration only until the shell launcher provider
+// host (HorneroOS/shell#250) exists; no parallel launcher and no
+// invented PluginKit launcher member is used here. PluginKit has
+// no text-input primitive, so the query field is a QtQuick.Controls
+// TextField with an accessible name and tooltip.
 Item {
     id: root
 
-    implicitWidth: 300
-    implicitHeight: content.implicitHeight + 24
+    property string hostOrientation: "horizontal"
+    property string hostEdge: "top"
+    property string hostSurface: "bar"
+    property int hostAvailableWidth: 0
+    property int hostAvailableHeight: 0
+    property bool hostCompact: false
+    property string hostScreenName: ""
 
-    property var categories: [
-        { "name": "Length", "units": ["m", "km", "mi", "ft"] },
-        { "name": "Mass", "units": ["kg", "lb"] },
-        { "name": "Temperature", "units": ["C", "F", "K"] }
-    ]
-    property var units: categories[categoryBox.currentIndex].units
+    implicitWidth: stack.implicitWidth
+    implicitHeight: stack.implicitHeight
 
+    property string quickText: ""
+
+    Translations { id: i18n; pluginId: "hornero-unit-converter" }
+    Settings { id: pluginSettings; pluginId: "hornero-unit-converter" }
+
+    readonly property int precision: { const v = Number(pluginSettings.value("precision", 6)); return isFinite(v) && v >= 0 && v <= 10 ? Math.floor(v) : 6; }
+    readonly property string defaultCategory: String(pluginSettings.value("defaultCategory", "length"))
+
+    // LOGIC-BEGIN
     function toBase(value, unit) {
-        // Length -> m, mass -> kg, temperature -> C.
         if (unit === "km") return value * 1000;
         if (unit === "mi") return value * 1000 / 0.621371;
         if (unit === "ft") return value * 0.3048;
         if (unit === "lb") return value / 2.20462;
         if (unit === "F") return (value - 32) * 5 / 9;
         if (unit === "K") return value - 273.15;
-        return value; // m, kg, C
+        return value;
     }
-
     function fromBase(base, unit) {
         if (unit === "km") return base / 1000;
         if (unit === "mi") return (base / 1000) * 0.621371;
@@ -37,85 +51,111 @@ Item {
         if (unit === "lb") return base * 2.20462;
         if (unit === "F") return base * 9 / 5 + 32;
         if (unit === "K") return base + 273.15;
-        return base; // m, kg, C
+        return base;
+    }
+    function convert(value, fromUnit, toUnit) { return fromBase(toBase(value, fromUnit), toUnit); }
+    function unitCategory(unit) {
+        if (unit === "m" || unit === "km" || unit === "mi" || unit === "ft") return "length";
+        if (unit === "kg" || unit === "lb") return "mass";
+        if (unit === "C" || unit === "F" || unit === "K") return "temperature";
+        return "";
+    }
+    function normalizeUnit(unit) {
+        var u = String(unit);
+        var lower = u.toLowerCase();
+        if (lower === "c" || lower === "f" || lower === "k") return lower.toUpperCase();
+        return lower;
+    }
+    function quickResult(query, precision) {
+        var p = (precision === undefined || precision === null) ? 6 : precision;
+        var m = /^\s*(-?\d+(?:\.\d+)?)\s*([A-Za-z]+)\s+(?:to\s+)?([A-Za-z]+)\s*$/.exec(String(query));
+        if (!m) return { "ok": false, "text": "Enter a value" };
+        var value = parseFloat(m[1]);
+        var fromUnit = normalizeUnit(m[2]);
+        var toUnit = normalizeUnit(m[3]);
+        if (!isFinite(value) || unitCategory(fromUnit) === "" || unitCategory(fromUnit) !== unitCategory(toUnit))
+            return { "ok": false, "text": "Enter a value" };
+        var result = convert(value, fromUnit, toUnit);
+        var factor = Math.pow(10, p);
+        var rounded = Math.round(result * factor) / factor;
+        return { "ok": true, "text": value + " " + fromUnit + " = " + rounded + " " + toUnit };
+    }
+    // LOGIC-END
+
+    function runQuick() {
+        var outcome = quickResult(quickInput.text, root.precision);
+        root.quickText = outcome.ok ? outcome.text : (outcome.error && outcome.error !== "" ? outcome.error : outcome.text);
     }
 
-    function convert(value, fromUnit, toUnit) {
-        return fromBase(toBase(value, fromUnit), toUnit);
+    UiStack {
+        id: stack
+        orientation: root.hostOrientation
+        compact: root.hostCompact
+
+        UiButton {
+            id: indicator
+            variant: "ghost"
+            text: "⇄"
+            tooltipText: i18n.tr("Unit Converter: activate for a quick conversion")
+            accessibleName: i18n.tr("Unit Converter quick action")
+            onClicked: popover.toggle()
+        }
+
+        UiText {
+            visible: !root.hostCompact && root.hostOrientation !== "vertical" && root.quickText !== ""
+            width: 140
+            elide: Text.ElideRight
+            wrapMode: Text.NoWrap
+            text: root.quickText
+        }
     }
 
-    function resultText() {
-        var value = parseFloat(input.text);
-        if (input.text.trim() === "" || !isFinite(value))
-            return "Enter a value";
-        var result = convert(value, units[fromBox.currentIndex], units[toBox.currentIndex]);
-        var rounded = Math.round(result * 1000000) / 1000000;
-        return value + " " + units[fromBox.currentIndex] + " = " + rounded + " " + units[toBox.currentIndex];
-    }
+    UiPopover {
+        id: popover
+        target: indicator
+        accessibleName: i18n.tr("Unit Converter quick action")
 
-    Column {
-        id: content
+        Column {
+            width: 300
+            spacing: Theme.spacingSmall
 
-        anchors.fill: parent
-        anchors.margins: 12
-        spacing: 8
+            UiText { role: "title"; text: i18n.tr("Unit Converter") }
 
-        Text {
-            color: Theme.onSurface
-            text: "Unit Converter"
-            font.bold: true
-            font.pixelSize: 14
-        }
-
-        ComboBox {
-            id: categoryBox
-
-            width: parent.width
-            model: ["Length", "Mass", "Temperature"]
-            Accessible.name: "Conversion category"
-            onCurrentIndexChanged: { fromBox.currentIndex = 0; toBox.currentIndex = 1; }
-        }
-
-        TextField {
-            id: input
-
-            width: parent.width
-            text: "1"
-            placeholderText: "Value"
-            Accessible.name: "Value to convert"
-            inputMethodHints: Qt.ImhFormattedNumbersOnly
-        }
-
-        Row {
-            width: parent.width
-            spacing: 8
-
-            ComboBox {
-                id: fromBox
-
-                width: (parent.width - parent.spacing) / 2
-                model: root.units
-                currentIndex: 0
-                Accessible.name: "From unit"
+            TextField {
+                id: quickInput
+                width: parent.width
+                placeholderText: i18n.tr("e.g. 10 km to mi")
+                Accessible.name: i18n.tr("Quick unit conversion")
+                ToolTip.text: i18n.tr("Quick unit conversion")
+                ToolTip.visible: hovered
+                onAccepted: root.runQuick()
             }
 
-            ComboBox {
-                id: toBox
-
-                width: (parent.width - parent.spacing) / 2
-                model: root.units
-                currentIndex: 1
-                Accessible.name: "To unit"
+            UiButton {
+                text: i18n.tr("Convert")
+                tooltipText: i18n.tr("Convert")
+                accessibleName: i18n.tr("Convert")
+                onClicked: root.runQuick()
             }
-        }
 
-        Text {
-            width: parent.width
-            wrapMode: Text.Wrap
-            color: Theme.onSurface
-            font.pixelSize: 13
-            Accessible.name: "Conversion result"
-            text: root.resultText()
+            UiState {
+                visible: root.quickText === ""
+                width: parent.width
+                kind: "empty"
+                message: i18n.tr("Type a conversion like 10 km to mi and press Convert.")
+            }
+
+            UiText {
+                visible: root.quickText !== ""
+                width: parent.width
+                text: root.quickText
+            }
+
+            UiText {
+                width: parent.width
+                role: "caption"
+                text: i18n.tr("Full controls are in the dashboard Utilities panel.")
+            }
         }
     }
 }
