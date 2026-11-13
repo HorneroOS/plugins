@@ -1,14 +1,77 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 2,
   "id": "hornero-system-monitor",
   "name": "Hornero System Monitor",
-  "version": "1.0.0",
-  "description": "Dashboard card with CPU, memory, GPU and storage usage bars from the PluginKit System service. Read-only, no processes or network.",
+  "version": "2.0.0",
+  "description": "System Monitor 2.0: dashboard card over the shared PluginKit System facade with the 1.x usage bars plus in-card session history, peak/average readouts and a high-load alert. Read-only.",
   "author": "HorneroOS contributors",
   "license": "MIT",
   "homepage": "https://github.com/HorneroOS/plugins",
   "entrypoint": "Main.qml",
-  "files": ["Main.qml", "README.md", "LICENSE"],
-  "capabilities": {"processCommands": [], "networkHosts": [], "settings": {}},
-  "placement": "dashboard"
+  "placement": "dashboard",
+  "surfaces": {
+    "dashboard": {
+      "entrypoint": "Main.qml",
+      "size": "standard",
+      "category": "System"
+    }
+  },
+  "translations": {
+    "sourceLocale": "en",
+    "locales": [
+      "es"
+    ],
+    "directory": "translations"
+  },
+  "marketplace": {
+    "compatibility": {
+      "minShellVersion": "1.0.0"
+    },
+    "changelog": [
+      {
+        "version": "2.0.0",
+        "notes": "Dashboard card on the shared System facade: 1.x bars plus session history sparkline, peak/average, high-load alert, typed settings, host-context layout and Spanish catalog."
+      },
+      {
+        "version": "1.0.0",
+        "notes": "Dashboard card with CPU, memory, GPU and storage usage bars from the PluginKit System service."
+      }
+    ]
+  },
+  "files": [
+    "Main.qml",
+    "README.md",
+    "LICENSE",
+    "translations/es.json"
+  ],
+  "capabilities": {
+    "processCommands": [],
+    "networkHosts": [],
+    "settings": {
+      "warnPercent": {
+        "type": "integer",
+        "default": 90,
+        "minimum": 50,
+        "maximum": 100,
+        "description": "Usage percent at or above which a row is flagged as high. Adds an alert chip only; 1.x had no threshold."
+      },
+      "showTemperatures": {
+        "type": "boolean",
+        "default": true,
+        "description": "Show CPU/GPU temperatures when the System service reports them (the 1.x behaviour)."
+      },
+      "showHistory": {
+        "type": "boolean",
+        "default": true,
+        "description": "Show the in-card session history sampled from the shared System facade while the card is loaded."
+      },
+      "sampleSeconds": {
+        "type": "integer",
+        "default": 5,
+        "minimum": 1,
+        "maximum": 60,
+        "description": "Seconds between history samples read from the already-live shared System facade."
+      }
+    }
+  }
 }

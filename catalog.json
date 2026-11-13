@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedFrom": "7ae2819ddb5bc72fcecd22e445a9baf7402164d5",
+  "generatedFrom": "ae3fce4b7e4479d260ab0242879c32f4536c80b9",
   "plugins": [
     {
       "id": "hornero-agenda",
@@ -214,8 +214,8 @@
     {
       "id": "hornero-disk-usage",
       "name": "Hornero Disk Usage",
-      "version": "1.0.0",
-      "description": "Dashboard card listing mounted disks from the PluginKit System service with used/total space and a percentage bar. Shows an empty state when no disks are reported. Read-only, no processes or network.",
+      "version": "2.0.0",
+      "description": "Disk Usage 2.0: dashboard card over the shared PluginKit System.disks facade with per-disk used/total/free space, a most-full summary and near-full alerts. No invented SMART data. Read-only.",
       "author": "HorneroOS contributors",
       "license": "MIT",
       "homepage": "https://github.com/HorneroOS/plugins",
@@ -224,11 +224,24 @@
       "capabilities": {
         "processCommands": [],
         "networkHosts": [],
-        "settings": {}
+        "settings": {
+          "warnPercent": {
+            "type": "integer",
+            "default": 90,
+            "minimum": 50,
+            "maximum": 100,
+            "description": "Used percent at or above which a disk is flagged as nearly full."
+          },
+          "showFreeSpace": {
+            "type": "boolean",
+            "default": true,
+            "description": "Show free space under each disk (additive in 2.0) and the nearly-full hint."
+          }
+        }
       },
       "trust": "official",
       "path": "plugins/hornero-disk-usage",
-      "sha256": "f38fe78699bb300fe2085ed156f8a84b663932f09357705fc755652cf6e959de"
+      "sha256": "b3a831cc208792eac60b9b7604afd239b2d87e5857f4b3a35cdeeaece6650d36"
     },
     {
       "id": "hornero-dual-clock",
@@ -378,8 +391,8 @@
     {
       "id": "hornero-network-monitor",
       "name": "Hornero Network Monitor",
-      "version": "1.0.0",
-      "description": "Dashboard card with download/upload speeds and session totals from the PluginKit Network service, formatted in human units. Read-only.",
+      "version": "2.0.0",
+      "description": "Network Monitor 2.0: dashboard card over the shared PluginKit Network facade with the 1.x speeds and session totals plus in-card history, peak readouts and honest unavailable states. Read-only.",
       "author": "HorneroOS contributors",
       "license": "MIT",
       "homepage": "https://github.com/HorneroOS/plugins",
@@ -388,11 +401,29 @@
       "capabilities": {
         "processCommands": [],
         "networkHosts": [],
-        "settings": {}
+        "settings": {
+          "showSessionTotals": {
+            "type": "boolean",
+            "default": true,
+            "description": "Show downloaded/uploaded session totals from the Network service (the 1.x behaviour)."
+          },
+          "showHistory": {
+            "type": "boolean",
+            "default": true,
+            "description": "Show the in-card speed history sampled from the shared Network facade while the card is loaded."
+          },
+          "sampleSeconds": {
+            "type": "integer",
+            "default": 5,
+            "minimum": 1,
+            "maximum": 60,
+            "description": "Seconds between history samples read from the already-live shared Network facade."
+          }
+        }
       },
       "trust": "official",
       "path": "plugins/hornero-network-monitor",
-      "sha256": "905d532d3426e9998aec87b2ea1b56ab75b148a90fea0ef4d6852eabe9136400"
+      "sha256": "e70c1501ba7f9d40824f4af9af7320fe8be4484750d3dab1412bf9d75be76381"
     },
     {
       "id": "hornero-now-playing",
@@ -629,8 +660,8 @@
     {
       "id": "hornero-system-health",
       "name": "Hornero System Health",
-      "version": "1.0.0",
-      "description": "Dashboard card summarising system health from PluginKit System, Power and Network: CPU, memory and storage usage, battery (or 'No battery'), and network speeds. Each row shows an honest unavailable state when its service reports no data.",
+      "version": "2.0.0",
+      "description": "System Health 2.0: dashboard health summary over the shared PluginKit System, Power and Network facades, with per-row health states, thresholds and troubleshooting hints. No invented SMART data.",
       "author": "HorneroOS contributors",
       "license": "MIT",
       "homepage": "https://github.com/HorneroOS/plugins",
@@ -639,17 +670,42 @@
       "capabilities": {
         "processCommands": [],
         "networkHosts": [],
-        "settings": {}
+        "settings": {
+          "warnPercent": {
+            "type": "integer",
+            "default": 90,
+            "minimum": 50,
+            "maximum": 100,
+            "description": "Usage percent at or above which a CPU, memory or storage row needs attention."
+          },
+          "batteryWarnPercent": {
+            "type": "integer",
+            "default": 20,
+            "minimum": 1,
+            "maximum": 50,
+            "description": "Battery percent at or below which a discharging battery needs attention."
+          },
+          "showNetwork": {
+            "type": "boolean",
+            "default": true,
+            "description": "Show the download/upload rows from the Network service (the 1.x behaviour)."
+          },
+          "showHints": {
+            "type": "boolean",
+            "default": true,
+            "description": "Show a short troubleshooting hint under rows that need attention."
+          }
+        }
       },
       "trust": "official",
       "path": "plugins/hornero-system-health",
-      "sha256": "51fb45e6ce631ae4291b0a1d703fd924450015429d3c95648856c17012820f17"
+      "sha256": "8c61627a42b02b8cfc50d2ea5150c5454dea042954a93fbb4c96b380c3dbf8c0"
     },
     {
       "id": "hornero-system-monitor",
       "name": "Hornero System Monitor",
-      "version": "1.0.0",
-      "description": "Dashboard card with CPU, memory, GPU and storage usage bars from the PluginKit System service. Read-only, no processes or network.",
+      "version": "2.0.0",
+      "description": "System Monitor 2.0: dashboard card over the shared PluginKit System facade with the 1.x usage bars plus in-card session history, peak/average readouts and a high-load alert. Read-only.",
       "author": "HorneroOS contributors",
       "license": "MIT",
       "homepage": "https://github.com/HorneroOS/plugins",
@@ -658,11 +714,36 @@
       "capabilities": {
         "processCommands": [],
         "networkHosts": [],
-        "settings": {}
+        "settings": {
+          "warnPercent": {
+            "type": "integer",
+            "default": 90,
+            "minimum": 50,
+            "maximum": 100,
+            "description": "Usage percent at or above which a row is flagged as high. Adds an alert chip only; 1.x had no threshold."
+          },
+          "showTemperatures": {
+            "type": "boolean",
+            "default": true,
+            "description": "Show CPU/GPU temperatures when the System service reports them (the 1.x behaviour)."
+          },
+          "showHistory": {
+            "type": "boolean",
+            "default": true,
+            "description": "Show the in-card session history sampled from the shared System facade while the card is loaded."
+          },
+          "sampleSeconds": {
+            "type": "integer",
+            "default": 5,
+            "minimum": 1,
+            "maximum": 60,
+            "description": "Seconds between history samples read from the already-live shared System facade."
+          }
+        }
       },
       "trust": "official",
       "path": "plugins/hornero-system-monitor",
-      "sha256": "f7f5eb75eb4e9046a6ce452eb0da62c83c190cb8141e2a36c4bb6dff2d48a90f"
+      "sha256": "1e9a4da368b53255703864a06bfaf505d395494101cf2b305c8fd948d483c014"
     },
     {
       "id": "hornero-text-tools",

@@ -1,0 +1,11 @@
+{
+  "A nearly full disk can block updates and caches; free space on the flagged disk.": "Un disco casi lleno puede bloquear actualizaciones y cachés; liberá espacio en el disco marcado.",
+  "Disk Usage": "Uso de disco",
+  "Disks": "Discos",
+  "Drive health (SMART) is not exposed to extensions and is not shown.": "La salud de la unidad (SMART) no está disponible para las extensiones y no se muestra.",
+  "Free": "Libre",
+  "Most full": "El más lleno",
+  "Nearly full": "Casi lleno",
+  "No disks reported by the System service.": "El servicio del sistema no informó ningún disco.",
+  "Unavailable": "No disponible"
+}

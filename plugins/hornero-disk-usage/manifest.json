@@ -1,14 +1,65 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 2,
   "id": "hornero-disk-usage",
   "name": "Hornero Disk Usage",
-  "version": "1.0.0",
-  "description": "Dashboard card listing mounted disks from the PluginKit System service with used/total space and a percentage bar. Shows an empty state when no disks are reported. Read-only, no processes or network.",
+  "version": "2.0.0",
+  "description": "Disk Usage 2.0: dashboard card over the shared PluginKit System.disks facade with per-disk used/total/free space, a most-full summary and near-full alerts. No invented SMART data. Read-only.",
   "author": "HorneroOS contributors",
   "license": "MIT",
   "homepage": "https://github.com/HorneroOS/plugins",
   "entrypoint": "Main.qml",
-  "files": ["Main.qml", "README.md", "LICENSE"],
-  "capabilities": {"processCommands": [], "networkHosts": [], "settings": {}},
-  "placement": "dashboard"
+  "placement": "dashboard",
+  "surfaces": {
+    "dashboard": {
+      "entrypoint": "Main.qml",
+      "size": "standard",
+      "category": "System"
+    }
+  },
+  "translations": {
+    "sourceLocale": "en",
+    "locales": [
+      "es"
+    ],
+    "directory": "translations"
+  },
+  "marketplace": {
+    "compatibility": {
+      "minShellVersion": "1.0.0"
+    },
+    "changelog": [
+      {
+        "version": "2.0.0",
+        "notes": "Per-disk card on the shared System.disks facade: used/total/free in correct KiB units, most-full summary, near-full alerts, typed settings and Spanish catalog. No SMART data invented."
+      },
+      {
+        "version": "1.0.0",
+        "notes": "Dashboard card listing mounted disks with used/total space and a percentage bar."
+      }
+    ]
+  },
+  "files": [
+    "Main.qml",
+    "README.md",
+    "LICENSE",
+    "translations/es.json"
+  ],
+  "capabilities": {
+    "processCommands": [],
+    "networkHosts": [],
+    "settings": {
+      "warnPercent": {
+        "type": "integer",
+        "default": 90,
+        "minimum": 50,
+        "maximum": 100,
+        "description": "Used percent at or above which a disk is flagged as nearly full."
+      },
+      "showFreeSpace": {
+        "type": "boolean",
+        "default": true,
+        "description": "Show free space under each disk (additive in 2.0) and the nearly-full hint."
+      }
+    }
+  }
 }

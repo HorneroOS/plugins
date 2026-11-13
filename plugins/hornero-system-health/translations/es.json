@@ -1,0 +1,23 @@
+{
+  "Battery": "Batería",
+  "Battery is low and not charging; connect the charger soon.": "La batería está baja y no se está cargando; conectá el cargador pronto.",
+  "CPU": "CPU",
+  "Download": "Descarga",
+  "Health states use only the values and thresholds above. Disk SMART, battery health and per-process data are not exposed to extensions and are not shown.": "Los estados de salud usan solo los valores y umbrales de arriba. SMART de disco, salud de la batería y datos por proceso no están disponibles para las extensiones y no se muestran.",
+  "Healthy": "En buen estado",
+  "High memory use can push the system into swap; closing unused apps frees memory.": "Un uso alto de memoria puede hacer que el sistema use swap; cerrar apps que no uses libera memoria.",
+  "Memory": "Memoria",
+  "Nearly full storage can block updates and caches; free space or check the Disk Usage card per disk.": "Un almacenamiento casi lleno puede bloquear actualizaciones y cachés; liberá espacio o revisá la tarjeta de uso de disco por cada disco.",
+  "Needs attention": "Necesita atención",
+  "No battery": "Sin batería",
+  "OK": "Bien",
+  "Partial data": "Datos parciales",
+  "Some services reported no usable data. Affected rows are marked unavailable instead of guessing.": "Algunos servicios no informaron datos utilizables. Las filas afectadas se marcan como no disponibles en vez de adivinar.",
+  "Storage": "Almacenamiento",
+  "Sustained high CPU usually means a busy app or background job; check what is running if the system feels slow.": "Una CPU alta de forma sostenida suele indicar una app ocupada o una tarea en segundo plano; revisá qué está corriendo si el sistema se siente lento.",
+  "System Health": "Salud del sistema",
+  "The Network service reported no usable speeds; the connection may be down or still starting.": "El servicio de red no informó velocidades utilizables; la conexión puede estar caída o todavía iniciándose.",
+  "Unavailable": "No disponible",
+  "Upload": "Subida",
+  "charging": "cargando"
+}

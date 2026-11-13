@@ -1,0 +1,18 @@
+{
+  "CPU": "CPU",
+  "CPU average": "Promedio de CPU",
+  "CPU history since this card loaded (not persisted)": "Historial de CPU desde que se cargó esta tarjeta (no se guarda)",
+  "CPU peak": "Pico de CPU",
+  "Clear history": "Borrar el historial",
+  "Collecting samples from the shared System service.": "Recolectando muestras del servicio compartido del sistema.",
+  "Forget the samples collected since this card loaded": "Olvidar las muestras recolectadas desde que se cargó esta tarjeta",
+  "GPU": "GPU",
+  "High": "Alto",
+  "High load": "Carga alta",
+  "Memory": "Memoria",
+  "Memory peak": "Pico de memoria",
+  "Storage": "Almacenamiento",
+  "System": "Sistema",
+  "System Monitor": "Monitor del sistema",
+  "Unavailable": "No disponible"
+}

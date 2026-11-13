@@ -1,0 +1,17 @@
+{
+  "Clear history": "Borrar el historial",
+  "Collecting samples from the shared Network service.": "Recolectando muestras del servicio compartido de red.",
+  "Download": "Descarga",
+  "Download history since this card loaded (not persisted)": "Historial de descarga desde que se cargó esta tarjeta (no se guarda)",
+  "Download peak": "Pico de descarga",
+  "Downloaded (session)": "Descargado (sesión)",
+  "Forget the samples collected since this card loaded": "Olvidar las muestras recolectadas desde que se cargó esta tarjeta",
+  "Network": "Red",
+  "Network Monitor": "Monitor de red",
+  "Reporting": "Informando datos",
+  "The Network service reported no usable speeds. The connection may be down or still starting; totals below stay as last reported.": "El servicio de red no informó velocidades utilizables. La conexión puede estar caída o todavía iniciándose; los totales de abajo quedan como se informaron por última vez.",
+  "Unavailable": "No disponible",
+  "Upload": "Subida",
+  "Upload peak": "Pico de subida",
+  "Uploaded (session)": "Subido (sesión)"
+}
