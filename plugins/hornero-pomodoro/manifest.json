@@ -2,21 +2,62 @@
   "schemaVersion": 1,
   "id": "hornero-pomodoro",
   "name": "Hornero Pomodoro",
-  "version": "1.0.1",
-  "description": "A 25-minute focus timer for the bar. Click to start or pause; it rings (visually) at zero and resets. No processes, no network, just time and discipline.",
+  "version": "2.0.0",
+  "description": "Pomodoro 2.0: compact bar focus timer with a popover, deadline-correct timing across sleep/reload, a typed session-length setting and a completion toast. No processes, no network.",
   "author": "HorneroOS contributors",
   "license": "MIT",
   "homepage": "https://github.com/HorneroOS/plugins",
   "entrypoint": "Main.qml",
+  "placement": "bar",
+  "translations": {
+    "sourceLocale": "en",
+    "locales": [
+      "es"
+    ],
+    "directory": "translations"
+  },
   "files": [
     "Main.qml",
     "README.md",
-    "LICENSE"
+    "LICENSE",
+    "translations/es.json"
   ],
   "capabilities": {
     "processCommands": [],
     "networkHosts": [],
-    "settings": {}
+    "settings": {
+      "focusMinutes": {
+        "type": "integer",
+        "default": 25,
+        "minimum": 1,
+        "maximum": 180,
+        "description": "Focus session length in minutes."
+      },
+      "deadlineEpochMs": {
+        "type": "integer",
+        "default": 0,
+        "minimum": 0,
+        "description": "Saved running deadline in epoch milliseconds (0 when not running). Managed by the timer; do not edit."
+      },
+      "remainingSeconds": {
+        "type": "integer",
+        "default": 0,
+        "minimum": 0,
+        "maximum": 10800,
+        "description": "Saved paused time remaining in seconds (0 means a full session). Managed by the timer; do not edit."
+      }
+    }
   },
-  "placement": "bar"
+  "marketplace": {
+    "changelog": [
+      {
+        "version": "2.0.0",
+        "notes": "Productivity Timers 2.0: compact indicator plus popover controls, deadline-correct timing persisted across sleep/reload, typed focusMinutes setting (default 25), completion toast, Theme tokens and Argentine Spanish translation."
+      },
+      {
+        "version": "1.0.1",
+        "notes": "Bar focus timer: click to start or pause, flashing DONE at zero, then reset."
+      }
+    ]
+  }
 }

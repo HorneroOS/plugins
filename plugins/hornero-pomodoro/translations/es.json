@@ -1,0 +1,23 @@
+{
+  "DONE": "LISTO",
+  "Finished": "Terminada",
+  "Focus session complete.": "Sesión de concentración completa.",
+  "Pause": "Pausar",
+  "Pause pomodoro": "Pausar el pomodoro",
+  "Pause the focus session": "Pausá la sesión de concentración",
+  "Paused": "En pausa",
+  "Pomodoro": "Pomodoro",
+  "Pomodoro %1 remaining": "Pomodoro: quedan %1",
+  "Pomodoro finished": "Pomodoro terminado",
+  "Pomodoro: activate for timer controls": "Pomodoro: activá para ver los controles del temporizador",
+  "Remaining": "Restante",
+  "Reset": "Reiniciar",
+  "Reset pomodoro": "Reiniciar el pomodoro",
+  "Reset the focus session": "Reiniciá la sesión de concentración",
+  "Running": "En curso",
+  "Session length: %1 minutes": "Duración de la sesión: %1 minutos",
+  "Session progress": "Progreso de la sesión",
+  "Start": "Iniciar",
+  "Start pomodoro": "Iniciar el pomodoro",
+  "Start the focus session": "Iniciá la sesión de concentración"
+}
