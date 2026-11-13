@@ -24,8 +24,8 @@
     {
       "id": "hornero-ai-usage",
       "name": "Hornero AI Usage",
-      "version": "1.0.0",
-      "description": "Dashboard card for local AI assistant usage from horneroctl assistant usage --json: sessions, API calls and tokens. Quota is shown as unknown; the provider does not expose a limit.",
+      "version": "2.0.0",
+      "description": "AI Usage 2.0: bar indicator, provider switcher popover and dashboard card over the normalized horneroctl agent usage records. Quota is shown only when a provider record carries it; otherwise it is unknown.",
       "author": "HorneroOS contributors",
       "license": "MIT",
       "homepage": "https://github.com/HorneroOS/plugins",
@@ -36,11 +36,19 @@
           "horneroctl"
         ],
         "networkHosts": [],
-        "settings": {}
+        "settings": {
+          "refreshSeconds": {
+            "type": "integer",
+            "default": 60,
+            "minimum": 15,
+            "maximum": 3600,
+            "description": "Seconds between AI usage refreshes."
+          }
+        }
       },
       "trust": "official",
       "path": "plugins/hornero-ai-usage",
-      "sha256": "057c8febc3e122ae583d965aa3c8efefd44042126665003014febbe47590d410"
+      "sha256": "ce23f0087c324fa70f560f39dc9e856697b124573cb46e1b8813ce33d0089841"
     },
     {
       "id": "hornero-base-converter",

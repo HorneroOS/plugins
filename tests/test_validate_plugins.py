@@ -15,15 +15,18 @@ import QtQuick.Controls
 import Hornero.PluginKit
 
 Item {
-    Text { color: Theme.onSurface; text: qsTr("Example") }
+    Translations { id: i18n; pluginId: "hornero-example" }
+    Text { color: Theme.onSurface; text: i18n.tr("Example") }
     Button {
-        text: qsTr("Go")
-        Accessible.name: qsTr("Go")
-        ToolTip.text: qsTr("Go")
+        text: i18n.tr("Go")
+        Accessible.name: i18n.tr("Go")
+        ToolTip.text: i18n.tr("Go")
         ToolTip.visible: hovered
     }
 }
 """
+
+GOOD_ES = {"Example": "Ejemplo", "Go": "Ir"}
 
 
 def make_plugin(root: Path, pid="hornero-example", qml=GOOD_QML, **overrides) -> Path:
@@ -38,7 +41,8 @@ def make_plugin(root: Path, pid="hornero-example", qml=GOOD_QML, **overrides) ->
         "author": "HorneroOS contributors",
         "license": "MIT",
         "entrypoint": "Main.qml",
-        "files": ["Main.qml", "README.md", "LICENSE"],
+        "files": ["Main.qml", "README.md", "LICENSE", "translations/es.json"],
+        "translations": {"sourceLocale": "en", "locales": ["es"]},
         "capabilities": {"processCommands": [], "networkHosts": [], "settings": {}},
         "placement": "dashboard",
     }
@@ -47,6 +51,8 @@ def make_plugin(root: Path, pid="hornero-example", qml=GOOD_QML, **overrides) ->
     (plugin_dir / "Main.qml").write_text(qml)
     (plugin_dir / "README.md").write_text("# Hornero Example\n")
     (plugin_dir / "LICENSE").write_text("MIT\n")
+    (plugin_dir / "translations").mkdir()
+    (plugin_dir / "translations" / "es.json").write_text(json.dumps(GOOD_ES))
     return plugin_dir
 
 
@@ -127,6 +133,51 @@ class ContractTest(unittest.TestCase):
         self.assertTrue(any("not declared in processCommands: curl" in e for e in errors))
         self.assertTrue(any("URL host not declared" in e for e in errors))
 
+    def test_qstr_is_rejected_as_never_translated(self):
+        errors = self.errors_for(qml=GOOD_QML.replace('i18n.tr("Example")', 'qsTr("Example")'))
+        self.assertTrue(any("never translated for plugins" in e for e in errors))
+
+    def test_surfaces_require_schema_version_2(self):
+        errors = self.errors_for(surfaces={"bar": {"entrypoint": "Main.qml"}})
+        self.assertTrue(any("surfaces requires schemaVersion 2" in e for e in errors))
+
+    def test_v2_surface_entrypoint_must_be_listed(self):
+        errors = self.errors_for(schemaVersion=2, surfaces={"bar": {"entrypoint": "Bar.qml"}})
+        self.assertTrue(any("surfaces.bar.entrypoint must be listed in files" in e for e in errors))
+
+    def test_v2_primary_surface_conflict_is_rejected(self):
+        plugin_dir = make_plugin(self.root, schemaVersion=2)
+        manifest = json.loads((plugin_dir / "manifest.json").read_text())
+        manifest["files"].append("Other.qml")
+        manifest["surfaces"] = {"dashboard": {"entrypoint": "Other.qml"}}
+        (plugin_dir / "manifest.json").write_text(json.dumps(manifest))
+        (plugin_dir / "Other.qml").write_text(GOOD_QML)
+        errors, _, _ = vp.validate_plugin_dir(plugin_dir)
+        self.assertTrue(any("conflicts with the top-level entrypoint" in e for e in errors))
+
+    def test_incomplete_translation_catalog_is_rejected(self):
+        plugin_dir = make_plugin(self.root)
+        (plugin_dir / "translations" / "es.json").write_text(json.dumps({"Example": "Ejemplo"}))
+        errors, _, _ = vp.validate_plugin_dir(plugin_dir)
+        self.assertTrue(any("missing translations for strings passed to Translations.tr()" in e for e in errors))
+
+    def test_typed_setting_constraints(self):
+        errors = self.errors_for(capabilities={
+            "processCommands": [], "networkHosts": [],
+            "settings": {"refresh": {"type": "integer", "default": 5, "minimum": 15, "maximum": 60}},
+        })
+        self.assertTrue(any("does not match declared type" in e for e in errors))
+        errors = self.errors_for(pid="hornero-example2", capabilities={
+            "processCommands": [], "networkHosts": [],
+            "settings": {"mode": {"type": "enum", "default": "x", "options": ["a", "b"]}},
+        })
+        self.assertTrue(any("does not match declared type" in e for e in errors))
+        errors = self.errors_for(pid="hornero-example3", capabilities={
+            "processCommands": [], "networkHosts": [],
+            "settings": {"label": {"type": "string", "default": "ok", "minimum": 1}},
+        })
+        self.assertTrue(any("cannot declare minimum" in e for e in errors))
+
     def test_undeclared_and_unused_settings_keys(self):
         qml = GOOD_QML + '\nSettings { pluginId: "hornero-example" }\nText { text: String(pluginSettings.value("ghost", 1)) }\n'
         errors = self.errors_for(qml=qml, capabilities={
@@ -184,6 +235,25 @@ class QualityProbeTest(unittest.TestCase):
     def test_hard_coded_chrome_colour_fails_theme_tokens(self):
         qml = GOOD_QML.replace('color: Theme.onSurface', 'color: "#112233"')
         self.assertEqual(self.probe_for(qml=qml)["themeTokens"], "fail")
+
+    def test_pluginkit_controls_probe_pass_with_kit_properties(self):
+        qml = """import QtQuick
+import Hornero.PluginKit
+
+Item {
+    Translations { id: i18n; pluginId: "hornero-example" }
+    UiButton {
+        text: i18n.tr("Go")
+        tooltipText: i18n.tr("Go")
+        accessibleName: i18n.tr("Go")
+    }
+    Text { color: Theme.onSurface; text: i18n.tr("Example") }
+}
+"""
+        probe = self.probe_for(qml=qml)
+        self.assertEqual(probe["tooltips"], "pass")
+        self.assertEqual(probe["accessibility"], "pass")
+        self.assertEqual(probe["translation"], "pass")
 
     def test_declared_and_used_settings_pass(self):
         qml = GOOD_QML + '\nSettings { id: s; pluginId: "hornero-example" }\nText { text: String(s.value("bpm", 96)) }\n'

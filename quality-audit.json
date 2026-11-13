@@ -50,28 +50,28 @@
     {
       "id": "hornero-ai-usage",
       "classification": "needs-upgrade",
-      "valueProposition": "Dashboard card for local AI assistant usage from horneroctl assistant usage --json: sessions, API calls and tokens. Quota is shown as unknown; the provider does not expose a limit.",
-      "nativeOverlap": "No native shell equivalent identified; its data source is the horneroctl assistant usage contract, not a shell service.",
+      "valueProposition": "Bar indicator, provider switcher popover and dashboard card over the normalized horneroctl agent usage records: per-provider sessions, API calls, tokens and models. Quota is shown only when a provider record carries it; otherwise it is unknown.",
+      "nativeOverlap": "No native shell equivalent identified; its data source is the normalized horneroctl agent usage contract (hornero#407), not a shell service.",
       "dimensions": {
         "tooltips": {
-          "status": "fail",
-          "note": "Interactive controls present but no ToolTip.text found (static probe)."
+          "status": "pass",
+          "note": "Refresh/indicator/switcher controls carry PluginKit tooltipText (host-owned UiTooltip, static probe)."
         },
         "accessibility": {
-          "status": "fail",
-          "note": "Interactive controls present but no Accessible.name found (static probe)."
+          "status": "pass",
+          "note": "UiButton/UiPopover accessibleName plus Accessible.name on the dashboard card; refresh is a real button, no mouse-only MouseArea remains (static probe). Live AT-SPI behaviour is not verified."
         },
         "translation": {
-          "status": "fail",
-          "note": "User-visible string literals are not wrapped in qsTr/qsTrId (static probe)."
+          "status": "pass",
+          "note": "All user-visible literals go through PluginKit Translations; es (Argentine Spanish) catalog declared in the manifest and checked complete for literal tr() strings (static probe). Provider-supplied error text stays in the CLI's language."
         },
         "settings": {
-          "status": "na",
-          "note": "No settings declared in the manifest; none are recorded as needed yet. Revisit if behaviour becomes user-configurable."
+          "status": "pass",
+          "note": "Typed refreshSeconds setting (integer 15-3600, default 60 = previous hardcoded cadence) declared in the manifest and read via PluginKit Settings (static probe)."
         },
         "themeTokens": {
           "status": "pass",
-          "note": "Visible colours come from PluginKit Theme tokens with no hard-coded chrome colours (static probe)."
+          "note": "Visible colours come from PluginKit Ui primitives/Theme tokens with no hard-coded chrome colours (static probe)."
         },
         "screenshots": {
           "status": "fail",
@@ -79,18 +79,18 @@
         },
         "orientation": {
           "status": "unverified",
-          "note": "Orientation/responsiveness across bar, dashboard and desktop placements has not had a graphical review; static checks cannot verify it."
+          "note": "Host context (hostOrientation/hostCompact) drives UiStack and compact metric/label dropping on both surfaces, but orientation across bar edges and dashboard has not had a graphical review."
         },
         "loadingErrorStates": {
           "status": "unverified",
-          "note": "Static probe finds error/empty-state text in the QML, but loading and error presentation have not been verified graphically."
+          "note": "UiState loading/error placeholders and per-provider unavailable labels exist in QML; presentation has not been verified graphically in a live shell."
         },
         "performance": {
           "status": "unverified",
-          "note": "Not profiled. Static cadence only: timer intervals (ms)=['60000'], process polling=yes; runtime cost is unverified."
+          "note": "Not profiled. Static cadence only: one horneroctl agent usage poll per surface instance every refreshSeconds (default 60s); runtime cost is unverified."
         }
       },
-      "issue": "https://github.com/HorneroOS/plugins/issues/21"
+      "issue": "https://github.com/HorneroOS/plugins/issues/22"
     },
     {
       "id": "hornero-base-converter",
