@@ -1,14 +1,19 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 2,
   "id": "hornero-agenda",
   "name": "Hornero Agenda",
-  "version": "2.0.0",
-  "description": "Agenda 2.0: desktop widget of date facts from PluginKit Time: weekday, day, month, quarter, ISO week and week-year, day of year, days remaining and year progress. No events backend.",
+  "version": "2.1.0",
+  "description": "Agenda: desktop widget of date facts from PluginKit Time (weekday, ISO week and week-year, day of year, remaining days, year progress) with Desktop Widgets 2.0 size classes, per-display slot display and hide-with-restore. No events backend.",
   "author": "HorneroOS contributors",
   "license": "MIT",
   "homepage": "https://github.com/HorneroOS/plugins",
   "entrypoint": "Main.qml",
   "placement": "desktop",
+  "surfaces": {
+    "desktop": {
+      "entrypoint": "Main.qml"
+    }
+  },
   "translations": {
     "sourceLocale": "en",
     "locales": [
@@ -21,6 +26,10 @@
       "minShellVersion": "1.0.0"
     },
     "changelog": [
+      {
+        "version": "2.1.0",
+        "notes": "Desktop Widgets 2.0 (#32): manifest v2 with the desktop surface redeclared on the same entrypoint, read-only Desktop.position slot and display shown in a host-owned popover, persisted compact/standard/wide size class and hide-with-restore visibility as typed settings (defaults standard/visible, so 2.0 content is unchanged), and reset for size and visibility. Moving stays in Control Center: PluginKit has no slot setter."
+      },
       {
         "version": "2.0.0",
         "notes": "Time and Agenda 2.0: the 1.x date facts as labelled metrics plus quarter, ISO week-year, days remaining in the month and a year-progress bar, locale-correct dates and numbers, typed row settings with 1.x defaults and Argentine Spanish catalog. No events are shown: PluginKit has no calendar data source."
@@ -55,6 +64,21 @@
         "type": "boolean",
         "default": true,
         "description": "Show the elapsed fraction of the year as a progress bar."
+      },
+      "sizeClass": {
+        "type": "enum",
+        "default": "standard",
+        "options": [
+          "compact",
+          "standard",
+          "wide"
+        ],
+        "description": "Desktop widget size class within the host width cap (300 logical px today); standard keeps the 2.0 size. This sizes content, not the slot."
+      },
+      "showOnDesktop": {
+        "type": "boolean",
+        "default": true,
+        "description": "Show the widget content on the desktop (the 2.0 behaviour). Off leaves a visible Show widget button so the content can always be restored."
       }
     }
   }

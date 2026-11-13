@@ -1,14 +1,19 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 2,
   "id": "hornero-calendar",
   "name": "Hornero Calendar",
-  "version": "2.0.0",
-  "description": "Calendar 2.0: desktop widget with the 1.x date/time header plus the current month grid with today marked, from PluginKit Time. Locale dates, no events backend, no processes or network.",
+  "version": "2.1.0",
+  "description": "Calendar: desktop widget with date/time header and current month grid from PluginKit Time, plus Desktop Widgets 2.0 size classes, per-display slot display and hide-with-restore. Locale dates, no events backend, no processes or network.",
   "author": "HorneroOS contributors",
   "license": "MIT",
   "homepage": "https://github.com/HorneroOS/plugins",
   "entrypoint": "Main.qml",
   "placement": "desktop",
+  "surfaces": {
+    "desktop": {
+      "entrypoint": "Main.qml"
+    }
+  },
   "translations": {
     "sourceLocale": "en",
     "locales": [
@@ -21,6 +26,10 @@
       "minShellVersion": "1.0.0"
     },
     "changelog": [
+      {
+        "version": "2.1.0",
+        "notes": "Desktop Widgets 2.0 (#32): manifest v2 with the desktop surface redeclared on the same entrypoint, read-only Desktop.position slot and display shown in a host-owned popover, persisted compact/standard/wide size class (month-grid cells follow it) and hide-with-restore visibility as typed settings (defaults standard/visible, so 2.0 content is unchanged), and reset for size and visibility. Moving stays in Control Center: PluginKit has no slot setter."
+      },
       {
         "version": "2.0.0",
         "notes": "Time and Agenda 2.0: current-month grid with today marked under the unchanged 1.x time/date header, locale-correct month and weekday names, typed clock-format/week-start settings with 1.x defaults, shared Time facade and Argentine Spanish catalog. No events are shown: PluginKit has no calendar data source."
@@ -59,8 +68,26 @@
       "weekStart": {
         "type": "enum",
         "default": "monday",
-        "options": ["monday", "sunday"],
+        "options": [
+          "monday",
+          "sunday"
+        ],
         "description": "First weekday column of the month grid. PluginKit does not expose the locale week start."
+      },
+      "sizeClass": {
+        "type": "enum",
+        "default": "standard",
+        "options": [
+          "compact",
+          "standard",
+          "wide"
+        ],
+        "description": "Desktop widget size class within the host width cap (300 logical px today); standard keeps the 2.0 size. This sizes content, not the slot."
+      },
+      "showOnDesktop": {
+        "type": "boolean",
+        "default": true,
+        "description": "Show the widget content on the desktop (the 2.0 behaviour). Off leaves a visible Show widget button so the content can always be restored."
       }
     }
   }

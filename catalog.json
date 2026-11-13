@@ -1,12 +1,12 @@
 {
   "schemaVersion": 1,
-  "generatedFrom": "46d181af3c8f5d83aeca9ef233755f1f1de4048a",
+  "generatedFrom": "4a1514f29e00b8b5766bc0e671c86f6e29abdd45",
   "plugins": [
     {
       "id": "hornero-agenda",
       "name": "Hornero Agenda",
-      "version": "2.0.0",
-      "description": "Agenda 2.0: desktop widget of date facts from PluginKit Time: weekday, day, month, quarter, ISO week and week-year, day of year, days remaining and year progress. No events backend.",
+      "version": "2.1.0",
+      "description": "Agenda: desktop widget of date facts from PluginKit Time (weekday, ISO week and week-year, day of year, remaining days, year progress) with Desktop Widgets 2.0 size classes, per-display slot display and hide-with-restore. No events backend.",
       "author": "HorneroOS contributors",
       "license": "MIT",
       "homepage": "https://github.com/HorneroOS/plugins",
@@ -30,12 +30,27 @@
             "type": "boolean",
             "default": true,
             "description": "Show the elapsed fraction of the year as a progress bar."
+          },
+          "sizeClass": {
+            "type": "enum",
+            "default": "standard",
+            "options": [
+              "compact",
+              "standard",
+              "wide"
+            ],
+            "description": "Desktop widget size class within the host width cap (300 logical px today); standard keeps the 2.0 size. This sizes content, not the slot."
+          },
+          "showOnDesktop": {
+            "type": "boolean",
+            "default": true,
+            "description": "Show the widget content on the desktop (the 2.0 behaviour). Off leaves a visible Show widget button so the content can always be restored."
           }
         }
       },
       "trust": "official",
       "path": "plugins/hornero-agenda",
-      "sha256": "667078bed7575df45508e1194544372ceb7afa5047bcf171c4aa13eda4846bef"
+      "sha256": "d2a1144d31d6a1d30bbcec1db4f32984d282270599cee2ee69a657e82bca5ed4"
     },
     {
       "id": "hornero-ai-usage",
@@ -166,8 +181,8 @@
     {
       "id": "hornero-calendar",
       "name": "Hornero Calendar",
-      "version": "2.0.0",
-      "description": "Calendar 2.0: desktop widget with the 1.x date/time header plus the current month grid with today marked, from PluginKit Time. Locale dates, no events backend, no processes or network.",
+      "version": "2.1.0",
+      "description": "Calendar: desktop widget with date/time header and current month grid from PluginKit Time, plus Desktop Widgets 2.0 size classes, per-display slot display and hide-with-restore. Locale dates, no events backend, no processes or network.",
       "author": "HorneroOS contributors",
       "license": "MIT",
       "homepage": "https://github.com/HorneroOS/plugins",
@@ -200,12 +215,27 @@
               "sunday"
             ],
             "description": "First weekday column of the month grid. PluginKit does not expose the locale week start."
+          },
+          "sizeClass": {
+            "type": "enum",
+            "default": "standard",
+            "options": [
+              "compact",
+              "standard",
+              "wide"
+            ],
+            "description": "Desktop widget size class within the host width cap (300 logical px today); standard keeps the 2.0 size. This sizes content, not the slot."
+          },
+          "showOnDesktop": {
+            "type": "boolean",
+            "default": true,
+            "description": "Show the widget content on the desktop (the 2.0 behaviour). Off leaves a visible Show widget button so the content can always be restored."
           }
         }
       },
       "trust": "official",
       "path": "plugins/hornero-calendar",
-      "sha256": "b67decab61c8e9fdb3c46eddd8d31e82de7e645732ab5f2346fe3c6786544806"
+      "sha256": "5b7c48426e4d102bb67e170f641e00b255b5c5dd8c31149e89f4ff711d1bc5b4"
     },
     {
       "id": "hornero-color-converter",
@@ -537,8 +567,8 @@
     {
       "id": "hornero-moon-phase",
       "name": "Hornero Moon Phase",
-      "version": "2.0.0",
-      "description": "Moon Phase 2.0: desktop widget and contextual bar indicator for the current moon phase, approximate illumination and derived next new/full moons from the 1.x pure-JS synodic approximation. Always labelled approximate.",
+      "version": "2.1.0",
+      "description": "Moon Phase: desktop widget and bar indicator for the approximate moon phase and illumination from the 1.x synodic approximation, plus Desktop Widgets 2.0 size classes, per-display slot display and hide-with-restore. Always labelled approximate.",
       "author": "HorneroOS contributors",
       "license": "MIT",
       "homepage": "https://github.com/HorneroOS/plugins",
@@ -572,12 +602,27 @@
               "detailed"
             ],
             "description": "compact shows only the phase name; standard keeps the 1.x rows; detailed adds the approximation note."
+          },
+          "sizeClass": {
+            "type": "enum",
+            "default": "standard",
+            "options": [
+              "compact",
+              "standard",
+              "wide"
+            ],
+            "description": "Desktop widget size class within the host width cap (300 logical px today); standard keeps the 2.0 size. This sizes content, not the slot."
+          },
+          "showOnDesktop": {
+            "type": "boolean",
+            "default": true,
+            "description": "Show the widget content on the desktop (the 2.0 behaviour). Off leaves a visible Show widget button so the content can always be restored."
           }
         }
       },
       "trust": "official",
       "path": "plugins/hornero-moon-phase",
-      "sha256": "57345973826751c1092620e65e12b4207fcf8d335eaf235a56ae44c4ea5fb133"
+      "sha256": "b814a6a4d6844a0268c62a9e62a2daf0ce82741c02030ad47e898765a865d351"
     },
     {
       "id": "hornero-network-monitor",
