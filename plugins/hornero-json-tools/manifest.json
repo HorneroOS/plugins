@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "id": "hornero-json-tools",
+  "name": "Hornero JSON Tools",
+  "version": "1.0.0",
+  "description": "Dashboard JSON tools: Format with 2-space indentation and Minify using JSON parse/stringify only. Parser errors are shown. Pure QML.",
+  "author": "HorneroOS contributors",
+  "license": "MIT",
+  "homepage": "https://github.com/HorneroOS/plugins",
+  "entrypoint": "Main.qml",
+  "files": [
+    "Main.qml",
+    "README.md",
+    "LICENSE"
+  ],
+  "capabilities": {
+    "processCommands": [],
+    "networkHosts": [],
+    "settings": {}
+  },
+  "placement": "dashboard"
+}

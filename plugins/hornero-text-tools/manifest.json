@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "id": "hornero-text-tools",
+  "name": "Hornero Text Tools",
+  "version": "1.0.0",
+  "description": "Dashboard text tools: Uppercase, Lowercase, Title Case and Reverse transforms with live character, word and line counts. Pure QML.",
+  "author": "HorneroOS contributors",
+  "license": "MIT",
+  "homepage": "https://github.com/HorneroOS/plugins",
+  "entrypoint": "Main.qml",
+  "files": [
+    "Main.qml",
+    "README.md",
+    "LICENSE"
+  ],
+  "capabilities": {
+    "processCommands": [],
+    "networkHosts": [],
+    "settings": {}
+  },
+  "placement": "dashboard"
+}

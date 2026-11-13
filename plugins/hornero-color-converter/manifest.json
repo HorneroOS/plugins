@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "id": "hornero-color-converter",
+  "name": "Hornero Color Converter",
+  "version": "1.0.0",
+  "description": "Dashboard color converter: validated #RGB/#RRGGBB hex to RGB and HSL, and RGB inputs back to hex. Invalid hex shows an error. Pure QML.",
+  "author": "HorneroOS contributors",
+  "license": "MIT",
+  "homepage": "https://github.com/HorneroOS/plugins",
+  "entrypoint": "Main.qml",
+  "files": [
+    "Main.qml",
+    "README.md",
+    "LICENSE"
+  ],
+  "capabilities": {
+    "processCommands": [],
+    "networkHosts": [],
+    "settings": {}
+  },
+  "placement": "dashboard"
+}
