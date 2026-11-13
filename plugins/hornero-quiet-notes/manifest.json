@@ -2,21 +2,57 @@
   "schemaVersion": 1,
   "id": "hornero-quiet-notes",
   "name": "Hornero Quiet Notes",
-  "version": "1.0.1",
-  "description": "A calm dashboard card for one short intention for this session. It keeps no history and writes nowhere; when the shell closes, the note is gone.",
+  "version": "2.0.0",
+  "description": "Quiet Notes 2.0: dashboard card for one short session-only intention. The line is never saved (in-memory only, as in 1.x) and the card says so. Keyboard-first capture, no processes or network.",
   "author": "HorneroOS contributors",
   "license": "MIT",
   "homepage": "https://github.com/HorneroOS/plugins",
   "entrypoint": "Main.qml",
+  "placement": "dashboard",
+  "translations": {
+    "sourceLocale": "en",
+    "locales": [
+      "es"
+    ],
+    "directory": "translations"
+  },
+  "marketplace": {
+    "compatibility": {
+      "minShellVersion": "1.0.0"
+    },
+    "changelog": [
+      {
+        "version": "2.0.0",
+        "notes": "Notes and Focus 2.0: explicit Session only - never saved labelling distinct from persistent Quick Notes, keyboard-first capture (UiButton, themed editor, Enter/Esc) replacing the mouse-only card click and its hard-coded colours, Ui primitives with Theme tokens, typed display preferences (140-char default as in 1.x; the intention itself is deliberately not a setting) and Argentine Spanish catalog."
+      },
+      {
+        "version": "1.0.1",
+        "notes": "Calm dashboard card for one short intention for this session; in-memory only, gone when the shell closes."
+      }
+    ]
+  },
   "files": [
     "Main.qml",
     "README.md",
-    "LICENSE"
+    "LICENSE",
+    "translations/es.json"
   ],
   "capabilities": {
     "processCommands": [],
     "networkHosts": [],
-    "settings": {}
-  },
-  "placement": "dashboard"
+    "settings": {
+      "maxLength": {
+        "type": "integer",
+        "default": 140,
+        "minimum": 20,
+        "maximum": 500,
+        "description": "Maximum characters for the session intention (140 in 1.x). Preference only: the intention itself is never stored."
+      },
+      "showCounter": {
+        "type": "boolean",
+        "default": true,
+        "description": "Show the remaining-characters hint while editing (shown in 1.x)."
+      }
+    }
+  }
 }
