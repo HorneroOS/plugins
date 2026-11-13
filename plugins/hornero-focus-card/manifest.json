@@ -2,21 +2,63 @@
   "schemaVersion": 1,
   "id": "hornero-focus-card",
   "name": "Hornero Focus Card",
-  "version": "1.0.1",
-  "description": "A dashboard card with a rotating original one-line focus reminder and the date. Pure QML, no processes or network.",
+  "version": "2.0.0",
+  "description": "Focus Card 2.0: dashboard card with the locale date and a rotating original one-line focus reminder, from PluginKit Time. Keyboard Previous/Next and pause, optional own leading line, no processes or network.",
   "author": "HorneroOS contributors",
   "license": "MIT",
   "homepage": "https://github.com/HorneroOS/plugins",
   "entrypoint": "Main.qml",
+  "placement": "dashboard",
+  "translations": {
+    "sourceLocale": "en",
+    "locales": [
+      "es"
+    ],
+    "directory": "translations"
+  },
+  "marketplace": {
+    "compatibility": {
+      "minShellVersion": "1.0.0"
+    },
+    "changelog": [
+      {
+        "version": "2.0.0",
+        "notes": "Notes and Focus 2.0: locale-formatted date from the shared Time facade instead of the hard-coded Spanish layout and own date object, keyboard Previous/Next plus pause replacing the mouse-only card click, Ui primitives with Theme tokens, typed settings with 1.x defaults (30 s rotation, date shown, built-in lines only) plus an optional custom leading line, and Argentine Spanish catalog."
+      },
+      {
+        "version": "1.0.1",
+        "notes": "Dashboard card with a rotating original one-line focus reminder and the date."
+      }
+    ]
+  },
   "files": [
     "Main.qml",
     "README.md",
-    "LICENSE"
+    "LICENSE",
+    "translations/es.json"
   ],
   "capabilities": {
     "processCommands": [],
     "networkHosts": [],
-    "settings": {}
-  },
-  "placement": "dashboard"
+    "settings": {
+      "rotateSeconds": {
+        "type": "integer",
+        "default": 30,
+        "minimum": 5,
+        "maximum": 600,
+        "description": "Seconds each focus line stays on screen (30 in 1.x)."
+      },
+      "showDate": {
+        "type": "boolean",
+        "default": true,
+        "description": "Show the date heading (shown in 1.x)."
+      },
+      "customLine": {
+        "type": "string",
+        "default": "",
+        "maxLength": 140,
+        "description": "Optional own focus line, shown first in the rotation. Empty (the 1.x behaviour) rotates the built-in lines only."
+      }
+    }
+  }
 }

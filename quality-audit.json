@@ -500,28 +500,28 @@
     {
       "id": "hornero-focus-card",
       "classification": "needs-upgrade",
-      "valueProposition": "A dashboard card with a rotating original one-line focus reminder and the date. Pure QML, no processes or network.",
-      "nativeOverlap": "Overlaps hornero-pomodoro and hornero-quiet-notes on focus/session intent; distinct value is the rotating reminder.",
+      "valueProposition": "Focus Card 2.0: dashboard card with the locale date from PluginKit Time and a rotating original one-line focus reminder (optional own leading line via the customLine setting). Stores no note; Previous/Next and a pause toggle replace the 1.x mouse-only click. Pure QML, no processes or network.",
+      "nativeOverlap": "Focus/session overlap with hornero-quiet-notes and hornero-pomodoro reviewed under #29, not consolidated: Quiet Notes holds your ephemeral line, Pomodoro times a session, Focus Card shows shipped reminders and stores no note, so there is no user text to migrate between them.",
       "dimensions": {
         "tooltips": {
-          "status": "fail",
-          "note": "Interactive controls present but no ToolTip.text found (static probe)."
+          "status": "pass",
+          "note": "Previous/Next buttons and the pause toggle carry PluginKit tooltipText (host-owned UiTooltip, static probe)."
         },
         "accessibility": {
-          "status": "fail",
-          "note": "Interactive controls present but no Accessible.name found (static probe)."
+          "status": "pass",
+          "note": "Card Accessible.name announces the current line and UiButton/UiToggle accessibleName covers every control; the mouse-only 1.x advance is gone (static probe). Live AT-SPI behaviour is not verified."
         },
         "translation": {
-          "status": "fail",
-          "note": "User-visible string literals are not wrapped in qsTr/qsTrId (static probe)."
+          "status": "pass",
+          "note": "All user-visible literals, including the five built-in lines, go through PluginKit Translations; es (Argentine Spanish) catalog declared in the manifest and checked complete for literal tr() strings (static probe). The date and line counter are locale-formatted via Translations."
         },
         "settings": {
-          "status": "na",
-          "note": "No settings declared in the manifest; none are recorded as needed yet. Revisit if behaviour becomes user-configurable."
+          "status": "pass",
+          "note": "Typed rotateSeconds (integer 5-600, default 30 = 1.x cadence), showDate (boolean, default true) and customLine (string, default empty = built-in lines only as in 1.x) settings declared in the manifest and read via PluginKit Settings (static probe)."
         },
         "themeTokens": {
-          "status": "fail",
-          "note": "PluginKit Theme tokens are not used, or hard-coded chrome colours are present (static probe)."
+          "status": "pass",
+          "note": "Visible colours come from PluginKit Ui primitives/Theme tokens with no hard-coded chrome colours; palette.windowText is gone (static probe)."
         },
         "screenshots": {
           "status": "fail",
@@ -529,18 +529,18 @@
         },
         "orientation": {
           "status": "unverified",
-          "note": "Orientation/responsiveness across bar, dashboard and desktop placements has not had a graphical review; static checks cannot verify it."
+          "note": "Host context drives the control stack (hostOrientation/hostCompact) and caps card width with dashboard defaults, but placement in dashboard slots has not had a graphical review."
         },
         "loadingErrorStates": {
           "status": "unverified",
-          "note": "Loading/error presentation has not been audited beyond the static probe; no graphical verification yet."
+          "note": "Line position, the own-line marker and the paused state render from in-memory state and Time.date; presentation has not been verified graphically in a live shell."
         },
         "performance": {
           "status": "unverified",
-          "note": "Not profiled. Static cadence only: timer intervals (ms)=['30000'], process polling=no; runtime cost is unverified."
+          "note": "Not profiled. Static cadence only: rotation timer at the typed rotateSeconds (default 30000 ms, as in 1.x) and Time event-pushed behind a Subscription lease, process polling=no; runtime cost is unverified."
         }
       },
-      "issue": "https://github.com/HorneroOS/plugins/issues/21"
+      "issue": "https://github.com/HorneroOS/plugins/issues/29"
     },
     {
       "id": "hornero-json-tools",
@@ -860,28 +860,28 @@
     {
       "id": "hornero-quick-notes",
       "classification": "needs-upgrade",
-      "valueProposition": "Dashboard card with one persistent note saved through PluginKit Settings. Text is loaded on start, saved debounced, counted, and truncated at 4096 characters.",
-      "nativeOverlap": "Overlaps hornero-quiet-notes; distinct value is persistence through PluginKit Settings. Pair to keep differentiated or consolidate under the linked issue.",
+      "valueProposition": "Quick Notes 2.0: dashboard card with one persistent note through PluginKit Settings under the unchanged 1.x note key: debounced autosave, Ctrl+S save-now, pending-edit flush on unload, save-state/failure chips, confirmed clear, character/word counts, clamped at 4096 characters and labelled Persistent.",
+      "nativeOverlap": "Family overlap with hornero-quiet-notes is deliberate and now labelled in both cards, not consolidated (#29 review): Quick Notes persists and restores, Quiet Notes never saves, Focus Card stores no note. No user text moves between them.",
       "dimensions": {
         "tooltips": {
           "status": "pass",
-          "note": "Interactive controls carry ToolTip.text (static probe)."
+          "note": "Editor and every UiButton carry ToolTip.text/tooltipText (host-owned UiTooltip, static probe)."
         },
         "accessibility": {
           "status": "pass",
-          "note": "Interactive controls carry Accessible.name (static probe); screen-reader behaviour itself is unverified graphically."
+          "note": "TextArea Accessible.name, count Accessible.name and UiButton accessibleName on every control; all actions are tab stops with Enter/Space activation (static probe). Live AT-SPI behaviour is not verified."
         },
         "translation": {
-          "status": "fail",
-          "note": "User-visible string literals are not wrapped in qsTr/qsTrId (static probe)."
+          "status": "pass",
+          "note": "All user-visible literals go through PluginKit Translations; es (Argentine Spanish) catalog declared in the manifest and checked complete for literal tr() strings (static probe). Counts are locale-formatted via Translations.formatNumber; the note text itself is user content, never translated."
         },
         "settings": {
           "status": "pass",
-          "note": "Manifest declares settings and the QML reads them through PluginKit Settings (static probe)."
+          "note": "Typed note (string, default empty, the unchanged 1.x key), autoSaveDelayMs (integer 200-5000, default 600 = 1.x debounce) and showCounts (boolean, default true) settings declared in the manifest and read/written via PluginKit Settings (static probe); persistence split pinned by tests/test_notes_focus_logic.py."
         },
         "themeTokens": {
           "status": "pass",
-          "note": "Visible colours come from PluginKit Theme tokens with no hard-coded chrome colours (static probe)."
+          "note": "Visible colours come from PluginKit Ui primitives/Theme tokens with no hard-coded chrome colours (static probe)."
         },
         "screenshots": {
           "status": "fail",
@@ -889,44 +889,44 @@
         },
         "orientation": {
           "status": "unverified",
-          "note": "Orientation/responsiveness across bar, dashboard and desktop placements has not had a graphical review; static checks cannot verify it."
+          "note": "Host context drives the button stack (hostOrientation/hostCompact) and caps card width with dashboard defaults, but placement in dashboard slots has not had a graphical review."
         },
         "loadingErrorStates": {
           "status": "unverified",
-          "note": "Static probe finds error/empty-state text in the QML, but loading and error presentation have not been verified graphically."
+          "note": "Unsaved-changes, save-failed and truncated states are explicit chips/captions and a refused Settings write never shows as saved, but the presentation has not been verified graphically in a live shell."
         },
         "performance": {
           "status": "unverified",
-          "note": "Not profiled. Static cadence only: timer intervals (ms)=['600'], process polling=no; runtime cost is unverified."
+          "note": "Not profiled. Static cadence only: one debounced autosave timer (default 600 ms, as in 1.x) firing only after edits, process polling=no; runtime cost is unverified."
         }
       },
-      "issue": "https://github.com/HorneroOS/plugins/issues/21"
+      "issue": "https://github.com/HorneroOS/plugins/issues/29"
     },
     {
       "id": "hornero-quiet-notes",
       "classification": "needs-upgrade",
-      "valueProposition": "A calm dashboard card for one short intention for this session. It keeps no history and writes nowhere; when the shell closes, the note is gone.",
-      "nativeOverlap": "Overlaps hornero-quick-notes; distinct value is deliberate session-only, never-saved notes. Pair to keep differentiated or consolidate under the linked issue.",
+      "valueProposition": "Quiet Notes 2.0: dashboard card for one short session-only intention, in-memory only as in 1.x and now labelled Session only - never saved. Keyboard-first capture (themed editor, Enter accepts, Esc cancels); the intention has deliberately no Settings key, only display preferences are stored.",
+      "nativeOverlap": "Family overlap with hornero-quick-notes is deliberate and now labelled in both cards, not consolidated (#29 review): persisting a Quiet Notes line would break its privacy contract, so no migration path into Quick Notes exists; Focus Card stores no note either.",
       "dimensions": {
         "tooltips": {
-          "status": "fail",
-          "note": "Interactive controls present but no ToolTip.text found (static probe)."
+          "status": "pass",
+          "note": "Editor and every UiButton carry ToolTip.text/tooltipText (host-owned UiTooltip, static probe)."
         },
         "accessibility": {
-          "status": "fail",
-          "note": "Interactive controls present but no Accessible.name found (static probe)."
+          "status": "pass",
+          "note": "Card Accessible.name announces the intention, the TextField has an Accessible.name and every UiButton an accessibleName; the mouse-only 1.x card click is gone and focus returns to the edit button after editing (static probe). Live AT-SPI behaviour is not verified."
         },
         "translation": {
-          "status": "fail",
-          "note": "User-visible string literals are not wrapped in qsTr/qsTrId (static probe)."
+          "status": "pass",
+          "note": "All user-visible literals go through PluginKit Translations; es (Argentine Spanish) catalog declared in the manifest and checked complete for literal tr() strings (static probe). The intention itself is user content, never translated."
         },
         "settings": {
-          "status": "na",
-          "note": "No settings declared in the manifest; none are recorded as needed yet. Revisit if behaviour becomes user-configurable."
+          "status": "pass",
+          "note": "Typed display preferences maxLength (integer 20-500, default 140 = 1.x limit) and showCounter (boolean, default true) declared in the manifest and read via PluginKit Settings; the intention text deliberately has no key and the QML contains no Settings write (static probe; absence of setValue pinned by tests/test_notes_focus_logic.py)."
         },
         "themeTokens": {
-          "status": "fail",
-          "note": "PluginKit Theme tokens are not used, or hard-coded chrome colours are present (static probe)."
+          "status": "pass",
+          "note": "Visible colours come from PluginKit Ui primitives/Theme tokens; the 1.x hard-coded editor colours are gone (static probe)."
         },
         "screenshots": {
           "status": "fail",
@@ -934,18 +934,18 @@
         },
         "orientation": {
           "status": "unverified",
-          "note": "Orientation/responsiveness across bar, dashboard and desktop placements has not had a graphical review; static checks cannot verify it."
+          "note": "Host context drives the button stack (hostOrientation/hostCompact) and caps card width with dashboard defaults, but placement in dashboard slots has not had a graphical review."
         },
         "loadingErrorStates": {
           "status": "unverified",
-          "note": "Loading/error presentation has not been audited beyond the static probe; no graphical verification yet."
+          "note": "The session-only erasure contract is an always-visible chip and caption rather than a surprise on exit; presentation has not been verified graphically in a live shell."
         },
         "performance": {
           "status": "unverified",
           "note": "Not profiled. Static cadence only: timer intervals (ms)=none, process polling=no; runtime cost is unverified."
         }
       },
-      "issue": "https://github.com/HorneroOS/plugins/issues/21"
+      "issue": "https://github.com/HorneroOS/plugins/issues/29"
     },
     {
       "id": "hornero-stopwatch",

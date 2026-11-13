@@ -2,13 +2,63 @@
   "schemaVersion": 1,
   "id": "hornero-quick-notes",
   "name": "Hornero Quick Notes",
-  "version": "1.0.0",
-  "description": "Dashboard card with one persistent note saved through PluginKit Settings. Text is loaded on start, saved debounced, counted, and truncated at 4096 characters.",
+  "version": "2.0.0",
+  "description": "Quick Notes 2.0: dashboard card with one persistent note saved through PluginKit Settings (same key as 1.x). Debounced autosave, Ctrl+S, flush on unload, clear confirmation, no processes or network.",
   "author": "HorneroOS contributors",
   "license": "MIT",
   "homepage": "https://github.com/HorneroOS/plugins",
   "entrypoint": "Main.qml",
-  "files": ["Main.qml", "README.md", "LICENSE"],
-  "capabilities": {"processCommands": [], "networkHosts": [], "settings": {"note": {"type": "string", "default": "", "description": "Persistent quick note text (max 4096 characters)."}}},
-  "placement": "dashboard"
+  "placement": "dashboard",
+  "translations": {
+    "sourceLocale": "en",
+    "locales": [
+      "es"
+    ],
+    "directory": "translations"
+  },
+  "marketplace": {
+    "compatibility": {
+      "minShellVersion": "1.0.0"
+    },
+    "changelog": [
+      {
+        "version": "2.0.0",
+        "notes": "Notes and Focus 2.0: explicit Persistent labelling distinct from session-only Quiet Notes, save-state and save-failure chips, pending-edit flush on disable/unload, Ctrl+S save-now, confirmed clear, word count, Ui primitives with Theme tokens, typed autosave/count settings (600 ms and shown, the 1.x defaults) and Argentine Spanish catalog. Stored note key unchanged, so existing notes carry over with no migration."
+      },
+      {
+        "version": "1.0.0",
+        "notes": "Dashboard card with one persistent note saved through PluginKit Settings, debounced, counted and truncated at 4096 characters."
+      }
+    ]
+  },
+  "files": [
+    "Main.qml",
+    "README.md",
+    "LICENSE",
+    "translations/es.json"
+  ],
+  "capabilities": {
+    "processCommands": [],
+    "networkHosts": [],
+    "settings": {
+      "note": {
+        "type": "string",
+        "default": "",
+        "maxLength": 4096,
+        "description": "Persistent quick note text (max 4096 characters). Same key as 1.x; existing notes are kept."
+      },
+      "autoSaveDelayMs": {
+        "type": "integer",
+        "default": 600,
+        "minimum": 200,
+        "maximum": 5000,
+        "description": "Debounce before an edit is saved automatically (600 ms in 1.x). Ctrl+S and unload always save immediately."
+      },
+      "showCounts": {
+        "type": "boolean",
+        "default": true,
+        "description": "Show the character/word count line (shown in 1.x)."
+      }
+    }
+  }
 }

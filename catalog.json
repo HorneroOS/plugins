@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedFrom": "2f280f245d4dc92643ee25ed7bb1f923b2096b15",
+  "generatedFrom": "6585f83fa8712672b2a86c3c2efba00e21bc9d32",
   "plugins": [
     {
       "id": "hornero-agenda",
@@ -336,8 +336,8 @@
     {
       "id": "hornero-focus-card",
       "name": "Hornero Focus Card",
-      "version": "1.0.1",
-      "description": "A dashboard card with a rotating original one-line focus reminder and the date. Pure QML, no processes or network.",
+      "version": "2.0.0",
+      "description": "Focus Card 2.0: dashboard card with the locale date and a rotating original one-line focus reminder, from PluginKit Time. Keyboard Previous/Next and pause, optional own leading line, no processes or network.",
       "author": "HorneroOS contributors",
       "license": "MIT",
       "homepage": "https://github.com/HorneroOS/plugins",
@@ -346,11 +346,30 @@
       "capabilities": {
         "processCommands": [],
         "networkHosts": [],
-        "settings": {}
+        "settings": {
+          "rotateSeconds": {
+            "type": "integer",
+            "default": 30,
+            "minimum": 5,
+            "maximum": 600,
+            "description": "Seconds each focus line stays on screen (30 in 1.x)."
+          },
+          "showDate": {
+            "type": "boolean",
+            "default": true,
+            "description": "Show the date heading (shown in 1.x)."
+          },
+          "customLine": {
+            "type": "string",
+            "default": "",
+            "maxLength": 140,
+            "description": "Optional own focus line, shown first in the rotation. Empty (the 1.x behaviour) rotates the built-in lines only."
+          }
+        }
       },
       "trust": "official",
       "path": "plugins/hornero-focus-card",
-      "sha256": "02a597f32423f8851dc7da6e832d48bc97eb5d12d1cdebe29f076ec60bbb448c"
+      "sha256": "71eceb1b491b2371ed956c7dd49c9a6bd33cf105b0edc246e35376a1c7652f94"
     },
     {
       "id": "hornero-json-tools",
@@ -602,8 +621,8 @@
     {
       "id": "hornero-quick-notes",
       "name": "Hornero Quick Notes",
-      "version": "1.0.0",
-      "description": "Dashboard card with one persistent note saved through PluginKit Settings. Text is loaded on start, saved debounced, counted, and truncated at 4096 characters.",
+      "version": "2.0.0",
+      "description": "Quick Notes 2.0: dashboard card with one persistent note saved through PluginKit Settings (same key as 1.x). Debounced autosave, Ctrl+S, flush on unload, clear confirmation, no processes or network.",
       "author": "HorneroOS contributors",
       "license": "MIT",
       "homepage": "https://github.com/HorneroOS/plugins",
@@ -616,19 +635,32 @@
           "note": {
             "type": "string",
             "default": "",
-            "description": "Persistent quick note text (max 4096 characters)."
+            "maxLength": 4096,
+            "description": "Persistent quick note text (max 4096 characters). Same key as 1.x; existing notes are kept."
+          },
+          "autoSaveDelayMs": {
+            "type": "integer",
+            "default": 600,
+            "minimum": 200,
+            "maximum": 5000,
+            "description": "Debounce before an edit is saved automatically (600 ms in 1.x). Ctrl+S and unload always save immediately."
+          },
+          "showCounts": {
+            "type": "boolean",
+            "default": true,
+            "description": "Show the character/word count line (shown in 1.x)."
           }
         }
       },
       "trust": "official",
       "path": "plugins/hornero-quick-notes",
-      "sha256": "4a4766eab7f6a1024d541ef92bc067b6c6cb2077cd6976e4ccb3b95243bb6065"
+      "sha256": "bafb43dbac46548dee3dc0e8be09e75d961f8f2f5551a28721d5f6355991324d"
     },
     {
       "id": "hornero-quiet-notes",
       "name": "Hornero Quiet Notes",
-      "version": "1.0.1",
-      "description": "A calm dashboard card for one short intention for this session. It keeps no history and writes nowhere; when the shell closes, the note is gone.",
+      "version": "2.0.0",
+      "description": "Quiet Notes 2.0: dashboard card for one short session-only intention. The line is never saved (in-memory only, as in 1.x) and the card says so. Keyboard-first capture, no processes or network.",
       "author": "HorneroOS contributors",
       "license": "MIT",
       "homepage": "https://github.com/HorneroOS/plugins",
@@ -637,11 +669,24 @@
       "capabilities": {
         "processCommands": [],
         "networkHosts": [],
-        "settings": {}
+        "settings": {
+          "maxLength": {
+            "type": "integer",
+            "default": 140,
+            "minimum": 20,
+            "maximum": 500,
+            "description": "Maximum characters for the session intention (140 in 1.x). Preference only: the intention itself is never stored."
+          },
+          "showCounter": {
+            "type": "boolean",
+            "default": true,
+            "description": "Show the remaining-characters hint while editing (shown in 1.x)."
+          }
+        }
       },
       "trust": "official",
       "path": "plugins/hornero-quiet-notes",
-      "sha256": "5f552fd0601675a3ddc95ccc27957e8e5d2514d9e0c739a9ed188f6eecc2476c"
+      "sha256": "6e7c53610e1ed3a16361ade283577a45c9b36ce08534f05228bd69560cc6706d"
     },
     {
       "id": "hornero-stopwatch",
