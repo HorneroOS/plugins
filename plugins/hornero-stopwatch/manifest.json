@@ -2,13 +2,59 @@
   "schemaVersion": 1,
   "id": "hornero-stopwatch",
   "name": "Hornero Stopwatch",
-  "version": "1.0.0",
-  "description": "Bar stopwatch with start, pause and reset, showing elapsed time as mm:ss.t. Pure QML, no processes or network.",
+  "version": "2.0.0",
+  "description": "Stopwatch 2.0: compact bar stopwatch with a popover, wall-clock-anchored elapsed time correct across sleep/reload and an optional tenths display. Pure QML, no processes or network.",
   "author": "HorneroOS contributors",
   "license": "MIT",
   "homepage": "https://github.com/HorneroOS/plugins",
   "entrypoint": "Main.qml",
-  "files": ["Main.qml", "README.md", "LICENSE"],
-  "capabilities": {"processCommands": [], "networkHosts": [], "settings": {}},
-  "placement": "bar"
+  "placement": "bar",
+  "translations": {
+    "sourceLocale": "en",
+    "locales": [
+      "es"
+    ],
+    "directory": "translations"
+  },
+  "files": [
+    "Main.qml",
+    "README.md",
+    "LICENSE",
+    "translations/es.json"
+  ],
+  "capabilities": {
+    "processCommands": [],
+    "networkHosts": [],
+    "settings": {
+      "showTenths": {
+        "type": "boolean",
+        "default": true,
+        "description": "Show tenths of a second in the elapsed time."
+      },
+      "accumulatedMs": {
+        "type": "integer",
+        "default": 0,
+        "minimum": 0,
+        "description": "Saved elapsed milliseconds while paused. Managed by the stopwatch; do not edit."
+      },
+      "startedEpochMs": {
+        "type": "integer",
+        "default": 0,
+        "minimum": 0,
+        "description": "Saved start anchor in epoch milliseconds (0 when paused). Managed by the stopwatch; do not edit."
+      }
+    }
+  },
+  "marketplace": {
+    "changelog": [
+      {
+        "version": "2.0.0",
+        "notes": "Productivity Timers 2.0: compact indicator plus popover controls, wall-clock-anchored timing persisted across sleep/reload (no per-tick drift), typed showTenths setting (default on), Theme tokens and Argentine Spanish translation."
+      },
+      {
+        "version": "1.0.0",
+        "notes": "Bar stopwatch with start, pause and reset, showing elapsed time as mm:ss.t."
+      }
+    ]
+  }
 }

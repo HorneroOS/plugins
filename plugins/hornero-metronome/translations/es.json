@@ -1,0 +1,21 @@
+{
+  "%1 BPM": "%1 PPM",
+  "Accent on beat 1 of %1": "Acento en el tiempo 1 de %1",
+  "Decrease BPM": "Bajar los PPM",
+  "Increase BPM": "Subir los PPM",
+  "Metronome": "Metrónomo",
+  "Metronome %1 beats per minute": "Metrónomo a %1 pulsos por minuto",
+  "Metronome beat off": "Pulso del metrónomo apagado",
+  "Metronome beat on": "Pulso del metrónomo encendido",
+  "Metronome: activate for controls": "Metrónomo: activá para ver los controles",
+  "Running": "En curso",
+  "Start": "Iniciar",
+  "Start metronome": "Iniciar el metrónomo",
+  "Start the metronome": "Iniciá el metrónomo",
+  "Stop": "Detener",
+  "Stop metronome": "Detener el metrónomo",
+  "Stop the metronome": "Detené el metrónomo",
+  "Stopped": "Detenido",
+  "Tempo": "Tempo",
+  "Tempo in beats per minute": "Tempo en pulsos por minuto"
+}

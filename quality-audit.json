@@ -320,28 +320,28 @@
     {
       "id": "hornero-countdown",
       "classification": "needs-upgrade",
-      "valueProposition": "Bar countdown timer with 5, 10 and 25 minute presets, start, pause and reset, and a visual ring and flashing text at zero. No sound. Pure QML, no processes or network.",
+      "valueProposition": "Countdown 2.0 bar timer: compact indicator plus popover with 5/10/25 presets, progress, start/pause and reset, deadline-based timing persisted across sleep/reload and a completion toast. No sound. Pure QML, no processes or network.",
       "nativeOverlap": "Timer family overlap with hornero-pomodoro and hornero-stopwatch; distinct value is preset countdowns.",
       "dimensions": {
         "tooltips": {
           "status": "pass",
-          "note": "Interactive controls carry ToolTip.text (static probe)."
+          "note": "Indicator and popover controls carry PluginKit tooltipText (host-owned UiTooltip, static probe)."
         },
         "accessibility": {
           "status": "pass",
-          "note": "Interactive controls carry Accessible.name (static probe); screen-reader behaviour itself is unverified graphically."
+          "note": "UiButton/UiPopover accessibleName on every control; no mouse-only MouseArea remains (static probe). Live AT-SPI behaviour is not verified."
         },
         "translation": {
-          "status": "fail",
-          "note": "User-visible string literals are not wrapped in qsTr/qsTrId (static probe)."
+          "status": "pass",
+          "note": "All user-visible literals go through PluginKit Translations; es (Argentine Spanish) catalog declared in the manifest and checked complete for literal tr() strings (static probe)."
         },
         "settings": {
-          "status": "na",
-          "note": "No settings declared in the manifest; none are recorded as needed yet. Revisit if behaviour becomes user-configurable."
+          "status": "pass",
+          "note": "Typed defaultMinutes setting (integer 1-180, default 5 = previous initial preset) plus timer-managed saved-state keys, all read/written via PluginKit Settings (static probe)."
         },
         "themeTokens": {
           "status": "pass",
-          "note": "Visible colours come from PluginKit Theme tokens with no hard-coded chrome colours (static probe)."
+          "note": "Visible colours come from PluginKit Ui primitives/Theme tokens with no hard-coded chrome colours (static probe)."
         },
         "screenshots": {
           "status": "fail",
@@ -349,18 +349,18 @@
         },
         "orientation": {
           "status": "unverified",
-          "note": "Orientation/responsiveness across bar, dashboard and desktop placements has not had a graphical review; static checks cannot verify it."
+          "note": "Host context (hostOrientation/hostCompact) drives UiStack and the compact indicator, but orientation across bar edges has not had a graphical review."
         },
         "loadingErrorStates": {
           "status": "unverified",
-          "note": "Static probe finds error/empty-state text in the QML, but loading and error presentation have not been verified graphically."
+          "note": "Finished/paused/running states are shown with UiChip plus a completion toast where the timer has a finish; presentation has not been verified graphically in a live shell."
         },
         "performance": {
           "status": "unverified",
-          "note": "Not profiled. Static cadence only: timer intervals (ms)=['1000', '600'], process polling=no; runtime cost is unverified."
+          "note": "Not profiled. Static cadence only: 1000ms deadline re-read tick while running and a 600ms DONE flash (both as in 1.x), process polling=no; runtime cost is unverified."
         }
       },
-      "issue": "https://github.com/HorneroOS/plugins/issues/21"
+      "issue": "https://github.com/HorneroOS/plugins/issues/24"
     },
     {
       "id": "hornero-date-calculator",
@@ -590,28 +590,28 @@
     {
       "id": "hornero-metronome",
       "classification": "needs-upgrade",
-      "valueProposition": "Bar metronome with a flashing beat indicator. BPM is a persisted integer setting (default 96, clamped 40-208) with start/stop and BPM minus/plus controls.",
+      "valueProposition": "Metronome 2.0 bar metronome: compact indicator plus popover with beat dot, BPM slider and minus/plus controls, deadline-scheduled beats that skip beats missed during sleep, and an optional first-beat accent. Pure QML, no processes or network.",
       "nativeOverlap": "Timer family overlap with hornero-countdown and hornero-stopwatch; distinct value is BPM beat indication.",
       "dimensions": {
         "tooltips": {
           "status": "pass",
-          "note": "Interactive controls carry ToolTip.text (static probe)."
+          "note": "Indicator and popover controls carry PluginKit tooltipText (host-owned UiTooltip, static probe)."
         },
         "accessibility": {
           "status": "pass",
-          "note": "Interactive controls carry Accessible.name (static probe); screen-reader behaviour itself is unverified graphically."
+          "note": "UiButton/UiSlider/UiPopover accessibleName on every control; no mouse-only MouseArea remains (static probe). Live AT-SPI behaviour is not verified."
         },
         "translation": {
-          "status": "fail",
-          "note": "User-visible string literals are not wrapped in qsTr/qsTrId (static probe)."
+          "status": "pass",
+          "note": "All user-visible literals go through PluginKit Translations; es (Argentine Spanish) catalog declared in the manifest and checked complete for literal tr() strings (static probe)."
         },
         "settings": {
           "status": "pass",
-          "note": "Manifest declares settings and the QML reads them through PluginKit Settings (static probe)."
+          "note": "Persisted bpm setting now declares its 40-208 bounds (default 96, as in 1.x), plus beatsPerBar/accentFirstBeat, all read/written via PluginKit Settings (static probe)."
         },
         "themeTokens": {
           "status": "pass",
-          "note": "Visible colours come from PluginKit Theme tokens with no hard-coded chrome colours (static probe)."
+          "note": "Visible colours come from PluginKit Ui primitives/Theme tokens with no hard-coded chrome colours (static probe)."
         },
         "screenshots": {
           "status": "fail",
@@ -619,18 +619,18 @@
         },
         "orientation": {
           "status": "unverified",
-          "note": "Orientation/responsiveness across bar, dashboard and desktop placements has not had a graphical review; static checks cannot verify it."
+          "note": "Host context (hostOrientation/hostCompact) drives UiStack and the compact indicator, but orientation across bar edges has not had a graphical review."
         },
         "loadingErrorStates": {
           "status": "unverified",
-          "note": "Loading/error presentation has not been audited beyond the static probe; no graphical verification yet."
+          "note": "Finished/paused/running states are shown with UiChip plus a completion toast where the timer has a finish; presentation has not been verified graphically in a live shell."
         },
         "performance": {
           "status": "unverified",
-          "note": "Not profiled. Static cadence only: timer intervals (ms)=['140'], process polling=no; runtime cost is unverified."
+          "note": "Not profiled. Static cadence only: 50ms beat-deadline poll while running (new in 2.0) and the 140ms flash (as in 1.x), process polling=no; runtime cost is unverified."
         }
       },
-      "issue": "https://github.com/HorneroOS/plugins/issues/21"
+      "issue": "https://github.com/HorneroOS/plugins/issues/24"
     },
     {
       "id": "hornero-microphone",
@@ -815,28 +815,28 @@
     {
       "id": "hornero-pomodoro",
       "classification": "needs-upgrade",
-      "valueProposition": "A 25-minute focus timer for the bar. Click to start or pause; it rings (visually) at zero and resets. No processes, no network, just time and discipline.",
+      "valueProposition": "Pomodoro 2.0 bar focus timer: compact indicator plus popover (remaining time, progress, start/pause, reset), deadline-based timing persisted across sleep/reload, typed focusMinutes setting (default 25) and a completion toast. Pure QML, no processes or network.",
       "nativeOverlap": "Timer family overlap with hornero-countdown and hornero-focus-card; distinct value is the 25-minute focus cycle.",
       "dimensions": {
         "tooltips": {
-          "status": "fail",
-          "note": "Interactive controls present but no ToolTip.text found (static probe)."
+          "status": "pass",
+          "note": "Indicator and popover controls carry PluginKit tooltipText (host-owned UiTooltip, static probe)."
         },
         "accessibility": {
-          "status": "fail",
-          "note": "Interactive controls present but no Accessible.name found (static probe)."
+          "status": "pass",
+          "note": "UiButton/UiPopover accessibleName on every control; no mouse-only MouseArea remains (static probe). Live AT-SPI behaviour is not verified."
         },
         "translation": {
-          "status": "fail",
-          "note": "User-visible string literals are not wrapped in qsTr/qsTrId (static probe)."
+          "status": "pass",
+          "note": "All user-visible literals go through PluginKit Translations; es (Argentine Spanish) catalog declared in the manifest and checked complete for literal tr() strings (static probe)."
         },
         "settings": {
-          "status": "na",
-          "note": "No settings declared in the manifest; none are recorded as needed yet. Revisit if behaviour becomes user-configurable."
+          "status": "pass",
+          "note": "Typed focusMinutes setting (integer 1-180, default 25 = previous hardcoded length) plus timer-managed saved-state keys, all read/written via PluginKit Settings (static probe)."
         },
         "themeTokens": {
-          "status": "fail",
-          "note": "PluginKit Theme tokens are not used, or hard-coded chrome colours are present (static probe)."
+          "status": "pass",
+          "note": "Visible colours come from PluginKit Ui primitives/Theme tokens with no hard-coded chrome colours (static probe)."
         },
         "screenshots": {
           "status": "fail",
@@ -844,18 +844,18 @@
         },
         "orientation": {
           "status": "unverified",
-          "note": "Orientation/responsiveness across bar, dashboard and desktop placements has not had a graphical review; static checks cannot verify it."
+          "note": "Host context (hostOrientation/hostCompact) drives UiStack and the compact indicator, but orientation across bar edges has not had a graphical review."
         },
         "loadingErrorStates": {
           "status": "unverified",
-          "note": "Loading/error presentation has not been audited beyond the static probe; no graphical verification yet."
+          "note": "Finished/paused/running states are shown with UiChip plus a completion toast where the timer has a finish; presentation has not been verified graphically in a live shell."
         },
         "performance": {
           "status": "unverified",
-          "note": "Not profiled. Static cadence only: timer intervals (ms)=['1000', '600'], process polling=no; runtime cost is unverified."
+          "note": "Not profiled. Static cadence only: 1000ms deadline re-read tick while running and a 600ms DONE flash (both as in 1.x), process polling=no; runtime cost is unverified."
         }
       },
-      "issue": "https://github.com/HorneroOS/plugins/issues/21"
+      "issue": "https://github.com/HorneroOS/plugins/issues/24"
     },
     {
       "id": "hornero-quick-notes",
@@ -950,28 +950,28 @@
     {
       "id": "hornero-stopwatch",
       "classification": "needs-upgrade",
-      "valueProposition": "Bar stopwatch with start, pause and reset, showing elapsed time as mm:ss.t. Pure QML, no processes or network.",
+      "valueProposition": "Stopwatch 2.0 bar stopwatch: compact indicator plus popover (elapsed time, start/pause/resume, reset), wall-clock-anchored timing persisted across sleep/reload with no per-tick drift. Pure QML, no processes or network.",
       "nativeOverlap": "Timer family overlap with hornero-countdown and hornero-metronome; distinct value is elapsed-time measurement.",
       "dimensions": {
         "tooltips": {
           "status": "pass",
-          "note": "Interactive controls carry ToolTip.text (static probe)."
+          "note": "Indicator and popover controls carry PluginKit tooltipText (host-owned UiTooltip, static probe)."
         },
         "accessibility": {
           "status": "pass",
-          "note": "Interactive controls carry Accessible.name (static probe); screen-reader behaviour itself is unverified graphically."
+          "note": "UiButton/UiPopover accessibleName on every control; no mouse-only MouseArea remains (static probe). Live AT-SPI behaviour is not verified."
         },
         "translation": {
-          "status": "fail",
-          "note": "User-visible string literals are not wrapped in qsTr/qsTrId (static probe)."
+          "status": "pass",
+          "note": "All user-visible literals go through PluginKit Translations; es (Argentine Spanish) catalog declared in the manifest and checked complete for literal tr() strings (static probe)."
         },
         "settings": {
-          "status": "na",
-          "note": "No settings declared in the manifest; none are recorded as needed yet. Revisit if behaviour becomes user-configurable."
+          "status": "pass",
+          "note": "Typed showTenths setting (boolean, default true = 1.x mm:ss.t display) plus timer-managed saved-state anchors, all read/written via PluginKit Settings (static probe)."
         },
         "themeTokens": {
           "status": "pass",
-          "note": "Visible colours come from PluginKit Theme tokens with no hard-coded chrome colours (static probe)."
+          "note": "Visible colours come from PluginKit Ui primitives/Theme tokens with no hard-coded chrome colours (static probe)."
         },
         "screenshots": {
           "status": "fail",
@@ -979,18 +979,18 @@
         },
         "orientation": {
           "status": "unverified",
-          "note": "Orientation/responsiveness across bar, dashboard and desktop placements has not had a graphical review; static checks cannot verify it."
+          "note": "Host context (hostOrientation/hostCompact) drives UiStack and the compact indicator, but orientation across bar edges has not had a graphical review."
         },
         "loadingErrorStates": {
           "status": "unverified",
-          "note": "Loading/error presentation has not been audited beyond the static probe; no graphical verification yet."
+          "note": "Finished/paused/running states are shown with UiChip plus a completion toast where the timer has a finish; presentation has not been verified graphically in a live shell."
         },
         "performance": {
           "status": "unverified",
-          "note": "Not profiled. Static cadence only: timer intervals (ms)=['100'], process polling=no; runtime cost is unverified."
+          "note": "Not profiled. Static cadence only: 100ms display tick while running (as in 1.x; anchors, not ticks, measure time), process polling=no; runtime cost is unverified."
         }
       },
-      "issue": "https://github.com/HorneroOS/plugins/issues/21"
+      "issue": "https://github.com/HorneroOS/plugins/issues/24"
     },
     {
       "id": "hornero-studio-audio",

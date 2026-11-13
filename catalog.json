@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedFrom": "d367eb8b0798002e9d819726300c12dc26f112b3",
+  "generatedFrom": "2b7ad3a7e475899d47c60caf954b2c6b11a075db",
   "plugins": [
     {
       "id": "hornero-agenda",
@@ -148,8 +148,8 @@
     {
       "id": "hornero-countdown",
       "name": "Hornero Countdown",
-      "version": "1.0.0",
-      "description": "Bar countdown timer with 5, 10 and 25 minute presets, start, pause and reset, and a visual ring and flashing text at zero. No sound. Pure QML, no processes or network.",
+      "version": "2.0.0",
+      "description": "Countdown 2.0: compact bar countdown (5/10/25 presets) with a popover, progress, deadline-correct timing across sleep/reload and a completion toast. No sound, no processes, no network.",
       "author": "HorneroOS contributors",
       "license": "MIT",
       "homepage": "https://github.com/HorneroOS/plugins",
@@ -158,11 +158,39 @@
       "capabilities": {
         "processCommands": [],
         "networkHosts": [],
-        "settings": {}
+        "settings": {
+          "defaultMinutes": {
+            "type": "integer",
+            "default": 5,
+            "minimum": 1,
+            "maximum": 180,
+            "description": "Countdown length in minutes used until a preset is chosen."
+          },
+          "deadlineEpochMs": {
+            "type": "integer",
+            "default": 0,
+            "minimum": 0,
+            "description": "Saved running deadline in epoch milliseconds (0 when not running). Managed by the timer; do not edit."
+          },
+          "totalSeconds": {
+            "type": "integer",
+            "default": 0,
+            "minimum": 0,
+            "maximum": 10800,
+            "description": "Saved countdown length in seconds (0 means the default length). Managed by the timer; do not edit."
+          },
+          "remainingSeconds": {
+            "type": "integer",
+            "default": 0,
+            "minimum": 0,
+            "maximum": 10800,
+            "description": "Saved paused time remaining in seconds (0 means a full countdown). Managed by the timer; do not edit."
+          }
+        }
       },
       "trust": "official",
       "path": "plugins/hornero-countdown",
-      "sha256": "964e22a13744d989f3b679ca287b0f46b39524f3a7f691a9c90e6a3c2e7efccb"
+      "sha256": "86454f4cf2b0c257d86139d65607079989be470856bedc2cde94172511050e62"
     },
     {
       "id": "hornero-date-calculator",
@@ -262,8 +290,8 @@
     {
       "id": "hornero-metronome",
       "name": "Hornero Metronome",
-      "version": "1.0.0",
-      "description": "Bar metronome with a flashing beat indicator. BPM is a persisted integer setting (default 96, clamped 40-208) with start/stop and BPM minus/plus controls.",
+      "version": "2.0.0",
+      "description": "Metronome 2.0: compact bar metronome with a popover (BPM slider plus minus/plus), deadline-scheduled beats that skip missed beats after sleep, and optional first-beat accent. No processes, no network.",
       "author": "HorneroOS contributors",
       "license": "MIT",
       "homepage": "https://github.com/HorneroOS/plugins",
@@ -276,13 +304,27 @@
           "bpm": {
             "type": "integer",
             "default": 96,
+            "minimum": 40,
+            "maximum": 208,
             "description": "Metronome tempo in beats per minute (40-208)."
+          },
+          "beatsPerBar": {
+            "type": "integer",
+            "default": 4,
+            "minimum": 1,
+            "maximum": 12,
+            "description": "Beats per bar used for the accented first beat."
+          },
+          "accentFirstBeat": {
+            "type": "boolean",
+            "default": false,
+            "description": "Flash the first beat of each bar in the accent colour."
           }
         }
       },
       "trust": "official",
       "path": "plugins/hornero-metronome",
-      "sha256": "facb2374288948f4993066c9e1a21da91c861ac371ff40d7ec45d81b14d60383"
+      "sha256": "92a1829f50f6ce54af6f4ecdc921dfba6f71942f1b8c3929716ce20bd1c68858"
     },
     {
       "id": "hornero-microphone",
@@ -381,8 +423,8 @@
     {
       "id": "hornero-pomodoro",
       "name": "Hornero Pomodoro",
-      "version": "1.0.1",
-      "description": "A 25-minute focus timer for the bar. Click to start or pause; it rings (visually) at zero and resets. No processes, no network, just time and discipline.",
+      "version": "2.0.0",
+      "description": "Pomodoro 2.0: compact bar focus timer with a popover, deadline-correct timing across sleep/reload, a typed session-length setting and a completion toast. No processes, no network.",
       "author": "HorneroOS contributors",
       "license": "MIT",
       "homepage": "https://github.com/HorneroOS/plugins",
@@ -391,11 +433,32 @@
       "capabilities": {
         "processCommands": [],
         "networkHosts": [],
-        "settings": {}
+        "settings": {
+          "focusMinutes": {
+            "type": "integer",
+            "default": 25,
+            "minimum": 1,
+            "maximum": 180,
+            "description": "Focus session length in minutes."
+          },
+          "deadlineEpochMs": {
+            "type": "integer",
+            "default": 0,
+            "minimum": 0,
+            "description": "Saved running deadline in epoch milliseconds (0 when not running). Managed by the timer; do not edit."
+          },
+          "remainingSeconds": {
+            "type": "integer",
+            "default": 0,
+            "minimum": 0,
+            "maximum": 10800,
+            "description": "Saved paused time remaining in seconds (0 means a full session). Managed by the timer; do not edit."
+          }
+        }
       },
       "trust": "official",
       "path": "plugins/hornero-pomodoro",
-      "sha256": "9540ef7be072cc29ddf075f529c604d0ec08b952a15bf8e80d6a23541e51308c"
+      "sha256": "16897ab08e5e3db038ada13c42054b3c784ad4ac296eb48ac0d65f6636a27d59"
     },
     {
       "id": "hornero-quick-notes",
@@ -444,8 +507,8 @@
     {
       "id": "hornero-stopwatch",
       "name": "Hornero Stopwatch",
-      "version": "1.0.0",
-      "description": "Bar stopwatch with start, pause and reset, showing elapsed time as mm:ss.t. Pure QML, no processes or network.",
+      "version": "2.0.0",
+      "description": "Stopwatch 2.0: compact bar stopwatch with a popover, wall-clock-anchored elapsed time correct across sleep/reload and an optional tenths display. Pure QML, no processes or network.",
       "author": "HorneroOS contributors",
       "license": "MIT",
       "homepage": "https://github.com/HorneroOS/plugins",
@@ -454,11 +517,29 @@
       "capabilities": {
         "processCommands": [],
         "networkHosts": [],
-        "settings": {}
+        "settings": {
+          "showTenths": {
+            "type": "boolean",
+            "default": true,
+            "description": "Show tenths of a second in the elapsed time."
+          },
+          "accumulatedMs": {
+            "type": "integer",
+            "default": 0,
+            "minimum": 0,
+            "description": "Saved elapsed milliseconds while paused. Managed by the stopwatch; do not edit."
+          },
+          "startedEpochMs": {
+            "type": "integer",
+            "default": 0,
+            "minimum": 0,
+            "description": "Saved start anchor in epoch milliseconds (0 when paused). Managed by the stopwatch; do not edit."
+          }
+        }
       },
       "trust": "official",
       "path": "plugins/hornero-stopwatch",
-      "sha256": "b61b74d3f16e7bf0bb0cce05a1867589a1d32d73fdf66f15009ef659b2470106"
+      "sha256": "0cc043047688207dc24bcef4086db4dce87ae20d6cf1a8f929a93bb47c82f4bd"
     },
     {
       "id": "hornero-studio-audio",

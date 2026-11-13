@@ -2,13 +2,61 @@
   "schemaVersion": 1,
   "id": "hornero-metronome",
   "name": "Hornero Metronome",
-  "version": "1.0.0",
-  "description": "Bar metronome with a flashing beat indicator. BPM is a persisted integer setting (default 96, clamped 40-208) with start/stop and BPM minus/plus controls.",
+  "version": "2.0.0",
+  "description": "Metronome 2.0: compact bar metronome with a popover (BPM slider plus minus/plus), deadline-scheduled beats that skip missed beats after sleep, and optional first-beat accent. No processes, no network.",
   "author": "HorneroOS contributors",
   "license": "MIT",
   "homepage": "https://github.com/HorneroOS/plugins",
   "entrypoint": "Main.qml",
-  "files": ["Main.qml", "README.md", "LICENSE"],
-  "capabilities": {"processCommands": [], "networkHosts": [], "settings": {"bpm": {"type": "integer", "default": 96, "description": "Metronome tempo in beats per minute (40-208)."}}},
-  "placement": "bar"
+  "placement": "bar",
+  "translations": {
+    "sourceLocale": "en",
+    "locales": [
+      "es"
+    ],
+    "directory": "translations"
+  },
+  "files": [
+    "Main.qml",
+    "README.md",
+    "LICENSE",
+    "translations/es.json"
+  ],
+  "capabilities": {
+    "processCommands": [],
+    "networkHosts": [],
+    "settings": {
+      "bpm": {
+        "type": "integer",
+        "default": 96,
+        "minimum": 40,
+        "maximum": 208,
+        "description": "Metronome tempo in beats per minute (40-208)."
+      },
+      "beatsPerBar": {
+        "type": "integer",
+        "default": 4,
+        "minimum": 1,
+        "maximum": 12,
+        "description": "Beats per bar used for the accented first beat."
+      },
+      "accentFirstBeat": {
+        "type": "boolean",
+        "default": false,
+        "description": "Flash the first beat of each bar in the accent colour."
+      }
+    }
+  },
+  "marketplace": {
+    "changelog": [
+      {
+        "version": "2.0.0",
+        "notes": "Productivity Timers 2.0: compact indicator plus popover with BPM slider, deadline-scheduled beats (missed beats after sleep are skipped), bpm setting now declares its 40-208 bounds, optional first-beat accent, Theme tokens and Argentine Spanish translation."
+      },
+      {
+        "version": "1.0.0",
+        "notes": "Bar metronome with flashing beat indicator and persisted BPM setting (default 96, clamped 40-208)."
+      }
+    ]
+  }
 }
