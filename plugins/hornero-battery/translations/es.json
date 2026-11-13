@@ -1,0 +1,20 @@
+{
+  "%1%": "%1%",
+  "Battery": "Batería",
+  "Battery %1%": "Batería %1%",
+  "Battery details": "Detalle de la batería",
+  "Charge": "Carga",
+  "Charging": "Cargando",
+  "Discharging": "Descargando",
+  "Fully charged": "Carga completa",
+  "Low": "Baja",
+  "No": "No",
+  "No battery": "Sin batería",
+  "No battery is reported by the Power service. The bar indicator stays hidden unless you enable 'show when no battery'.": "El servicio de energía no informa ninguna batería. El indicador de la barra queda oculto salvo que actives «mostrar cuando no hay batería».",
+  "On battery": "Con batería",
+  "Pending charge": "Carga pendiente",
+  "PluginKit Power does not expose time remaining, battery health or power profiles, so they are not shown. 'Not on battery' is reported as No above; the facade has no separate AC-online signal.": "PluginKit Power no expone tiempo restante, salud de la batería ni perfiles de energía, así que no se muestran. «No está con batería» se informa como No arriba; la fachada no tiene una señal separada de conexión a la red eléctrica.",
+  "State": "Estado",
+  "Unknown": "Desconocido",
+  "Yes": "Sí"
+}

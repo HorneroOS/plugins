@@ -1,14 +1,76 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 2,
   "id": "hornero-battery",
   "name": "Hornero Battery",
-  "version": "1.0.0",
-  "description": "Bar widget showing battery percentage and charging state from PluginKit Power. Shows 'No battery' on machines without a battery instead of a fabricated percentage.",
+  "version": "2.0.0",
+  "description": "Battery 2.0: contextual bar indicator over the PluginKit Power facade, hidden by default when no battery is reported, with a power-detail popover and dashboard card. Real no-battery/unknown states only.",
   "author": "HorneroOS contributors",
   "license": "MIT",
   "homepage": "https://github.com/HorneroOS/plugins",
   "entrypoint": "Main.qml",
-  "files": ["Main.qml", "README.md", "LICENSE"],
-  "capabilities": {"processCommands": [], "networkHosts": [], "settings": {}},
-  "placement": "bar"
+  "placement": "bar",
+  "surfaces": {
+    "dashboard": {
+      "entrypoint": "Dashboard.qml",
+      "size": "compact",
+      "category": "System"
+    }
+  },
+  "translations": {
+    "sourceLocale": "en",
+    "locales": [
+      "es"
+    ],
+    "directory": "translations"
+  },
+  "marketplace": {
+    "compatibility": {
+      "minShellVersion": "1.0.0"
+    },
+    "changelog": [
+      {
+        "version": "2.0.0",
+        "notes": "Battery & Uptime 2.0 (#31): no permanent 'No battery' bar item by default (showWhenNoBattery opt-in restores it), host-owned popover and dashboard card with charge/state/power-source detail from PluginKit Power only, low-battery chip, typed settings, host-context layout and Spanish catalog."
+      },
+      {
+        "version": "1.0.0",
+        "notes": "Bar widget showing battery percentage and charging state from PluginKit Power; showed 'No battery' on machines without a battery."
+      }
+    ]
+  },
+  "files": [
+    "Main.qml",
+    "Dashboard.qml",
+    "README.md",
+    "LICENSE",
+    "translations/es.json"
+  ],
+  "capabilities": {
+    "processCommands": [],
+    "networkHosts": [],
+    "settings": {
+      "showWhenNoBattery": {
+        "type": "boolean",
+        "default": false,
+        "description": "Keep a permanent 'No battery' bar item when Power reports no battery (the 1.x behaviour). Off, the 2.0 default, takes no bar space on desktops."
+      },
+      "showPercentage": {
+        "type": "boolean",
+        "default": true,
+        "description": "Show the battery percentage in the bar indicator (the 1.x behaviour)."
+      },
+      "showStateText": {
+        "type": "boolean",
+        "default": true,
+        "description": "Append the Power state (charging, fully-charged, discharging, pending-charge) when known (the 1.x behaviour)."
+      },
+      "lowBatteryPercent": {
+        "type": "integer",
+        "default": 20,
+        "minimum": 5,
+        "maximum": 50,
+        "description": "Charge percent at or below which, while on battery, a low-battery chip is shown. Adds a chip only; 1.x had no threshold."
+      }
+    }
+  }
 }
