@@ -2,13 +2,60 @@
   "schemaVersion": 1,
   "id": "hornero-agenda",
   "name": "Hornero Agenda",
-  "version": "1.0.0",
-  "description": "Desktop widget showing weekday, day and month, ISO week number, day of year and days remaining in the year, computed with pure Date math from PluginKit Time.",
+  "version": "2.0.0",
+  "description": "Agenda 2.0: desktop widget of date facts from PluginKit Time: weekday, day, month, quarter, ISO week and week-year, day of year, days remaining and year progress. No events backend.",
   "author": "HorneroOS contributors",
   "license": "MIT",
   "homepage": "https://github.com/HorneroOS/plugins",
   "entrypoint": "Main.qml",
-  "files": ["Main.qml", "README.md", "LICENSE"],
-  "capabilities": {"processCommands": [], "networkHosts": [], "settings": {}},
-  "placement": "desktop"
+  "placement": "desktop",
+  "translations": {
+    "sourceLocale": "en",
+    "locales": [
+      "es"
+    ],
+    "directory": "translations"
+  },
+  "marketplace": {
+    "compatibility": {
+      "minShellVersion": "1.0.0"
+    },
+    "changelog": [
+      {
+        "version": "2.0.0",
+        "notes": "Time and Agenda 2.0: the 1.x date facts as labelled metrics plus quarter, ISO week-year, days remaining in the month and a year-progress bar, locale-correct dates and numbers, typed row settings with 1.x defaults and Argentine Spanish catalog. No events are shown: PluginKit has no calendar data source."
+      },
+      {
+        "version": "1.0.0",
+        "notes": "Desktop widget showing weekday, day and month, ISO week number, day of year and days remaining in the year, computed with pure Date math from PluginKit Time."
+      }
+    ]
+  },
+  "files": [
+    "Main.qml",
+    "README.md",
+    "LICENSE",
+    "translations/es.json"
+  ],
+  "capabilities": {
+    "processCommands": [],
+    "networkHosts": [],
+    "settings": {
+      "showIsoWeek": {
+        "type": "boolean",
+        "default": true,
+        "description": "Show the ISO week and week-year row (the 1.x behaviour)."
+      },
+      "showDayOfYear": {
+        "type": "boolean",
+        "default": true,
+        "description": "Show the day-of-year row (the 1.x behaviour)."
+      },
+      "showYearProgress": {
+        "type": "boolean",
+        "default": true,
+        "description": "Show the elapsed fraction of the year as a progress bar."
+      }
+    }
+  }
 }

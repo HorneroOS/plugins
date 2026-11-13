@@ -2,13 +2,66 @@
   "schemaVersion": 1,
   "id": "hornero-calendar",
   "name": "Hornero Calendar",
-  "version": "1.0.0",
-  "description": "Desktop widget showing the current date and time from the PluginKit Time service. Read-only, no processes or network.",
+  "version": "2.0.0",
+  "description": "Calendar 2.0: desktop widget with the 1.x date/time header plus the current month grid with today marked, from PluginKit Time. Locale dates, no events backend, no processes or network.",
   "author": "HorneroOS contributors",
   "license": "MIT",
   "homepage": "https://github.com/HorneroOS/plugins",
   "entrypoint": "Main.qml",
-  "files": ["Main.qml", "README.md", "LICENSE"],
-  "capabilities": {"processCommands": [], "networkHosts": [], "settings": {}},
-  "placement": "desktop"
+  "placement": "desktop",
+  "translations": {
+    "sourceLocale": "en",
+    "locales": [
+      "es"
+    ],
+    "directory": "translations"
+  },
+  "marketplace": {
+    "compatibility": {
+      "minShellVersion": "1.0.0"
+    },
+    "changelog": [
+      {
+        "version": "2.0.0",
+        "notes": "Time and Agenda 2.0: current-month grid with today marked under the unchanged 1.x time/date header, locale-correct month and weekday names, typed clock-format/week-start settings with 1.x defaults, shared Time facade and Argentine Spanish catalog. No events are shown: PluginKit has no calendar data source."
+      },
+      {
+        "version": "1.0.0",
+        "notes": "Desktop widget showing the current time and full date from the PluginKit Time service."
+      }
+    ]
+  },
+  "files": [
+    "Main.qml",
+    "README.md",
+    "LICENSE",
+    "translations/es.json"
+  ],
+  "capabilities": {
+    "processCommands": [],
+    "networkHosts": [],
+    "settings": {
+      "twentyFourHour": {
+        "type": "boolean",
+        "default": true,
+        "description": "Use a 24-hour large clock (the 1.x HH:mm behaviour); off shows 12-hour AM/PM."
+      },
+      "showShellTime": {
+        "type": "boolean",
+        "default": true,
+        "description": "Show the shell-formatted time line under the date (the 1.x third line)."
+      },
+      "showMonthGrid": {
+        "type": "boolean",
+        "default": true,
+        "description": "Show the current month grid with today marked."
+      },
+      "weekStart": {
+        "type": "enum",
+        "default": "monday",
+        "options": ["monday", "sunday"],
+        "description": "First weekday column of the month grid. PluginKit does not expose the locale week start."
+      }
+    }
+  }
 }

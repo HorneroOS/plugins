@@ -1,0 +1,17 @@
+{
+  "%1 of %2": "%1 de %2",
+  "%1% of the year elapsed": "%1% del año transcurrido",
+  "Agenda": "Agenda",
+  "Agenda: %1": "Agenda: %1",
+  "Date facts from the system clock; extensions have no calendar events source yet.": "Datos de fecha del reloj del sistema; las extensiones todavía no tienen una fuente de eventos de calendario.",
+  "Day": "Día",
+  "Day of year": "Día del año",
+  "Days remaining in month": "Días restantes en el mes",
+  "Days remaining in year": "Días restantes en el año",
+  "ISO week": "Semana ISO",
+  "Month": "Mes",
+  "Q%1": "T%1",
+  "Quarter": "Trimestre",
+  "Weekday": "Día de semana",
+  "Year progress": "Progreso del año"
+}
