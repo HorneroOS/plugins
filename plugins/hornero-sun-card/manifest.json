@@ -1,14 +1,82 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 2,
   "id": "hornero-sun-card",
   "name": "Hornero Sun Card",
-  "version": "1.0.0",
-  "description": "Dashboard card showing sunrise, sunset, temperature, description and humidity from PluginKit Weather. Shows a not-configured state when no location is set.",
+  "version": "2.0.0",
+  "description": "Sun Card 2.0: dashboard astronomy card and contextual bar indicator with sunrise/sunset from PluginKit Weather plus derived day length, sun progress and next sun event. Approximations are labelled derived.",
   "author": "HorneroOS contributors",
   "license": "MIT",
   "homepage": "https://github.com/HorneroOS/plugins",
   "entrypoint": "Main.qml",
-  "files": ["Main.qml", "README.md", "LICENSE"],
-  "capabilities": {"processCommands": [], "networkHosts": [], "settings": {}},
-  "placement": "dashboard"
+  "placement": "dashboard",
+  "surfaces": {
+    "dashboard": {
+      "entrypoint": "Main.qml",
+      "size": "compact",
+      "category": "Weather"
+    },
+    "bar": {
+      "entrypoint": "Bar.qml"
+    }
+  },
+  "translations": {
+    "sourceLocale": "en",
+    "locales": [
+      "es"
+    ],
+    "directory": "translations"
+  },
+  "marketplace": {
+    "compatibility": {
+      "minShellVersion": "1.0.0"
+    },
+    "changelog": [
+      {
+        "version": "2.0.0",
+        "notes": "Weather & Astronomy 2.0: astronomy detail derived from the facade sunrise/sunset strings (day length, sun progress, next sun event), contextual bar indicator, configurable density, typed settings, host-context layout and Spanish catalog. Solar noon, twilight and moon times are not exposed by the facade and are labelled unavailable."
+      },
+      {
+        "version": "1.0.0",
+        "notes": "Dashboard card showing sunrise, sunset, temperature, description and humidity from PluginKit Weather, with a not-configured state when no location is set."
+      }
+    ]
+  },
+  "files": [
+    "Main.qml",
+    "Bar.qml",
+    "README.md",
+    "LICENSE",
+    "translations/es.json"
+  ],
+  "capabilities": {
+    "processCommands": [],
+    "networkHosts": [],
+    "settings": {
+      "showTemperature": {
+        "type": "boolean",
+        "default": true,
+        "description": "Show temperature and description from the Weather facade (the 1.x behaviour)."
+      },
+      "showHumidity": {
+        "type": "boolean",
+        "default": true,
+        "description": "Show relative humidity when the Weather facade reports it (the 1.x behaviour)."
+      },
+      "showAstronomy": {
+        "type": "boolean",
+        "default": true,
+        "description": "Show astronomy detail derived from sunrise/sunset: day length, sun progress and the next sun event."
+      },
+      "dataDensity": {
+        "type": "enum",
+        "default": "standard",
+        "options": [
+          "compact",
+          "standard",
+          "detailed"
+        ],
+        "description": "compact shows only sunrise/sunset; standard keeps the 1.x rows plus astronomy; detailed adds the unavailable-fields note."
+      }
+    }
+  }
 }

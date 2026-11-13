@@ -1,14 +1,96 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 2,
   "id": "hornero-weather",
   "name": "Hornero Weather",
-  "version": "1.0.0",
-  "description": "Dashboard card for current weather and forecast from the PluginKit Weather service. Shows a not-configured state instead of fake data when no location is set.",
+  "version": "2.0.0",
+  "description": "Weather 2.0: dashboard card and contextual bar indicator complementing native Weather with configurable density, a local wind-threshold alert and forecast detail from the PluginKit Weather facade only.",
   "author": "HorneroOS contributors",
   "license": "MIT",
   "homepage": "https://github.com/HorneroOS/plugins",
   "entrypoint": "Main.qml",
-  "files": ["Main.qml", "README.md", "LICENSE"],
-  "capabilities": {"processCommands": [], "networkHosts": [], "settings": {}},
-  "placement": "dashboard"
+  "placement": "dashboard",
+  "surfaces": {
+    "dashboard": {
+      "entrypoint": "Main.qml",
+      "size": "standard",
+      "category": "Weather"
+    },
+    "bar": {
+      "entrypoint": "Bar.qml"
+    }
+  },
+  "translations": {
+    "sourceLocale": "en",
+    "locales": [
+      "es"
+    ],
+    "directory": "translations"
+  },
+  "marketplace": {
+    "compatibility": {
+      "minShellVersion": "1.0.0"
+    },
+    "changelog": [
+      {
+        "version": "2.0.0",
+        "notes": "Weather & Astronomy 2.0: dashboard card plus contextual bar indicator, configurable density and forecast days, local high-wind threshold alert, typed settings, host-context layout and Spanish catalog. Only PluginKit Weather fields are shown; official alerts and multi-location are not exposed by the facade and are labelled unavailable."
+      },
+      {
+        "version": "1.0.0",
+        "notes": "Dashboard card for current weather and forecast from the PluginKit Weather service, with a not-configured state instead of fake data."
+      }
+    ]
+  },
+  "files": [
+    "Main.qml",
+    "Bar.qml",
+    "README.md",
+    "LICENSE",
+    "translations/es.json"
+  ],
+  "capabilities": {
+    "processCommands": [],
+    "networkHosts": [],
+    "settings": {
+      "forecastDays": {
+        "type": "integer",
+        "default": 3,
+        "minimum": 0,
+        "maximum": 7,
+        "description": "Forecast entries to show (the 1.x card showed the first 3)."
+      },
+      "showHumidity": {
+        "type": "boolean",
+        "default": true,
+        "description": "Show relative humidity when the Weather facade reports it (the 1.x behaviour)."
+      },
+      "showWind": {
+        "type": "boolean",
+        "default": true,
+        "description": "Show wind speed in km/h when the Weather facade reports it (the 1.x behaviour)."
+      },
+      "showSunTimes": {
+        "type": "boolean",
+        "default": true,
+        "description": "Show sunrise and sunset times from the Weather facade (the 1.x behaviour)."
+      },
+      "dataDensity": {
+        "type": "enum",
+        "default": "standard",
+        "options": [
+          "compact",
+          "standard",
+          "detailed"
+        ],
+        "description": "compact shows only temperature and description; standard keeps the 1.x rows; detailed adds the derived forecast range."
+      },
+      "windAlertKmh": {
+        "type": "integer",
+        "default": 50,
+        "minimum": 1,
+        "maximum": 200,
+        "description": "Local high-wind alert threshold in km/h. Not an official alert; 1.x had no threshold."
+      }
+    }
+  }
 }

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedFrom": "ae3fce4b7e4479d260ab0242879c32f4536c80b9",
+  "generatedFrom": "d6d21480275f8e3de59cb2af6d8862dd54e334dc",
   "plugins": [
     {
       "id": "hornero-agenda",
@@ -372,8 +372,8 @@
     {
       "id": "hornero-moon-phase",
       "name": "Hornero Moon Phase",
-      "version": "1.0.0",
-      "description": "Desktop widget showing the current moon phase name and approximate illumination from a pure-JS synodic approximation anchored on the 2000-01-06 new moon. Labelled approximate. No processes or network.",
+      "version": "2.0.0",
+      "description": "Moon Phase 2.0: desktop widget and contextual bar indicator for the current moon phase, approximate illumination and derived next new/full moons from the 1.x pure-JS synodic approximation. Always labelled approximate.",
       "author": "HorneroOS contributors",
       "license": "MIT",
       "homepage": "https://github.com/HorneroOS/plugins",
@@ -382,11 +382,37 @@
       "capabilities": {
         "processCommands": [],
         "networkHosts": [],
-        "settings": {}
+        "settings": {
+          "showIllumination": {
+            "type": "boolean",
+            "default": true,
+            "description": "Show the approximate illumination percentage (the 1.x behaviour)."
+          },
+          "showAge": {
+            "type": "boolean",
+            "default": true,
+            "description": "Show the approximate moon age in days (the 1.x behaviour)."
+          },
+          "showNextPhases": {
+            "type": "boolean",
+            "default": true,
+            "description": "Show approximate days to the next new and full moons, derived from the same synodic approximation."
+          },
+          "dataDensity": {
+            "type": "enum",
+            "default": "standard",
+            "options": [
+              "compact",
+              "standard",
+              "detailed"
+            ],
+            "description": "compact shows only the phase name; standard keeps the 1.x rows; detailed adds the approximation note."
+          }
+        }
       },
       "trust": "official",
       "path": "plugins/hornero-moon-phase",
-      "sha256": "23f65bf3ecc07454793a67f4aaf12338905affa47dc99fc32d76783df1e8e213"
+      "sha256": "57345973826751c1092620e65e12b4207fcf8d335eaf235a56ae44c4ea5fb133"
     },
     {
       "id": "hornero-network-monitor",
@@ -641,8 +667,8 @@
     {
       "id": "hornero-sun-card",
       "name": "Hornero Sun Card",
-      "version": "1.0.0",
-      "description": "Dashboard card showing sunrise, sunset, temperature, description and humidity from PluginKit Weather. Shows a not-configured state when no location is set.",
+      "version": "2.0.0",
+      "description": "Sun Card 2.0: dashboard astronomy card and contextual bar indicator with sunrise/sunset from PluginKit Weather plus derived day length, sun progress and next sun event. Approximations are labelled derived.",
       "author": "HorneroOS contributors",
       "license": "MIT",
       "homepage": "https://github.com/HorneroOS/plugins",
@@ -651,11 +677,37 @@
       "capabilities": {
         "processCommands": [],
         "networkHosts": [],
-        "settings": {}
+        "settings": {
+          "showTemperature": {
+            "type": "boolean",
+            "default": true,
+            "description": "Show temperature and description from the Weather facade (the 1.x behaviour)."
+          },
+          "showHumidity": {
+            "type": "boolean",
+            "default": true,
+            "description": "Show relative humidity when the Weather facade reports it (the 1.x behaviour)."
+          },
+          "showAstronomy": {
+            "type": "boolean",
+            "default": true,
+            "description": "Show astronomy detail derived from sunrise/sunset: day length, sun progress and the next sun event."
+          },
+          "dataDensity": {
+            "type": "enum",
+            "default": "standard",
+            "options": [
+              "compact",
+              "standard",
+              "detailed"
+            ],
+            "description": "compact shows only sunrise/sunset; standard keeps the 1.x rows plus astronomy; detailed adds the unavailable-fields note."
+          }
+        }
       },
       "trust": "official",
       "path": "plugins/hornero-sun-card",
-      "sha256": "6d371f11c43dc805413d7e31bbd997d9631102ca69f4f7b973cab533fcd5b3af"
+      "sha256": "94727d67b8cd9083d478f4a006e6d5dc21975c690653fb233011a8bfffe33ef6"
     },
     {
       "id": "hornero-system-health",
@@ -837,8 +889,8 @@
     {
       "id": "hornero-weather",
       "name": "Hornero Weather",
-      "version": "1.0.0",
-      "description": "Dashboard card for current weather and forecast from the PluginKit Weather service. Shows a not-configured state instead of fake data when no location is set.",
+      "version": "2.0.0",
+      "description": "Weather 2.0: dashboard card and contextual bar indicator complementing native Weather with configurable density, a local wind-threshold alert and forecast detail from the PluginKit Weather facade only.",
       "author": "HorneroOS contributors",
       "license": "MIT",
       "homepage": "https://github.com/HorneroOS/plugins",
@@ -847,11 +899,51 @@
       "capabilities": {
         "processCommands": [],
         "networkHosts": [],
-        "settings": {}
+        "settings": {
+          "forecastDays": {
+            "type": "integer",
+            "default": 3,
+            "minimum": 0,
+            "maximum": 7,
+            "description": "Forecast entries to show (the 1.x card showed the first 3)."
+          },
+          "showHumidity": {
+            "type": "boolean",
+            "default": true,
+            "description": "Show relative humidity when the Weather facade reports it (the 1.x behaviour)."
+          },
+          "showWind": {
+            "type": "boolean",
+            "default": true,
+            "description": "Show wind speed in km/h when the Weather facade reports it (the 1.x behaviour)."
+          },
+          "showSunTimes": {
+            "type": "boolean",
+            "default": true,
+            "description": "Show sunrise and sunset times from the Weather facade (the 1.x behaviour)."
+          },
+          "dataDensity": {
+            "type": "enum",
+            "default": "standard",
+            "options": [
+              "compact",
+              "standard",
+              "detailed"
+            ],
+            "description": "compact shows only temperature and description; standard keeps the 1.x rows; detailed adds the derived forecast range."
+          },
+          "windAlertKmh": {
+            "type": "integer",
+            "default": 50,
+            "minimum": 1,
+            "maximum": 200,
+            "description": "Local high-wind alert threshold in km/h. Not an official alert; 1.x had no threshold."
+          }
+        }
       },
       "trust": "official",
       "path": "plugins/hornero-weather",
-      "sha256": "447bc6ad18b935fd936c4d0affc634f6368064969d562f64d7e3d089b01b9ce8"
+      "sha256": "651e20784b4754811a5bde2947bd4412a94944916252dd4007b948cccac6b894"
     },
     {
       "id": "hornero-world-clock",

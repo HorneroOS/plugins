@@ -1,0 +1,18 @@
+{
+  "Forecast range (derived)": "Rango del pronóstico (derivado)",
+  "High wind": "Viento fuerte",
+  "Humidity": "Humedad",
+  "Loading weather...": "Cargando el clima...",
+  "Local alert: wind at or above your %1 km/h threshold. Not an official weather alert.": "Alerta local: viento en o por encima de tu umbral de %1 km/h. No es una alerta meteorológica oficial.",
+  "Sunrise: %1  Sunset: %2": "Salida del sol: %1  Puesta del sol: %2",
+  "Temperature": "Temperatura",
+  "Unavailable": "No disponible",
+  "Unavailable from the Weather facade: official alerts, multiple locations, feels-like, UV and precipitation. The single configured location only is shown; its name is not exposed to extensions.": "No disponibles en la fachada Weather: alertas oficiales, varias ubicaciones, sensación térmica, UV y precipitaciones. Solo se muestra la única ubicación configurada; su nombre no se expone a las extensiones.",
+  "Weather": "Clima",
+  "Weather %1": "Clima %1",
+  "Weather details": "Detalles del clima",
+  "Weather location not configured. Set a location in the shell settings to see conditions here.": "Ubicación del clima no configurada. Configurá una ubicación en los ajustes del shell para ver las condiciones acá.",
+  "Weather unavailable: %1": "Clima no disponible: %1",
+  "Weather: activate for details": "Clima: activá para ver los detalles",
+  "Wind": "Viento"
+}
