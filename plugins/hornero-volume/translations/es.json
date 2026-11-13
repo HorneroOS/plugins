@@ -1,0 +1,19 @@
+{
+  "%1%": "%1%",
+  "Decrease volume": "Bajar el volumen",
+  "Increase volume": "Subir el volumen",
+  "Mute": "Silenciar",
+  "Mute output": "Silenciar la salida",
+  "Muted": "Silenciado",
+  "No output device": "Sin dispositivo de salida",
+  "No output device is available, so volume cannot be adjusted.": "No hay ningún dispositivo de salida disponible, así que no se puede ajustar el volumen.",
+  "Output": "Salida",
+  "Output device selection is not exposed by PluginKit Audio; use the shell audio settings to switch devices.": "PluginKit Audio no expone la selección de dispositivo de salida; usá los ajustes de sonido del shell para cambiar de dispositivo.",
+  "Output volume": "Volumen de salida",
+  "Sound on": "Sonido activado",
+  "Unmute": "Activar sonido",
+  "Unmute output": "Activar el sonido de la salida",
+  "Volume": "Volumen",
+  "Volume %1%": "Volumen %1%",
+  "Volume details": "Detalle del volumen"
+}

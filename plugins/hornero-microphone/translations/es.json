@@ -1,0 +1,19 @@
+{
+  "%1%": "%1%",
+  "Input": "Entrada",
+  "Input level and device selection are not exposed by PluginKit Audio; the level above is read-only and device switching stays in the shell audio settings.": "PluginKit Audio no expone el nivel de entrada ni la selección de dispositivo; el nivel de arriba es de solo lectura y el cambio de dispositivo queda en los ajustes de sonido del shell.",
+  "Mic %1%": "Micrófono %1%",
+  "Mic muted": "Micrófono silenciado",
+  "Mic muted %1%": "Micrófono silenciado %1%",
+  "Mic on": "Micrófono activo",
+  "Microphone": "Micrófono",
+  "Microphone details": "Detalle del micrófono",
+  "Mute": "Silenciar",
+  "Mute microphone": "Silenciar el micrófono",
+  "Muted": "Silenciado",
+  "No input device": "Sin dispositivo de entrada",
+  "No input device is available, so the microphone cannot be muted or unmuted here.": "No hay ningún dispositivo de entrada disponible, así que acá no se puede silenciar ni activar el micrófono.",
+  "This widget only shows muted and volume state. It never records audio.": "Este widget solo muestra el estado de silencio y el volumen. Nunca graba audio.",
+  "Unmute": "Activar sonido",
+  "Unmute microphone": "Activar el micrófono"
+}

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedFrom": "2b7ad3a7e475899d47c60caf954b2c6b11a075db",
+  "generatedFrom": "7ae2819ddb5bc72fcecd22e445a9baf7402164d5",
   "plugins": [
     {
       "id": "hornero-agenda",
@@ -329,8 +329,8 @@
     {
       "id": "hornero-microphone",
       "name": "Hornero Microphone",
-      "version": "1.0.0",
-      "description": "Bar widget showing microphone volume and muted state from PluginKit Audio. Shows 'No input device' when no source is present. Privacy: shows only muted/volume state, never records audio.",
+      "version": "2.0.0",
+      "description": "Audio Extensions 2.0: compact bar indicator, details popover and dashboard card for microphone state over the shared PluginKit Audio facade, with honest muted and no-input-device states. Never records audio.",
       "author": "HorneroOS contributors",
       "license": "MIT",
       "homepage": "https://github.com/HorneroOS/plugins",
@@ -339,11 +339,22 @@
       "capabilities": {
         "processCommands": [],
         "networkHosts": [],
-        "settings": {}
+        "settings": {
+          "showPercentage": {
+            "type": "boolean",
+            "default": true,
+            "description": "Show the microphone volume percentage next to the bar indicator."
+          },
+          "showWhenNoSource": {
+            "type": "boolean",
+            "default": true,
+            "description": "Keep the bar indicator visible, labelled as no input device, when no source is present."
+          }
+        }
       },
       "trust": "official",
       "path": "plugins/hornero-microphone",
-      "sha256": "5f495ac3681251bde113556e265549140604befdd9269a778a0aea56c59a7986"
+      "sha256": "dc380d657c1f6d75d681b1d7cb12370756c46db768b8cf58ca00d47db6af7b5c"
     },
     {
       "id": "hornero-moon-phase",
@@ -544,8 +555,8 @@
     {
       "id": "hornero-studio-audio",
       "name": "Hornero Studio Audio",
-      "version": "1.0.2",
-      "description": "Bar indicator for the HorneroOS Studio audio mode (Balanced, Low Latency, Advanced) and Temporary Performance state, read from the typed horneroctl studio mode contract. Read-only; mode changes stay in the CLI and Control Center.",
+      "version": "2.0.0",
+      "description": "Audio Extensions 2.0: bar indicator, popover and dashboard card for the Studio audio mode and Temporary Performance state from the typed horneroctl contract. Read-only; mode changes stay in the CLI and Control Center.",
       "author": "HorneroOS contributors",
       "license": "MIT",
       "homepage": "https://github.com/HorneroOS/plugins",
@@ -556,11 +567,24 @@
           "horneroctl"
         ],
         "networkHosts": [],
-        "settings": {}
+        "settings": {
+          "refreshSeconds": {
+            "type": "integer",
+            "default": 60,
+            "minimum": 15,
+            "maximum": 3600,
+            "description": "Seconds between studio mode refreshes from horneroctl."
+          },
+          "showWhenUnavailable": {
+            "type": "boolean",
+            "default": true,
+            "description": "Keep the bar indicator visible, labelled as unavailable, when horneroctl returns no usable studio mode."
+          }
+        }
       },
       "trust": "official",
       "path": "plugins/hornero-studio-audio",
-      "sha256": "5fb19c2256209483b95d542cd783adf5ac5bd10fd702083d1cded81b00f0f69a"
+      "sha256": "1f079648e3706cf79d2afea145e6aa498dd584ce5d8d2ce58fbf22f4c42b00c9"
     },
     {
       "id": "hornero-studio-jobs",
@@ -702,8 +726,8 @@
     {
       "id": "hornero-volume",
       "name": "Hornero Volume",
-      "version": "1.0.0",
-      "description": "Bar widget showing output volume from PluginKit Audio. Shows 'Muted' when muted and 'No output device' when no sink is present, with mute, decrease and increase buttons.",
+      "version": "2.0.0",
+      "description": "Audio Extensions 2.0: compact bar indicator, details popover and dashboard card for output volume over the shared PluginKit Audio facade, with honest muted and no-output-device states.",
       "author": "HorneroOS contributors",
       "license": "MIT",
       "homepage": "https://github.com/HorneroOS/plugins",
@@ -712,11 +736,22 @@
       "capabilities": {
         "processCommands": [],
         "networkHosts": [],
-        "settings": {}
+        "settings": {
+          "showPercentage": {
+            "type": "boolean",
+            "default": true,
+            "description": "Show the output volume percentage next to the bar indicator."
+          },
+          "showWhenNoSink": {
+            "type": "boolean",
+            "default": true,
+            "description": "Keep the bar indicator visible, labelled as no output device, when no sink is present."
+          }
+        }
       },
       "trust": "official",
       "path": "plugins/hornero-volume",
-      "sha256": "f9b8b96e8c190bf35fd4dbc773512a734bcd7e4e5ec91d86c467a4c3cbea7ba5"
+      "sha256": "c927fff9c17af2a471770ff2d7cc5e43e20b5885ec536057d9328f34c6813394"
     },
     {
       "id": "hornero-weather",

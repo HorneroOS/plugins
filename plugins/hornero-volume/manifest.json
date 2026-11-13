@@ -1,14 +1,64 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 2,
   "id": "hornero-volume",
   "name": "Hornero Volume",
-  "version": "1.0.0",
-  "description": "Bar widget showing output volume from PluginKit Audio. Shows 'Muted' when muted and 'No output device' when no sink is present, with mute, decrease and increase buttons.",
+  "version": "2.0.0",
+  "description": "Audio Extensions 2.0: compact bar indicator, details popover and dashboard card for output volume over the shared PluginKit Audio facade, with honest muted and no-output-device states.",
   "author": "HorneroOS contributors",
   "license": "MIT",
   "homepage": "https://github.com/HorneroOS/plugins",
   "entrypoint": "Main.qml",
-  "files": ["Main.qml", "README.md", "LICENSE"],
-  "capabilities": {"processCommands": [], "networkHosts": [], "settings": {}},
-  "placement": "bar"
+  "placement": "bar",
+  "surfaces": {
+    "dashboard": {
+      "entrypoint": "Dashboard.qml",
+      "size": "standard",
+      "category": "Audio"
+    }
+  },
+  "translations": {
+    "sourceLocale": "en",
+    "locales": [
+      "es"
+    ],
+    "directory": "translations"
+  },
+  "marketplace": {
+    "compatibility": {
+      "minShellVersion": "1.0.0"
+    },
+    "changelog": [
+      {
+        "version": "2.0.0",
+        "notes": "Audio Extensions 2.0: compact indicator with host-owned popover (volume slider, step and mute controls), dashboard card, typed settings, host-context layout and Spanish catalog, over the shared PluginKit Audio facade only."
+      },
+      {
+        "version": "1.0.0",
+        "notes": "Bar widget showing output volume with inline mute, decrease and increase buttons."
+      }
+    ]
+  },
+  "files": [
+    "Main.qml",
+    "Dashboard.qml",
+    "README.md",
+    "LICENSE",
+    "translations/es.json"
+  ],
+  "capabilities": {
+    "processCommands": [],
+    "networkHosts": [],
+    "settings": {
+      "showPercentage": {
+        "type": "boolean",
+        "default": true,
+        "description": "Show the output volume percentage next to the bar indicator."
+      },
+      "showWhenNoSink": {
+        "type": "boolean",
+        "default": true,
+        "description": "Keep the bar indicator visible, labelled as no output device, when no sink is present."
+      }
+    }
+  }
 }
