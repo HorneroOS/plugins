@@ -1,0 +1,1491 @@
+{
+  "schemaVersion": 1,
+  "disclaimer": "Maintained static quality audit for HorneroOS/plugins#21. Statuses come from static probes and maintainer notes; this is not graphical acceptance. No entry here proves a plugin renders correctly, is accessible in use, or performs well at runtime.",
+  "entries": [
+    {
+      "id": "hornero-agenda",
+      "classification": "needs-upgrade",
+      "valueProposition": "Desktop widget showing weekday, day and month, ISO week number, day of year and days remaining in the year, computed with pure Date math from PluginKit Time.",
+      "nativeOverlap": "Overlaps hornero-calendar and hornero-world-clock on date display; distinct value is ISO week, day-of-year and days-remaining.",
+      "dimensions": {
+        "tooltips": {
+          "status": "na",
+          "note": "No interactive controls in the entrypoint, so tooltips do not apply (static probe)."
+        },
+        "accessibility": {
+          "status": "na",
+          "note": "No interactive controls in the entrypoint; static text only (static probe)."
+        },
+        "translation": {
+          "status": "fail",
+          "note": "User-visible string literals are not wrapped in qsTr/qsTrId (static probe)."
+        },
+        "settings": {
+          "status": "na",
+          "note": "No settings declared in the manifest; none are recorded as needed yet. Revisit if behaviour becomes user-configurable."
+        },
+        "themeTokens": {
+          "status": "pass",
+          "note": "Visible colours come from PluginKit Theme tokens with no hard-coded chrome colours (static probe)."
+        },
+        "screenshots": {
+          "status": "fail",
+          "note": "No screenshot under docs/screenshots/<id>.png yet; graphical capture is outstanding."
+        },
+        "orientation": {
+          "status": "unverified",
+          "note": "Orientation/responsiveness across bar, dashboard and desktop placements has not had a graphical review; static checks cannot verify it."
+        },
+        "loadingErrorStates": {
+          "status": "unverified",
+          "note": "Loading/error presentation has not been audited beyond the static probe; no graphical verification yet."
+        },
+        "performance": {
+          "status": "unverified",
+          "note": "Not profiled. Static cadence only: timer intervals (ms)=none, process polling=no; runtime cost is unverified."
+        }
+      },
+      "issue": "https://github.com/HorneroOS/plugins/issues/21"
+    },
+    {
+      "id": "hornero-ai-usage",
+      "classification": "needs-upgrade",
+      "valueProposition": "Dashboard card for local AI assistant usage from horneroctl assistant usage --json: sessions, API calls and tokens. Quota is shown as unknown; the provider does not expose a limit.",
+      "nativeOverlap": "No native shell equivalent identified; its data source is the horneroctl assistant usage contract, not a shell service.",
+      "dimensions": {
+        "tooltips": {
+          "status": "fail",
+          "note": "Interactive controls present but no ToolTip.text found (static probe)."
+        },
+        "accessibility": {
+          "status": "fail",
+          "note": "Interactive controls present but no Accessible.name found (static probe)."
+        },
+        "translation": {
+          "status": "fail",
+          "note": "User-visible string literals are not wrapped in qsTr/qsTrId (static probe)."
+        },
+        "settings": {
+          "status": "na",
+          "note": "No settings declared in the manifest; none are recorded as needed yet. Revisit if behaviour becomes user-configurable."
+        },
+        "themeTokens": {
+          "status": "pass",
+          "note": "Visible colours come from PluginKit Theme tokens with no hard-coded chrome colours (static probe)."
+        },
+        "screenshots": {
+          "status": "fail",
+          "note": "No screenshot under docs/screenshots/<id>.png yet; graphical capture is outstanding."
+        },
+        "orientation": {
+          "status": "unverified",
+          "note": "Orientation/responsiveness across bar, dashboard and desktop placements has not had a graphical review; static checks cannot verify it."
+        },
+        "loadingErrorStates": {
+          "status": "unverified",
+          "note": "Static probe finds error/empty-state text in the QML, but loading and error presentation have not been verified graphically."
+        },
+        "performance": {
+          "status": "unverified",
+          "note": "Not profiled. Static cadence only: timer intervals (ms)=['60000'], process polling=yes; runtime cost is unverified."
+        }
+      },
+      "issue": "https://github.com/HorneroOS/plugins/issues/21"
+    },
+    {
+      "id": "hornero-base-converter",
+      "classification": "needs-upgrade",
+      "valueProposition": "Dashboard base converter: validated decimal integer within safe range to binary, octal and hex, and hex back to decimal. Invalid digits show errors. Pure QML.",
+      "nativeOverlap": "Converter family overlap with hornero-unit-converter and hornero-color-converter; distinct value is numeric-base conversion.",
+      "dimensions": {
+        "tooltips": {
+          "status": "pass",
+          "note": "Interactive controls carry ToolTip.text (static probe)."
+        },
+        "accessibility": {
+          "status": "pass",
+          "note": "Interactive controls carry Accessible.name (static probe); screen-reader behaviour itself is unverified graphically."
+        },
+        "translation": {
+          "status": "fail",
+          "note": "User-visible string literals are not wrapped in qsTr/qsTrId (static probe)."
+        },
+        "settings": {
+          "status": "na",
+          "note": "No settings declared in the manifest; none are recorded as needed yet. Revisit if behaviour becomes user-configurable."
+        },
+        "themeTokens": {
+          "status": "pass",
+          "note": "Visible colours come from PluginKit Theme tokens with no hard-coded chrome colours (static probe)."
+        },
+        "screenshots": {
+          "status": "fail",
+          "note": "No screenshot under docs/screenshots/<id>.png yet; graphical capture is outstanding."
+        },
+        "orientation": {
+          "status": "unverified",
+          "note": "Orientation/responsiveness across bar, dashboard and desktop placements has not had a graphical review; static checks cannot verify it."
+        },
+        "loadingErrorStates": {
+          "status": "unverified",
+          "note": "Static probe finds error/empty-state text in the QML, but loading and error presentation have not been verified graphically."
+        },
+        "performance": {
+          "status": "unverified",
+          "note": "Not profiled. Static cadence only: timer intervals (ms)=none, process polling=no; runtime cost is unverified."
+        }
+      },
+      "issue": "https://github.com/HorneroOS/plugins/issues/21"
+    },
+    {
+      "id": "hornero-battery",
+      "classification": "needs-upgrade",
+      "valueProposition": "Bar widget showing battery percentage and charging state from PluginKit Power. Shows 'No battery' on machines without a battery instead of a fabricated percentage.",
+      "nativeOverlap": "Overlaps the battery row in hornero-system-health; possible overlap with a native shell bar power indicator is unverified.",
+      "dimensions": {
+        "tooltips": {
+          "status": "na",
+          "note": "No interactive controls in the entrypoint, so tooltips do not apply (static probe)."
+        },
+        "accessibility": {
+          "status": "na",
+          "note": "No interactive controls in the entrypoint; static text only (static probe)."
+        },
+        "translation": {
+          "status": "fail",
+          "note": "User-visible string literals are not wrapped in qsTr/qsTrId (static probe)."
+        },
+        "settings": {
+          "status": "na",
+          "note": "No settings declared in the manifest; none are recorded as needed yet. Revisit if behaviour becomes user-configurable."
+        },
+        "themeTokens": {
+          "status": "pass",
+          "note": "Visible colours come from PluginKit Theme tokens with no hard-coded chrome colours (static probe)."
+        },
+        "screenshots": {
+          "status": "fail",
+          "note": "No screenshot under docs/screenshots/<id>.png yet; graphical capture is outstanding."
+        },
+        "orientation": {
+          "status": "unverified",
+          "note": "Orientation/responsiveness across bar, dashboard and desktop placements has not had a graphical review; static checks cannot verify it."
+        },
+        "loadingErrorStates": {
+          "status": "unverified",
+          "note": "Static probe finds error/empty-state text in the QML, but loading and error presentation have not been verified graphically."
+        },
+        "performance": {
+          "status": "unverified",
+          "note": "Not profiled. Static cadence only: timer intervals (ms)=none, process polling=no; runtime cost is unverified."
+        }
+      },
+      "issue": "https://github.com/HorneroOS/plugins/issues/21"
+    },
+    {
+      "id": "hornero-calculator",
+      "classification": "needs-upgrade",
+      "valueProposition": "Dashboard calculator with a safe tokenizer and recursive-descent parser for +, -, *, /, %, parentheses, decimals and unary minus. Division by zero shows Error.",
+      "nativeOverlap": "No native shell calculator identified; overlaps converter tools only as another dashboard utility.",
+      "dimensions": {
+        "tooltips": {
+          "status": "pass",
+          "note": "Interactive controls carry ToolTip.text (static probe)."
+        },
+        "accessibility": {
+          "status": "pass",
+          "note": "Interactive controls carry Accessible.name (static probe); screen-reader behaviour itself is unverified graphically."
+        },
+        "translation": {
+          "status": "fail",
+          "note": "User-visible string literals are not wrapped in qsTr/qsTrId (static probe)."
+        },
+        "settings": {
+          "status": "na",
+          "note": "No settings declared in the manifest; none are recorded as needed yet. Revisit if behaviour becomes user-configurable."
+        },
+        "themeTokens": {
+          "status": "pass",
+          "note": "Visible colours come from PluginKit Theme tokens with no hard-coded chrome colours (static probe)."
+        },
+        "screenshots": {
+          "status": "fail",
+          "note": "No screenshot under docs/screenshots/<id>.png yet; graphical capture is outstanding."
+        },
+        "orientation": {
+          "status": "unverified",
+          "note": "Orientation/responsiveness across bar, dashboard and desktop placements has not had a graphical review; static checks cannot verify it."
+        },
+        "loadingErrorStates": {
+          "status": "unverified",
+          "note": "Static probe finds error/empty-state text in the QML, but loading and error presentation have not been verified graphically."
+        },
+        "performance": {
+          "status": "unverified",
+          "note": "Not profiled. Static cadence only: timer intervals (ms)=none, process polling=no; runtime cost is unverified."
+        }
+      },
+      "issue": "https://github.com/HorneroOS/plugins/issues/21"
+    },
+    {
+      "id": "hornero-calendar",
+      "classification": "needs-upgrade",
+      "valueProposition": "Desktop widget showing the current date and time from the PluginKit Time service. Read-only, no processes or network.",
+      "nativeOverlap": "Overlaps hornero-agenda (date) and hornero-world-clock (time); distinct value is a large desktop date/time display. Consolidation candidate to evaluate under the linked issue.",
+      "dimensions": {
+        "tooltips": {
+          "status": "na",
+          "note": "No interactive controls in the entrypoint, so tooltips do not apply (static probe)."
+        },
+        "accessibility": {
+          "status": "na",
+          "note": "No interactive controls in the entrypoint; static text only (static probe)."
+        },
+        "translation": {
+          "status": "na",
+          "note": "No translatable string literals outside format strings (static probe)."
+        },
+        "settings": {
+          "status": "na",
+          "note": "No settings declared in the manifest; none are recorded as needed yet. Revisit if behaviour becomes user-configurable."
+        },
+        "themeTokens": {
+          "status": "pass",
+          "note": "Visible colours come from PluginKit Theme tokens with no hard-coded chrome colours (static probe)."
+        },
+        "screenshots": {
+          "status": "fail",
+          "note": "No screenshot under docs/screenshots/<id>.png yet; graphical capture is outstanding."
+        },
+        "orientation": {
+          "status": "unverified",
+          "note": "Orientation/responsiveness across bar, dashboard and desktop placements has not had a graphical review; static checks cannot verify it."
+        },
+        "loadingErrorStates": {
+          "status": "unverified",
+          "note": "Loading/error presentation has not been audited beyond the static probe; no graphical verification yet."
+        },
+        "performance": {
+          "status": "unverified",
+          "note": "Not profiled. Static cadence only: timer intervals (ms)=none, process polling=no; runtime cost is unverified."
+        }
+      },
+      "issue": "https://github.com/HorneroOS/plugins/issues/21"
+    },
+    {
+      "id": "hornero-color-converter",
+      "classification": "needs-upgrade",
+      "valueProposition": "Dashboard color converter: validated #RGB/#RRGGBB hex to RGB and HSL, and RGB inputs back to hex. Invalid hex shows an error. Pure QML.",
+      "nativeOverlap": "Converter family overlap with hornero-base-converter and hornero-unit-converter; distinct value is colour-space conversion.",
+      "dimensions": {
+        "tooltips": {
+          "status": "pass",
+          "note": "Interactive controls carry ToolTip.text (static probe)."
+        },
+        "accessibility": {
+          "status": "pass",
+          "note": "Interactive controls carry Accessible.name (static probe); screen-reader behaviour itself is unverified graphically."
+        },
+        "translation": {
+          "status": "fail",
+          "note": "User-visible string literals are not wrapped in qsTr/qsTrId (static probe)."
+        },
+        "settings": {
+          "status": "na",
+          "note": "No settings declared in the manifest; none are recorded as needed yet. Revisit if behaviour becomes user-configurable."
+        },
+        "themeTokens": {
+          "status": "pass",
+          "note": "Visible colours come from PluginKit Theme tokens with no hard-coded chrome colours (static probe)."
+        },
+        "screenshots": {
+          "status": "fail",
+          "note": "No screenshot under docs/screenshots/<id>.png yet; graphical capture is outstanding."
+        },
+        "orientation": {
+          "status": "unverified",
+          "note": "Orientation/responsiveness across bar, dashboard and desktop placements has not had a graphical review; static checks cannot verify it."
+        },
+        "loadingErrorStates": {
+          "status": "unverified",
+          "note": "Static probe finds error/empty-state text in the QML, but loading and error presentation have not been verified graphically."
+        },
+        "performance": {
+          "status": "unverified",
+          "note": "Not profiled. Static cadence only: timer intervals (ms)=none, process polling=no; runtime cost is unverified."
+        }
+      },
+      "issue": "https://github.com/HorneroOS/plugins/issues/21"
+    },
+    {
+      "id": "hornero-countdown",
+      "classification": "needs-upgrade",
+      "valueProposition": "Bar countdown timer with 5, 10 and 25 minute presets, start, pause and reset, and a visual ring and flashing text at zero. No sound. Pure QML, no processes or network.",
+      "nativeOverlap": "Timer family overlap with hornero-pomodoro and hornero-stopwatch; distinct value is preset countdowns.",
+      "dimensions": {
+        "tooltips": {
+          "status": "pass",
+          "note": "Interactive controls carry ToolTip.text (static probe)."
+        },
+        "accessibility": {
+          "status": "pass",
+          "note": "Interactive controls carry Accessible.name (static probe); screen-reader behaviour itself is unverified graphically."
+        },
+        "translation": {
+          "status": "fail",
+          "note": "User-visible string literals are not wrapped in qsTr/qsTrId (static probe)."
+        },
+        "settings": {
+          "status": "na",
+          "note": "No settings declared in the manifest; none are recorded as needed yet. Revisit if behaviour becomes user-configurable."
+        },
+        "themeTokens": {
+          "status": "pass",
+          "note": "Visible colours come from PluginKit Theme tokens with no hard-coded chrome colours (static probe)."
+        },
+        "screenshots": {
+          "status": "fail",
+          "note": "No screenshot under docs/screenshots/<id>.png yet; graphical capture is outstanding."
+        },
+        "orientation": {
+          "status": "unverified",
+          "note": "Orientation/responsiveness across bar, dashboard and desktop placements has not had a graphical review; static checks cannot verify it."
+        },
+        "loadingErrorStates": {
+          "status": "unverified",
+          "note": "Static probe finds error/empty-state text in the QML, but loading and error presentation have not been verified graphically."
+        },
+        "performance": {
+          "status": "unverified",
+          "note": "Not profiled. Static cadence only: timer intervals (ms)=['1000', '600'], process polling=no; runtime cost is unverified."
+        }
+      },
+      "issue": "https://github.com/HorneroOS/plugins/issues/21"
+    },
+    {
+      "id": "hornero-date-calculator",
+      "classification": "needs-upgrade",
+      "valueProposition": "Dashboard date calculator: validated YYYY-MM-DD real dates, days-between and add-days results using UTC math to avoid DST drift. Pure QML.",
+      "nativeOverlap": "Overlaps hornero-agenda on date arithmetic display; distinct value is days-between and add-days calculation.",
+      "dimensions": {
+        "tooltips": {
+          "status": "pass",
+          "note": "Interactive controls carry ToolTip.text (static probe)."
+        },
+        "accessibility": {
+          "status": "pass",
+          "note": "Interactive controls carry Accessible.name (static probe); screen-reader behaviour itself is unverified graphically."
+        },
+        "translation": {
+          "status": "fail",
+          "note": "User-visible string literals are not wrapped in qsTr/qsTrId (static probe)."
+        },
+        "settings": {
+          "status": "na",
+          "note": "No settings declared in the manifest; none are recorded as needed yet. Revisit if behaviour becomes user-configurable."
+        },
+        "themeTokens": {
+          "status": "pass",
+          "note": "Visible colours come from PluginKit Theme tokens with no hard-coded chrome colours (static probe)."
+        },
+        "screenshots": {
+          "status": "fail",
+          "note": "No screenshot under docs/screenshots/<id>.png yet; graphical capture is outstanding."
+        },
+        "orientation": {
+          "status": "unverified",
+          "note": "Orientation/responsiveness across bar, dashboard and desktop placements has not had a graphical review; static checks cannot verify it."
+        },
+        "loadingErrorStates": {
+          "status": "unverified",
+          "note": "Static probe finds error/empty-state text in the QML, but loading and error presentation have not been verified graphically."
+        },
+        "performance": {
+          "status": "unverified",
+          "note": "Not profiled. Static cadence only: timer intervals (ms)=none, process polling=no; runtime cost is unverified."
+        }
+      },
+      "issue": "https://github.com/HorneroOS/plugins/issues/21"
+    },
+    {
+      "id": "hornero-disk-usage",
+      "classification": "needs-upgrade",
+      "valueProposition": "Dashboard card listing mounted disks from the PluginKit System service with used/total space and a percentage bar. Shows an empty state when no disks are reported. Read-only, no processes or network.",
+      "nativeOverlap": "Overlaps the storage figures in hornero-system-monitor and hornero-system-health; distinct value is the per-disk listing.",
+      "dimensions": {
+        "tooltips": {
+          "status": "na",
+          "note": "No interactive controls in the entrypoint, so tooltips do not apply (static probe)."
+        },
+        "accessibility": {
+          "status": "na",
+          "note": "No interactive controls in the entrypoint; static text only (static probe)."
+        },
+        "translation": {
+          "status": "fail",
+          "note": "User-visible string literals are not wrapped in qsTr/qsTrId (static probe)."
+        },
+        "settings": {
+          "status": "na",
+          "note": "No settings declared in the manifest; none are recorded as needed yet. Revisit if behaviour becomes user-configurable."
+        },
+        "themeTokens": {
+          "status": "pass",
+          "note": "Visible colours come from PluginKit Theme tokens with no hard-coded chrome colours (static probe)."
+        },
+        "screenshots": {
+          "status": "fail",
+          "note": "No screenshot under docs/screenshots/<id>.png yet; graphical capture is outstanding."
+        },
+        "orientation": {
+          "status": "unverified",
+          "note": "Orientation/responsiveness across bar, dashboard and desktop placements has not had a graphical review; static checks cannot verify it."
+        },
+        "loadingErrorStates": {
+          "status": "unverified",
+          "note": "Static probe finds error/empty-state text in the QML, but loading and error presentation have not been verified graphically."
+        },
+        "performance": {
+          "status": "unverified",
+          "note": "Not profiled. Static cadence only: timer intervals (ms)=none, process polling=no; runtime cost is unverified."
+        }
+      },
+      "issue": "https://github.com/HorneroOS/plugins/issues/21"
+    },
+    {
+      "id": "hornero-dual-clock",
+      "classification": "needs-upgrade",
+      "valueProposition": "Local time next to UTC in the bar, for coordinating with people in other time zones. Pure QML, no processes or network.",
+      "nativeOverlap": "Overlaps hornero-world-clock (local plus UTC); distinct value is a compact bar placement. Consolidation candidate to evaluate under the linked issue.",
+      "dimensions": {
+        "tooltips": {
+          "status": "na",
+          "note": "No interactive controls in the entrypoint, so tooltips do not apply (static probe)."
+        },
+        "accessibility": {
+          "status": "na",
+          "note": "No interactive controls in the entrypoint; static text only (static probe)."
+        },
+        "translation": {
+          "status": "fail",
+          "note": "User-visible string literals are not wrapped in qsTr/qsTrId (static probe)."
+        },
+        "settings": {
+          "status": "na",
+          "note": "No settings declared in the manifest; none are recorded as needed yet. Revisit if behaviour becomes user-configurable."
+        },
+        "themeTokens": {
+          "status": "fail",
+          "note": "PluginKit Theme tokens are not used, or hard-coded chrome colours are present (static probe)."
+        },
+        "screenshots": {
+          "status": "fail",
+          "note": "No screenshot under docs/screenshots/<id>.png yet; graphical capture is outstanding."
+        },
+        "orientation": {
+          "status": "unverified",
+          "note": "Orientation/responsiveness across bar, dashboard and desktop placements has not had a graphical review; static checks cannot verify it."
+        },
+        "loadingErrorStates": {
+          "status": "unverified",
+          "note": "Loading/error presentation has not been audited beyond the static probe; no graphical verification yet."
+        },
+        "performance": {
+          "status": "unverified",
+          "note": "Not profiled. Static cadence only: timer intervals (ms)=['1000'], process polling=no; runtime cost is unverified."
+        }
+      },
+      "issue": "https://github.com/HorneroOS/plugins/issues/21"
+    },
+    {
+      "id": "hornero-focus-card",
+      "classification": "needs-upgrade",
+      "valueProposition": "A dashboard card with a rotating original one-line focus reminder and the date. Pure QML, no processes or network.",
+      "nativeOverlap": "Overlaps hornero-pomodoro and hornero-quiet-notes on focus/session intent; distinct value is the rotating reminder.",
+      "dimensions": {
+        "tooltips": {
+          "status": "fail",
+          "note": "Interactive controls present but no ToolTip.text found (static probe)."
+        },
+        "accessibility": {
+          "status": "fail",
+          "note": "Interactive controls present but no Accessible.name found (static probe)."
+        },
+        "translation": {
+          "status": "fail",
+          "note": "User-visible string literals are not wrapped in qsTr/qsTrId (static probe)."
+        },
+        "settings": {
+          "status": "na",
+          "note": "No settings declared in the manifest; none are recorded as needed yet. Revisit if behaviour becomes user-configurable."
+        },
+        "themeTokens": {
+          "status": "fail",
+          "note": "PluginKit Theme tokens are not used, or hard-coded chrome colours are present (static probe)."
+        },
+        "screenshots": {
+          "status": "fail",
+          "note": "No screenshot under docs/screenshots/<id>.png yet; graphical capture is outstanding."
+        },
+        "orientation": {
+          "status": "unverified",
+          "note": "Orientation/responsiveness across bar, dashboard and desktop placements has not had a graphical review; static checks cannot verify it."
+        },
+        "loadingErrorStates": {
+          "status": "unverified",
+          "note": "Loading/error presentation has not been audited beyond the static probe; no graphical verification yet."
+        },
+        "performance": {
+          "status": "unverified",
+          "note": "Not profiled. Static cadence only: timer intervals (ms)=['30000'], process polling=no; runtime cost is unverified."
+        }
+      },
+      "issue": "https://github.com/HorneroOS/plugins/issues/21"
+    },
+    {
+      "id": "hornero-json-tools",
+      "classification": "needs-upgrade",
+      "valueProposition": "Dashboard JSON tools: Format with 2-space indentation and Minify using JSON parse/stringify only. Parser errors are shown. Pure QML.",
+      "nativeOverlap": "Developer-tool overlap with hornero-text-tools and hornero-base-converter; distinct value is JSON format/minify.",
+      "dimensions": {
+        "tooltips": {
+          "status": "pass",
+          "note": "Interactive controls carry ToolTip.text (static probe)."
+        },
+        "accessibility": {
+          "status": "pass",
+          "note": "Interactive controls carry Accessible.name (static probe); screen-reader behaviour itself is unverified graphically."
+        },
+        "translation": {
+          "status": "fail",
+          "note": "User-visible string literals are not wrapped in qsTr/qsTrId (static probe)."
+        },
+        "settings": {
+          "status": "na",
+          "note": "No settings declared in the manifest; none are recorded as needed yet. Revisit if behaviour becomes user-configurable."
+        },
+        "themeTokens": {
+          "status": "pass",
+          "note": "Visible colours come from PluginKit Theme tokens with no hard-coded chrome colours (static probe)."
+        },
+        "screenshots": {
+          "status": "fail",
+          "note": "No screenshot under docs/screenshots/<id>.png yet; graphical capture is outstanding."
+        },
+        "orientation": {
+          "status": "unverified",
+          "note": "Orientation/responsiveness across bar, dashboard and desktop placements has not had a graphical review; static checks cannot verify it."
+        },
+        "loadingErrorStates": {
+          "status": "unverified",
+          "note": "Static probe finds error/empty-state text in the QML, but loading and error presentation have not been verified graphically."
+        },
+        "performance": {
+          "status": "unverified",
+          "note": "Not profiled. Static cadence only: timer intervals (ms)=none, process polling=no; runtime cost is unverified."
+        }
+      },
+      "issue": "https://github.com/HorneroOS/plugins/issues/21"
+    },
+    {
+      "id": "hornero-metronome",
+      "classification": "needs-upgrade",
+      "valueProposition": "Bar metronome with a flashing beat indicator. BPM is a persisted integer setting (default 96, clamped 40-208) with start/stop and BPM minus/plus controls.",
+      "nativeOverlap": "Timer family overlap with hornero-countdown and hornero-stopwatch; distinct value is BPM beat indication.",
+      "dimensions": {
+        "tooltips": {
+          "status": "pass",
+          "note": "Interactive controls carry ToolTip.text (static probe)."
+        },
+        "accessibility": {
+          "status": "pass",
+          "note": "Interactive controls carry Accessible.name (static probe); screen-reader behaviour itself is unverified graphically."
+        },
+        "translation": {
+          "status": "fail",
+          "note": "User-visible string literals are not wrapped in qsTr/qsTrId (static probe)."
+        },
+        "settings": {
+          "status": "pass",
+          "note": "Manifest declares settings and the QML reads them through PluginKit Settings (static probe)."
+        },
+        "themeTokens": {
+          "status": "pass",
+          "note": "Visible colours come from PluginKit Theme tokens with no hard-coded chrome colours (static probe)."
+        },
+        "screenshots": {
+          "status": "fail",
+          "note": "No screenshot under docs/screenshots/<id>.png yet; graphical capture is outstanding."
+        },
+        "orientation": {
+          "status": "unverified",
+          "note": "Orientation/responsiveness across bar, dashboard and desktop placements has not had a graphical review; static checks cannot verify it."
+        },
+        "loadingErrorStates": {
+          "status": "unverified",
+          "note": "Loading/error presentation has not been audited beyond the static probe; no graphical verification yet."
+        },
+        "performance": {
+          "status": "unverified",
+          "note": "Not profiled. Static cadence only: timer intervals (ms)=['140'], process polling=no; runtime cost is unverified."
+        }
+      },
+      "issue": "https://github.com/HorneroOS/plugins/issues/21"
+    },
+    {
+      "id": "hornero-microphone",
+      "classification": "needs-upgrade",
+      "valueProposition": "Bar widget showing microphone volume and muted state from PluginKit Audio. Shows 'No input device' when no source is present. Privacy: shows only muted/volume state, never records audio.",
+      "nativeOverlap": "Audio family overlap with hornero-volume and hornero-studio-audio; distinct value is input-device state. Possible native shell bar audio overlap is unverified.",
+      "dimensions": {
+        "tooltips": {
+          "status": "pass",
+          "note": "Interactive controls carry ToolTip.text (static probe)."
+        },
+        "accessibility": {
+          "status": "pass",
+          "note": "Interactive controls carry Accessible.name (static probe); screen-reader behaviour itself is unverified graphically."
+        },
+        "translation": {
+          "status": "fail",
+          "note": "User-visible string literals are not wrapped in qsTr/qsTrId (static probe)."
+        },
+        "settings": {
+          "status": "na",
+          "note": "No settings declared in the manifest; none are recorded as needed yet. Revisit if behaviour becomes user-configurable."
+        },
+        "themeTokens": {
+          "status": "pass",
+          "note": "Visible colours come from PluginKit Theme tokens with no hard-coded chrome colours (static probe)."
+        },
+        "screenshots": {
+          "status": "fail",
+          "note": "No screenshot under docs/screenshots/<id>.png yet; graphical capture is outstanding."
+        },
+        "orientation": {
+          "status": "unverified",
+          "note": "Orientation/responsiveness across bar, dashboard and desktop placements has not had a graphical review; static checks cannot verify it."
+        },
+        "loadingErrorStates": {
+          "status": "unverified",
+          "note": "Static probe finds error/empty-state text in the QML, but loading and error presentation have not been verified graphically."
+        },
+        "performance": {
+          "status": "unverified",
+          "note": "Not profiled. Static cadence only: timer intervals (ms)=none, process polling=no; runtime cost is unverified."
+        }
+      },
+      "issue": "https://github.com/HorneroOS/plugins/issues/21"
+    },
+    {
+      "id": "hornero-moon-phase",
+      "classification": "needs-upgrade",
+      "valueProposition": "Desktop widget showing the current moon phase name and approximate illumination from a pure-JS synodic approximation anchored on the 2000-01-06 new moon. Labelled approximate. No processes or network.",
+      "nativeOverlap": "Overlaps hornero-sun-card and hornero-weather on sky/ambient data; distinct value is the lunar phase approximation.",
+      "dimensions": {
+        "tooltips": {
+          "status": "na",
+          "note": "No interactive controls in the entrypoint, so tooltips do not apply (static probe)."
+        },
+        "accessibility": {
+          "status": "na",
+          "note": "No interactive controls in the entrypoint; static text only (static probe)."
+        },
+        "translation": {
+          "status": "fail",
+          "note": "User-visible string literals are not wrapped in qsTr/qsTrId (static probe)."
+        },
+        "settings": {
+          "status": "na",
+          "note": "No settings declared in the manifest; none are recorded as needed yet. Revisit if behaviour becomes user-configurable."
+        },
+        "themeTokens": {
+          "status": "pass",
+          "note": "Visible colours come from PluginKit Theme tokens with no hard-coded chrome colours (static probe)."
+        },
+        "screenshots": {
+          "status": "fail",
+          "note": "No screenshot under docs/screenshots/<id>.png yet; graphical capture is outstanding."
+        },
+        "orientation": {
+          "status": "unverified",
+          "note": "Orientation/responsiveness across bar, dashboard and desktop placements has not had a graphical review; static checks cannot verify it."
+        },
+        "loadingErrorStates": {
+          "status": "unverified",
+          "note": "Loading/error presentation has not been audited beyond the static probe; no graphical verification yet."
+        },
+        "performance": {
+          "status": "unverified",
+          "note": "Not profiled. Static cadence only: timer intervals (ms)=['3600000'], process polling=no; runtime cost is unverified."
+        }
+      },
+      "issue": "https://github.com/HorneroOS/plugins/issues/21"
+    },
+    {
+      "id": "hornero-network-monitor",
+      "classification": "needs-upgrade",
+      "valueProposition": "Dashboard card with download/upload speeds and session totals from the PluginKit Network service, formatted in human units. Read-only.",
+      "nativeOverlap": "Overlaps the network rows in hornero-system-health; distinct value is session download/upload totals.",
+      "dimensions": {
+        "tooltips": {
+          "status": "na",
+          "note": "No interactive controls in the entrypoint, so tooltips do not apply (static probe)."
+        },
+        "accessibility": {
+          "status": "na",
+          "note": "No interactive controls in the entrypoint; static text only (static probe)."
+        },
+        "translation": {
+          "status": "fail",
+          "note": "User-visible string literals are not wrapped in qsTr/qsTrId (static probe)."
+        },
+        "settings": {
+          "status": "na",
+          "note": "No settings declared in the manifest; none are recorded as needed yet. Revisit if behaviour becomes user-configurable."
+        },
+        "themeTokens": {
+          "status": "pass",
+          "note": "Visible colours come from PluginKit Theme tokens with no hard-coded chrome colours (static probe)."
+        },
+        "screenshots": {
+          "status": "fail",
+          "note": "No screenshot under docs/screenshots/<id>.png yet; graphical capture is outstanding."
+        },
+        "orientation": {
+          "status": "unverified",
+          "note": "Orientation/responsiveness across bar, dashboard and desktop placements has not had a graphical review; static checks cannot verify it."
+        },
+        "loadingErrorStates": {
+          "status": "unverified",
+          "note": "Loading/error presentation has not been audited beyond the static probe; no graphical verification yet."
+        },
+        "performance": {
+          "status": "unverified",
+          "note": "Not profiled. Static cadence only: timer intervals (ms)=none, process polling=no; runtime cost is unverified."
+        }
+      },
+      "issue": "https://github.com/HorneroOS/plugins/issues/21"
+    },
+    {
+      "id": "hornero-now-playing",
+      "classification": "needs-upgrade",
+      "valueProposition": "Bar widget showing the active media player identity, title and artist from PluginKit Media, with previous, play/pause and next controls. Transport runs only on user click.",
+      "nativeOverlap": "Possible overlap with native shell media controls is unverified; distinct value is a bar media display with transport controls.",
+      "dimensions": {
+        "tooltips": {
+          "status": "pass",
+          "note": "Interactive controls carry ToolTip.text (static probe)."
+        },
+        "accessibility": {
+          "status": "pass",
+          "note": "Interactive controls carry Accessible.name (static probe); screen-reader behaviour itself is unverified graphically."
+        },
+        "translation": {
+          "status": "fail",
+          "note": "User-visible string literals are not wrapped in qsTr/qsTrId (static probe)."
+        },
+        "settings": {
+          "status": "na",
+          "note": "No settings declared in the manifest; none are recorded as needed yet. Revisit if behaviour becomes user-configurable."
+        },
+        "themeTokens": {
+          "status": "pass",
+          "note": "Visible colours come from PluginKit Theme tokens with no hard-coded chrome colours (static probe)."
+        },
+        "screenshots": {
+          "status": "fail",
+          "note": "No screenshot under docs/screenshots/<id>.png yet; graphical capture is outstanding."
+        },
+        "orientation": {
+          "status": "unverified",
+          "note": "Orientation/responsiveness across bar, dashboard and desktop placements has not had a graphical review; static checks cannot verify it."
+        },
+        "loadingErrorStates": {
+          "status": "unverified",
+          "note": "Loading/error presentation has not been audited beyond the static probe; no graphical verification yet."
+        },
+        "performance": {
+          "status": "unverified",
+          "note": "Not profiled. Static cadence only: timer intervals (ms)=none, process polling=no; runtime cost is unverified."
+        }
+      },
+      "issue": "https://github.com/HorneroOS/plugins/issues/21"
+    },
+    {
+      "id": "hornero-pomodoro",
+      "classification": "needs-upgrade",
+      "valueProposition": "A 25-minute focus timer for the bar. Click to start or pause; it rings (visually) at zero and resets. No processes, no network, just time and discipline.",
+      "nativeOverlap": "Timer family overlap with hornero-countdown and hornero-focus-card; distinct value is the 25-minute focus cycle.",
+      "dimensions": {
+        "tooltips": {
+          "status": "fail",
+          "note": "Interactive controls present but no ToolTip.text found (static probe)."
+        },
+        "accessibility": {
+          "status": "fail",
+          "note": "Interactive controls present but no Accessible.name found (static probe)."
+        },
+        "translation": {
+          "status": "fail",
+          "note": "User-visible string literals are not wrapped in qsTr/qsTrId (static probe)."
+        },
+        "settings": {
+          "status": "na",
+          "note": "No settings declared in the manifest; none are recorded as needed yet. Revisit if behaviour becomes user-configurable."
+        },
+        "themeTokens": {
+          "status": "fail",
+          "note": "PluginKit Theme tokens are not used, or hard-coded chrome colours are present (static probe)."
+        },
+        "screenshots": {
+          "status": "fail",
+          "note": "No screenshot under docs/screenshots/<id>.png yet; graphical capture is outstanding."
+        },
+        "orientation": {
+          "status": "unverified",
+          "note": "Orientation/responsiveness across bar, dashboard and desktop placements has not had a graphical review; static checks cannot verify it."
+        },
+        "loadingErrorStates": {
+          "status": "unverified",
+          "note": "Loading/error presentation has not been audited beyond the static probe; no graphical verification yet."
+        },
+        "performance": {
+          "status": "unverified",
+          "note": "Not profiled. Static cadence only: timer intervals (ms)=['1000', '600'], process polling=no; runtime cost is unverified."
+        }
+      },
+      "issue": "https://github.com/HorneroOS/plugins/issues/21"
+    },
+    {
+      "id": "hornero-quick-notes",
+      "classification": "needs-upgrade",
+      "valueProposition": "Dashboard card with one persistent note saved through PluginKit Settings. Text is loaded on start, saved debounced, counted, and truncated at 4096 characters.",
+      "nativeOverlap": "Overlaps hornero-quiet-notes; distinct value is persistence through PluginKit Settings. Pair to keep differentiated or consolidate under the linked issue.",
+      "dimensions": {
+        "tooltips": {
+          "status": "pass",
+          "note": "Interactive controls carry ToolTip.text (static probe)."
+        },
+        "accessibility": {
+          "status": "pass",
+          "note": "Interactive controls carry Accessible.name (static probe); screen-reader behaviour itself is unverified graphically."
+        },
+        "translation": {
+          "status": "fail",
+          "note": "User-visible string literals are not wrapped in qsTr/qsTrId (static probe)."
+        },
+        "settings": {
+          "status": "pass",
+          "note": "Manifest declares settings and the QML reads them through PluginKit Settings (static probe)."
+        },
+        "themeTokens": {
+          "status": "pass",
+          "note": "Visible colours come from PluginKit Theme tokens with no hard-coded chrome colours (static probe)."
+        },
+        "screenshots": {
+          "status": "fail",
+          "note": "No screenshot under docs/screenshots/<id>.png yet; graphical capture is outstanding."
+        },
+        "orientation": {
+          "status": "unverified",
+          "note": "Orientation/responsiveness across bar, dashboard and desktop placements has not had a graphical review; static checks cannot verify it."
+        },
+        "loadingErrorStates": {
+          "status": "unverified",
+          "note": "Static probe finds error/empty-state text in the QML, but loading and error presentation have not been verified graphically."
+        },
+        "performance": {
+          "status": "unverified",
+          "note": "Not profiled. Static cadence only: timer intervals (ms)=['600'], process polling=no; runtime cost is unverified."
+        }
+      },
+      "issue": "https://github.com/HorneroOS/plugins/issues/21"
+    },
+    {
+      "id": "hornero-quiet-notes",
+      "classification": "needs-upgrade",
+      "valueProposition": "A calm dashboard card for one short intention for this session. It keeps no history and writes nowhere; when the shell closes, the note is gone.",
+      "nativeOverlap": "Overlaps hornero-quick-notes; distinct value is deliberate session-only, never-saved notes. Pair to keep differentiated or consolidate under the linked issue.",
+      "dimensions": {
+        "tooltips": {
+          "status": "fail",
+          "note": "Interactive controls present but no ToolTip.text found (static probe)."
+        },
+        "accessibility": {
+          "status": "fail",
+          "note": "Interactive controls present but no Accessible.name found (static probe)."
+        },
+        "translation": {
+          "status": "fail",
+          "note": "User-visible string literals are not wrapped in qsTr/qsTrId (static probe)."
+        },
+        "settings": {
+          "status": "na",
+          "note": "No settings declared in the manifest; none are recorded as needed yet. Revisit if behaviour becomes user-configurable."
+        },
+        "themeTokens": {
+          "status": "fail",
+          "note": "PluginKit Theme tokens are not used, or hard-coded chrome colours are present (static probe)."
+        },
+        "screenshots": {
+          "status": "fail",
+          "note": "No screenshot under docs/screenshots/<id>.png yet; graphical capture is outstanding."
+        },
+        "orientation": {
+          "status": "unverified",
+          "note": "Orientation/responsiveness across bar, dashboard and desktop placements has not had a graphical review; static checks cannot verify it."
+        },
+        "loadingErrorStates": {
+          "status": "unverified",
+          "note": "Loading/error presentation has not been audited beyond the static probe; no graphical verification yet."
+        },
+        "performance": {
+          "status": "unverified",
+          "note": "Not profiled. Static cadence only: timer intervals (ms)=none, process polling=no; runtime cost is unverified."
+        }
+      },
+      "issue": "https://github.com/HorneroOS/plugins/issues/21"
+    },
+    {
+      "id": "hornero-stopwatch",
+      "classification": "needs-upgrade",
+      "valueProposition": "Bar stopwatch with start, pause and reset, showing elapsed time as mm:ss.t. Pure QML, no processes or network.",
+      "nativeOverlap": "Timer family overlap with hornero-countdown and hornero-metronome; distinct value is elapsed-time measurement.",
+      "dimensions": {
+        "tooltips": {
+          "status": "pass",
+          "note": "Interactive controls carry ToolTip.text (static probe)."
+        },
+        "accessibility": {
+          "status": "pass",
+          "note": "Interactive controls carry Accessible.name (static probe); screen-reader behaviour itself is unverified graphically."
+        },
+        "translation": {
+          "status": "fail",
+          "note": "User-visible string literals are not wrapped in qsTr/qsTrId (static probe)."
+        },
+        "settings": {
+          "status": "na",
+          "note": "No settings declared in the manifest; none are recorded as needed yet. Revisit if behaviour becomes user-configurable."
+        },
+        "themeTokens": {
+          "status": "pass",
+          "note": "Visible colours come from PluginKit Theme tokens with no hard-coded chrome colours (static probe)."
+        },
+        "screenshots": {
+          "status": "fail",
+          "note": "No screenshot under docs/screenshots/<id>.png yet; graphical capture is outstanding."
+        },
+        "orientation": {
+          "status": "unverified",
+          "note": "Orientation/responsiveness across bar, dashboard and desktop placements has not had a graphical review; static checks cannot verify it."
+        },
+        "loadingErrorStates": {
+          "status": "unverified",
+          "note": "Loading/error presentation has not been audited beyond the static probe; no graphical verification yet."
+        },
+        "performance": {
+          "status": "unverified",
+          "note": "Not profiled. Static cadence only: timer intervals (ms)=['100'], process polling=no; runtime cost is unverified."
+        }
+      },
+      "issue": "https://github.com/HorneroOS/plugins/issues/21"
+    },
+    {
+      "id": "hornero-studio-audio",
+      "classification": "needs-upgrade",
+      "valueProposition": "Bar indicator for the HorneroOS Studio audio mode (Balanced, Low Latency, Advanced) and Temporary Performance state, read from the typed horneroctl studio mode contract. Read-only; mode changes stay in the CLI and Control Center.",
+      "nativeOverlap": "Audio family overlap with hornero-volume and hornero-microphone; distinct value is the HorneroOS Studio mode contract. Mode switching stays native in CLI/Control Center.",
+      "dimensions": {
+        "tooltips": {
+          "status": "fail",
+          "note": "Interactive controls present but no ToolTip.text found (static probe)."
+        },
+        "accessibility": {
+          "status": "fail",
+          "note": "Interactive controls present but no Accessible.name found (static probe)."
+        },
+        "translation": {
+          "status": "fail",
+          "note": "User-visible string literals are not wrapped in qsTr/qsTrId (static probe)."
+        },
+        "settings": {
+          "status": "na",
+          "note": "No settings declared in the manifest; none are recorded as needed yet. Revisit if behaviour becomes user-configurable."
+        },
+        "themeTokens": {
+          "status": "fail",
+          "note": "PluginKit Theme tokens are not used, or hard-coded chrome colours are present (static probe)."
+        },
+        "screenshots": {
+          "status": "fail",
+          "note": "No screenshot under docs/screenshots/<id>.png yet; graphical capture is outstanding."
+        },
+        "orientation": {
+          "status": "unverified",
+          "note": "Orientation/responsiveness across bar, dashboard and desktop placements has not had a graphical review; static checks cannot verify it."
+        },
+        "loadingErrorStates": {
+          "status": "unverified",
+          "note": "Loading/error presentation has not been audited beyond the static probe; no graphical verification yet."
+        },
+        "performance": {
+          "status": "unverified",
+          "note": "Not profiled. Static cadence only: timer intervals (ms)=['60000'], process polling=yes; runtime cost is unverified."
+        }
+      },
+      "issue": "https://github.com/HorneroOS/plugins/issues/21"
+    },
+    {
+      "id": "hornero-studio-jobs",
+      "classification": "needs-upgrade",
+      "valueProposition": "Render and export job monitor for HorneroOS Studio: shows queued, running, finished and interrupted jobs from the typed horneroctl studio jobs contract. Read-only; jobs are submitted and cancelled from the CLI or Control Center.",
+      "nativeOverlap": "No native shell equivalent identified; job submission/cancellation stays native in CLI/Control Center, this is a read-only monitor.",
+      "dimensions": {
+        "tooltips": {
+          "status": "na",
+          "note": "No interactive controls in the entrypoint, so tooltips do not apply (static probe)."
+        },
+        "accessibility": {
+          "status": "na",
+          "note": "No interactive controls in the entrypoint; static text only (static probe)."
+        },
+        "translation": {
+          "status": "fail",
+          "note": "User-visible string literals are not wrapped in qsTr/qsTrId (static probe)."
+        },
+        "settings": {
+          "status": "na",
+          "note": "No settings declared in the manifest; none are recorded as needed yet. Revisit if behaviour becomes user-configurable."
+        },
+        "themeTokens": {
+          "status": "fail",
+          "note": "PluginKit Theme tokens are not used, or hard-coded chrome colours are present (static probe)."
+        },
+        "screenshots": {
+          "status": "fail",
+          "note": "No screenshot under docs/screenshots/<id>.png yet; graphical capture is outstanding."
+        },
+        "orientation": {
+          "status": "unverified",
+          "note": "Orientation/responsiveness across bar, dashboard and desktop placements has not had a graphical review; static checks cannot verify it."
+        },
+        "loadingErrorStates": {
+          "status": "unverified",
+          "note": "Static probe finds error/empty-state text in the QML, but loading and error presentation have not been verified graphically."
+        },
+        "performance": {
+          "status": "unverified",
+          "note": "Not profiled. Static cadence only: timer intervals (ms)=['30000'], process polling=yes; runtime cost is unverified."
+        }
+      },
+      "issue": "https://github.com/HorneroOS/plugins/issues/21"
+    },
+    {
+      "id": "hornero-sun-card",
+      "classification": "needs-upgrade",
+      "valueProposition": "Dashboard card showing sunrise, sunset, temperature, description and humidity from PluginKit Weather. Shows a not-configured state when no location is set.",
+      "nativeOverlap": "Overlaps hornero-weather (same PluginKit Weather data) and hornero-moon-phase; distinct value is sunrise/sunset focus. Consolidation candidate to evaluate under the linked issue.",
+      "dimensions": {
+        "tooltips": {
+          "status": "na",
+          "note": "No interactive controls in the entrypoint, so tooltips do not apply (static probe)."
+        },
+        "accessibility": {
+          "status": "na",
+          "note": "No interactive controls in the entrypoint; static text only (static probe)."
+        },
+        "translation": {
+          "status": "fail",
+          "note": "User-visible string literals are not wrapped in qsTr/qsTrId (static probe)."
+        },
+        "settings": {
+          "status": "na",
+          "note": "No settings declared in the manifest; none are recorded as needed yet. Revisit if behaviour becomes user-configurable."
+        },
+        "themeTokens": {
+          "status": "pass",
+          "note": "Visible colours come from PluginKit Theme tokens with no hard-coded chrome colours (static probe)."
+        },
+        "screenshots": {
+          "status": "fail",
+          "note": "No screenshot under docs/screenshots/<id>.png yet; graphical capture is outstanding."
+        },
+        "orientation": {
+          "status": "unverified",
+          "note": "Orientation/responsiveness across bar, dashboard and desktop placements has not had a graphical review; static checks cannot verify it."
+        },
+        "loadingErrorStates": {
+          "status": "unverified",
+          "note": "Static probe finds error/empty-state text in the QML, but loading and error presentation have not been verified graphically."
+        },
+        "performance": {
+          "status": "unverified",
+          "note": "Not profiled. Static cadence only: timer intervals (ms)=none, process polling=no; runtime cost is unverified."
+        }
+      },
+      "issue": "https://github.com/HorneroOS/plugins/issues/21"
+    },
+    {
+      "id": "hornero-system-health",
+      "classification": "needs-upgrade",
+      "valueProposition": "Dashboard card summarising system health from PluginKit System, Power and Network: CPU, memory and storage usage, battery (or 'No battery'), and network speeds. Each row shows an honest unavailable state when its service reports no data.",
+      "nativeOverlap": "Superset overlap with hornero-system-monitor, hornero-disk-usage, hornero-network-monitor and hornero-battery rows; distinct value is the combined health summary. Consolidation candidate to evaluate under the linked issue.",
+      "dimensions": {
+        "tooltips": {
+          "status": "na",
+          "note": "No interactive controls in the entrypoint, so tooltips do not apply (static probe)."
+        },
+        "accessibility": {
+          "status": "na",
+          "note": "No interactive controls in the entrypoint; static text only (static probe)."
+        },
+        "translation": {
+          "status": "fail",
+          "note": "User-visible string literals are not wrapped in qsTr/qsTrId (static probe)."
+        },
+        "settings": {
+          "status": "na",
+          "note": "No settings declared in the manifest; none are recorded as needed yet. Revisit if behaviour becomes user-configurable."
+        },
+        "themeTokens": {
+          "status": "pass",
+          "note": "Visible colours come from PluginKit Theme tokens with no hard-coded chrome colours (static probe)."
+        },
+        "screenshots": {
+          "status": "fail",
+          "note": "No screenshot under docs/screenshots/<id>.png yet; graphical capture is outstanding."
+        },
+        "orientation": {
+          "status": "unverified",
+          "note": "Orientation/responsiveness across bar, dashboard and desktop placements has not had a graphical review; static checks cannot verify it."
+        },
+        "loadingErrorStates": {
+          "status": "unverified",
+          "note": "Static probe finds error/empty-state text in the QML, but loading and error presentation have not been verified graphically."
+        },
+        "performance": {
+          "status": "unverified",
+          "note": "Not profiled. Static cadence only: timer intervals (ms)=none, process polling=no; runtime cost is unverified."
+        }
+      },
+      "issue": "https://github.com/HorneroOS/plugins/issues/21"
+    },
+    {
+      "id": "hornero-system-monitor",
+      "classification": "needs-upgrade",
+      "valueProposition": "Dashboard card with CPU, memory, GPU and storage usage bars from the PluginKit System service. Read-only, no processes or network.",
+      "nativeOverlap": "Overlaps hornero-system-health and hornero-disk-usage; distinct value is CPU/GPU/memory/storage usage bars.",
+      "dimensions": {
+        "tooltips": {
+          "status": "na",
+          "note": "No interactive controls in the entrypoint, so tooltips do not apply (static probe)."
+        },
+        "accessibility": {
+          "status": "na",
+          "note": "No interactive controls in the entrypoint; static text only (static probe)."
+        },
+        "translation": {
+          "status": "fail",
+          "note": "User-visible string literals are not wrapped in qsTr/qsTrId (static probe)."
+        },
+        "settings": {
+          "status": "na",
+          "note": "No settings declared in the manifest; none are recorded as needed yet. Revisit if behaviour becomes user-configurable."
+        },
+        "themeTokens": {
+          "status": "pass",
+          "note": "Visible colours come from PluginKit Theme tokens with no hard-coded chrome colours (static probe)."
+        },
+        "screenshots": {
+          "status": "fail",
+          "note": "No screenshot under docs/screenshots/<id>.png yet; graphical capture is outstanding."
+        },
+        "orientation": {
+          "status": "unverified",
+          "note": "Orientation/responsiveness across bar, dashboard and desktop placements has not had a graphical review; static checks cannot verify it."
+        },
+        "loadingErrorStates": {
+          "status": "unverified",
+          "note": "Loading/error presentation has not been audited beyond the static probe; no graphical verification yet."
+        },
+        "performance": {
+          "status": "unverified",
+          "note": "Not profiled. Static cadence only: timer intervals (ms)=none, process polling=no; runtime cost is unverified."
+        }
+      },
+      "issue": "https://github.com/HorneroOS/plugins/issues/21"
+    },
+    {
+      "id": "hornero-text-tools",
+      "classification": "needs-upgrade",
+      "valueProposition": "Dashboard text tools: Uppercase, Lowercase, Title Case and Reverse transforms with live character, word and line counts. Pure QML.",
+      "nativeOverlap": "Developer-tool overlap with hornero-json-tools; distinct value is case/reverse transforms with counts.",
+      "dimensions": {
+        "tooltips": {
+          "status": "pass",
+          "note": "Interactive controls carry ToolTip.text (static probe)."
+        },
+        "accessibility": {
+          "status": "pass",
+          "note": "Interactive controls carry Accessible.name (static probe); screen-reader behaviour itself is unverified graphically."
+        },
+        "translation": {
+          "status": "fail",
+          "note": "User-visible string literals are not wrapped in qsTr/qsTrId (static probe)."
+        },
+        "settings": {
+          "status": "na",
+          "note": "No settings declared in the manifest; none are recorded as needed yet. Revisit if behaviour becomes user-configurable."
+        },
+        "themeTokens": {
+          "status": "pass",
+          "note": "Visible colours come from PluginKit Theme tokens with no hard-coded chrome colours (static probe)."
+        },
+        "screenshots": {
+          "status": "fail",
+          "note": "No screenshot under docs/screenshots/<id>.png yet; graphical capture is outstanding."
+        },
+        "orientation": {
+          "status": "unverified",
+          "note": "Orientation/responsiveness across bar, dashboard and desktop placements has not had a graphical review; static checks cannot verify it."
+        },
+        "loadingErrorStates": {
+          "status": "unverified",
+          "note": "Loading/error presentation has not been audited beyond the static probe; no graphical verification yet."
+        },
+        "performance": {
+          "status": "unverified",
+          "note": "Not profiled. Static cadence only: timer intervals (ms)=none, process polling=no; runtime cost is unverified."
+        }
+      },
+      "issue": "https://github.com/HorneroOS/plugins/issues/21"
+    },
+    {
+      "id": "hornero-unit-converter",
+      "classification": "needs-upgrade",
+      "valueProposition": "Dashboard unit converter for length (m, km, mi, ft), mass (kg, lb) and temperature (C, F, K). Pure-JS conversions computed live from a text field and unit selectors. No processes or network.",
+      "nativeOverlap": "Converter family overlap with hornero-base-converter and hornero-color-converter; distinct value is physical-unit conversion.",
+      "dimensions": {
+        "tooltips": {
+          "status": "fail",
+          "note": "Interactive controls present but no ToolTip.text found (static probe)."
+        },
+        "accessibility": {
+          "status": "pass",
+          "note": "Interactive controls carry Accessible.name (static probe); screen-reader behaviour itself is unverified graphically."
+        },
+        "translation": {
+          "status": "fail",
+          "note": "User-visible string literals are not wrapped in qsTr/qsTrId (static probe)."
+        },
+        "settings": {
+          "status": "na",
+          "note": "No settings declared in the manifest; none are recorded as needed yet. Revisit if behaviour becomes user-configurable."
+        },
+        "themeTokens": {
+          "status": "pass",
+          "note": "Visible colours come from PluginKit Theme tokens with no hard-coded chrome colours (static probe)."
+        },
+        "screenshots": {
+          "status": "fail",
+          "note": "No screenshot under docs/screenshots/<id>.png yet; graphical capture is outstanding."
+        },
+        "orientation": {
+          "status": "unverified",
+          "note": "Orientation/responsiveness across bar, dashboard and desktop placements has not had a graphical review; static checks cannot verify it."
+        },
+        "loadingErrorStates": {
+          "status": "unverified",
+          "note": "Loading/error presentation has not been audited beyond the static probe; no graphical verification yet."
+        },
+        "performance": {
+          "status": "unverified",
+          "note": "Not profiled. Static cadence only: timer intervals (ms)=none, process polling=no; runtime cost is unverified."
+        }
+      },
+      "issue": "https://github.com/HorneroOS/plugins/issues/21"
+    },
+    {
+      "id": "hornero-uptime",
+      "classification": "needs-upgrade",
+      "valueProposition": "Bar widget showing system uptime read from /proc/uptime with the declared cat command, refreshed every 60 seconds. Shows an error state when uptime is unreadable instead of a fabricated zero.",
+      "nativeOverlap": "Overlaps hornero-system-health/system-monitor territory; distinct value is a compact bar uptime from /proc/uptime.",
+      "dimensions": {
+        "tooltips": {
+          "status": "na",
+          "note": "No interactive controls in the entrypoint, so tooltips do not apply (static probe)."
+        },
+        "accessibility": {
+          "status": "na",
+          "note": "No interactive controls in the entrypoint; static text only (static probe)."
+        },
+        "translation": {
+          "status": "fail",
+          "note": "User-visible string literals are not wrapped in qsTr/qsTrId (static probe)."
+        },
+        "settings": {
+          "status": "na",
+          "note": "No settings declared in the manifest; none are recorded as needed yet. Revisit if behaviour becomes user-configurable."
+        },
+        "themeTokens": {
+          "status": "pass",
+          "note": "Visible colours come from PluginKit Theme tokens with no hard-coded chrome colours (static probe)."
+        },
+        "screenshots": {
+          "status": "fail",
+          "note": "No screenshot under docs/screenshots/<id>.png yet; graphical capture is outstanding."
+        },
+        "orientation": {
+          "status": "unverified",
+          "note": "Orientation/responsiveness across bar, dashboard and desktop placements has not had a graphical review; static checks cannot verify it."
+        },
+        "loadingErrorStates": {
+          "status": "unverified",
+          "note": "Static probe finds error/empty-state text in the QML, but loading and error presentation have not been verified graphically."
+        },
+        "performance": {
+          "status": "unverified",
+          "note": "Not profiled. Static cadence only: timer intervals (ms)=['60000'], process polling=yes; runtime cost is unverified."
+        }
+      },
+      "issue": "https://github.com/HorneroOS/plugins/issues/21"
+    },
+    {
+      "id": "hornero-volume",
+      "classification": "needs-upgrade",
+      "valueProposition": "Bar widget showing output volume from PluginKit Audio. Shows 'Muted' when muted and 'No output device' when no sink is present, with mute, decrease and increase buttons.",
+      "nativeOverlap": "Audio family overlap with hornero-microphone and hornero-studio-audio; distinct value is output controls. Possible native shell bar audio overlap is unverified.",
+      "dimensions": {
+        "tooltips": {
+          "status": "pass",
+          "note": "Interactive controls carry ToolTip.text (static probe)."
+        },
+        "accessibility": {
+          "status": "pass",
+          "note": "Interactive controls carry Accessible.name (static probe); screen-reader behaviour itself is unverified graphically."
+        },
+        "translation": {
+          "status": "fail",
+          "note": "User-visible string literals are not wrapped in qsTr/qsTrId (static probe)."
+        },
+        "settings": {
+          "status": "na",
+          "note": "No settings declared in the manifest; none are recorded as needed yet. Revisit if behaviour becomes user-configurable."
+        },
+        "themeTokens": {
+          "status": "pass",
+          "note": "Visible colours come from PluginKit Theme tokens with no hard-coded chrome colours (static probe)."
+        },
+        "screenshots": {
+          "status": "fail",
+          "note": "No screenshot under docs/screenshots/<id>.png yet; graphical capture is outstanding."
+        },
+        "orientation": {
+          "status": "unverified",
+          "note": "Orientation/responsiveness across bar, dashboard and desktop placements has not had a graphical review; static checks cannot verify it."
+        },
+        "loadingErrorStates": {
+          "status": "unverified",
+          "note": "Static probe finds error/empty-state text in the QML, but loading and error presentation have not been verified graphically."
+        },
+        "performance": {
+          "status": "unverified",
+          "note": "Not profiled. Static cadence only: timer intervals (ms)=none, process polling=no; runtime cost is unverified."
+        }
+      },
+      "issue": "https://github.com/HorneroOS/plugins/issues/21"
+    },
+    {
+      "id": "hornero-weather",
+      "classification": "needs-upgrade",
+      "valueProposition": "Dashboard card for current weather and forecast from the PluginKit Weather service. Shows a not-configured state instead of fake data when no location is set.",
+      "nativeOverlap": "Overlaps hornero-sun-card (same PluginKit Weather data); distinct value is conditions plus forecast.",
+      "dimensions": {
+        "tooltips": {
+          "status": "na",
+          "note": "No interactive controls in the entrypoint, so tooltips do not apply (static probe)."
+        },
+        "accessibility": {
+          "status": "na",
+          "note": "No interactive controls in the entrypoint; static text only (static probe)."
+        },
+        "translation": {
+          "status": "fail",
+          "note": "User-visible string literals are not wrapped in qsTr/qsTrId (static probe)."
+        },
+        "settings": {
+          "status": "na",
+          "note": "No settings declared in the manifest; none are recorded as needed yet. Revisit if behaviour becomes user-configurable."
+        },
+        "themeTokens": {
+          "status": "pass",
+          "note": "Visible colours come from PluginKit Theme tokens with no hard-coded chrome colours (static probe)."
+        },
+        "screenshots": {
+          "status": "fail",
+          "note": "No screenshot under docs/screenshots/<id>.png yet; graphical capture is outstanding."
+        },
+        "orientation": {
+          "status": "unverified",
+          "note": "Orientation/responsiveness across bar, dashboard and desktop placements has not had a graphical review; static checks cannot verify it."
+        },
+        "loadingErrorStates": {
+          "status": "unverified",
+          "note": "Static probe finds error/empty-state text in the QML, but loading and error presentation have not been verified graphically."
+        },
+        "performance": {
+          "status": "unverified",
+          "note": "Not profiled. Static cadence only: timer intervals (ms)=none, process polling=no; runtime cost is unverified."
+        }
+      },
+      "issue": "https://github.com/HorneroOS/plugins/issues/21"
+    },
+    {
+      "id": "hornero-world-clock",
+      "classification": "needs-upgrade",
+      "valueProposition": "Dashboard card showing local time, UTC, and Buenos Aires, Madrid and Tokyo. Times use pure-JS offsets (Madrid follows the EU DST rule); each row is labelled with its applied UTC offset. No processes or network.",
+      "nativeOverlap": "Overlaps hornero-dual-clock and hornero-calendar; distinct value is multiple named cities with labelled offsets.",
+      "dimensions": {
+        "tooltips": {
+          "status": "na",
+          "note": "No interactive controls in the entrypoint, so tooltips do not apply (static probe)."
+        },
+        "accessibility": {
+          "status": "na",
+          "note": "No interactive controls in the entrypoint; static text only (static probe)."
+        },
+        "translation": {
+          "status": "fail",
+          "note": "User-visible string literals are not wrapped in qsTr/qsTrId (static probe)."
+        },
+        "settings": {
+          "status": "na",
+          "note": "No settings declared in the manifest; none are recorded as needed yet. Revisit if behaviour becomes user-configurable."
+        },
+        "themeTokens": {
+          "status": "pass",
+          "note": "Visible colours come from PluginKit Theme tokens with no hard-coded chrome colours (static probe)."
+        },
+        "screenshots": {
+          "status": "fail",
+          "note": "No screenshot under docs/screenshots/<id>.png yet; graphical capture is outstanding."
+        },
+        "orientation": {
+          "status": "unverified",
+          "note": "Orientation/responsiveness across bar, dashboard and desktop placements has not had a graphical review; static checks cannot verify it."
+        },
+        "loadingErrorStates": {
+          "status": "unverified",
+          "note": "Loading/error presentation has not been audited beyond the static probe; no graphical verification yet."
+        },
+        "performance": {
+          "status": "unverified",
+          "note": "Not profiled. Static cadence only: timer intervals (ms)=['1000'], process polling=no; runtime cost is unverified."
+        }
+      },
+      "issue": "https://github.com/HorneroOS/plugins/issues/21"
+    }
+  ]
+}
