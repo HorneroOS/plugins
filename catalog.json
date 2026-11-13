@@ -1,12 +1,12 @@
 {
   "schemaVersion": 1,
-  "generatedFrom": "d6d21480275f8e3de59cb2af6d8862dd54e334dc",
+  "generatedFrom": "2f280f245d4dc92643ee25ed7bb1f923b2096b15",
   "plugins": [
     {
       "id": "hornero-agenda",
       "name": "Hornero Agenda",
-      "version": "1.0.0",
-      "description": "Desktop widget showing weekday, day and month, ISO week number, day of year and days remaining in the year, computed with pure Date math from PluginKit Time.",
+      "version": "2.0.0",
+      "description": "Agenda 2.0: desktop widget of date facts from PluginKit Time: weekday, day, month, quarter, ISO week and week-year, day of year, days remaining and year progress. No events backend.",
       "author": "HorneroOS contributors",
       "license": "MIT",
       "homepage": "https://github.com/HorneroOS/plugins",
@@ -15,11 +15,27 @@
       "capabilities": {
         "processCommands": [],
         "networkHosts": [],
-        "settings": {}
+        "settings": {
+          "showIsoWeek": {
+            "type": "boolean",
+            "default": true,
+            "description": "Show the ISO week and week-year row (the 1.x behaviour)."
+          },
+          "showDayOfYear": {
+            "type": "boolean",
+            "default": true,
+            "description": "Show the day-of-year row (the 1.x behaviour)."
+          },
+          "showYearProgress": {
+            "type": "boolean",
+            "default": true,
+            "description": "Show the elapsed fraction of the year as a progress bar."
+          }
+        }
       },
       "trust": "official",
       "path": "plugins/hornero-agenda",
-      "sha256": "0803c0d0dc7556bd2dc12e8e1511ff113a58746e0169bdb0bc77283d0c654e4d"
+      "sha256": "667078bed7575df45508e1194544372ceb7afa5047bcf171c4aa13eda4846bef"
     },
     {
       "id": "hornero-ai-usage",
@@ -110,8 +126,8 @@
     {
       "id": "hornero-calendar",
       "name": "Hornero Calendar",
-      "version": "1.0.0",
-      "description": "Desktop widget showing the current date and time from the PluginKit Time service. Read-only, no processes or network.",
+      "version": "2.0.0",
+      "description": "Calendar 2.0: desktop widget with the 1.x date/time header plus the current month grid with today marked, from PluginKit Time. Locale dates, no events backend, no processes or network.",
       "author": "HorneroOS contributors",
       "license": "MIT",
       "homepage": "https://github.com/HorneroOS/plugins",
@@ -120,11 +136,36 @@
       "capabilities": {
         "processCommands": [],
         "networkHosts": [],
-        "settings": {}
+        "settings": {
+          "twentyFourHour": {
+            "type": "boolean",
+            "default": true,
+            "description": "Use a 24-hour large clock (the 1.x HH:mm behaviour); off shows 12-hour AM/PM."
+          },
+          "showShellTime": {
+            "type": "boolean",
+            "default": true,
+            "description": "Show the shell-formatted time line under the date (the 1.x third line)."
+          },
+          "showMonthGrid": {
+            "type": "boolean",
+            "default": true,
+            "description": "Show the current month grid with today marked."
+          },
+          "weekStart": {
+            "type": "enum",
+            "default": "monday",
+            "options": [
+              "monday",
+              "sunday"
+            ],
+            "description": "First weekday column of the month grid. PluginKit does not expose the locale week start."
+          }
+        }
       },
       "trust": "official",
       "path": "plugins/hornero-calendar",
-      "sha256": "ca40592d7fed1b8c94ca5fb4f9f6e25f2678736c7173e4e5170089ddfb8a2026"
+      "sha256": "b67decab61c8e9fdb3c46eddd8d31e82de7e645732ab5f2346fe3c6786544806"
     },
     {
       "id": "hornero-color-converter",
@@ -246,8 +287,8 @@
     {
       "id": "hornero-dual-clock",
       "name": "Hornero Dual Clock",
-      "version": "1.0.1",
-      "description": "Local time next to UTC in the bar, for coordinating with people in other time zones. Pure QML, no processes or network.",
+      "version": "2.0.0",
+      "description": "Dual Clock 2.0: local time next to a second zone (UTC by default, as in 1.x) in the bar, with a details popover. Pure-JS rule-based offsets, no processes or network.",
       "author": "HorneroOS contributors",
       "license": "MIT",
       "homepage": "https://github.com/HorneroOS/plugins",
@@ -256,11 +297,41 @@
       "capabilities": {
         "processCommands": [],
         "networkHosts": [],
-        "settings": {}
+        "settings": {
+          "secondZone": {
+            "type": "enum",
+            "default": "utc",
+            "options": [
+              "utc",
+              "buenos-aires",
+              "new-york",
+              "chicago",
+              "los-angeles",
+              "london",
+              "madrid",
+              "berlin",
+              "new-delhi",
+              "tokyo",
+              "sydney",
+              "auckland"
+            ],
+            "description": "Zone shown on the second line (UTC in 1.x). Only zones with a built-in DST rule are offered."
+          },
+          "showSeconds": {
+            "type": "boolean",
+            "default": false,
+            "description": "Show seconds on both lines (1.x showed HH:mm only)."
+          },
+          "twentyFourHour": {
+            "type": "boolean",
+            "default": true,
+            "description": "Use 24-hour times (the 1.x behaviour); off shows 12-hour AM/PM."
+          }
+        }
       },
       "trust": "official",
       "path": "plugins/hornero-dual-clock",
-      "sha256": "10f917a853ebd048ea48beed4426eb1579909cb7d3be6a2bdb306f9129d005d7"
+      "sha256": "97396e2ea2d7004c0af34e259cc660d8e926c9795cf0aa308c8bb81c2f211e1a"
     },
     {
       "id": "hornero-focus-card",
@@ -948,8 +1019,8 @@
     {
       "id": "hornero-world-clock",
       "name": "Hornero World Clock",
-      "version": "1.0.0",
-      "description": "Dashboard card showing local time, UTC, and Buenos Aires, Madrid and Tokyo. Times use pure-JS offsets (Madrid follows the EU DST rule); each row is labelled with its applied UTC offset. No processes or network.",
+      "version": "2.0.0",
+      "description": "World Clock 2.0: dashboard card with local, UTC and three selectable cities. Pure-JS rule-based offsets (fixed, EU, US and southern DST rules) labelled per row; no processes or network.",
       "author": "HorneroOS contributors",
       "license": "MIT",
       "homepage": "https://github.com/HorneroOS/plugins",
@@ -958,11 +1029,89 @@
       "capabilities": {
         "processCommands": [],
         "networkHosts": [],
-        "settings": {}
+        "settings": {
+          "city1": {
+            "type": "enum",
+            "default": "buenos-aires",
+            "options": [
+              "utc",
+              "buenos-aires",
+              "new-york",
+              "chicago",
+              "los-angeles",
+              "london",
+              "madrid",
+              "berlin",
+              "new-delhi",
+              "tokyo",
+              "sydney",
+              "auckland"
+            ],
+            "description": "First city row. Only zones with a built-in DST rule are offered."
+          },
+          "city2": {
+            "type": "enum",
+            "default": "madrid",
+            "options": [
+              "utc",
+              "buenos-aires",
+              "new-york",
+              "chicago",
+              "los-angeles",
+              "london",
+              "madrid",
+              "berlin",
+              "new-delhi",
+              "tokyo",
+              "sydney",
+              "auckland"
+            ],
+            "description": "Second city row. Only zones with a built-in DST rule are offered."
+          },
+          "city3": {
+            "type": "enum",
+            "default": "tokyo",
+            "options": [
+              "utc",
+              "buenos-aires",
+              "new-york",
+              "chicago",
+              "los-angeles",
+              "london",
+              "madrid",
+              "berlin",
+              "new-delhi",
+              "tokyo",
+              "sydney",
+              "auckland"
+            ],
+            "description": "Third city row. Only zones with a built-in DST rule are offered."
+          },
+          "showLocal": {
+            "type": "boolean",
+            "default": true,
+            "description": "Show the local time row (the 1.x behaviour)."
+          },
+          "showUtc": {
+            "type": "boolean",
+            "default": true,
+            "description": "Show the UTC row (the 1.x behaviour)."
+          },
+          "showSeconds": {
+            "type": "boolean",
+            "default": true,
+            "description": "Show seconds in every row (the 1.x behaviour)."
+          },
+          "twentyFourHour": {
+            "type": "boolean",
+            "default": true,
+            "description": "Use 24-hour times (the 1.x behaviour); off shows 12-hour AM/PM."
+          }
+        }
       },
       "trust": "official",
       "path": "plugins/hornero-world-clock",
-      "sha256": "5c8dafd0dfca9ae442bb303e6e159d6246f4e053e8532c1e35743d678d76dc62"
+      "sha256": "339e912e05c2913590b7e07fe7a50704541ac9c9493f8813ae9a06dd33958f31"
     }
   ]
 }

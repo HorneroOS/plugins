@@ -2,21 +2,61 @@
   "schemaVersion": 1,
   "id": "hornero-dual-clock",
   "name": "Hornero Dual Clock",
-  "version": "1.0.1",
-  "description": "Local time next to UTC in the bar, for coordinating with people in other time zones. Pure QML, no processes or network.",
+  "version": "2.0.0",
+  "description": "Dual Clock 2.0: local time next to a second zone (UTC by default, as in 1.x) in the bar, with a details popover. Pure-JS rule-based offsets, no processes or network.",
   "author": "HorneroOS contributors",
   "license": "MIT",
   "homepage": "https://github.com/HorneroOS/plugins",
   "entrypoint": "Main.qml",
+  "placement": "bar",
+  "translations": {
+    "sourceLocale": "en",
+    "locales": [
+      "es"
+    ],
+    "directory": "translations"
+  },
+  "marketplace": {
+    "compatibility": {
+      "minShellVersion": "1.0.0"
+    },
+    "changelog": [
+      {
+        "version": "2.0.0",
+        "notes": "Time and Agenda 2.0: shared Time facade instead of an own timer, Theme tokens, keyboard-operable indicator with a details popover (locale dates, applied offsets, DST state, offset difference), selectable second zone defaulting to UTC with the identical 1.x label, typed settings and Argentine Spanish catalog."
+      },
+      {
+        "version": "1.0.1",
+        "notes": "Local time next to UTC in the bar for coordinating across time zones; themed text and vertical two-line layout."
+      }
+    ]
+  },
   "files": [
     "Main.qml",
     "README.md",
-    "LICENSE"
+    "LICENSE",
+    "translations/es.json"
   ],
   "capabilities": {
     "processCommands": [],
     "networkHosts": [],
-    "settings": {}
-  },
-  "placement": "bar"
+    "settings": {
+      "secondZone": {
+        "type": "enum",
+        "default": "utc",
+        "options": ["utc", "buenos-aires", "new-york", "chicago", "los-angeles", "london", "madrid", "berlin", "new-delhi", "tokyo", "sydney", "auckland"],
+        "description": "Zone shown on the second line (UTC in 1.x). Only zones with a built-in DST rule are offered."
+      },
+      "showSeconds": {
+        "type": "boolean",
+        "default": false,
+        "description": "Show seconds on both lines (1.x showed HH:mm only)."
+      },
+      "twentyFourHour": {
+        "type": "boolean",
+        "default": true,
+        "description": "Use 24-hour times (the 1.x behaviour); off shows 12-hour AM/PM."
+      }
+    }
+  }
 }

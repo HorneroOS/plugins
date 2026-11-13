@@ -1,0 +1,22 @@
+{
+  "AM": "a. m.",
+  "Auckland": "Auckland",
+  "Berlin": "Berlín",
+  "Buenos Aires": "Buenos Aires",
+  "Chicago": "Chicago",
+  "DST": "Horario de verano",
+  "Local": "Local",
+  "London": "Londres",
+  "Los Angeles": "Los Ángeles",
+  "Madrid": "Madrid",
+  "New Delhi": "Nueva Delhi",
+  "New York": "Nueva York",
+  "Offsets follow the DST rules built into this extension; there is no system timezone database for other zones.": "Los desplazamientos siguen las reglas de horario de verano incluidas en esta extensión; no hay una base de datos de zonas horarias del sistema para otras zonas.",
+  "PM": "p. m.",
+  "Sydney": "Sídney",
+  "Tokyo": "Tokio",
+  "UTC": "UTC",
+  "World Clock": "Reloj mundial",
+  "tomorrow": "mañana",
+  "yesterday": "ayer"
+}

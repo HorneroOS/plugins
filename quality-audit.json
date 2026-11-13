@@ -5,8 +5,8 @@
     {
       "id": "hornero-agenda",
       "classification": "needs-upgrade",
-      "valueProposition": "Desktop widget showing weekday, day and month, ISO week number, day of year and days remaining in the year, computed with pure Date math from PluginKit Time.",
-      "nativeOverlap": "Overlaps hornero-calendar and hornero-world-clock on date display; distinct value is ISO week, day-of-year and days-remaining.",
+      "valueProposition": "Agenda 2.0: desktop widget of date facts from PluginKit Time: the 1.x weekday/day/month, ISO week, day of year and days remaining, plus quarter, ISO week-year, days remaining in the month and a year-progress bar. No events: PluginKit has no calendar data source.",
+      "nativeOverlap": "Overlaps hornero-calendar on date display; distinct value is ISO week/week-year, day-of-year, remaining-day counts and year progress as labelled metrics.",
       "dimensions": {
         "tooltips": {
           "status": "na",
@@ -14,19 +14,19 @@
         },
         "accessibility": {
           "status": "na",
-          "note": "No interactive controls in the entrypoint; static text only (static probe)."
+          "note": "No interactive controls in the entrypoint; the card carries an Accessible.name with the full date (static probe). Live AT-SPI behaviour is not verified."
         },
         "translation": {
-          "status": "fail",
-          "note": "User-visible string literals are not wrapped in qsTr/qsTrId (static probe)."
+          "status": "pass",
+          "note": "All user-visible literals go through PluginKit Translations; es (Argentine Spanish) catalog declared in the manifest and checked complete for literal tr() strings (static probe). Weekday/month names and numbers are locale-formatted via Translations."
         },
         "settings": {
-          "status": "na",
-          "note": "No settings declared in the manifest; none are recorded as needed yet. Revisit if behaviour becomes user-configurable."
+          "status": "pass",
+          "note": "Typed showIsoWeek/showDayOfYear/showYearProgress row toggles (boolean, default true) declared in the manifest and read via PluginKit Settings; defaults keep every 1.x row visible (static probe)."
         },
         "themeTokens": {
           "status": "pass",
-          "note": "Visible colours come from PluginKit Theme tokens with no hard-coded chrome colours (static probe)."
+          "note": "Visible colours come from PluginKit Ui primitives/Theme tokens with no hard-coded chrome colours (static probe)."
         },
         "screenshots": {
           "status": "fail",
@@ -34,18 +34,18 @@
         },
         "orientation": {
           "status": "unverified",
-          "note": "Orientation/responsiveness across bar, dashboard and desktop placements has not had a graphical review; static checks cannot verify it."
+          "note": "Host context drives the metric stack (hostOrientation/hostCompact) with desktop defaults, but placement across desktop slots has not had a graphical review."
         },
         "loadingErrorStates": {
           "status": "unverified",
-          "note": "Loading/error presentation has not been audited beyond the static probe; no graphical verification yet."
+          "note": "The no-events-source limit is an explicit caption and derived counts always render from Time.date; presentation has not been verified graphically in a live shell."
         },
         "performance": {
           "status": "unverified",
-          "note": "Not profiled. Static cadence only: timer intervals (ms)=none, process polling=no; runtime cost is unverified."
+          "note": "Not profiled. Static cadence only: no own timer or polling; Time is event-pushed by the system clock behind a Subscription time lease; runtime cost is unverified."
         }
       },
-      "issue": "https://github.com/HorneroOS/plugins/issues/21"
+      "issue": "https://github.com/HorneroOS/plugins/issues/28"
     },
     {
       "id": "hornero-ai-usage",
@@ -230,8 +230,8 @@
     {
       "id": "hornero-calendar",
       "classification": "needs-upgrade",
-      "valueProposition": "Desktop widget showing the current date and time from the PluginKit Time service. Read-only, no processes or network.",
-      "nativeOverlap": "Overlaps hornero-agenda (date) and hornero-world-clock (time); distinct value is a large desktop date/time display. Consolidation candidate to evaluate under the linked issue.",
+      "valueProposition": "Calendar 2.0: desktop widget keeping the 1.x large time, full locale date and shell time line, plus the current month grid with today marked, computed with UTC day math from PluginKit Time. Shows no events: PluginKit has no calendar data source, and the widget says so.",
+      "nativeOverlap": "Overlaps hornero-agenda (date facts) and the shell clock; distinct value is the month grid on the desktop. No events overlap exists to consolidate: no PluginKit facade exposes appointments.",
       "dimensions": {
         "tooltips": {
           "status": "na",
@@ -239,19 +239,19 @@
         },
         "accessibility": {
           "status": "na",
-          "note": "No interactive controls in the entrypoint; static text only (static probe)."
+          "note": "No interactive controls in the entrypoint; the card carries an Accessible.name with the full date, day cells are static text (static probe). Live AT-SPI behaviour is not verified."
         },
         "translation": {
-          "status": "na",
-          "note": "No translatable string literals outside format strings (static probe)."
+          "status": "pass",
+          "note": "User-visible literals go through PluginKit Translations; es (Argentine Spanish) catalog declared in the manifest and checked complete for literal tr() strings (static probe). Month/weekday names and day numbers are locale-formatted via Translations, not literals."
         },
         "settings": {
-          "status": "na",
-          "note": "No settings declared in the manifest; none are recorded as needed yet. Revisit if behaviour becomes user-configurable."
+          "status": "pass",
+          "note": "Typed twentyFourHour/showShellTime/showMonthGrid (boolean, default true) and weekStart (enum, default monday) settings declared in the manifest and read via PluginKit Settings; defaults keep every 1.x element visible (static probe)."
         },
         "themeTokens": {
           "status": "pass",
-          "note": "Visible colours come from PluginKit Theme tokens with no hard-coded chrome colours (static probe)."
+          "note": "Visible colours come from PluginKit Ui primitives/Theme tokens with no hard-coded chrome colours (static probe)."
         },
         "screenshots": {
           "status": "fail",
@@ -259,18 +259,18 @@
         },
         "orientation": {
           "status": "unverified",
-          "note": "Orientation/responsiveness across bar, dashboard and desktop placements has not had a graphical review; static checks cannot verify it."
+          "note": "Host context properties are declared with desktop defaults, but placement in desktop slots across displays has not had a graphical review."
         },
         "loadingErrorStates": {
           "status": "unverified",
-          "note": "Loading/error presentation has not been audited beyond the static probe; no graphical verification yet."
+          "note": "The no-events-source state is an explicit caption rather than invented entries; presentation has not been verified graphically in a live shell."
         },
         "performance": {
           "status": "unverified",
-          "note": "Not profiled. Static cadence only: timer intervals (ms)=none, process polling=no; runtime cost is unverified."
+          "note": "Not profiled. Static cadence only: no own timer or polling; Time is event-pushed by the system clock behind a Subscription time lease; runtime cost is unverified."
         }
       },
-      "issue": "https://github.com/HorneroOS/plugins/issues/21"
+      "issue": "https://github.com/HorneroOS/plugins/issues/28"
     },
     {
       "id": "hornero-color-converter",
@@ -455,28 +455,28 @@
     {
       "id": "hornero-dual-clock",
       "classification": "needs-upgrade",
-      "valueProposition": "Local time next to UTC in the bar, for coordinating with people in other time zones. Pure QML, no processes or network.",
-      "nativeOverlap": "Overlaps hornero-world-clock (local plus UTC); distinct value is a compact bar placement. Consolidation candidate to evaluate under the linked issue.",
+      "valueProposition": "Dual Clock 2.0: compact bar indicator with local time over a second zone (UTC by default, identical 1.x label), opening a popover with locale dates, applied offsets, DST state and the signed offset difference. Non-UTC zones use the same pure-JS DST rule table as World Clock.",
+      "nativeOverlap": "Overlaps hornero-world-clock (many zones on the dashboard) and the shell clock; distinct value is one glanceable second zone in the bar plus a details popover.",
       "dimensions": {
         "tooltips": {
-          "status": "na",
-          "note": "No interactive controls in the entrypoint, so tooltips do not apply (static probe)."
+          "status": "pass",
+          "note": "The indicator carries PluginKit tooltipText (host-owned UiTooltip, static probe); it is the only interactive control."
         },
         "accessibility": {
-          "status": "na",
-          "note": "No interactive controls in the entrypoint; static text only (static probe)."
+          "status": "pass",
+          "note": "UiButton accessibleName announces both times and UiPopover carries an accessibleName; no mouse-only MouseArea (static probe). Live AT-SPI behaviour is not verified."
         },
         "translation": {
-          "status": "fail",
-          "note": "User-visible string literals are not wrapped in qsTr/qsTrId (static probe)."
+          "status": "pass",
+          "note": "All user-visible literals, including city names, go through PluginKit Translations; es (Argentine Spanish) catalog declared in the manifest and checked complete for literal tr() strings (static probe)."
         },
         "settings": {
-          "status": "na",
-          "note": "No settings declared in the manifest; none are recorded as needed yet. Revisit if behaviour becomes user-configurable."
+          "status": "pass",
+          "note": "Typed secondZone (enum, default utc), showSeconds (boolean, default false) and twentyFourHour (boolean, default true) declared in the manifest and read via PluginKit Settings; defaults reproduce the 1.x HH:mm over HH:mm UTC label exactly (static probe)."
         },
         "themeTokens": {
-          "status": "fail",
-          "note": "PluginKit Theme tokens are not used, or hard-coded chrome colours are present (static probe)."
+          "status": "pass",
+          "note": "Visible colours come from PluginKit Ui primitives/Theme tokens with no hard-coded chrome colours; the 1.x palette.windowText is gone (static probe)."
         },
         "screenshots": {
           "status": "fail",
@@ -484,18 +484,18 @@
         },
         "orientation": {
           "status": "unverified",
-          "note": "Orientation/responsiveness across bar, dashboard and desktop placements has not had a graphical review; static checks cannot verify it."
+          "note": "Host context (hostOrientation/hostCompact) drives the popover stack and the two-line label suits vertical rails as in 1.x, but orientation across bar edges has not had a graphical review."
         },
         "loadingErrorStates": {
           "status": "unverified",
-          "note": "Loading/error presentation has not been audited beyond the static probe; no graphical verification yet."
+          "note": "The popover labels the rule-table limit and unknown stored zones fall back to UTC; presentation has not been verified graphically in a live shell."
         },
         "performance": {
           "status": "unverified",
-          "note": "Not profiled. Static cadence only: timer intervals (ms)=['1000'], process polling=no; runtime cost is unverified."
+          "note": "Not profiled. Static cadence only: the 1.x 1000ms own timer is removed; Time is event-pushed (second precision) behind a Subscription time lease; runtime cost is unverified."
         }
       },
-      "issue": "https://github.com/HorneroOS/plugins/issues/21"
+      "issue": "https://github.com/HorneroOS/plugins/issues/28"
     },
     {
       "id": "hornero-focus-card",
@@ -1445,8 +1445,8 @@
     {
       "id": "hornero-world-clock",
       "classification": "needs-upgrade",
-      "valueProposition": "Dashboard card showing local time, UTC, and Buenos Aires, Madrid and Tokyo. Times use pure-JS offsets (Madrid follows the EU DST rule); each row is labelled with its applied UTC offset. No processes or network.",
-      "nativeOverlap": "Overlaps hornero-dual-clock and hornero-calendar; distinct value is multiple named cities with labelled offsets.",
+      "valueProposition": "World Clock 2.0: dashboard card (Time category) with local, UTC and three selectable city rows from a pure-JS rule table (fixed, EU, US and southern-hemisphere DST rules) over the shared PluginKit Time facade; every row labelled with its applied offset, DST state and zoned date.",
+      "nativeOverlap": "Overlaps hornero-dual-clock (one extra zone in the bar) and hornero-calendar (local date); distinct value is several named zones with DST-aware labelled offsets in one card. PluginKit offers no timezone database, so the rule table is the documented limit.",
       "dimensions": {
         "tooltips": {
           "status": "na",
@@ -1454,19 +1454,19 @@
         },
         "accessibility": {
           "status": "na",
-          "note": "No interactive controls in the entrypoint; static text only (static probe)."
+          "note": "No interactive controls in the entrypoint; the card carries an Accessible.name (static probe). Live AT-SPI behaviour is not verified."
         },
         "translation": {
-          "status": "fail",
-          "note": "User-visible string literals are not wrapped in qsTr/qsTrId (static probe)."
+          "status": "pass",
+          "note": "All user-visible literals, including city names, go through PluginKit Translations; es (Argentine Spanish) catalog declared in the manifest and checked complete for literal tr() strings (static probe). Zoned weekday/month names are locale-formatted via Translations."
         },
         "settings": {
-          "status": "na",
-          "note": "No settings declared in the manifest; none are recorded as needed yet. Revisit if behaviour becomes user-configurable."
+          "status": "pass",
+          "note": "Typed city1/city2/city3 enum slots (defaults buenos-aires/madrid/tokyo, the 1.x fixed rows) plus showLocal/showUtc/showSeconds/twentyFourHour booleans (default true) declared in the manifest and read via PluginKit Settings (static probe)."
         },
         "themeTokens": {
           "status": "pass",
-          "note": "Visible colours come from PluginKit Theme tokens with no hard-coded chrome colours (static probe)."
+          "note": "Visible colours come from PluginKit Ui primitives/Theme tokens with no hard-coded chrome colours (static probe)."
         },
         "screenshots": {
           "status": "fail",
@@ -1474,18 +1474,18 @@
         },
         "orientation": {
           "status": "unverified",
-          "note": "Orientation/responsiveness across bar, dashboard and desktop placements has not had a graphical review; static checks cannot verify it."
+          "note": "Host context (hostOrientation/hostCompact/hostAvailableWidth) drives UiStack and card width, but orientation across dashboard placements has not had a graphical review."
         },
         "loadingErrorStates": {
           "status": "unverified",
-          "note": "Loading/error presentation has not been audited beyond the static probe; no graphical verification yet."
+          "note": "Offsets are labelled per row with DST chips and a rule-table caption instead of a fake database state; presentation has not been verified graphically in a live shell."
         },
         "performance": {
           "status": "unverified",
-          "note": "Not profiled. Static cadence only: timer intervals (ms)=['1000'], process polling=no; runtime cost is unverified."
+          "note": "Not profiled. Static cadence only: the 1.x 1000ms own timer is removed; Time is event-pushed (second precision) behind a Subscription time lease; runtime cost is unverified. Offset rules are checked against zoneinfo in tests/test_time_logic.py."
         }
       },
-      "issue": "https://github.com/HorneroOS/plugins/issues/21"
+      "issue": "https://github.com/HorneroOS/plugins/issues/28"
     }
   ]
 }
