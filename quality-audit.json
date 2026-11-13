@@ -635,28 +635,28 @@
     {
       "id": "hornero-microphone",
       "classification": "needs-upgrade",
-      "valueProposition": "Bar widget showing microphone volume and muted state from PluginKit Audio. Shows 'No input device' when no source is present. Privacy: shows only muted/volume state, never records audio.",
+      "valueProposition": "Microphone 2.0: compact bar indicator with details popover and dashboard card for microphone state over the shared PluginKit Audio facade: read-only input level and mute, labelled muted and no-input-device states. Never records audio.",
       "nativeOverlap": "Audio family overlap with hornero-volume and hornero-studio-audio; distinct value is input-device state. Possible native shell bar audio overlap is unverified.",
       "dimensions": {
         "tooltips": {
           "status": "pass",
-          "note": "Interactive controls carry ToolTip.text (static probe)."
+          "note": "Indicator and mute controls carry PluginKit tooltipText (host-owned UiTooltip, static probe)."
         },
         "accessibility": {
           "status": "pass",
-          "note": "Interactive controls carry Accessible.name (static probe); screen-reader behaviour itself is unverified graphically."
+          "note": "UiButton/UiPopover accessibleName plus Accessible.name on the dashboard card; mute is a real button, no mouse-only MouseArea (static probe). Live AT-SPI behaviour is not verified."
         },
         "translation": {
-          "status": "fail",
-          "note": "User-visible string literals are not wrapped in qsTr/qsTrId (static probe)."
+          "status": "pass",
+          "note": "All user-visible literals go through PluginKit Translations; es (Argentine Spanish) catalog declared in the manifest and checked complete for literal tr() strings (static probe)."
         },
         "settings": {
-          "status": "na",
-          "note": "No settings declared in the manifest; none are recorded as needed yet. Revisit if behaviour becomes user-configurable."
+          "status": "pass",
+          "note": "Typed showPercentage/showWhenNoSource (boolean, default true) settings declared in the manifest and read via PluginKit Settings; defaults equal the 1.x hardcoded behaviour (static probe)."
         },
         "themeTokens": {
           "status": "pass",
-          "note": "Visible colours come from PluginKit Theme tokens with no hard-coded chrome colours (static probe)."
+          "note": "Visible colours come from PluginKit Ui primitives/Theme tokens with no hard-coded chrome colours (static probe)."
         },
         "screenshots": {
           "status": "fail",
@@ -664,18 +664,18 @@
         },
         "orientation": {
           "status": "unverified",
-          "note": "Orientation/responsiveness across bar, dashboard and desktop placements has not had a graphical review; static checks cannot verify it."
+          "note": "Host context (hostOrientation/hostCompact/hostAvailableWidth) drives UiStack and compact label-dropping on both surfaces, but orientation across bar edges and dashboard has not had a graphical review."
         },
         "loadingErrorStates": {
           "status": "unverified",
-          "note": "Static probe finds error/empty-state text in the QML, but loading and error presentation have not been verified graphically."
+          "note": "UiState empty placeholder covers the no-input-device state and muted is labelled in bar, popover and card; presentation has not been verified graphically in a live shell."
         },
         "performance": {
           "status": "unverified",
-          "note": "Not profiled. Static cadence only: timer intervals (ms)=none, process polling=no; runtime cost is unverified."
+          "note": "Not profiled. Static cadence only: no timers or polling; Audio is event-pushed by PipeWire and both surfaces hold a Subscription audio lease; runtime cost is unverified."
         }
       },
-      "issue": "https://github.com/HorneroOS/plugins/issues/21"
+      "issue": "https://github.com/HorneroOS/plugins/issues/25"
     },
     {
       "id": "hornero-moon-phase",
@@ -995,28 +995,28 @@
     {
       "id": "hornero-studio-audio",
       "classification": "needs-upgrade",
-      "valueProposition": "Bar indicator for the HorneroOS Studio audio mode (Balanced, Low Latency, Advanced) and Temporary Performance state, read from the typed horneroctl studio mode contract. Read-only; mode changes stay in the CLI and Control Center.",
+      "valueProposition": "Studio Audio 2.0: compact bar indicator with details popover and dashboard card for the Studio audio mode (Balanced, Low Latency, Advanced) and Temporary Performance state from the typed horneroctl studio mode contract, plus read-only output state from PluginKit Audio. Read-only; mode changes stay in the CLI and Control Center.",
       "nativeOverlap": "Audio family overlap with hornero-volume and hornero-microphone; distinct value is the HorneroOS Studio mode contract. Mode switching stays native in CLI/Control Center.",
       "dimensions": {
         "tooltips": {
-          "status": "fail",
-          "note": "Interactive controls present but no ToolTip.text found (static probe)."
+          "status": "pass",
+          "note": "Indicator and refresh controls carry PluginKit tooltipText (host-owned UiTooltip, static probe)."
         },
         "accessibility": {
-          "status": "fail",
-          "note": "Interactive controls present but no Accessible.name found (static probe)."
+          "status": "pass",
+          "note": "UiButton/UiPopover accessibleName plus Accessible.name on the dashboard card; the 1.x mouse-only MouseArea is replaced by real buttons (static probe). Live AT-SPI behaviour is not verified."
         },
         "translation": {
-          "status": "fail",
-          "note": "User-visible string literals are not wrapped in qsTr/qsTrId (static probe)."
+          "status": "pass",
+          "note": "All user-visible literals go through PluginKit Translations; es (Argentine Spanish) catalog declared in the manifest and checked complete for literal tr() strings (static probe). Mode codes (BAL/LL/ADV) and ST/PERF captions are kept as codes."
         },
         "settings": {
-          "status": "na",
-          "note": "No settings declared in the manifest; none are recorded as needed yet. Revisit if behaviour becomes user-configurable."
+          "status": "pass",
+          "note": "Typed refreshSeconds (integer 15-3600, default 60 = the 1.x 60-second poll) and showWhenUnavailable (boolean, default true) settings declared in the manifest and read via PluginKit Settings (static probe)."
         },
         "themeTokens": {
-          "status": "fail",
-          "note": "PluginKit Theme tokens are not used, or hard-coded chrome colours are present (static probe)."
+          "status": "pass",
+          "note": "Visible colours come from PluginKit Ui primitives/Theme tokens with no hard-coded chrome colours; the 1.x raw palette text is gone (static probe)."
         },
         "screenshots": {
           "status": "fail",
@@ -1024,18 +1024,18 @@
         },
         "orientation": {
           "status": "unverified",
-          "note": "Orientation/responsiveness across bar, dashboard and desktop placements has not had a graphical review; static checks cannot verify it."
+          "note": "Host context (hostOrientation/hostCompact/hostAvailableWidth) drives UiStack and compact caption-dropping on both surfaces, but orientation across bar edges and dashboard has not had a graphical review."
         },
         "loadingErrorStates": {
           "status": "unverified",
-          "note": "Loading/error presentation has not been audited beyond the static probe; no graphical verification yet."
+          "note": "UiState error placeholder covers the horneroctl-unavailable state and unknown mode strings are labelled unknown; presentation has not been verified graphically in a live shell."
         },
         "performance": {
           "status": "unverified",
-          "note": "Not profiled. Static cadence only: timer intervals (ms)=['60000'], process polling=yes; runtime cost is unverified."
+          "note": "Not profiled. Static cadence only: horneroctl studio mode read every refreshSeconds (default 60s, as in 1.x) per surface, process polling=yes; runtime cost is unverified."
         }
       },
-      "issue": "https://github.com/HorneroOS/plugins/issues/21"
+      "issue": "https://github.com/HorneroOS/plugins/issues/25"
     },
     {
       "id": "hornero-studio-jobs",
@@ -1355,28 +1355,28 @@
     {
       "id": "hornero-volume",
       "classification": "needs-upgrade",
-      "valueProposition": "Bar widget showing output volume from PluginKit Audio. Shows 'Muted' when muted and 'No output device' when no sink is present, with mute, decrease and increase buttons.",
+      "valueProposition": "Volume 2.0: compact bar indicator with details popover and dashboard card for output volume over the shared PluginKit Audio facade: volume slider, step and mute controls, labelled muted and no-output-device states.",
       "nativeOverlap": "Audio family overlap with hornero-microphone and hornero-studio-audio; distinct value is output controls. Possible native shell bar audio overlap is unverified.",
       "dimensions": {
         "tooltips": {
           "status": "pass",
-          "note": "Interactive controls carry ToolTip.text (static probe)."
+          "note": "Indicator, slider and step/mute controls carry PluginKit tooltipText (host-owned UiTooltip, static probe)."
         },
         "accessibility": {
           "status": "pass",
-          "note": "Interactive controls carry Accessible.name (static probe); screen-reader behaviour itself is unverified graphically."
+          "note": "UiButton/UiSlider/UiPopover accessibleName plus Accessible.name on the dashboard card; controls are real buttons/slider, no mouse-only MouseArea (static probe). Live AT-SPI behaviour is not verified."
         },
         "translation": {
-          "status": "fail",
-          "note": "User-visible string literals are not wrapped in qsTr/qsTrId (static probe)."
+          "status": "pass",
+          "note": "All user-visible literals go through PluginKit Translations; es (Argentine Spanish) catalog declared in the manifest and checked complete for literal tr() strings (static probe)."
         },
         "settings": {
-          "status": "na",
-          "note": "No settings declared in the manifest; none are recorded as needed yet. Revisit if behaviour becomes user-configurable."
+          "status": "pass",
+          "note": "Typed showPercentage/showWhenNoSink (boolean, default true) settings declared in the manifest and read via PluginKit Settings; defaults equal the 1.x hardcoded behaviour (static probe)."
         },
         "themeTokens": {
           "status": "pass",
-          "note": "Visible colours come from PluginKit Theme tokens with no hard-coded chrome colours (static probe)."
+          "note": "Visible colours come from PluginKit Ui primitives/Theme tokens with no hard-coded chrome colours (static probe)."
         },
         "screenshots": {
           "status": "fail",
@@ -1384,18 +1384,18 @@
         },
         "orientation": {
           "status": "unverified",
-          "note": "Orientation/responsiveness across bar, dashboard and desktop placements has not had a graphical review; static checks cannot verify it."
+          "note": "Host context (hostOrientation/hostCompact/hostAvailableWidth) drives UiStack and compact label-dropping on both surfaces, but orientation across bar edges and dashboard has not had a graphical review."
         },
         "loadingErrorStates": {
           "status": "unverified",
-          "note": "Static probe finds error/empty-state text in the QML, but loading and error presentation have not been verified graphically."
+          "note": "UiState empty placeholder covers the no-output-device state and muted is labelled in bar, popover and card; presentation has not been verified graphically in a live shell."
         },
         "performance": {
           "status": "unverified",
-          "note": "Not profiled. Static cadence only: timer intervals (ms)=none, process polling=no; runtime cost is unverified."
+          "note": "Not profiled. Static cadence only: no timers or polling; Audio is event-pushed by PipeWire and both surfaces hold a Subscription audio lease; runtime cost is unverified."
         }
       },
-      "issue": "https://github.com/HorneroOS/plugins/issues/21"
+      "issue": "https://github.com/HorneroOS/plugins/issues/25"
     },
     {
       "id": "hornero-weather",

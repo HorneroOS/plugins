@@ -1,0 +1,23 @@
+{
+  "%1%": "%1%",
+  "Advanced": "Avanzado",
+  "Balanced": "Equilibrado",
+  "Low Latency": "Baja latencia",
+  "Mode": "Modo",
+  "Muted": "Silenciado",
+  "No output device is available.": "No hay ningún dispositivo de salida disponible.",
+  "Output": "Salida",
+  "PERF": "PERF",
+  "Refresh": "Actualizar",
+  "Refresh studio mode": "Actualizar el modo Studio",
+  "Reload the studio mode from horneroctl": "Volver a cargar el modo Studio desde horneroctl",
+  "ST": "ST",
+  "Studio Audio": "Audio Studio",
+  "Studio audio details": "Detalle de Audio Studio",
+  "Studio mode and Temporary Performance are shown read-only. Switching modes stays in horneroctl and Control Center.": "El modo Studio y el Rendimiento temporal se muestran en modo de solo lectura. El cambio de modo queda en horneroctl y en el Centro de Control.",
+  "Studio mode unavailable": "Modo Studio no disponible",
+  "Studio mode unavailable: horneroctl returned no usable studio mode.": "Modo Studio no disponible: horneroctl no devolvió un modo Studio utilizable.",
+  "Temporary Performance off": "Rendimiento temporal desactivado",
+  "Temporary Performance on": "Rendimiento temporal activado",
+  "Unknown mode": "Modo desconocido"
+}

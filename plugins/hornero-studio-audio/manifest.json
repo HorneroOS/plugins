@@ -1,24 +1,68 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 2,
   "id": "hornero-studio-audio",
   "name": "Hornero Studio Audio",
-  "version": "1.0.2",
-  "description": "Bar indicator for the HorneroOS Studio audio mode (Balanced, Low Latency, Advanced) and Temporary Performance state, read from the typed horneroctl studio mode contract. Read-only; mode changes stay in the CLI and Control Center.",
+  "version": "2.0.0",
+  "description": "Audio Extensions 2.0: bar indicator, popover and dashboard card for the Studio audio mode and Temporary Performance state from the typed horneroctl contract. Read-only; mode changes stay in the CLI and Control Center.",
   "author": "HorneroOS contributors",
   "license": "MIT",
   "homepage": "https://github.com/HorneroOS/plugins",
   "entrypoint": "Main.qml",
+  "placement": "bar",
+  "surfaces": {
+    "dashboard": {
+      "entrypoint": "Dashboard.qml",
+      "size": "standard",
+      "category": "Audio"
+    }
+  },
+  "translations": {
+    "sourceLocale": "en",
+    "locales": [
+      "es"
+    ],
+    "directory": "translations"
+  },
+  "marketplace": {
+    "compatibility": {
+      "minShellVersion": "1.0.0"
+    },
+    "changelog": [
+      {
+        "version": "2.0.0",
+        "notes": "Audio Extensions 2.0: compact indicator with host-owned popover and dashboard card (mode, Temporary Performance, read-only output state, refresh), typed refreshSeconds/showWhenUnavailable settings, Theme tokens, host-context layout and Spanish catalog. Still read-only over the typed horneroctl studio contract."
+      },
+      {
+        "version": "1.0.2",
+        "notes": "Bar indicator for the Studio audio mode and Temporary Performance state; stacked caption so the mode code does not clip in the bar."
+      }
+    ]
+  },
   "files": [
     "Main.qml",
+    "Dashboard.qml",
     "README.md",
-    "LICENSE"
+    "LICENSE",
+    "translations/es.json"
   ],
   "capabilities": {
     "processCommands": [
       "horneroctl"
     ],
     "networkHosts": [],
-    "settings": {}
-  },
-  "placement": "bar"
+    "settings": {
+      "refreshSeconds": {
+        "type": "integer",
+        "default": 60,
+        "minimum": 15,
+        "maximum": 3600,
+        "description": "Seconds between studio mode refreshes from horneroctl."
+      },
+      "showWhenUnavailable": {
+        "type": "boolean",
+        "default": true,
+        "description": "Keep the bar indicator visible, labelled as unavailable, when horneroctl returns no usable studio mode."
+      }
+    }
+  }
 }

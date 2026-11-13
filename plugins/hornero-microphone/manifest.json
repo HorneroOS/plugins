@@ -1,14 +1,64 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 2,
   "id": "hornero-microphone",
   "name": "Hornero Microphone",
-  "version": "1.0.0",
-  "description": "Bar widget showing microphone volume and muted state from PluginKit Audio. Shows 'No input device' when no source is present. Privacy: shows only muted/volume state, never records audio.",
+  "version": "2.0.0",
+  "description": "Audio Extensions 2.0: compact bar indicator, details popover and dashboard card for microphone state over the shared PluginKit Audio facade, with honest muted and no-input-device states. Never records audio.",
   "author": "HorneroOS contributors",
   "license": "MIT",
   "homepage": "https://github.com/HorneroOS/plugins",
   "entrypoint": "Main.qml",
-  "files": ["Main.qml", "README.md", "LICENSE"],
-  "capabilities": {"processCommands": [], "networkHosts": [], "settings": {}},
-  "placement": "bar"
+  "placement": "bar",
+  "surfaces": {
+    "dashboard": {
+      "entrypoint": "Dashboard.qml",
+      "size": "standard",
+      "category": "Audio"
+    }
+  },
+  "translations": {
+    "sourceLocale": "en",
+    "locales": [
+      "es"
+    ],
+    "directory": "translations"
+  },
+  "marketplace": {
+    "compatibility": {
+      "minShellVersion": "1.0.0"
+    },
+    "changelog": [
+      {
+        "version": "2.0.0",
+        "notes": "Audio Extensions 2.0: compact indicator with host-owned popover (read-only input level and mute), dashboard card, typed settings, host-context layout and Spanish catalog, over the shared PluginKit Audio facade only."
+      },
+      {
+        "version": "1.0.0",
+        "notes": "Bar widget showing microphone volume and muted state with an inline mute button."
+      }
+    ]
+  },
+  "files": [
+    "Main.qml",
+    "Dashboard.qml",
+    "README.md",
+    "LICENSE",
+    "translations/es.json"
+  ],
+  "capabilities": {
+    "processCommands": [],
+    "networkHosts": [],
+    "settings": {
+      "showPercentage": {
+        "type": "boolean",
+        "default": true,
+        "description": "Show the microphone volume percentage next to the bar indicator."
+      },
+      "showWhenNoSource": {
+        "type": "boolean",
+        "default": true,
+        "description": "Keep the bar indicator visible, labelled as no input device, when no source is present."
+      }
+    }
+  }
 }
