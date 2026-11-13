@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedFrom": "adf3d2dd7f9e0382c23622c00b1feff65f0e3beb",
+  "generatedFrom": "d367eb8b0798002e9d819726300c12dc26f112b3",
   "plugins": [
     {
       "id": "hornero-agenda",
@@ -344,8 +344,8 @@
     {
       "id": "hornero-now-playing",
       "name": "Hornero Now Playing",
-      "version": "1.0.0",
-      "description": "Bar widget showing the active media player identity, title and artist from PluginKit Media, with previous, play/pause and next controls. Transport runs only on user click.",
+      "version": "2.0.0",
+      "description": "Now Playing 2.0: compact bar indicator, details popover and dashboard card over the shared PluginKit Media (MPRIS) facade, with graceful no-player and idle-player states.",
       "author": "HorneroOS contributors",
       "license": "MIT",
       "homepage": "https://github.com/HorneroOS/plugins",
@@ -354,11 +354,29 @@
       "capabilities": {
         "processCommands": [],
         "networkHosts": [],
-        "settings": {}
+        "settings": {
+          "showArtist": {
+            "type": "boolean",
+            "default": true,
+            "description": "Show the track artist under the title when the player reports one."
+          },
+          "showWhenNoPlayer": {
+            "type": "boolean",
+            "default": true,
+            "description": "Keep the bar indicator visible, labelled as no player, when no media player is active."
+          },
+          "maxTitleWidth": {
+            "type": "integer",
+            "default": 180,
+            "minimum": 80,
+            "maximum": 240,
+            "description": "Maximum width in pixels for the track title in the bar."
+          }
+        }
       },
       "trust": "official",
       "path": "plugins/hornero-now-playing",
-      "sha256": "d9127981cb5e2b3e82b87366a284a4a125500bfb5a0cf7728396ef5d2f580432"
+      "sha256": "e5456fb198019c0cc87c07c122a268a18649f309bd3cf656feb69b49505d0f6f"
     },
     {
       "id": "hornero-pomodoro",

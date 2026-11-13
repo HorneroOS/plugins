@@ -1,14 +1,71 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 2,
   "id": "hornero-now-playing",
   "name": "Hornero Now Playing",
-  "version": "1.0.0",
-  "description": "Bar widget showing the active media player identity, title and artist from PluginKit Media, with previous, play/pause and next controls. Transport runs only on user click.",
+  "version": "2.0.0",
+  "description": "Now Playing 2.0: compact bar indicator, details popover and dashboard card over the shared PluginKit Media (MPRIS) facade, with graceful no-player and idle-player states.",
   "author": "HorneroOS contributors",
   "license": "MIT",
   "homepage": "https://github.com/HorneroOS/plugins",
   "entrypoint": "Main.qml",
-  "files": ["Main.qml", "README.md", "LICENSE"],
-  "capabilities": {"processCommands": [], "networkHosts": [], "settings": {}},
-  "placement": "bar"
+  "placement": "bar",
+  "surfaces": {
+    "dashboard": {
+      "entrypoint": "Dashboard.qml",
+      "size": "standard",
+      "category": "Media"
+    }
+  },
+  "translations": {
+    "sourceLocale": "en",
+    "locales": [
+      "es"
+    ],
+    "directory": "translations"
+  },
+  "marketplace": {
+    "compatibility": {
+      "minShellVersion": "1.0.0"
+    },
+    "changelog": [
+      {
+        "version": "2.0.0",
+        "notes": "Compact bar indicator with host-owned details popover, dashboard card, typed settings, host-context layout and Spanish catalog, over the shared PluginKit Media facade."
+      },
+      {
+        "version": "1.0.0",
+        "notes": "Bar widget showing player identity, title and artist with inline previous, play/pause and next buttons."
+      }
+    ]
+  },
+  "files": [
+    "Main.qml",
+    "Dashboard.qml",
+    "README.md",
+    "LICENSE",
+    "translations/es.json"
+  ],
+  "capabilities": {
+    "processCommands": [],
+    "networkHosts": [],
+    "settings": {
+      "showArtist": {
+        "type": "boolean",
+        "default": true,
+        "description": "Show the track artist under the title when the player reports one."
+      },
+      "showWhenNoPlayer": {
+        "type": "boolean",
+        "default": true,
+        "description": "Keep the bar indicator visible, labelled as no player, when no media player is active."
+      },
+      "maxTitleWidth": {
+        "type": "integer",
+        "default": 180,
+        "minimum": 80,
+        "maximum": 240,
+        "description": "Maximum width in pixels for the track title in the bar."
+      }
+    }
+  }
 }

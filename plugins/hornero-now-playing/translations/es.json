@@ -1,0 +1,18 @@
+{
+  "Artist": "Artista",
+  "Next track": "Tema siguiente",
+  "No media player is active": "No hay ningún reproductor activo",
+  "No media player is active. Start playback in a media app and it will appear here.": "No hay ningún reproductor activo. Poné a reproducir algo en una app de música o video y va a aparecer acá.",
+  "No player": "Sin reproductor",
+  "Now Playing": "Reproduciendo ahora",
+  "Now playing: activate for track details and controls": "Reproduciendo ahora: activá para ver el detalle del tema y los controles",
+  "Now playing details": "Detalle de lo que está sonando",
+  "Pause": "Pausar",
+  "Paused": "En pausa",
+  "Play": "Reproducir",
+  "Player": "Reproductor",
+  "Playing": "Reproduciendo",
+  "Previous track": "Tema anterior",
+  "The player reported no track information. It may be idle or stale.": "El reproductor no informó ningún tema. Puede que esté sin reproducir o que sus datos hayan quedado viejos.",
+  "Track": "Tema"
+}

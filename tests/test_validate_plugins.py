@@ -155,6 +155,34 @@ class ContractTest(unittest.TestCase):
         errors, _, _ = vp.validate_plugin_dir(plugin_dir)
         self.assertTrue(any("conflicts with the top-level entrypoint" in e for e in errors))
 
+    def test_dashboard_hints_only_on_dashboard_surface(self):
+        errors = self.errors_for(schemaVersion=2, surfaces={"bar": {"entrypoint": "Main.qml", "size": "wide"}})
+        self.assertTrue(any("only allowed on the dashboard surface" in e for e in errors))
+        errors = self.errors_for(pid="hornero-example2", schemaVersion=2, surfaces={"dashboard": {"entrypoint": "Main.qml", "size": "huge"}})
+        self.assertTrue(any("size must be one of" in e for e in errors))
+        errors = self.errors_for(pid="hornero-example3", schemaVersion=2, surfaces={"dashboard": {"entrypoint": "Main.qml", "category": "Pinned"}})
+        self.assertTrue(any("category must be" in e for e in errors))
+
+    def test_marketplace_rules(self):
+        errors = self.errors_for(marketplace={})
+        self.assertTrue(any("marketplace must declare at least one" in e for e in errors))
+        errors = self.errors_for(pid="hornero-example2", marketplace={"compatibility": {"minShellVersion": "2.0.0", "maxShellVersion": "1.0.0"}})
+        self.assertTrue(any("minShellVersion must not exceed" in e for e in errors))
+        errors = self.errors_for(pid="hornero-example3", marketplace={"changelog": [{"version": "1.0.0", "notes": "a"}, {"version": "1.0.0", "notes": "b"}]})
+        self.assertTrue(any("must not repeat a version" in e for e in errors))
+        errors = self.errors_for(pid="hornero-example4", marketplace={"screenshots": [{"path": "previews/x.svg"}]})
+        self.assertTrue(any("must be a static image" in e for e in errors))
+        errors = self.errors_for(pid="hornero-example5", marketplace={"deprecation": {"replacedBy": "hornero-example5"}})
+        self.assertTrue(any("must not name the plugin itself" in e for e in errors))
+
+    def test_capabilities_actions_must_be_snake_case(self):
+        errors = self.errors_for(capabilities={
+            "processCommands": [], "networkHosts": [], "settings": {}, "actions": ["BadAction"]})
+        self.assertTrue(any("capabilities.actions" in e for e in errors))
+        errors = self.errors_for(pid="hornero-example2", capabilities={
+            "processCommands": [], "networkHosts": [], "settings": {}, "actions": ["system_info"]})
+        self.assertFalse(any("capabilities.actions" in e for e in errors))
+
     def test_incomplete_translation_catalog_is_rejected(self):
         plugin_dir = make_plugin(self.root)
         (plugin_dir / "translations" / "es.json").write_text(json.dumps({"Example": "Ejemplo"}))

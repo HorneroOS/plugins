@@ -770,28 +770,28 @@
     {
       "id": "hornero-now-playing",
       "classification": "needs-upgrade",
-      "valueProposition": "Bar widget showing the active media player identity, title and artist from PluginKit Media, with previous, play/pause and next controls. Transport runs only on user click.",
-      "nativeOverlap": "Possible overlap with native shell media controls is unverified; distinct value is a bar media display with transport controls.",
+      "valueProposition": "Now Playing 2.0: compact bar indicator with details popover and dashboard card over the shared PluginKit Media (MPRIS) facade: player identity, title, artist and playing state, with previous/play-pause/next in the popover and card. No-player and idle-player states are labelled.",
+      "nativeOverlap": "Overlaps the shell's native bar media component (inline transport, collapses when idle); distinct value is an opt-in single-button indicator that stays labelled with no player, names player/state in a popover, and adds a dashboard card. Users keeping the native component do not need the bar surface.",
       "dimensions": {
         "tooltips": {
           "status": "pass",
-          "note": "Interactive controls carry ToolTip.text (static probe)."
+          "note": "Indicator and transport controls carry PluginKit tooltipText (host-owned UiTooltip, static probe)."
         },
         "accessibility": {
           "status": "pass",
-          "note": "Interactive controls carry Accessible.name (static probe); screen-reader behaviour itself is unverified graphically."
+          "note": "UiButton/UiPopover accessibleName plus Accessible.name on the dashboard card; transport are real buttons, no mouse-only MouseArea (static probe). Live AT-SPI behaviour is not verified."
         },
         "translation": {
-          "status": "fail",
-          "note": "User-visible string literals are not wrapped in qsTr/qsTrId (static probe)."
+          "status": "pass",
+          "note": "All user-visible literals go through PluginKit Translations; es (Argentine Spanish) catalog declared in the manifest and checked complete for literal tr() strings (static probe). Player-supplied titles/artists stay in the player's language."
         },
         "settings": {
-          "status": "na",
-          "note": "No settings declared in the manifest; none are recorded as needed yet. Revisit if behaviour becomes user-configurable."
+          "status": "pass",
+          "note": "Typed showArtist/showWhenNoPlayer (boolean, default true) and maxTitleWidth (integer 80-240, default 180) settings declared in the manifest and read via PluginKit Settings; defaults equal the 1.x hardcoded behaviour (static probe)."
         },
         "themeTokens": {
           "status": "pass",
-          "note": "Visible colours come from PluginKit Theme tokens with no hard-coded chrome colours (static probe)."
+          "note": "Visible colours come from PluginKit Ui primitives/Theme tokens with no hard-coded chrome colours (static probe)."
         },
         "screenshots": {
           "status": "fail",
@@ -799,18 +799,18 @@
         },
         "orientation": {
           "status": "unverified",
-          "note": "Orientation/responsiveness across bar, dashboard and desktop placements has not had a graphical review; static checks cannot verify it."
+          "note": "Host context (hostOrientation/hostCompact/hostAvailableWidth) drives UiStack and compact label-dropping on both surfaces, but orientation across bar edges and dashboard has not had a graphical review."
         },
         "loadingErrorStates": {
           "status": "unverified",
-          "note": "Loading/error presentation has not been audited beyond the static probe; no graphical verification yet."
+          "note": "UiState empty placeholders cover the no-player and idle/stale-player (no title or artist) states in popover and card; presentation has not been verified graphically in a live shell."
         },
         "performance": {
           "status": "unverified",
-          "note": "Not profiled. Static cadence only: timer intervals (ms)=none, process polling=no; runtime cost is unverified."
+          "note": "Not profiled. Static cadence only: no timers or polling; Media is event-pushed by MPRIS and both surfaces hold a Subscription media lease; runtime cost is unverified."
         }
       },
-      "issue": "https://github.com/HorneroOS/plugins/issues/21"
+      "issue": "https://github.com/HorneroOS/plugins/issues/23"
     },
     {
       "id": "hornero-pomodoro",
