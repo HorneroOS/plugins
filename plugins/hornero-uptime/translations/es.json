@@ -1,0 +1,16 @@
+{
+  "Booted at (derived)": "Arranque (derivado)",
+  "Idle time": "Tiempo inactivo",
+  "Idle time is summed across CPUs in /proc/uptime and can exceed wall-clock time. Boot time is derived as now minus uptime; PluginKit exposes no uptime or boot-time facade.": "El tiempo inactivo se suma entre todas las CPU en /proc/uptime y puede superar el tiempo real transcurrido. El momento de arranque se deriva como ahora menos el tiempo encendido; PluginKit no expone ninguna fachada de tiempo encendido ni de arranque.",
+  "Read /proc/uptime again": "Volver a leer /proc/uptime",
+  "Reading /proc/uptime...": "Leyendo /proc/uptime...",
+  "Refresh": "Actualizar",
+  "Refresh uptime": "Actualizar el tiempo encendido",
+  "Unavailable": "No disponible",
+  "Up %1": "Encendido hace %1",
+  "Up ...": "Encendido hace ...",
+  "Uptime": "Tiempo encendido",
+  "Uptime details": "Detalle del tiempo encendido",
+  "Uptime is unavailable: /proc/uptime could not be read or parsed. No value is fabricated.": "El tiempo encendido no está disponible: /proc/uptime no se pudo leer ni interpretar. No se inventa ningún valor.",
+  "Uptime unavailable": "Tiempo encendido no disponible"
+}

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedFrom": "4be1bbe8731d30aa908b3352214cab19031b3d3e",
+  "generatedFrom": "46d181af3c8f5d83aeca9ef233755f1f1de4048a",
   "plugins": [
     {
       "id": "hornero-agenda",
@@ -94,8 +94,8 @@
     {
       "id": "hornero-battery",
       "name": "Hornero Battery",
-      "version": "1.0.0",
-      "description": "Bar widget showing battery percentage and charging state from PluginKit Power. Shows 'No battery' on machines without a battery instead of a fabricated percentage.",
+      "version": "2.0.0",
+      "description": "Battery 2.0: contextual bar indicator over the PluginKit Power facade, hidden by default when no battery is reported, with a power-detail popover and dashboard card. Real no-battery/unknown states only.",
       "author": "HorneroOS contributors",
       "license": "MIT",
       "homepage": "https://github.com/HorneroOS/plugins",
@@ -104,11 +104,34 @@
       "capabilities": {
         "processCommands": [],
         "networkHosts": [],
-        "settings": {}
+        "settings": {
+          "showWhenNoBattery": {
+            "type": "boolean",
+            "default": false,
+            "description": "Keep a permanent 'No battery' bar item when Power reports no battery (the 1.x behaviour). Off, the 2.0 default, takes no bar space on desktops."
+          },
+          "showPercentage": {
+            "type": "boolean",
+            "default": true,
+            "description": "Show the battery percentage in the bar indicator (the 1.x behaviour)."
+          },
+          "showStateText": {
+            "type": "boolean",
+            "default": true,
+            "description": "Append the Power state (charging, fully-charged, discharging, pending-charge) when known (the 1.x behaviour)."
+          },
+          "lowBatteryPercent": {
+            "type": "integer",
+            "default": 20,
+            "minimum": 5,
+            "maximum": 50,
+            "description": "Charge percent at or below which, while on battery, a low-battery chip is shown. Adds a chip only; 1.x had no threshold."
+          }
+        }
       },
       "trust": "official",
       "path": "plugins/hornero-battery",
-      "sha256": "55537c2256c308c518741092ba6956b8bab50d51401632be9d17ee68a5ead6f8"
+      "sha256": "6c52647f70ac6cd8233502e9d0690ce958bd6fc4bf11ac58fc0e14b9454cd66c"
     },
     {
       "id": "hornero-calculator",
@@ -1041,8 +1064,8 @@
     {
       "id": "hornero-uptime",
       "name": "Hornero Uptime",
-      "version": "1.0.0",
-      "description": "Bar widget showing system uptime read from /proc/uptime with the declared cat command, refreshed every 60 seconds. Shows an error state when uptime is unreadable instead of a fabricated zero.",
+      "version": "2.0.0",
+      "description": "Uptime 2.0: bar indicator plus popover/dashboard session detail (uptime, boot time, idle time) from /proc/uptime with the declared cat command. No PluginKit uptime facade exists; error state instead of a fabricated zero.",
       "author": "HorneroOS contributors",
       "license": "MIT",
       "homepage": "https://github.com/HorneroOS/plugins",
@@ -1053,11 +1076,29 @@
           "cat"
         ],
         "networkHosts": [],
-        "settings": {}
+        "settings": {
+          "refreshSeconds": {
+            "type": "integer",
+            "default": 60,
+            "minimum": 15,
+            "maximum": 600,
+            "description": "Seconds between /proc/uptime reads (the 1.x fixed 60-second cadence by default)."
+          },
+          "showLabel": {
+            "type": "boolean",
+            "default": true,
+            "description": "Prefix the bar value with 'Up' (the 1.x behaviour); off shows the duration alone."
+          },
+          "showWhenUnavailable": {
+            "type": "boolean",
+            "default": true,
+            "description": "Keep the bar indicator visible, labelled unavailable, when /proc/uptime cannot be read (the 1.x behaviour); off hides it until a read succeeds."
+          }
+        }
       },
       "trust": "official",
       "path": "plugins/hornero-uptime",
-      "sha256": "7a8737f27940834da97b9f0171d529e5b9f32dc05b8a9f1fd2bdd99e9be9a049"
+      "sha256": "731b4956234de3ff5f6579e552b547e9ca2b4250e41d58cc8238d9bdd1ed71b3"
     },
     {
       "id": "hornero-volume",

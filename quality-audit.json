@@ -140,28 +140,28 @@
     {
       "id": "hornero-battery",
       "classification": "needs-upgrade",
-      "valueProposition": "Bar widget showing battery percentage and charging state from PluginKit Power. Shows 'No battery' on machines without a battery instead of a fabricated percentage.",
-      "nativeOverlap": "Overlaps the battery row in hornero-system-health; possible overlap with a native shell bar power indicator is unverified.",
+      "valueProposition": "Battery 2.0 (#31): contextual bar indicator over the shared PluginKit Power facade, hidden by default when no battery is reported (showWhenNoBattery opt-in restores the permanent 1.x item), with an activation popover and dashboard card showing charge, mapped state and on-battery/charging flags plus a low-battery chip. No time-remaining, health or profile data is invented because PluginKit Power exposes none.",
+      "nativeOverlap": "Overlaps the shell native bar battery indicator and the battery row in hornero-system-health on instantaneous percentage/state; distinct extension value is the contextual (hidden-on-desktops) bar presence, the typed low-battery threshold and the dashboard card form.",
       "dimensions": {
         "tooltips": {
-          "status": "na",
-          "note": "No interactive controls in the entrypoint, so tooltips do not apply (static probe)."
+          "status": "pass",
+          "note": "Indicator carries PluginKit tooltipText plus a UiTooltip on the same target (host-owned, static probe); it is the only interactive control."
         },
         "accessibility": {
-          "status": "na",
-          "note": "No interactive controls in the entrypoint; static text only (static probe)."
+          "status": "pass",
+          "note": "UiButton/UiPopover accessibleName, UiProgress accessibleName and Accessible.name on the dashboard card; activation is a real button, no mouse-only MouseArea (static probe). Live AT-SPI behaviour is not verified."
         },
         "translation": {
-          "status": "fail",
-          "note": "User-visible string literals are not wrapped in qsTr/qsTrId (static probe)."
+          "status": "pass",
+          "note": "All user-visible literals go through PluginKit Translations; es (Argentine Spanish) catalog declared in the manifest and checked complete for literal tr() strings (static probe). Power.stateText machine values are mapped to localized labels in QML."
         },
         "settings": {
-          "status": "na",
-          "note": "No settings declared in the manifest; none are recorded as needed yet. Revisit if behaviour becomes user-configurable."
+          "status": "pass",
+          "note": "Typed showWhenNoBattery (boolean, default false -- the deliberate #31 change; true restores the permanent 1.x item), showPercentage/showStateText (default true, the 1.x label) and lowBatteryPercent (integer, default 20, additive chip) settings declared in the manifest and read via PluginKit Settings; the plugin stored no settings before 2.0 (static probe)."
         },
         "themeTokens": {
           "status": "pass",
-          "note": "Visible colours come from PluginKit Theme tokens with no hard-coded chrome colours (static probe)."
+          "note": "Visible colours come from PluginKit Ui primitives/Theme tokens with no hard-coded chrome colours (static probe)."
         },
         "screenshots": {
           "status": "fail",
@@ -169,18 +169,18 @@
         },
         "orientation": {
           "status": "unverified",
-          "note": "Orientation/responsiveness across bar, dashboard and desktop placements has not had a graphical review; static checks cannot verify it."
+          "note": "Host context (hostOrientation/hostCompact/hostAvailableWidth) drives UiStack and compact label-dropping on both surfaces, but orientation across bar edges and dashboard has not had a graphical review."
         },
         "loadingErrorStates": {
           "status": "unverified",
-          "note": "Static probe finds error/empty-state text in the QML, but loading and error presentation have not been verified graphically."
+          "note": "UiState empty placeholder covers the no-battery-reported state in popover and card and unknown stateText reads as Unknown; presentation has not been verified graphically in a live shell."
         },
         "performance": {
           "status": "unverified",
-          "note": "Not profiled. Static cadence only: timer intervals (ms)=none, process polling=no; runtime cost is unverified."
+          "note": "Not profiled. Static cadence only: no timers, processes or polling; Power is event-pushed by UPower and both surfaces hold a Subscription power lease; runtime cost is unverified."
         }
       },
-      "issue": "https://github.com/HorneroOS/plugins/issues/21"
+      "issue": "https://github.com/HorneroOS/plugins/issues/31"
     },
     {
       "id": "hornero-calculator",
@@ -1310,28 +1310,28 @@
     {
       "id": "hornero-uptime",
       "classification": "needs-upgrade",
-      "valueProposition": "Bar widget showing system uptime read from /proc/uptime with the declared cat command, refreshed every 60 seconds. Shows an error state when uptime is unreadable instead of a fabricated zero.",
-      "nativeOverlap": "Overlaps hornero-system-health/system-monitor territory; distinct value is a compact bar uptime from /proc/uptime.",
+      "valueProposition": "Uptime 2.0 (#31): compact bar session-length indicator with an activation popover and dashboard card adding /proc/uptime idle time, the derived boot time (labelled derived) and a user Refresh, over the declared cat read kept because PluginKit exposes no uptime/boot facade member. Unreadable input is a real unavailable state, never a fabricated zero.",
+      "nativeOverlap": "Overlaps hornero-system-health/system-monitor territory on session facts; distinct value is the compact bar uptime plus idle-time and derived-boot detail from /proc/uptime, which no PluginKit facade exposes.",
       "dimensions": {
         "tooltips": {
-          "status": "na",
-          "note": "No interactive controls in the entrypoint, so tooltips do not apply (static probe)."
+          "status": "pass",
+          "note": "Indicator and Refresh controls carry PluginKit tooltipText plus a UiTooltip on the bar indicator (host-owned, static probe)."
         },
         "accessibility": {
-          "status": "na",
-          "note": "No interactive controls in the entrypoint; static text only (static probe)."
+          "status": "pass",
+          "note": "UiButton/UiPopover accessibleName and Accessible.name on the dashboard card; activation and refresh are real buttons, no mouse-only MouseArea (static probe). Live AT-SPI behaviour is not verified."
         },
         "translation": {
-          "status": "fail",
-          "note": "User-visible string literals are not wrapped in qsTr/qsTrId (static probe)."
+          "status": "pass",
+          "note": "All user-visible literals go through PluginKit Translations; es (Argentine Spanish) catalog declared in the manifest and checked complete for literal tr() strings (static probe). Duration unit letters (d/h/m) keep the 1.x format."
         },
         "settings": {
-          "status": "na",
-          "note": "No settings declared in the manifest; none are recorded as needed yet. Revisit if behaviour becomes user-configurable."
+          "status": "pass",
+          "note": "Typed refreshSeconds (integer, default 60, the 1.x cadence), showLabel and showWhenUnavailable (boolean, default true, the 1.x bar behaviour) settings declared in the manifest and read via PluginKit Settings; the plugin stored no settings before 2.0 (static probe)."
         },
         "themeTokens": {
           "status": "pass",
-          "note": "Visible colours come from PluginKit Theme tokens with no hard-coded chrome colours (static probe)."
+          "note": "Visible colours come from PluginKit Ui primitives/Theme tokens with no hard-coded chrome colours (static probe)."
         },
         "screenshots": {
           "status": "fail",
@@ -1339,18 +1339,18 @@
         },
         "orientation": {
           "status": "unverified",
-          "note": "Orientation/responsiveness across bar, dashboard and desktop placements has not had a graphical review; static checks cannot verify it."
+          "note": "Host context (hostOrientation/hostCompact/hostAvailableWidth) drives UiStack and compact label-dropping on both surfaces, but orientation across bar edges and dashboard has not had a graphical review."
         },
         "loadingErrorStates": {
           "status": "unverified",
-          "note": "Static probe finds error/empty-state text in the QML, but loading and error presentation have not been verified graphically."
+          "note": "UiState loading covers the pre-first-read state and UiState error covers unreadable/unparsable /proc/uptime in popover and card; presentation has not been verified graphically in a live shell."
         },
         "performance": {
           "status": "unverified",
-          "note": "Not profiled. Static cadence only: timer intervals (ms)=['60000'], process polling=yes; runtime cost is unverified."
+          "note": "Not profiled. Static cadence only: one declared cat /proc/uptime process per surface on load, every refreshSeconds (default 60s) and on user activation/Refresh; bar and dashboard Loaders read separately; runtime cost is unverified."
         }
       },
-      "issue": "https://github.com/HorneroOS/plugins/issues/21"
+      "issue": "https://github.com/HorneroOS/plugins/issues/31"
     },
     {
       "id": "hornero-volume",

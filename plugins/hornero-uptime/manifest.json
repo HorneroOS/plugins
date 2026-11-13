@@ -1,14 +1,73 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 2,
   "id": "hornero-uptime",
   "name": "Hornero Uptime",
-  "version": "1.0.0",
-  "description": "Bar widget showing system uptime read from /proc/uptime with the declared cat command, refreshed every 60 seconds. Shows an error state when uptime is unreadable instead of a fabricated zero.",
+  "version": "2.0.0",
+  "description": "Uptime 2.0: bar indicator plus popover/dashboard session detail (uptime, boot time, idle time) from /proc/uptime with the declared cat command. No PluginKit uptime facade exists; error state instead of a fabricated zero.",
   "author": "HorneroOS contributors",
   "license": "MIT",
   "homepage": "https://github.com/HorneroOS/plugins",
   "entrypoint": "Main.qml",
-  "files": ["Main.qml", "README.md", "LICENSE"],
-  "capabilities": {"processCommands": ["cat"], "networkHosts": [], "settings": {}},
-  "placement": "bar"
+  "placement": "bar",
+  "surfaces": {
+    "dashboard": {
+      "entrypoint": "Dashboard.qml",
+      "size": "compact",
+      "category": "System"
+    }
+  },
+  "translations": {
+    "sourceLocale": "en",
+    "locales": [
+      "es"
+    ],
+    "directory": "translations"
+  },
+  "marketplace": {
+    "compatibility": {
+      "minShellVersion": "1.0.0"
+    },
+    "changelog": [
+      {
+        "version": "2.0.0",
+        "notes": "Battery & Uptime 2.0 (#31): activation popover and dashboard card with uptime, derived boot time and /proc/uptime idle time, refresh on activation, typed refresh setting (60s 1.x default), host-context layout and Spanish catalog. PluginKit exposes no uptime member, so the declared cat /proc/uptime read is kept."
+      },
+      {
+        "version": "1.0.0",
+        "notes": "Bar widget showing system uptime from /proc/uptime every 60 seconds; error state when unreadable."
+      }
+    ]
+  },
+  "files": [
+    "Main.qml",
+    "Dashboard.qml",
+    "README.md",
+    "LICENSE",
+    "translations/es.json"
+  ],
+  "capabilities": {
+    "processCommands": [
+      "cat"
+    ],
+    "networkHosts": [],
+    "settings": {
+      "refreshSeconds": {
+        "type": "integer",
+        "default": 60,
+        "minimum": 15,
+        "maximum": 600,
+        "description": "Seconds between /proc/uptime reads (the 1.x fixed 60-second cadence by default)."
+      },
+      "showLabel": {
+        "type": "boolean",
+        "default": true,
+        "description": "Prefix the bar value with 'Up' (the 1.x behaviour); off shows the duration alone."
+      },
+      "showWhenUnavailable": {
+        "type": "boolean",
+        "default": true,
+        "description": "Keep the bar indicator visible, labelled unavailable, when /proc/uptime cannot be read (the 1.x behaviour); off hides it until a read succeeds."
+      }
+    }
+  }
 }
