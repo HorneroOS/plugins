@@ -27,6 +27,32 @@ One directory per plugin under `plugins/<id>/`:
 - Screenshots must be real captures of the running shell, labelled
   with the shell version. Generated art must be labelled artwork.
 
+## Provenance (`inventory.yaml`)
+
+Every official plugin and every upstream capability studied for
+inspiration carries a provenance entry in `inventory.yaml`
+(HorneroOS/plugins#33), enforced by `scripts/validate_plugins.py`:
+
+- `origin` — `{project, url, license}`: the verified upstream link
+  (https) and its license.
+- `classification` — `inspiration`, `adapt-idea`, or `research-only`
+  for researched upstream capabilities; `implemented` or
+  `hornero-original` for first-party plugins under `plugins/`.
+- `license_status` — `verified` only when the license was observed
+  at the upstream source, with `license_evidence` recording where:
+  the https URL of the upstream license file, or, for first-party
+  plugins, `plugins/<id>/LICENSE` (the validator probes that file
+  and checks it against the manifest license). Anything not
+  verified must read `license: UNVERIFIED` with
+  `license_status: unverified` — never claim a license silently.
+- `inspiration_notes` — what was taken as an idea and what was not
+  (no upstream code is copied; GPL upstreams are idea-only).
+
+A new official plugin must add its implemented entry in the same
+change; the validator fails without it. Credit upstream inspiration
+with a separate researched entry, not by pointing a first-party
+entry at the upstream repository.
+
 ## Workflow
 
 ```sh

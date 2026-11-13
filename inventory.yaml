@@ -3,13 +3,28 @@
 # inspiration (see HorneroOS/docs competitive-capability-matrix.md);
 # no upstream code is copied. Implemented entries are plugins in
 # this repository under plugins/.
-schemaVersion: 1
+#
+# Provenance (HorneroOS/plugins#33): every entry carries the
+# upstream link (origin.url), classification, license status and
+# inspiration notes, enforced by scripts/validate_plugins.py.
+# license_status verified requires license_evidence: for upstream
+# entries the https URL of the license file a maintainer observed
+# (recorded 2026-11-13 for the entries present at schema 2), and
+# for first-party entries the plugin's own LICENSE path, which the
+# validator probes together with the manifest license. Anything not
+# verified from the upstream source must read license: UNVERIFIED
+# with license_status: unverified; never claim a license silently.
+
+schemaVersion: 2
 capabilities:
   - id: omarchy-atomic-theme-swap
     name: Atomic theme swap with generation token
     category: theming
     origin: {project: Omarchy, url: "https://github.com/omacom/omarchy", license: MIT}
     classification: adapt-idea
+    license_status: verified
+    license_evidence: "https://github.com/omacom/omarchy/blob/quattro/LICENSE"
+    inspiration_notes: "Studied Omarchy's atomic theme application as an idea for Hornero's validated theme core; no upstream code copied."
     hornero_equivalent: "Theme system (validated core); staged atomic swap not yet adopted"
     status: researched
   - id: omarchy-migrations-snapshots
@@ -17,48 +32,69 @@ capabilities:
     category: updates
     origin: {project: Omarchy, url: "https://github.com/omacom/omarchy", license: MIT}
     classification: adapt-idea
+    license_status: verified
+    license_evidence: "https://github.com/omacom/omarchy/blob/quattro/LICENSE"
+    inspiration_notes: "Studied Omarchy's migration-marker and snapshot-before-update discipline as an idea; Hornero has no snapshot story yet."
     hornero_equivalent: "horneroctl updates; no OS snapshot/rollback story yet"
     status: researched
   - id: dms-unified-shell
     name: Unified shell (bar, dashboard, launcher in one shell)
     category: shell
-    origin: {project: DankMaterialShell, url: "https://github.com/AvengeMedia/DankMaterialShell", license: MIT}
+    origin: {project: DankMaterialShell, url: "https://github.com/duxlabs-dev/dux-shell", license: MIT}
     classification: inspiration
+    license_status: verified
+    license_evidence: "https://github.com/duxlabs-dev/dux-shell/blob/master/LICENSE"
+    inspiration_notes: "DankMaterialShell (repository moved to duxlabs-dev/dux-shell) inspired the one-shell bar/dashboard/launcher shape; Hornero Shell is an independent implementation."
     hornero_equivalent: "Hornero Shell (bar, dashboard, desktop placements)"
     status: researched
   - id: dms-plugin-widgets
     name: In-shell plugin/widget loader with manifest discipline
     category: extensions
-    origin: {project: DankMaterialShell, url: "https://github.com/AvengeMedia/DankMaterialShell", license: MIT}
+    origin: {project: DankMaterialShell, url: "https://github.com/duxlabs-dev/dux-shell", license: MIT}
     classification: adapt-idea
+    license_status: verified
+    license_evidence: "https://github.com/duxlabs-dev/dux-shell/blob/master/LICENSE"
+    inspiration_notes: "DankMaterialShell's manifest-disciplined plugin widgets (repository moved to duxlabs-dev/dux-shell) informed PluginKit's manifest contract; no code copied."
     hornero_equivalent: "Hornero PluginKit runtime + this plugins catalogue"
     status: researched
   - id: caelestia-shell-launcher
     name: Integrated shell with launcher and workspaces overview
     category: shell
-    origin: {project: Caelestia, url: "https://github.com/caelestia-dots/shell", license: UNVERIFIED}
+    origin: {project: Caelestia, url: "https://github.com/caelestia-dots/shell", license: GPL-3.0}
     classification: inspiration
+    license_status: verified
+    license_evidence: "https://github.com/caelestia-dots/shell/blob/main/LICENSE"
+    inspiration_notes: "Caelestia's integrated launcher/workspaces shell was visual inspiration only; GPL-3.0 upstream, so no code may be copied into this MIT catalogue."
     hornero_equivalent: "Hornero Shell launcher and dashboard"
     status: researched
   - id: caelestia-dynamic-scheme
     name: Dynamic colour scheme generated from wallpaper
     category: theming
-    origin: {project: Caelestia, url: "https://github.com/caelestia-dots/shell", license: UNVERIFIED}
+    origin: {project: Caelestia, url: "https://github.com/caelestia-dots/shell", license: GPL-3.0}
     classification: adapt-idea
+    license_status: verified
+    license_evidence: "https://github.com/caelestia-dots/shell/blob/main/LICENSE"
+    inspiration_notes: "Caelestia's wallpaper-derived colour scheme inspired Hornero's wallpaper-bound theme tokens; idea only, GPL-3.0 code not copied."
     hornero_equivalent: "Wallpaper-bound theme tokens (partial)"
     status: researched
   - id: noctalia-plugin-api
     name: Plugin API with injected pluginApi and entry points
     category: extensions
-    origin: {project: Noctalia, url: "https://github.com/noctalia-dev/noctalia", license: UNVERIFIED}
+    origin: {project: Noctalia, url: "https://github.com/noctalia-dev/noctalia", license: MIT}
     classification: adapt-idea
+    license_status: verified
+    license_evidence: "https://github.com/noctalia-dev/noctalia/blob/main/LICENSE"
+    inspiration_notes: "Noctalia's injected pluginApi and entry-point model informed the Hornero.PluginKit public QML module design; independently implemented."
     hornero_equivalent: "Hornero.PluginKit public QML module"
     status: researched
   - id: noctalia-configurable-widgets
     name: Configurable panels and widget placement
     category: shell
-    origin: {project: Noctalia, url: "https://github.com/noctalia-dev/noctalia", license: UNVERIFIED}
+    origin: {project: Noctalia, url: "https://github.com/noctalia-dev/noctalia", license: MIT}
     classification: inspiration
+    license_status: verified
+    license_evidence: "https://github.com/noctalia-dev/noctalia/blob/main/LICENSE"
+    inspiration_notes: "Noctalia's configurable widget placement inspired user-chosen manifest placement in Control Center; no upstream code copied."
     hornero_equivalent: "Manifest placement (bar/dashboard/desktop) chosen by users in Control Center"
     status: researched
   - id: hyprland-core-plugins
@@ -66,13 +102,19 @@ capabilities:
     category: extensions
     origin: {project: Hyprland, url: "https://github.com/hyprwm/Hyprland", license: BSD-3-Clause}
     classification: inspiration
+    license_status: verified
+    license_evidence: "https://github.com/hyprwm/Hyprland/blob/main/LICENSE"
+    inspiration_notes: "Hyprland's compositor plugin loading (hyprpm) was studied and deliberately kept out of scope; Hornero plugins are shell-level only."
     hornero_equivalent: "none (shell-level plugins only; compositor plugins out of scope)"
     status: researched
   - id: hyprland-plugin-ecosystem
     name: Community plugin repository ecosystem
     category: extensions
-    origin: {project: Hyprland community plugins, url: "https://github.com/hyprwm/hyprland-plugins", license: UNVERIFIED}
+    origin: {project: Hyprland community plugins, url: "https://github.com/hyprwm/hyprland-plugins", license: BSD-3-Clause}
     classification: inspiration
+    license_status: verified
+    license_evidence: "https://github.com/hyprwm/hyprland-plugins/blob/main/LICENSE"
+    inspiration_notes: "The official hyprland-plugins repository (BSD-3-Clause; third-party plugin licenses vary) inspired this repo's unreviewed community intake; no code copied."
     hornero_equivalent: "Community registry intake in this repository (unreviewed, not catalogued)"
     status: researched
   - id: waybar-builtin-modules
@@ -80,6 +122,9 @@ capabilities:
     category: widgets
     origin: {project: Waybar, url: "https://github.com/Alexays/Waybar", license: MIT}
     classification: adapt-idea
+    license_status: verified
+    license_evidence: "https://github.com/Alexays/Waybar/blob/master/LICENSE"
+    inspiration_notes: "Waybar's built-in cpu/memory/network/battery modules are the capability reference reimplemented independently as hornero-system-monitor and hornero-network-monitor."
     hornero_equivalent: "hornero-system-monitor and hornero-network-monitor plugins"
     status: researched
   - id: waybar-custom-modules
@@ -87,34 +132,48 @@ capabilities:
     category: widgets
     origin: {project: Waybar, url: "https://github.com/Alexays/Waybar", license: MIT}
     classification: adapt-idea
+    license_status: verified
+    license_evidence: "https://github.com/Alexays/Waybar/blob/master/LICENSE"
+    inspiration_notes: "Waybar custom modules inspired declared processCommands, tightened in Hornero to reviewed exact executable basenames; no code copied."
     hornero_equivalent: "Declared processCommands in plugin manifests (review metadata, typed horneroctl contracts preferred)"
     status: researched
   - id: astal-service-libraries
     name: Astal service libraries (battery, network, mpris, hyprland)
     category: extensions
-    origin: {project: Astal, url: "https://github.com/Aylur/astal", license: UNVERIFIED}
+    origin: {project: Astal, url: "https://github.com/Aylur/astal", license: LGPL-2.1}
     classification: adapt-idea
+    license_status: verified
+    license_evidence: "https://github.com/Aylur/astal/blob/main/LICENSE"
+    inspiration_notes: "Astal's battery/network/mpris service libraries informed PluginKit's System/Network/Media facades; LGPL-2.1 upstream, independently implemented over Hornero shell services."
     hornero_equivalent: "PluginKit System/Network/Media/Time/Weather facades over shell services"
     status: researched
   - id: ags-widget-framework
     name: AGS widget framework for custom shells
     category: shell
-    origin: {project: AGS, url: "https://github.com/Aylur/ags", license: UNVERIFIED}
+    origin: {project: AGS, url: "https://github.com/Aylur/ags", license: GPL-3.0}
     classification: inspiration
+    license_status: verified
+    license_evidence: "https://github.com/Aylur/ags/blob/main/LICENSE"
+    inspiration_notes: "AGS's widget-framework approach was shell-architecture inspiration only; GPL-3.0 upstream, Hornero Shell is Quickshell-based and independent."
     hornero_equivalent: "Quickshell-based Hornero Shell with PluginKit"
     status: researched
   - id: gnome-reviewed-store
     name: Reviewed extension store with human review (extensions.gnome.org)
     category: extensions
-    origin: {project: GNOME Shell, url: "https://extensions.gnome.org", license: "GPL-2.0-or-later (shell); extension licenses vary"}
+    origin: {project: GNOME Shell, url: "https://extensions.gnome.org", license: UNVERIFIED}
     classification: adapt-idea
+    license_status: unverified
+    inspiration_notes: "extensions.gnome.org's human-reviewed store model informed this catalogue's official trust label; store terms and per-extension licenses vary and were not verified from source, so no license is claimed."
     hornero_equivalent: "Official catalogue in this repository plus signed community registry design"
     status: researched
   - id: gnome-extension-lifecycle
     name: Extension lifecycle with shell-version compatibility checks
     category: extensions
-    origin: {project: GNOME Shell, url: "https://gitlab.gnome.org/GNOME/gnome-shell", license: GPL-2.0-or-later}
+    origin: {project: GNOME Shell, url: "https://gitlab.gnome.org/GNOME/gnome-shell", license: GPL-2.0}
     classification: adapt-idea
+    license_status: verified
+    license_evidence: "https://gitlab.gnome.org/GNOME/gnome-shell/-/raw/main/COPYING"
+    inspiration_notes: "GNOME Shell's extension lifecycle and shell-version compatibility checks informed horneroctl plugin enable/disable revalidation; upstream COPYING ships the GPL version 2 text (per-file or-later grants not audited), and no code was copied."
     hornero_equivalent: "horneroctl plugin enable/disable with revalidation on enable"
     status: researched
   - id: kde-store
@@ -122,6 +181,8 @@ capabilities:
     category: extensions
     origin: {project: KDE Store, url: "https://store.kde.org", license: UNVERIFIED}
     classification: research-only
+    license_status: unverified
+    inspiration_notes: "KDE Store / Pling distribution was surveyed as a store model only; store terms and review process were not verified from source (site refused automated fetch), so no license is claimed."
     hornero_equivalent: "none (HorneroOS/plugins catalogue is git-based)"
     status: researched
   - id: kde-kwin-effects-store
@@ -129,20 +190,28 @@ capabilities:
     category: extensions
     origin: {project: KDE KWin, url: "https://invent.kde.org/plasma/kwin", license: UNVERIFIED}
     classification: research-only
+    license_status: unverified
+    inspiration_notes: "KWin effects/scripts distribution was surveyed only; KWin ships multiple per-file licenses under LICENSES/ with no single project license, so no single license is claimed."
     hornero_equivalent: "none"
     status: researched
   - id: wallpaper-templating-matugen
     name: Material You colour generation from wallpaper (matugen)
     category: theming
-    origin: {project: matugen, url: "https://github.com/InioX/matugen", license: UNVERIFIED}
+    origin: {project: matugen, url: "https://github.com/InioX/matugen", license: GPL-2.0}
     classification: adapt-idea
+    license_status: verified
+    license_evidence: "https://github.com/InioX/matugen/blob/main/LICENSE"
+    inspiration_notes: "matugen's Material You palette generation inspired Hornero's wallpaper analysis and theme token binding; GPL-2.0 upstream, idea only, no code copied."
     hornero_equivalent: "Wallpaper analysis and theme token binding in the shell (partial)"
     status: researched
   - id: wallpaper-templating-app-configs
     name: Rendering generated palettes into per-app config templates
     category: theming
-    origin: {project: matugen templates, url: "https://github.com/InioX/matugen", license: UNVERIFIED}
+    origin: {project: matugen templates, url: "https://github.com/InioX/matugen", license: GPL-2.0}
     classification: adapt-idea
+    license_status: verified
+    license_evidence: "https://github.com/InioX/matugen/blob/main/LICENSE"
+    inspiration_notes: "matugen's per-app template rendering informed Hornero's GTK/icon/wallpaper binding on theme apply; GPL-2.0 upstream, independently implemented."
     hornero_equivalent: "GTK/icon/wallpaper binding on theme apply (partial)"
     status: researched
   - id: hornero-ai-usage
@@ -150,6 +219,9 @@ capabilities:
     category: dashboard
     origin: {project: HorneroOS/plugins, url: "https://github.com/HorneroOS/plugins", license: MIT}
     classification: implemented
+    license_status: verified
+    license_evidence: plugins/hornero-ai-usage/LICENSE
+    inspiration_notes: "First-party HorneroOS plugin written for this catalogue; no upstream code is copied. Upstream ideas, where any, are credited in the researched entries above."
     hornero_equivalent: "plugins/hornero-ai-usage"
     status: implemented
   - id: hornero-system-monitor
@@ -157,6 +229,9 @@ capabilities:
     category: dashboard
     origin: {project: HorneroOS/plugins, url: "https://github.com/HorneroOS/plugins", license: MIT}
     classification: implemented
+    license_status: verified
+    license_evidence: plugins/hornero-system-monitor/LICENSE
+    inspiration_notes: "First-party HorneroOS plugin written for this catalogue; no upstream code is copied. Upstream ideas, where any, are credited in the researched entries above."
     hornero_equivalent: "plugins/hornero-system-monitor"
     status: implemented
   - id: hornero-network-monitor
@@ -164,6 +239,9 @@ capabilities:
     category: dashboard
     origin: {project: HorneroOS/plugins, url: "https://github.com/HorneroOS/plugins", license: MIT}
     classification: implemented
+    license_status: verified
+    license_evidence: plugins/hornero-network-monitor/LICENSE
+    inspiration_notes: "First-party HorneroOS plugin written for this catalogue; no upstream code is copied. Upstream ideas, where any, are credited in the researched entries above."
     hornero_equivalent: "plugins/hornero-network-monitor"
     status: implemented
   - id: hornero-now-playing
@@ -171,6 +249,9 @@ capabilities:
     category: bar
     origin: {project: HorneroOS/plugins, url: "https://github.com/HorneroOS/plugins", license: MIT}
     classification: implemented
+    license_status: verified
+    license_evidence: plugins/hornero-now-playing/LICENSE
+    inspiration_notes: "First-party HorneroOS plugin written for this catalogue; no upstream code is copied. Upstream ideas, where any, are credited in the researched entries above."
     hornero_equivalent: "plugins/hornero-now-playing"
     status: implemented
   - id: hornero-weather
@@ -178,6 +259,9 @@ capabilities:
     category: dashboard
     origin: {project: HorneroOS/plugins, url: "https://github.com/HorneroOS/plugins", license: MIT}
     classification: implemented
+    license_status: verified
+    license_evidence: plugins/hornero-weather/LICENSE
+    inspiration_notes: "First-party HorneroOS plugin written for this catalogue; no upstream code is copied. Upstream ideas, where any, are credited in the researched entries above."
     hornero_equivalent: "plugins/hornero-weather"
     status: implemented
   - id: hornero-calendar
@@ -185,6 +269,9 @@ capabilities:
     category: desktop
     origin: {project: HorneroOS/plugins, url: "https://github.com/HorneroOS/plugins", license: MIT}
     classification: implemented
+    license_status: verified
+    license_evidence: plugins/hornero-calendar/LICENSE
+    inspiration_notes: "First-party HorneroOS plugin written for this catalogue; no upstream code is copied. Upstream ideas, where any, are credited in the researched entries above."
     hornero_equivalent: "plugins/hornero-calendar"
     status: implemented
   - id: hornero-pomodoro
@@ -192,6 +279,9 @@ capabilities:
     category: productivity
     origin: {project: HorneroOS/plugins, url: "https://github.com/HorneroOS/plugins", license: MIT}
     classification: implemented
+    license_status: verified
+    license_evidence: plugins/hornero-pomodoro/LICENSE
+    inspiration_notes: "First-party HorneroOS plugin written for this catalogue; no upstream code is copied. Upstream ideas, where any, are credited in the researched entries above."
     hornero_equivalent: "plugins/hornero-pomodoro"
     status: implemented
   - id: hornero-dual-clock
@@ -199,6 +289,9 @@ capabilities:
     category: utilities
     origin: {project: HorneroOS/plugins, url: "https://github.com/HorneroOS/plugins", license: MIT}
     classification: implemented
+    license_status: verified
+    license_evidence: plugins/hornero-dual-clock/LICENSE
+    inspiration_notes: "First-party HorneroOS plugin written for this catalogue; no upstream code is copied. Upstream ideas, where any, are credited in the researched entries above."
     hornero_equivalent: "plugins/hornero-dual-clock"
     status: implemented
   - id: hornero-focus-card
@@ -206,6 +299,9 @@ capabilities:
     category: utilities
     origin: {project: HorneroOS/plugins, url: "https://github.com/HorneroOS/plugins", license: MIT}
     classification: implemented
+    license_status: verified
+    license_evidence: plugins/hornero-focus-card/LICENSE
+    inspiration_notes: "First-party HorneroOS plugin written for this catalogue; no upstream code is copied. Upstream ideas, where any, are credited in the researched entries above."
     hornero_equivalent: "plugins/hornero-focus-card"
     status: implemented
   - id: hornero-quiet-notes
@@ -213,6 +309,9 @@ capabilities:
     category: productivity
     origin: {project: HorneroOS/plugins, url: "https://github.com/HorneroOS/plugins", license: MIT}
     classification: implemented
+    license_status: verified
+    license_evidence: plugins/hornero-quiet-notes/LICENSE
+    inspiration_notes: "First-party HorneroOS plugin written for this catalogue; no upstream code is copied. Upstream ideas, where any, are credited in the researched entries above."
     hornero_equivalent: "plugins/hornero-quiet-notes"
     status: implemented
   - id: hornero-world-clock
@@ -220,6 +319,9 @@ capabilities:
     category: dashboard
     origin: {project: HorneroOS, url: "https://github.com/HorneroOS/plugins", license: MIT}
     classification: hornero-original
+    license_status: verified
+    license_evidence: plugins/hornero-world-clock/LICENSE
+    inspiration_notes: "First-party HorneroOS plugin written for this catalogue; no upstream code is copied. Upstream ideas, where any, are credited in the researched entries above."
     hornero_equivalent: "plugins/hornero-world-clock"
     status: implemented
   - id: hornero-disk-usage
@@ -227,6 +329,9 @@ capabilities:
     category: dashboard
     origin: {project: HorneroOS, url: "https://github.com/HorneroOS/plugins", license: MIT}
     classification: hornero-original
+    license_status: verified
+    license_evidence: plugins/hornero-disk-usage/LICENSE
+    inspiration_notes: "First-party HorneroOS plugin written for this catalogue; no upstream code is copied. Upstream ideas, where any, are credited in the researched entries above."
     hornero_equivalent: "plugins/hornero-disk-usage"
     status: implemented
   - id: hornero-stopwatch
@@ -234,6 +339,9 @@ capabilities:
     category: bar
     origin: {project: HorneroOS, url: "https://github.com/HorneroOS/plugins", license: MIT}
     classification: hornero-original
+    license_status: verified
+    license_evidence: plugins/hornero-stopwatch/LICENSE
+    inspiration_notes: "First-party HorneroOS plugin written for this catalogue; no upstream code is copied. Upstream ideas, where any, are credited in the researched entries above."
     hornero_equivalent: "plugins/hornero-stopwatch"
     status: implemented
   - id: hornero-countdown
@@ -241,6 +349,9 @@ capabilities:
     category: bar
     origin: {project: HorneroOS, url: "https://github.com/HorneroOS/plugins", license: MIT}
     classification: hornero-original
+    license_status: verified
+    license_evidence: plugins/hornero-countdown/LICENSE
+    inspiration_notes: "First-party HorneroOS plugin written for this catalogue; no upstream code is copied. Upstream ideas, where any, are credited in the researched entries above."
     hornero_equivalent: "plugins/hornero-countdown"
     status: implemented
   - id: hornero-uptime
@@ -248,6 +359,9 @@ capabilities:
     category: bar
     origin: {project: HorneroOS, url: "https://github.com/HorneroOS/plugins", license: MIT}
     classification: hornero-original
+    license_status: verified
+    license_evidence: plugins/hornero-uptime/LICENSE
+    inspiration_notes: "First-party HorneroOS plugin written for this catalogue; no upstream code is copied. Upstream ideas, where any, are credited in the researched entries above."
     hornero_equivalent: "plugins/hornero-uptime"
     status: implemented
   - id: hornero-battery
@@ -255,6 +369,9 @@ capabilities:
     category: bar
     origin: {project: HorneroOS, url: "https://github.com/HorneroOS/plugins", license: MIT}
     classification: hornero-original
+    license_status: verified
+    license_evidence: plugins/hornero-battery/LICENSE
+    inspiration_notes: "First-party HorneroOS plugin written for this catalogue; no upstream code is copied. Upstream ideas, where any, are credited in the researched entries above."
     hornero_equivalent: "plugins/hornero-battery"
     status: implemented
   - id: hornero-unit-converter
@@ -262,6 +379,9 @@ capabilities:
     category: dashboard
     origin: {project: HorneroOS, url: "https://github.com/HorneroOS/plugins", license: MIT}
     classification: hornero-original
+    license_status: verified
+    license_evidence: plugins/hornero-unit-converter/LICENSE
+    inspiration_notes: "First-party HorneroOS plugin written for this catalogue; no upstream code is copied. Upstream ideas, where any, are credited in the researched entries above."
     hornero_equivalent: "plugins/hornero-unit-converter"
     status: implemented
   - id: hornero-moon-phase
@@ -269,6 +389,9 @@ capabilities:
     category: desktop
     origin: {project: HorneroOS, url: "https://github.com/HorneroOS/plugins", license: MIT}
     classification: hornero-original
+    license_status: verified
+    license_evidence: plugins/hornero-moon-phase/LICENSE
+    inspiration_notes: "First-party HorneroOS plugin written for this catalogue; no upstream code is copied. Upstream ideas, where any, are credited in the researched entries above."
     hornero_equivalent: "plugins/hornero-moon-phase"
     status: implemented
   - id: hornero-studio-audio
@@ -276,6 +399,9 @@ capabilities:
     category: bar
     origin: {project: HorneroOS, url: "https://github.com/HorneroOS/plugins", license: MIT}
     classification: hornero-original
+    license_status: verified
+    license_evidence: plugins/hornero-studio-audio/LICENSE
+    inspiration_notes: "First-party HorneroOS plugin written for this catalogue; no upstream code is copied. Upstream ideas, where any, are credited in the researched entries above."
     hornero_equivalent: "plugins/hornero-studio-audio"
     status: implemented
   - id: hornero-studio-jobs
@@ -283,6 +409,9 @@ capabilities:
     category: dashboard
     origin: {project: HorneroOS, url: "https://github.com/HorneroOS/plugins", license: MIT}
     classification: hornero-original
+    license_status: verified
+    license_evidence: plugins/hornero-studio-jobs/LICENSE
+    inspiration_notes: "First-party HorneroOS plugin written for this catalogue; no upstream code is copied. Upstream ideas, where any, are credited in the researched entries above."
     hornero_equivalent: "plugins/hornero-studio-jobs"
     status: implemented
   - id: hornero-volume
@@ -290,6 +419,9 @@ capabilities:
     category: bar
     origin: {project: HorneroOS, url: "https://github.com/HorneroOS/plugins", license: MIT}
     classification: hornero-original
+    license_status: verified
+    license_evidence: plugins/hornero-volume/LICENSE
+    inspiration_notes: "First-party HorneroOS plugin written for this catalogue; no upstream code is copied. Upstream ideas, where any, are credited in the researched entries above."
     hornero_equivalent: "plugins/hornero-volume"
     status: implemented
   - id: hornero-microphone
@@ -297,6 +429,9 @@ capabilities:
     category: bar
     origin: {project: HorneroOS, url: "https://github.com/HorneroOS/plugins", license: MIT}
     classification: hornero-original
+    license_status: verified
+    license_evidence: plugins/hornero-microphone/LICENSE
+    inspiration_notes: "First-party HorneroOS plugin written for this catalogue; no upstream code is copied. Upstream ideas, where any, are credited in the researched entries above."
     hornero_equivalent: "plugins/hornero-microphone"
     status: implemented
   - id: hornero-system-health
@@ -304,6 +439,9 @@ capabilities:
     category: dashboard
     origin: {project: HorneroOS, url: "https://github.com/HorneroOS/plugins", license: MIT}
     classification: hornero-original
+    license_status: verified
+    license_evidence: plugins/hornero-system-health/LICENSE
+    inspiration_notes: "First-party HorneroOS plugin written for this catalogue; no upstream code is copied. Upstream ideas, where any, are credited in the researched entries above."
     hornero_equivalent: "plugins/hornero-system-health"
     status: implemented
   - id: hornero-quick-notes
@@ -311,6 +449,9 @@ capabilities:
     category: dashboard
     origin: {project: HorneroOS, url: "https://github.com/HorneroOS/plugins", license: MIT}
     classification: hornero-original
+    license_status: verified
+    license_evidence: plugins/hornero-quick-notes/LICENSE
+    inspiration_notes: "First-party HorneroOS plugin written for this catalogue; no upstream code is copied. Upstream ideas, where any, are credited in the researched entries above."
     hornero_equivalent: "plugins/hornero-quick-notes"
     status: implemented
   - id: hornero-calculator
@@ -318,6 +459,9 @@ capabilities:
     category: dashboard
     origin: {project: HorneroOS, url: "https://github.com/HorneroOS/plugins", license: MIT}
     classification: hornero-original
+    license_status: verified
+    license_evidence: plugins/hornero-calculator/LICENSE
+    inspiration_notes: "First-party HorneroOS plugin written for this catalogue; no upstream code is copied. Upstream ideas, where any, are credited in the researched entries above."
     hornero_equivalent: "plugins/hornero-calculator"
     status: implemented
   - id: hornero-agenda
@@ -325,6 +469,9 @@ capabilities:
     category: desktop
     origin: {project: HorneroOS, url: "https://github.com/HorneroOS/plugins", license: MIT}
     classification: hornero-original
+    license_status: verified
+    license_evidence: plugins/hornero-agenda/LICENSE
+    inspiration_notes: "First-party HorneroOS plugin written for this catalogue; no upstream code is copied. Upstream ideas, where any, are credited in the researched entries above."
     hornero_equivalent: "plugins/hornero-agenda"
     status: implemented
   - id: hornero-sun-card
@@ -332,6 +479,9 @@ capabilities:
     category: dashboard
     origin: {project: HorneroOS, url: "https://github.com/HorneroOS/plugins", license: MIT}
     classification: hornero-original
+    license_status: verified
+    license_evidence: plugins/hornero-sun-card/LICENSE
+    inspiration_notes: "First-party HorneroOS plugin written for this catalogue; no upstream code is copied. Upstream ideas, where any, are credited in the researched entries above."
     hornero_equivalent: "plugins/hornero-sun-card"
     status: implemented
   - id: hornero-metronome
@@ -339,6 +489,9 @@ capabilities:
     category: bar
     origin: {project: HorneroOS, url: "https://github.com/HorneroOS/plugins", license: MIT}
     classification: hornero-original
+    license_status: verified
+    license_evidence: plugins/hornero-metronome/LICENSE
+    inspiration_notes: "First-party HorneroOS plugin written for this catalogue; no upstream code is copied. Upstream ideas, where any, are credited in the researched entries above."
     hornero_equivalent: "plugins/hornero-metronome"
     status: implemented
   - id: hornero-text-tools
@@ -346,6 +499,9 @@ capabilities:
     category: dashboard
     origin: {project: HorneroOS, url: "https://github.com/HorneroOS/plugins", license: MIT}
     classification: hornero-original
+    license_status: verified
+    license_evidence: plugins/hornero-text-tools/LICENSE
+    inspiration_notes: "First-party HorneroOS plugin written for this catalogue; no upstream code is copied. Upstream ideas, where any, are credited in the researched entries above."
     hornero_equivalent: "plugins/hornero-text-tools"
     status: implemented
   - id: hornero-color-converter
@@ -353,6 +509,9 @@ capabilities:
     category: dashboard
     origin: {project: HorneroOS, url: "https://github.com/HorneroOS/plugins", license: MIT}
     classification: hornero-original
+    license_status: verified
+    license_evidence: plugins/hornero-color-converter/LICENSE
+    inspiration_notes: "First-party HorneroOS plugin written for this catalogue; no upstream code is copied. Upstream ideas, where any, are credited in the researched entries above."
     hornero_equivalent: "plugins/hornero-color-converter"
     status: implemented
   - id: hornero-json-tools
@@ -360,6 +519,9 @@ capabilities:
     category: dashboard
     origin: {project: HorneroOS, url: "https://github.com/HorneroOS/plugins", license: MIT}
     classification: hornero-original
+    license_status: verified
+    license_evidence: plugins/hornero-json-tools/LICENSE
+    inspiration_notes: "First-party HorneroOS plugin written for this catalogue; no upstream code is copied. Upstream ideas, where any, are credited in the researched entries above."
     hornero_equivalent: "plugins/hornero-json-tools"
     status: implemented
   - id: hornero-base-converter
@@ -367,6 +529,9 @@ capabilities:
     category: dashboard
     origin: {project: HorneroOS, url: "https://github.com/HorneroOS/plugins", license: MIT}
     classification: hornero-original
+    license_status: verified
+    license_evidence: plugins/hornero-base-converter/LICENSE
+    inspiration_notes: "First-party HorneroOS plugin written for this catalogue; no upstream code is copied. Upstream ideas, where any, are credited in the researched entries above."
     hornero_equivalent: "plugins/hornero-base-converter"
     status: implemented
   - id: hornero-date-calculator
@@ -374,5 +539,8 @@ capabilities:
     category: dashboard
     origin: {project: HorneroOS, url: "https://github.com/HorneroOS/plugins", license: MIT}
     classification: hornero-original
+    license_status: verified
+    license_evidence: plugins/hornero-date-calculator/LICENSE
+    inspiration_notes: "First-party HorneroOS plugin written for this catalogue; no upstream code is copied. Upstream ideas, where any, are credited in the researched entries above."
     hornero_equivalent: "plugins/hornero-date-calculator"
     status: implemented

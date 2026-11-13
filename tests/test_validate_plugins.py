@@ -77,6 +77,60 @@ def write_audit(root: Path, entries, disclaimer="Static audit; this is not graph
         {"schemaVersion": 1, "disclaimer": disclaimer, "entries": entries}))
 
 
+def inventory_yaml(entries, schema_version=2):
+    lines = [f"schemaVersion: {schema_version}", "capabilities:"]
+    for entry in entries:
+        first = True
+        for key, value in entry.items():
+            prefix = "  - " if first else "    "
+            first = False
+            if key == "origin":
+                value = "{project: %s, url: \"%s\", license: %s}" % (
+                    value["project"], value["url"], value["license"])
+            elif isinstance(value, str) and (":" in value or value.startswith("https://")):
+                value = json.dumps(value)
+            lines.append(f"{prefix}{key}: {value}")
+    return "\n".join(lines) + "\n"
+
+
+def implemented_entry(pid="hornero-example", **overrides):
+    entry = {
+        "id": pid,
+        "name": "Hornero Example",
+        "category": "dashboard",
+        "origin": {"project": "HorneroOS/plugins", "url": "https://github.com/HorneroOS/plugins", "license": "MIT"},
+        "classification": "hornero-original",
+        "license_status": "verified",
+        "license_evidence": f"plugins/{pid}/LICENSE",
+        "inspiration_notes": "First-party HorneroOS plugin; no upstream code is copied.",
+        "hornero_equivalent": f"plugins/{pid}",
+        "status": "implemented",
+    }
+    entry.update(overrides)
+    return entry
+
+
+def researched_entry(pid="upstream-widgets", **overrides):
+    entry = {
+        "id": pid,
+        "name": "Upstream widget system",
+        "category": "widgets",
+        "origin": {"project": "Upstream", "url": "https://example.invalid/upstream", "license": "MIT"},
+        "classification": "inspiration",
+        "license_status": "verified",
+        "license_evidence": "https://example.invalid/upstream/LICENSE",
+        "inspiration_notes": "Studied as a capability reference; reimplemented independently, no code copied.",
+        "hornero_equivalent": "hornero-example plugin",
+        "status": "researched",
+    }
+    entry.update(overrides)
+    return entry
+
+
+def write_inventory(root: Path, entries, schema_version=2):
+    (root / vp.INVENTORY_FILE).write_text(inventory_yaml(entries, schema_version))
+
+
 class ContractTest(unittest.TestCase):
     def setUp(self):
         self.tmp = tempfile.TemporaryDirectory()
@@ -383,8 +437,93 @@ class QualityAuditTest(unittest.TestCase):
 
     def test_main_strict_turns_warnings_into_errors(self):
         write_audit(self.root, [audit_entry("hornero-example", self.probe)])
+        write_inventory(self.root, [implemented_entry()])
         self.assertEqual(vp.main([], root=self.root), 0)
         self.assertEqual(vp.main(["--strict"], root=self.root), 1)
+
+
+class InventoryTest(unittest.TestCase):
+    def setUp(self):
+        self.tmp = tempfile.TemporaryDirectory()
+        self.root = Path(self.tmp.name)
+        make_plugin(self.root)
+        self.official = {"hornero-example"}
+        self.manifests = {"hornero-example": {"license": "MIT"}}
+
+    def tearDown(self):
+        self.tmp.cleanup()
+
+    def errors_for(self, entries, schema_version=2):
+        write_inventory(self.root, entries, schema_version)
+        errors, _ = vp.validate_inventory(self.root, self.official, self.manifests)
+        return errors
+
+    def test_missing_inventory_file_is_an_error(self):
+        errors, _ = vp.validate_inventory(self.root, self.official, self.manifests)
+        self.assertTrue(any("missing" in e for e in errors))
+
+    def test_verified_implemented_and_researched_entries_pass(self):
+        self.assertEqual(self.errors_for([implemented_entry(), researched_entry()]), [])
+
+    def test_honest_unverified_entry_passes(self):
+        entry = researched_entry(license_status="unverified",
+                                 origin={"project": "Upstream", "url": "https://example.invalid/upstream", "license": "UNVERIFIED"})
+        del entry["license_evidence"]
+        self.assertEqual(self.errors_for([implemented_entry(), entry]), [])
+
+    def test_unverified_license_must_never_be_silently_claimed(self):
+        errors = self.errors_for([implemented_entry(), researched_entry(license_status="unverified")])
+        self.assertTrue(any("never silently claimed" in e for e in errors))
+        self.assertTrue(any("license_evidence is only allowed" in e for e in errors))
+
+    def test_verified_requires_recorded_evidence(self):
+        entry = researched_entry()
+        del entry["license_evidence"]
+        errors = self.errors_for([implemented_entry(), entry])
+        self.assertTrue(any("verified requires license_evidence" in e for e in errors))
+
+    def test_schema_1_is_rejected(self):
+        errors = self.errors_for([implemented_entry()], schema_version=1)
+        self.assertTrue(any("schemaVersion must be 2" in e for e in errors))
+
+    def test_missing_provenance_fields_are_rejected(self):
+        entry = researched_entry()
+        del entry["inspiration_notes"], entry["license_status"], entry["classification"]
+        errors = self.errors_for([implemented_entry(), entry])
+        self.assertTrue(any("missing provenance field inspiration_notes" in e for e in errors))
+        self.assertTrue(any("missing provenance field license_status" in e for e in errors))
+        self.assertTrue(any("missing provenance field classification" in e for e in errors))
+
+    def test_unknown_classification_and_field_are_rejected(self):
+        entry = researched_entry(classification="copied", surprise="yes")
+        errors = self.errors_for([implemented_entry(), entry])
+        self.assertTrue(any("classification must be one of" in e for e in errors))
+        self.assertTrue(any("unknown field surprise" in e for e in errors))
+
+    def test_status_must_agree_with_classification(self):
+        errors = self.errors_for([implemented_entry(), researched_entry(classification="implemented")])
+        self.assertTrue(any("requires status implemented" in e for e in errors))
+
+    def test_every_official_plugin_needs_an_implemented_entry(self):
+        errors = self.errors_for([researched_entry()])
+        self.assertTrue(any("missing implemented provenance entry for official plugin hornero-example" in e for e in errors))
+
+    def test_implemented_license_must_match_manifest_and_license_file(self):
+        entry = implemented_entry(origin={"project": "HorneroOS/plugins", "url": "https://github.com/HorneroOS/plugins", "license": "Apache-2.0"})
+        errors = self.errors_for([entry])
+        self.assertTrue(any("does not match the plugin manifest license" in e for e in errors))
+        entry = implemented_entry(license_evidence="https://example.invalid/LICENSE")
+        errors = self.errors_for([entry])
+        self.assertTrue(any("must record license_evidence plugins/hornero-example/LICENSE" in e for e in errors))
+
+    def test_upstream_link_must_be_https(self):
+        entry = researched_entry(origin={"project": "Upstream", "url": "http://example.invalid/upstream", "license": "MIT"})
+        errors = self.errors_for([implemented_entry(), entry])
+        self.assertTrue(any("origin.url must be an https URI" in e for e in errors))
+
+    def test_duplicate_ids_are_rejected(self):
+        errors = self.errors_for([implemented_entry(), researched_entry(), researched_entry()])
+        self.assertTrue(any("duplicate entry for upstream-widgets" in e for e in errors))
 
 
 if __name__ == "__main__":
