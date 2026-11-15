@@ -148,9 +148,8 @@ Item {
     UiButton {
         id: indicator
 
-        variant: "ghost"
+        variant: root.finished && root.flashOn && !Theme.reducedMotion ? "primary" : "ghost"
         text: root.finished ? i18n.tr("DONE") : (root.running ? "● " : "○ ") + root.fmt(root.remainingSeconds)
-        opacity: root.finished && !root.flashOn && !Theme.reducedMotion ? 0.25 : 1.0
         tooltipText: i18n.tr("Pomodoro: activate for timer controls")
         accessibleName: root.finished ? i18n.tr("Pomodoro finished") : i18n.tr("Pomodoro %1 remaining").arg(root.fmt(root.remainingSeconds))
         onClicked: popover.toggle()

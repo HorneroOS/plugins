@@ -113,7 +113,6 @@ Item {
 
         variant: "ghost"
         text: root.hostCompact ? i18n.formatNumber(root.bpm) : i18n.tr("%1 BPM").arg(i18n.formatNumber(root.bpm))
-        opacity: root.beatOn ? 1.0 : 0.75
         tooltipText: i18n.tr("Metronome: activate for controls")
         accessibleName: i18n.tr("Metronome %1 beats per minute").arg(i18n.formatNumber(root.bpm))
         onClicked: popover.toggle()
@@ -142,7 +141,9 @@ Item {
                     width: 14
                     height: 14
                     radius: 7
-                    color: root.beatOn ? (root.accentBeat ? Theme.tertiary : Theme.primary) : Theme.surfaceContainer
+                    color: root.beatOn ? (root.accentBeat ? Theme.tertiary : Theme.primary) : Theme.surfaceContainerHighest
+                    border.width: 1
+                    border.color: Theme.componentBorder
                     Accessible.name: root.beatOn ? i18n.tr("Metronome beat on") : i18n.tr("Metronome beat off")
                 }
 
