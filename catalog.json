@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedFrom": "4a1514f29e00b8b5766bc0e671c86f6e29abdd45",
+  "generatedFrom": "01efeb2c32a4b3485e2d7f7afa4d6ed6c9666173",
   "plugins": [
     {
       "id": "hornero-agenda",
@@ -313,7 +313,7 @@
       },
       "trust": "official",
       "path": "plugins/hornero-countdown",
-      "sha256": "86454f4cf2b0c257d86139d65607079989be470856bedc2cde94172511050e62"
+      "sha256": "db4ead36a1c6b6871457bb929868be8214844f195a0072e53f11714f6ec1094c"
     },
     {
       "id": "hornero-date-calculator",
@@ -532,7 +532,7 @@
       },
       "trust": "official",
       "path": "plugins/hornero-metronome",
-      "sha256": "92a1829f50f6ce54af6f4ecdc921dfba6f71942f1b8c3929716ce20bd1c68858"
+      "sha256": "bea5cbb282de165d2edaf6cf86f0cb1ee562d629b9bb43539fa7fcba47ad9df5"
     },
     {
       "id": "hornero-microphone",
@@ -736,7 +736,7 @@
       },
       "trust": "official",
       "path": "plugins/hornero-pomodoro",
-      "sha256": "16897ab08e5e3db038ada13c42054b3c784ad4ac296eb48ac0d65f6636a27d59"
+      "sha256": "2fbdacc6a1e03c91e7c1c461ce49ddca4bdc56a353386b59b2e712b3b852d047"
     },
     {
       "id": "hornero-quick-notes",
@@ -898,7 +898,7 @@
       },
       "trust": "official",
       "path": "plugins/hornero-studio-jobs",
-      "sha256": "7182f286d2ddb6bcd9a240acd9e15d8a1ccf16f3e2c3b440cc0d73e3b7fef458"
+      "sha256": "e827778fc17f23974c38ce51d7db8adca3123fca2534f944d0e7619db05888ef"
     },
     {
       "id": "hornero-sun-card",
