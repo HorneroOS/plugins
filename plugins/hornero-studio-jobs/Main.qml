@@ -88,14 +88,12 @@ Item {
             color: palette.windowText
             visible: root.available && root.jobs.length === 0
             text: "Submit one: horneroctl studio jobs submit"
-            opacity: 0.7
         }
 
         Text {
             color: palette.windowText
             visible: !root.available
             text: "Is horneroctl installed?"
-            opacity: 0.7
         }
 
         Repeater {
@@ -106,7 +104,6 @@ Item {
                 required property var modelData
 
                 text: `${modelData.state} · ${modelData.adapter} · ${root.basename(modelData.output)}`
-                opacity: modelData.state === "succeeded" ? 0.7 : 1.0
             }
         }
     }
