@@ -217,8 +217,9 @@ Item {
                 }
             }
 
-            UiButton {
-                variant: "ghost"
+            UiActionRow {
+                width: parent.width
+                iconName: "refresh"
                 text: i18n.tr("Refresh")
                 tooltipText: i18n.tr("Read /proc/uptime again")
                 accessibleName: i18n.tr("Refresh uptime")

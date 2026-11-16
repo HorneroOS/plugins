@@ -1,11 +1,11 @@
 {
   "schemaVersion": 1,
-  "generatedFrom": "3204b6689168c982246596468054ebe5e09d5707",
+  "generatedFrom": "120817e0b29bf74b52092688a5909c8ca140b9a4",
   "plugins": [
     {
       "id": "hornero-agenda",
       "name": "Hornero Agenda",
-      "version": "2.1.0",
+      "version": "2.1.1",
       "description": "Agenda: desktop widget of date facts from PluginKit Time (weekday, ISO week and week-year, day of year, remaining days, year progress) with Desktop Widgets 2.0 size classes, per-display slot display and hide-with-restore. No events backend.",
       "author": "HorneroOS contributors",
       "license": "MIT",
@@ -50,12 +50,12 @@
       },
       "trust": "official",
       "path": "plugins/hornero-agenda",
-      "sha256": "d2a1144d31d6a1d30bbcec1db4f32984d282270599cee2ee69a657e82bca5ed4"
+      "sha256": "c954388558c5aa521aeef8d022c15410e22ebaae960837ca4915a6d0228f5270"
     },
     {
       "id": "hornero-ai-usage",
       "name": "Hornero AI Usage",
-      "version": "2.0.0",
+      "version": "2.0.1",
       "description": "AI Usage 2.0: bar indicator, provider switcher popover and dashboard card over the normalized horneroctl agent usage records. Quota is shown only when a provider record carries it; otherwise it is unknown.",
       "author": "HorneroOS contributors",
       "license": "MIT",
@@ -79,7 +79,7 @@
       },
       "trust": "official",
       "path": "plugins/hornero-ai-usage",
-      "sha256": "ce23f0087c324fa70f560f39dc9e856697b124573cb46e1b8813ce33d0089841"
+      "sha256": "33b6df96b7ac57093f0dcfba21f52d60d03ba6482269a2d21eaad562df9e5d8e"
     },
     {
       "id": "hornero-base-converter",
@@ -181,7 +181,7 @@
     {
       "id": "hornero-calendar",
       "name": "Hornero Calendar",
-      "version": "2.1.0",
+      "version": "2.1.1",
       "description": "Calendar: desktop widget with date/time header and current month grid from PluginKit Time, plus Desktop Widgets 2.0 size classes, per-display slot display and hide-with-restore. Locale dates, no events backend, no processes or network.",
       "author": "HorneroOS contributors",
       "license": "MIT",
@@ -235,7 +235,7 @@
       },
       "trust": "official",
       "path": "plugins/hornero-calendar",
-      "sha256": "5b7c48426e4d102bb67e170f641e00b255b5c5dd8c31149e89f4ff711d1bc5b4"
+      "sha256": "8088ac692168b87f22a68943d1189bee8d1b3b0fa55d3f976fd6623df70982ba"
     },
     {
       "id": "hornero-color-converter",
@@ -567,7 +567,7 @@
     {
       "id": "hornero-moon-phase",
       "name": "Hornero Moon Phase",
-      "version": "2.1.0",
+      "version": "2.1.1",
       "description": "Moon Phase: desktop widget and bar indicator for the approximate moon phase and illumination from the 1.x synodic approximation, plus Desktop Widgets 2.0 size classes, per-display slot display and hide-with-restore. Always labelled approximate.",
       "author": "HorneroOS contributors",
       "license": "MIT",
@@ -622,7 +622,7 @@
       },
       "trust": "official",
       "path": "plugins/hornero-moon-phase",
-      "sha256": "b814a6a4d6844a0268c62a9e62a2daf0ce82741c02030ad47e898765a865d351"
+      "sha256": "c14333914dadf238641ad913aed44a5c05a3956906a1d5efe4bc36a3dac520a3"
     },
     {
       "id": "hornero-network-monitor",
@@ -848,7 +848,7 @@
     {
       "id": "hornero-studio-audio",
       "name": "Hornero Studio Audio",
-      "version": "2.3.1",
+      "version": "2.3.2",
       "description": "Audio Extensions 2.0: bar indicator, popover and dashboard card for the Studio audio mode and Temporary Performance state from the typed horneroctl contract. Read-only; mode changes stay in the CLI and Control Center.",
       "author": "HorneroOS contributors",
       "license": "MIT",
@@ -877,7 +877,7 @@
       },
       "trust": "official",
       "path": "plugins/hornero-studio-audio",
-      "sha256": "d9083013c85a208eebc169d9b47d131263a1cb9c36a2b24d641cb9c7222f742f"
+      "sha256": "33a9abbb370aead4c8758221be178e914d7fde37ef6e46713dd0a429d99a0dec"
     },
     {
       "id": "hornero-studio-jobs",
@@ -1109,7 +1109,7 @@
     {
       "id": "hornero-uptime",
       "name": "Hornero Uptime",
-      "version": "2.0.0",
+      "version": "2.0.1",
       "description": "Uptime 2.0: bar indicator plus popover/dashboard session detail (uptime, boot time, idle time) from /proc/uptime with the declared cat command. No PluginKit uptime facade exists; error state instead of a fabricated zero.",
       "author": "HorneroOS contributors",
       "license": "MIT",
@@ -1143,7 +1143,7 @@
       },
       "trust": "official",
       "path": "plugins/hornero-uptime",
-      "sha256": "731b4956234de3ff5f6579e552b547e9ca2b4250e41d58cc8238d9bdd1ed71b3"
+      "sha256": "93361d00b8f381ffed95091e32d155899a75a792f3e94cc509cb99617ba07aa3"
     },
     {
       "id": "hornero-volume",

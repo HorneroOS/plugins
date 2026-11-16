@@ -2,7 +2,7 @@
   "schemaVersion": 2,
   "id": "hornero-agenda",
   "name": "Hornero Agenda",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "description": "Agenda: desktop widget of date facts from PluginKit Time (weekday, ISO week and week-year, day of year, remaining days, year progress) with Desktop Widgets 2.0 size classes, per-display slot display and hide-with-restore. No events backend.",
   "author": "HorneroOS contributors",
   "license": "MIT",
@@ -23,9 +23,13 @@
   },
   "marketplace": {
     "compatibility": {
-      "minShellVersion": "1.0.0"
+      "minShellVersion": "1.2.79"
     },
     "changelog": [
+      {
+        "version": "2.1.1",
+        "notes": "Popover actions use the native full-width UiActionRow (shell 1.2.79 PluginKit) instead of small buttons."
+      },
       {
         "version": "2.1.0",
         "notes": "Desktop Widgets 2.0 (#32): manifest v2 with the desktop surface redeclared on the same entrypoint, read-only Desktop.position slot and display shown in a host-owned popover, persisted compact/standard/wide size class and hide-with-restore visibility as typed settings (defaults standard/visible, so 2.0 content is unchanged), and reset for size and visibility. Moving stays in Control Center: PluginKit has no slot setter."

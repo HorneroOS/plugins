@@ -2,7 +2,7 @@
   "schemaVersion": 2,
   "id": "hornero-moon-phase",
   "name": "Hornero Moon Phase",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "description": "Moon Phase: desktop widget and bar indicator for the approximate moon phase and illumination from the 1.x synodic approximation, plus Desktop Widgets 2.0 size classes, per-display slot display and hide-with-restore. Always labelled approximate.",
   "author": "HorneroOS contributors",
   "license": "MIT",
@@ -26,9 +26,13 @@
   },
   "marketplace": {
     "compatibility": {
-      "minShellVersion": "1.0.0"
+      "minShellVersion": "1.2.79"
     },
     "changelog": [
+      {
+        "version": "2.1.1",
+        "notes": "Popover actions use the native full-width UiActionRow (shell 1.2.79 PluginKit) instead of small buttons."
+      },
       {
         "version": "2.1.0",
         "notes": "Desktop Widgets 2.0 (#32): desktop surface redeclared on the same entrypoint alongside the bar surface, read-only Desktop.position slot and display shown in a host-owned popover, persisted compact/standard/wide size class and hide-with-restore visibility as typed settings (defaults standard/visible, so 2.0 content is unchanged; the bar surface is untouched), and reset for size and visibility. Moving stays in Control Center: PluginKit has no slot setter."

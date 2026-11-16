@@ -206,8 +206,9 @@ Item {
                 text: i18n.tr("Read-only. Switching modes stays in horneroctl and Control Center.")
             }
 
-            UiButton {
+            UiActionRow {
                 width: parent.width
+                iconName: "refresh"
                 text: i18n.tr("Refresh")
                 accessibleName: i18n.tr("Refresh studio mode")
                 onClicked: root.refresh()

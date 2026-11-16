@@ -2,7 +2,7 @@
   "schemaVersion": 2,
   "id": "hornero-studio-audio",
   "name": "Hornero Studio Audio",
-  "version": "2.3.1",
+  "version": "2.3.2",
   "description": "Audio Extensions 2.0: bar indicator, popover and dashboard card for the Studio audio mode and Temporary Performance state from the typed horneroctl contract. Read-only; mode changes stay in the CLI and Control Center.",
   "author": "HorneroOS contributors",
   "license": "MIT",
@@ -29,9 +29,13 @@
   },
   "marketplace": {
     "compatibility": {
-      "minShellVersion": "1.2.74"
+      "minShellVersion": "1.2.79"
     },
     "changelog": [
+      {
+        "version": "2.3.2",
+        "notes": "Popover actions use the native full-width UiActionRow (shell 1.2.79 PluginKit) instead of small buttons."
+      },
       {
         "version": "2.3.1",
         "notes": "Suppress the indicator tooltip while its popover is open (it floated over the popover and covered the Output row)."
