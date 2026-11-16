@@ -60,7 +60,8 @@
           },
           "enabled": { "type": "boolean", "default": true },
           "size": { "type": "string", "enum": ["compact", "standard", "wide"], "default": "standard", "description": "Dashboard surface only (shell#378): preferred card size class. A hint the user's persisted layout overrides; declaring it on another surface is rejected by the validators, not by this structural schema." },
-          "category": { "type": "string", "minLength": 1, "maxLength": 40, "pattern": "\\S", "description": "Dashboard surface only (shell#378): grouping label (\"Pinned\" is reserved). Same enforcement split as size." }
+          "category": { "type": "string", "minLength": 1, "maxLength": 40, "pattern": "\\S", "description": "Dashboard surface only (shell#378): grouping label (\"Pinned\" is reserved). Same enforcement split as size." },
+          "section": { "type": "string", "enum": ["status", "actions", "clock", "end"], "default": "end", "description": "Bar surface only (shell#439): native bar island the indicator joins (status, actions, clock) or end (the Extensions island). Same enforcement split as size." }
         }
       },
       "description": "Manifest v2 only (schemaVersion 2): additional per-surface entry points. The top-level entrypoint/placement pair stays the primary surface; redeclaring it here requires the same entrypoint. launcher/settings are validated declarations whose hosts do not load them yet."
