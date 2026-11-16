@@ -2,7 +2,7 @@
   "schemaVersion": 2,
   "id": "hornero-studio-audio",
   "name": "Hornero Studio Audio",
-  "version": "2.2.0",
+  "version": "2.3.0",
   "description": "Audio Extensions 2.0: bar indicator, popover and dashboard card for the Studio audio mode and Temporary Performance state from the typed horneroctl contract. Read-only; mode changes stay in the CLI and Control Center.",
   "author": "HorneroOS contributors",
   "license": "MIT",
@@ -29,9 +29,13 @@
   },
   "marketplace": {
     "compatibility": {
-      "minShellVersion": "1.2.73"
+      "minShellVersion": "1.2.74"
     },
     "changelog": [
+      {
+        "version": "2.3.0",
+        "notes": "Native popout: subtitle header, caption state line and label/value detail rows (PluginKit UiDetailRow), no hero metrics or outlined chip. Needs Hornero Shell 1.2.74 (UiText subtitle, UiDetailRow, borderless UiPopover)."
+      },
       {
         "version": "2.2.0",
         "notes": "Bar indicator joins the native status icons island (section status), next to volume and microphone. Needs Hornero Shell 1.2.73 (bar sections)."

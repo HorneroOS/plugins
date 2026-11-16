@@ -149,13 +149,22 @@ Item {
         target: indicator
         accessibleName: i18n.tr("Studio audio details")
 
+        // Native popout pattern (shell modules/bar/popouts): a medium
+        // subtitle, a caption state line, then label/value rows — no card
+        // title, hero metrics, outlined chip or floating tooltip.
         Column {
             width: 300
             spacing: Theme.spacingSmall
 
             UiText {
-                role: "title"
+                role: "subtitle"
                 text: i18n.tr("Studio Audio")
+            }
+
+            UiText {
+                visible: root.available
+                role: "caption"
+                text: root.performance ? i18n.tr("Temporary Performance on") : i18n.tr("Temporary Performance off")
             }
 
             UiState {
@@ -170,23 +179,15 @@ Item {
                 width: parent.width
                 spacing: Theme.spacingSmall
 
-                UiStack {
-                    orientation: root.hostOrientation
-                    compact: root.hostCompact
-
-                    UiMetric {
-                        label: i18n.tr("Mode")
-                        value: root.modeName(root.mode)
-                    }
-
-                    UiChip {
-                        text: root.performance ? i18n.tr("Temporary Performance on") : i18n.tr("Temporary Performance off")
-                        tone: root.performance ? "primary" : "neutral"
-                    }
+                UiDetailRow {
+                    width: parent.width
+                    label: i18n.tr("Mode")
+                    value: root.modeName(root.mode)
                 }
 
-                UiMetric {
+                UiDetailRow {
                     visible: Audio.hasSink
+                    width: parent.width
                     label: i18n.tr("Output")
                     value: Audio.muted ? i18n.tr("Muted") : i18n.tr("%1%").arg(Math.round(Audio.volume * 100))
                 }
@@ -202,13 +203,12 @@ Item {
             UiText {
                 width: parent.width
                 role: "caption"
-                text: i18n.tr("Studio mode and Temporary Performance are shown read-only. Switching modes stays in horneroctl and Control Center.")
+                text: i18n.tr("Read-only. Switching modes stays in horneroctl and Control Center.")
             }
 
             UiButton {
-                variant: "ghost"
+                variant: "tonal"
                 text: i18n.tr("Refresh")
-                tooltipText: i18n.tr("Reload the studio mode from horneroctl")
                 accessibleName: i18n.tr("Refresh studio mode")
                 onClicked: root.refresh()
             }

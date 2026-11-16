@@ -20,5 +20,6 @@
   "Temporary Performance off": "Rendimiento temporal desactivado",
   "Temporary Performance on": "Rendimiento temporal activado",
   "Unknown mode": "Modo desconocido",
-  "Read-only. Change modes in Control Center.": "Solo lectura. Cambiá el modo en el Centro de control."
+  "Read-only. Change modes in Control Center.": "Solo lectura. Cambiá el modo en el Centro de control.",
+  "Read-only. Switching modes stays in horneroctl and Control Center.": "Solo lectura. El cambio de modo queda en horneroctl y en el Centro de Control."
 }

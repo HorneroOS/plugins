@@ -215,13 +215,8 @@ Item {
             spacing: Theme.spacingSmall
 
             UiText {
-                role: "title"
+                role: "subtitle"
                 text: i18n.tr("Dual Clock")
-            }
-
-            UiMetric {
-                label: i18n.tr("Local")
-                value: root.localTimeText(Time.date) + " (" + root.offsetLabel(-Time.date.getTimezoneOffset()) + ")"
             }
 
             UiText {
@@ -229,22 +224,18 @@ Item {
                 text: i18n.formatDateTime(Time.date, "dddd, d MMMM yyyy")
             }
 
-            UiStack {
-                orientation: root.hostOrientation
-                compact: root.hostCompact
+            UiDetailRow {
+                width: parent.width
+                label: i18n.tr("Local")
+                value: root.localTimeText(Time.date) + " (" + root.offsetLabel(-Time.date.getTimezoneOffset()) + ")"
+            }
 
-                UiMetric {
-                    label: root.cityName(root.secondZone)
-                    value: {
-                        const p = root.secondParts(Time.date);
-                        return root.fmtHms(p.hours, p.minutes, p.seconds) + " (" + root.offsetLabel(p.offsetMin) + ")";
-                    }
-                }
-
-                UiChip {
-                    visible: root.secondParts(Time.date).dst
-                    text: i18n.tr("DST")
-                    tone: "primary"
+            UiDetailRow {
+                width: parent.width
+                label: root.cityName(root.secondZone) + (root.secondParts(Time.date).dst ? " · " + i18n.tr("DST") : "")
+                value: {
+                    const p = root.secondParts(Time.date);
+                    return root.fmtHms(p.hours, p.minutes, p.seconds) + " (" + root.offsetLabel(p.offsetMin) + ")";
                 }
             }
 

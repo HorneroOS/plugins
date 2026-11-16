@@ -168,23 +168,19 @@ Item {
             spacing: Theme.spacingSmall
 
             UiText {
-                role: "title"
+                role: "subtitle"
                 text: i18n.tr("Pomodoro")
             }
 
-            UiStack {
-                orientation: root.hostOrientation
-                compact: root.hostCompact
+            UiText {
+                role: "caption"
+                text: root.finished ? i18n.tr("Finished") : root.running ? i18n.tr("Running") : i18n.tr("Paused")
+            }
 
-                UiMetric {
-                    label: i18n.tr("Remaining")
-                    value: root.finished ? i18n.tr("DONE") : root.fmt(root.remainingSeconds)
-                }
-
-                UiChip {
-                    text: root.finished ? i18n.tr("Finished") : root.running ? i18n.tr("Running") : i18n.tr("Paused")
-                    tone: root.finished ? "error" : root.running ? "primary" : "neutral"
-                }
+            UiDetailRow {
+                width: parent.width
+                label: i18n.tr("Remaining")
+                value: root.finished ? i18n.tr("DONE") : root.fmt(root.remainingSeconds)
             }
 
             UiProgress {
@@ -204,15 +200,13 @@ Item {
 
                 UiButton {
                     text: root.running ? i18n.tr("Pause") : i18n.tr("Start")
-                    tooltipText: root.running ? i18n.tr("Pause the focus session") : i18n.tr("Start the focus session")
                     accessibleName: root.running ? i18n.tr("Pause pomodoro") : i18n.tr("Start pomodoro")
                     onClicked: root.toggleRunning()
                 }
 
                 UiButton {
-                    variant: "ghost"
+                    variant: "tonal"
                     text: i18n.tr("Reset")
-                    tooltipText: i18n.tr("Reset the focus session")
                     accessibleName: i18n.tr("Reset pomodoro")
                     onClicked: root.resetTimer()
                 }

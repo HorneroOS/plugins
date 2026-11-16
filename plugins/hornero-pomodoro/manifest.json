@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "id": "hornero-pomodoro",
   "name": "Hornero Pomodoro",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "description": "Pomodoro 2.0: compact bar focus timer with a popover, deadline-correct timing across sleep/reload, a typed session-length setting and a completion toast. No processes, no network.",
   "author": "HorneroOS contributors",
   "license": "MIT",
@@ -51,6 +51,10 @@
   "marketplace": {
     "changelog": [
       {
+        "version": "2.2.0",
+        "notes": "Native popout: subtitle header, caption state line and label/value detail rows (PluginKit UiDetailRow); session actions without floating tooltips. Needs Hornero Shell 1.2.74 (UiText subtitle, UiDetailRow, borderless UiPopover)."
+      },
+      {
         "version": "2.1.0",
         "notes": "Native look: timer icon plus time in the bar (filled while running), alarm icon when finished. Needs Hornero Shell 1.2.72 (PluginKit UiIcon/iconName/card header)."
       },
@@ -64,7 +68,7 @@
       }
     ],
     "compatibility": {
-      "minShellVersion": "1.2.72"
+      "minShellVersion": "1.2.74"
     }
   }
 }
