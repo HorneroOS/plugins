@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedFrom": "01efeb2c32a4b3485e2d7f7afa4d6ed6c9666173",
+  "generatedFrom": "01544b56c6ea63d6033d0ffd7503fe494216c14c",
   "plugins": [
     {
       "id": "hornero-agenda",
@@ -151,7 +151,7 @@
     {
       "id": "hornero-calculator",
       "name": "Hornero Calculator",
-      "version": "2.0.0",
+      "version": "2.0.1",
       "description": "Utility Tools 2.0 calculator: bar quick action and compact dashboard detail over a safe tokenizer/recursive-descent parser (+ - * / %, parentheses, decimals, unary minus). Division by zero shows Error.",
       "author": "HorneroOS contributors",
       "license": "MIT",
@@ -176,7 +176,7 @@
       },
       "trust": "official",
       "path": "plugins/hornero-calculator",
-      "sha256": "eab8a6b5e3d0e2ea62e88fb6325295d55a8b9d16b6982ae23fee2a5cb50b3ac6"
+      "sha256": "f0e91164b886bd4dd0ae1e1da8463f3392cdd8ef6750d83c70999a5039131dbf"
     },
     {
       "id": "hornero-calendar",
