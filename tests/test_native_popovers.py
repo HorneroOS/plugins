@@ -17,4 +17,6 @@ def test_popovers_use_native_pattern():
         assert "UiMetric {" not in popover, pid
         assert "UiChip {" not in popover, pid
         manifest = json.loads((ROOT / "plugins" / pid / "manifest.json").read_text())
-        assert manifest["marketplace"]["compatibility"]["minShellVersion"] == "1.2.74", pid
+        # studio-audio moved to 1.2.79 for the UiActionRow footer.
+        expected = "1.2.79" if pid == "hornero-studio-audio" else "1.2.74"
+        assert manifest["marketplace"]["compatibility"]["minShellVersion"] == expected, pid

@@ -311,14 +311,18 @@ Item {
                 value: root.sizeClassLabel()
             }
 
-            UiButton {
+            UiActionRow {
+                width: parent.width
+                iconName: "aspect_ratio"
                 text: i18n.tr("Use next size class")
                 tooltipText: i18n.tr("Use next size class")
                 accessibleName: i18n.tr("Use next size class")
                 onClicked: root.applySizeClass(nextSizeClass(root.sizeClass))
             }
 
-            UiButton {
+            UiActionRow {
+                width: parent.width
+                iconName: "visibility_off"
                 text: i18n.tr("Hide widget content")
                 tooltipText: i18n.tr("Hide widget content")
                 accessibleName: i18n.tr("Hide widget content")
@@ -328,7 +332,9 @@ Item {
                 }
             }
 
-            UiButton {
+            UiActionRow {
+                width: parent.width
+                iconName: "restart_alt"
                 text: i18n.tr("Reset size and visibility")
                 tooltipText: i18n.tr("Reset size and visibility")
                 accessibleName: i18n.tr("Reset size and visibility")
