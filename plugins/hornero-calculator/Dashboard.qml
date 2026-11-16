@@ -155,7 +155,9 @@ Item {
                     delegate: UiButton {
                         required property var modelData
                         width: (parent.width - 18) / 4
-                        variant: "ghost"
+                        // Keypad reads as a calculator, not a wireframe: quiet
+                        // tonal keys, "=" as the one primary action.
+                        variant: modelData === "=" ? "primary" : "tonal"
                         text: modelData
                         accessibleName: modelData === "C" ? i18n.tr("Clear calculator") : (modelData === "=" ? i18n.tr("Compute result") : i18n.tr("Calculator key") + " " + modelData)
                         tooltipText: modelData === "C" ? i18n.tr("Clear") : (modelData === "=" ? i18n.tr("Compute result") : i18n.tr("Insert") + " " + modelData)
