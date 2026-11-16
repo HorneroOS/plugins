@@ -15,5 +15,6 @@
   "Quick calculator expression": "Expresión rápida de calculadora",
   "Result": "Resultado",
   "Type an expression and press Compute. Division by zero shows Error.": "Escribí una expresión y tocá Calcular. La división por cero muestra Error.",
-  "e.g. (2 + 3) * 4": "ej. (2 + 3) * 4"
+  "e.g. (2 + 3) * 4": "ej. (2 + 3) * 4",
+  "Type an expression and press Enter.": "Escribí una expresión y presioná Enter."
 }

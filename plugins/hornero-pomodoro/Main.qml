@@ -191,7 +191,7 @@ Item {
 
             UiText {
                 role: "caption"
-                text: i18n.tr("Session length: %1 minutes").arg(i18n.formatNumber(root.focusMinutes))
+                text: i18n.tr("Session length: %1 minutes").arg(Math.round(root.focusMinutes))
             }
 
             UiStack {
