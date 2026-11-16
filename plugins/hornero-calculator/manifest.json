@@ -2,7 +2,7 @@
   "schemaVersion": 2,
   "id": "hornero-calculator",
   "name": "Hornero Calculator",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "description": "Utility Tools 2.0 calculator: bar quick action and compact dashboard detail over a safe tokenizer/recursive-descent parser (+ - * / %, parentheses, decimals, unary minus). Division by zero shows Error.",
   "author": "HorneroOS contributors",
   "license": "MIT",
@@ -10,6 +10,10 @@
   "entrypoint": "Main.qml",
   "placement": "bar",
   "surfaces": {
+    "bar": {
+      "entrypoint": "Main.qml",
+      "section": "actions"
+    },
     "dashboard": {
       "entrypoint": "Dashboard.qml",
       "size": "compact",
@@ -28,9 +32,13 @@
   },
   "marketplace": {
     "compatibility": {
-      "minShellVersion": "1.2.72"
+      "minShellVersion": "1.2.73"
     },
     "changelog": [
+      {
+        "version": "2.2.0",
+        "notes": "Bar quick action joins the native quick actions island (section actions). Needs Hornero Shell 1.2.73 (bar sections)."
+      },
       {
         "version": "2.1.0",
         "notes": "Native look: card header with the calculate icon, icon-only bar button, tonal keypad with a primary \"=\". Needs Hornero Shell 1.2.72 (PluginKit UiIcon/iconName/card header)."

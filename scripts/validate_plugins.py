@@ -347,9 +347,14 @@ def validate_surfaces(tag: str, manifest: dict, safe_files: set) -> list:
         if not isinstance(surface, dict):
             errors.append(f"{where} must be an object")
             continue
-        extra = set(surface) - {"entrypoint", "enabled", "size", "category"}
+        extra = set(surface) - {"entrypoint", "enabled", "size", "category", "section"}
         if extra:
             errors.append(f"{where} contains unknown fields: {', '.join(sorted(extra))}")
+        # Bar section hint (shell#439): native island the indicator joins.
+        if "section" in surface and name != "bar":
+            errors.append(f"{where}.section is a bar hint and is only allowed on the bar surface")
+        if "section" in surface and surface["section"] not in ("status", "actions", "clock", "end"):
+            errors.append(f"{where}.section must be one of status, actions, clock, end")
         if ("size" in surface or "category" in surface) and name != "dashboard":
             errors.append(f"{where}.size/category are dashboard card hints and are only allowed on the dashboard surface")
         if "size" in surface and surface["size"] not in DASHBOARD_CARD_SIZES:
