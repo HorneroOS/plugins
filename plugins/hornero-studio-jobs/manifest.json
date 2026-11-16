@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "id": "hornero-studio-jobs",
   "name": "Hornero Studio Jobs",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "Render and export job monitor for HorneroOS Studio: shows queued, running, finished and interrupted jobs from the typed horneroctl studio jobs contract. Read-only; jobs are submitted and cancelled from the CLI or Control Center.",
   "author": "HorneroOS contributors",
   "license": "MIT",
@@ -11,7 +11,8 @@
   "files": [
     "Main.qml",
     "README.md",
-    "LICENSE"
+    "LICENSE",
+    "translations/es.json"
   ],
   "capabilities": {
     "processCommands": [
@@ -20,5 +21,23 @@
     "networkHosts": [],
     "settings": {}
   },
-  "placement": "dashboard"
+  "placement": "dashboard",
+  "marketplace": {
+    "compatibility": {
+      "minShellVersion": "1.2.72"
+    },
+    "changelog": [
+      {
+        "version": "1.1.0",
+        "notes": "Rebuilt on PluginKit: native card header, empty and unavailable states, one row per job with a semantic state icon. Needs Hornero Shell 1.2.72 (PluginKit UiIcon/iconName/card header)."
+      }
+    ]
+  },
+  "translations": {
+    "sourceLocale": "en",
+    "locales": [
+      "es"
+    ],
+    "directory": "translations"
+  }
 }

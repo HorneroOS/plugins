@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "id": "hornero-quiet-notes",
   "name": "Hornero Quiet Notes",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "Quiet Notes 2.0: dashboard card for one short session-only intention. The line is never saved (in-memory only, as in 1.x) and the card says so. Keyboard-first capture, no processes or network.",
   "author": "HorneroOS contributors",
   "license": "MIT",
@@ -18,9 +18,13 @@
   },
   "marketplace": {
     "compatibility": {
-      "minShellVersion": "1.0.0"
+      "minShellVersion": "1.2.72"
     },
     "changelog": [
+      {
+        "version": "2.1.0",
+        "notes": "Native look: card header, neutral session chip, no repeated never-saved prose, empty state as a caption. Needs Hornero Shell 1.2.72 (PluginKit UiIcon/iconName/card header)."
+      },
       {
         "version": "2.0.0",
         "notes": "Notes and Focus 2.0: explicit Session only - never saved labelling distinct from persistent Quick Notes, keyboard-first capture (UiButton, themed editor, Enter/Esc) replacing the mouse-only card click and its hard-coded colours, Ui primitives with Theme tokens, typed display preferences (140-char default as in 1.x; the intention itself is deliberately not a setting) and Argentine Spanish catalog."

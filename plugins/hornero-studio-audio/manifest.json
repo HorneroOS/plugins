@@ -2,7 +2,7 @@
   "schemaVersion": 2,
   "id": "hornero-studio-audio",
   "name": "Hornero Studio Audio",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "Audio Extensions 2.0: bar indicator, popover and dashboard card for the Studio audio mode and Temporary Performance state from the typed horneroctl contract. Read-only; mode changes stay in the CLI and Control Center.",
   "author": "HorneroOS contributors",
   "license": "MIT",
@@ -25,9 +25,13 @@
   },
   "marketplace": {
     "compatibility": {
-      "minShellVersion": "1.0.0"
+      "minShellVersion": "1.2.72"
     },
     "changelog": [
+      {
+        "version": "2.1.0",
+        "notes": "Native look: card header, one native icon per studio mode in the bar (filled while Temporary Performance is on), shorter read-only note, Refresh with icon. Needs Hornero Shell 1.2.72 (PluginKit UiIcon/iconName/card header)."
+      },
       {
         "version": "2.0.0",
         "notes": "Audio Extensions 2.0: compact indicator with host-owned popover and dashboard card (mode, Temporary Performance, read-only output state, refresh), typed refreshSeconds/showWhenUnavailable settings, Theme tokens, host-context layout and Spanish catalog. Still read-only over the typed horneroctl studio contract."

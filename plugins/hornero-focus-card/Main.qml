@@ -113,31 +113,22 @@ Item {
         anchors.centerIn: parent
         width: root.hostAvailableWidth > 0 ? Math.min(root.hostAvailableWidth, 320) : 320
         Accessible.name: i18n.tr("Focus: %1").arg(root.currentLine)
+        title: root.showDate ? i18n.formatDateTime(Time.date, "dddd, d MMMM") : i18n.tr("Focus")
+        icon: "self_improvement"
 
         Column {
             width: parent.width
             spacing: Theme.spacingSmall
 
             UiText {
-                visible: root.showDate
                 role: "title"
-                text: i18n.formatDateTime(Time.date, "dddd, d MMMM")
-            }
-
-            UiChip {
-                text: i18n.tr("Focus reminder — nothing to save")
-                tone: "neutral"
-            }
-
-            UiText {
-                role: "body"
                 width: parent.width
                 text: root.currentLine
             }
 
             UiText {
                 role: "caption"
-                text: i18n.tr("Line %1 of %2").arg(i18n.formatNumber(root.currentIndex + 1)).arg(i18n.formatNumber(root.lines.length)) + (root.customLine !== "" && root.currentIndex === 0 ? " · " + i18n.tr("your line") : "")
+                text: i18n.tr("Line %1 of %2").arg(root.currentIndex + 1).arg(root.lines.length) + (root.customLine !== "" && root.currentIndex === 0 ? " · " + i18n.tr("your line") : "")
             }
 
             UiStack {
@@ -145,15 +136,16 @@ Item {
                 compact: root.hostCompact
 
                 UiButton {
-                    variant: "ghost"
-                    text: i18n.tr("Previous")
+                    variant: "tonal"
+                    iconName: "chevron_left"
                     tooltipText: i18n.tr("Show the previous focus line")
                     accessibleName: i18n.tr("Previous focus line")
                     onClicked: root.lineIndex = root.previousIndex(root.currentIndex, root.lines.length)
                 }
 
                 UiButton {
-                    text: i18n.tr("Next")
+                    variant: "tonal"
+                    iconName: "chevron_right"
                     tooltipText: i18n.tr("Show the next focus line")
                     accessibleName: i18n.tr("Next focus line")
                     onClicked: root.lineIndex = root.nextIndex(root.currentIndex, root.lines.length)

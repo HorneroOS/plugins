@@ -122,12 +122,12 @@ Item {
         id: card
         anchors.fill: parent
         Accessible.name: i18n.tr("Calculator")
+        title: i18n.tr("Calculator")
+        icon: "calculate"
 
         Column {
             width: parent.width
             spacing: Theme.spacingSmall
-
-            UiText { role: "title"; text: i18n.tr("Calculator") }
 
             TextField {
                 id: input
@@ -155,7 +155,9 @@ Item {
                     delegate: UiButton {
                         required property var modelData
                         width: (parent.width - 18) / 4
-                        variant: "ghost"
+                        // Keypad reads as a calculator, not a wireframe: quiet
+                        // tonal keys, "=" as the one primary action.
+                        variant: modelData === "=" ? "primary" : "tonal"
                         text: modelData
                         accessibleName: modelData === "C" ? i18n.tr("Clear calculator") : (modelData === "=" ? i18n.tr("Compute result") : i18n.tr("Calculator key") + " " + modelData)
                         tooltipText: modelData === "C" ? i18n.tr("Clear") : (modelData === "=" ? i18n.tr("Compute result") : i18n.tr("Insert") + " " + modelData)

@@ -94,26 +94,23 @@ Item {
         anchors.centerIn: parent
         width: root.hostAvailableWidth > 0 ? Math.min(root.hostAvailableWidth, 320) : 320
         Accessible.name: root.note.length > 0 ? i18n.tr("Session intention: %1").arg(root.note) : i18n.tr("Session intention: not set")
+        title: i18n.tr("Session intention")
+        icon: "edit_note"
 
         Column {
             width: parent.width
             spacing: Theme.spacingSmall
 
-            UiText {
-                role: "title"
-                text: i18n.tr("Session intention")
-            }
-
             UiChip {
                 text: i18n.tr("Session only — never saved")
-                tone: "primary"
+                tone: "neutral"
             }
 
             UiText {
                 visible: !root.editing
-                role: "body"
                 width: parent.width
-                text: root.note.length > 0 ? root.note : i18n.tr("Write one line for this session. It is never saved.")
+                role: root.note.length > 0 ? "title" : "caption"
+                text: root.note.length > 0 ? root.note : i18n.tr("No intention set yet.")
             }
 
             TextField {
@@ -178,11 +175,6 @@ Item {
                 }
             }
 
-            UiText {
-                role: "caption"
-                width: parent.width
-                text: i18n.tr("Closing the shell or disabling this extension erases this line. For a note that is saved, use Quick Notes.")
-            }
         }
     }
 }
