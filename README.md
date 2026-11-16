@@ -1,8 +1,11 @@
 # HorneroOS Plugins — official extensions marketplace
 
 First-party extensions for Hornero Shell, plus the curated catalogue
-the Shell and `horneroctl` use for discovery. Hornero 199X identity,
-real software, no fake screenshots.
+the Shell and `horneroctl` use for discovery. Real software, real data,
+no fake screenshots. Extensions are moving to
+[Hornero Signal](https://github.com/HorneroOS/docs/blob/main/development/rfc-0001-hornero-signal.md),
+the HorneroOS design language, through PluginKit; that migration is in
+progress ([HorneroOS/.github#28](https://github.com/HorneroOS/.github/issues/28)).
 
 ## Trust model (read this first)
 
