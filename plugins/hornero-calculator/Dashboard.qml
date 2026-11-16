@@ -122,12 +122,12 @@ Item {
         id: card
         anchors.fill: parent
         Accessible.name: i18n.tr("Calculator")
+        title: i18n.tr("Calculator")
+        icon: "calculate"
 
         Column {
             width: parent.width
             spacing: Theme.spacingSmall
-
-            UiText { role: "title"; text: i18n.tr("Calculator") }
 
             TextField {
                 id: input

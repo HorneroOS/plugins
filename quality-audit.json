@@ -1052,16 +1052,16 @@
           "note": "No interactive controls in the entrypoint; static text only (static probe)."
         },
         "translation": {
-          "status": "fail",
-          "note": "User-visible string literals are not wrapped in qsTr/qsTrId (static probe)."
+          "status": "pass",
+          "note": "User-visible strings go through the PluginKit Translations facade; es locale shipped."
         },
         "settings": {
           "status": "na",
           "note": "No settings declared in the manifest; none are recorded as needed yet. Revisit if behaviour becomes user-configurable."
         },
         "themeTokens": {
-          "status": "fail",
-          "note": "PluginKit Theme tokens are not used, or hard-coded chrome colours are present (static probe)."
+          "status": "pass",
+          "note": "Rebuilt on PluginKit: UiCard/UiText/UiIcon/UiState with Theme tokens only, no hard-coded chrome colours."
         },
         "screenshots": {
           "status": "fail",

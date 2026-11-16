@@ -127,7 +127,7 @@ Item {
         UiButton {
             id: indicator
             variant: "ghost"
-            text: "="
+            iconName: "calculate"
             tooltipText: i18n.tr("Calculator: activate for a quick expression")
             accessibleName: i18n.tr("Calculator quick action")
             onClicked: popover.toggle()

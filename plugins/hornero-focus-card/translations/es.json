@@ -15,5 +15,6 @@
   "Next focus line": "Línea de foco siguiente",
   "Pause rotation": "Pausar la rotación",
   "Keep the current line instead of rotating": "Conservar la línea actual en vez de rotar",
-  "Focus: %1": "Foco: %1"
+  "Focus: %1": "Foco: %1",
+  "Focus": "Foco"
 }

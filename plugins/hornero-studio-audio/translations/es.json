@@ -19,5 +19,6 @@
   "Studio mode unavailable: horneroctl returned no usable studio mode.": "Modo Studio no disponible: horneroctl no devolvió un modo Studio utilizable.",
   "Temporary Performance off": "Rendimiento temporal desactivado",
   "Temporary Performance on": "Rendimiento temporal activado",
-  "Unknown mode": "Modo desconocido"
+  "Unknown mode": "Modo desconocido",
+  "Read-only. Change modes in Control Center.": "Solo lectura. Cambiá el modo en el Centro de control."
 }

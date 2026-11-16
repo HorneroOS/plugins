@@ -1,5 +1,6 @@
 import QtQuick
 import Quickshell.Io
+import Hornero.PluginKit
 
 // Hornero Studio Jobs — a read-only render/export monitor card.
 // Data comes only from the typed contract `horneroctl --json studio
@@ -13,7 +14,7 @@ Item {
     property bool available: true
     property string buffer: ""
 
-    implicitWidth: 300
+    implicitWidth: 320
     implicitHeight: content.implicitHeight
 
     function refresh(): void {
@@ -29,6 +30,12 @@ Item {
     }
 
     Component.onCompleted: refresh()
+
+    Translations {
+        id: i18n
+
+        pluginId: "hornero-studio-jobs"
+    }
 
     Timer {
         interval: 30000
@@ -73,37 +80,101 @@ Item {
         }
     }
 
-    Column {
+    function stateName(state: string): string {
+        if (state === "succeeded")
+            return i18n.tr("succeeded");
+        if (state === "failed")
+            return i18n.tr("failed");
+        if (state === "cancelled")
+            return i18n.tr("cancelled");
+        if (state === "running")
+            return i18n.tr("running");
+        if (state === "queued")
+            return i18n.tr("queued");
+        return state;
+    }
+
+    function stateIcon(state: string): string {
+        if (state === "succeeded")
+            return "check_circle";
+        if (state === "failed" || state === "cancelled")
+            return "error";
+        if (state === "running")
+            return "progress_activity";
+        return "schedule";
+    }
+
+    function stateColor(state: string): color {
+        if (state === "succeeded")
+            return Theme.success;
+        if (state === "failed" || state === "cancelled")
+            return Theme.error;
+        if (state === "running")
+            return Theme.primary;
+        return Theme.onSurfaceVariant;
+    }
+
+    UiCard {
         id: content
 
-        spacing: 4
+        width: parent.width
+        title: i18n.tr("Studio jobs")
+        icon: "movie"
 
-        Text {
-            color: palette.windowText
-            text: root.available ? (root.jobs.length > 0 ? "Studio jobs" : "No Studio jobs yet") : "Studio jobs unavailable"
-            font.bold: true
-        }
+        Column {
+            width: parent.width
+            spacing: Theme.spacingSmall
 
-        Text {
-            color: palette.windowText
-            visible: root.available && root.jobs.length === 0
-            text: "Submit one: horneroctl studio jobs submit"
-        }
+            UiState {
+                visible: !root.available
+                width: parent.width
+                kind: "error"
+                message: i18n.tr("Studio jobs are unavailable: horneroctl did not answer.")
+            }
 
-        Text {
-            color: palette.windowText
-            visible: !root.available
-            text: "Is horneroctl installed?"
-        }
+            UiState {
+                visible: root.available && root.jobs.length === 0
+                width: parent.width
+                kind: "empty"
+                message: i18n.tr("No jobs yet. Start one with horneroctl studio jobs submit.")
+            }
 
-        Repeater {
-            model: root.jobs
+            Repeater {
+                model: root.jobs
 
-            Text {
-                color: palette.windowText
-                required property var modelData
+                delegate: Row {
+                    required property var modelData
 
-                text: `${modelData.state} · ${modelData.adapter} · ${root.basename(modelData.output)}`
+                    width: parent.width
+                    spacing: Theme.spacingSmall
+
+                    UiIcon {
+                        anchors.verticalCenter: parent.verticalCenter
+                        icon: root.stateIcon(modelData.state)
+                        fill: modelData.state === "succeeded" ? 1 : 0
+                        color: root.stateColor(modelData.state)
+                    }
+
+                    Column {
+                        width: parent.width - Theme.iconSize * 2 - Theme.spacingSmall
+                        spacing: 0
+
+                        UiText {
+                            width: parent.width
+                            text: root.basename(modelData.output)
+                            elide: Text.ElideMiddle
+                            wrapMode: Text.NoWrap
+                        }
+
+                        UiText {
+                            width: parent.width
+                            role: "caption"
+                            text: modelData.adapter + " · " + root.stateName(modelData.state)
+                            elide: Text.ElideRight
+                            wrapMode: Text.NoWrap
+                        }
+                    }
+                }
             }
         }
     }

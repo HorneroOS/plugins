@@ -22,5 +22,6 @@
   "Cancel editing": "Cancelar la edición",
   "Closing the shell or disabling this extension erases this line. For a note that is saved, use Quick Notes.": "Al cerrar el shell o desactivar esta extensión, esta línea se borra. Para una nota guardada, usá Notas rápidas.",
   "Session intention: %1": "Intención de la sesión: %1",
-  "Session intention: not set": "Intención de la sesión: sin definir"
+  "Session intention: not set": "Intención de la sesión: sin definir",
+  "No intention set yet.": "Todavía no hay una intención."
 }

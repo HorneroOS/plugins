@@ -105,15 +105,12 @@ Item {
 
         anchors.fill: parent
         Accessible.name: i18n.tr("Studio Audio")
+        title: i18n.tr("Studio Audio")
+        icon: "graphic_eq"
 
         Column {
             width: parent.width
             spacing: Theme.spacingSmall
-
-            UiText {
-                role: "title"
-                text: i18n.tr("Studio Audio")
-            }
 
             UiState {
                 visible: !root.available
@@ -159,11 +156,12 @@ Item {
             UiText {
                 width: parent.width
                 role: "caption"
-                text: i18n.tr("Studio mode and Temporary Performance are shown read-only. Switching modes stays in horneroctl and Control Center.")
+                text: i18n.tr("Read-only. Change modes in Control Center.")
             }
 
             UiButton {
                 variant: "ghost"
+                iconName: "refresh"
                 text: i18n.tr("Refresh")
                 tooltipText: i18n.tr("Reload the studio mode from horneroctl")
                 accessibleName: i18n.tr("Refresh studio mode")
