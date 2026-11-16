@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedFrom": "9884efc0d9b1e408ca003ae9621d028971169daf",
+  "generatedFrom": "3204b6689168c982246596468054ebe5e09d5707",
   "plugins": [
     {
       "id": "hornero-agenda",
@@ -151,7 +151,7 @@
     {
       "id": "hornero-calculator",
       "name": "Hornero Calculator",
-      "version": "2.2.0",
+      "version": "2.2.1",
       "description": "Utility Tools 2.0 calculator: bar quick action and compact dashboard detail over a safe tokenizer/recursive-descent parser (+ - * / %, parentheses, decimals, unary minus). Division by zero shows Error.",
       "author": "HorneroOS contributors",
       "license": "MIT",
@@ -176,7 +176,7 @@
       },
       "trust": "official",
       "path": "plugins/hornero-calculator",
-      "sha256": "aa7f809bd2ee202b15f904424bd0da9966c124b7d707ef63459ab202c75e8dcb"
+      "sha256": "757e02d949b5f5b2175851e5c4002780ecabcc6bbdf8d35a65ef54d447d8be8e"
     },
     {
       "id": "hornero-calendar",
@@ -375,7 +375,7 @@
     {
       "id": "hornero-dual-clock",
       "name": "Hornero Dual Clock",
-      "version": "2.1.1",
+      "version": "2.1.2",
       "description": "Dual Clock 2.0: local time next to a second zone (UTC by default, as in 1.x) in the bar, with a details popover. Pure-JS rule-based offsets, no processes or network.",
       "author": "HorneroOS contributors",
       "license": "MIT",
@@ -419,7 +419,7 @@
       },
       "trust": "official",
       "path": "plugins/hornero-dual-clock",
-      "sha256": "c2edf3775e781fb42197bef9600520ecf1aef8942dd39e1579838c903aca5f18"
+      "sha256": "7ff7268366b0526be6b7b9baf45d56b6c2fb367bbcbfdab444edb97eb77835b6"
     },
     {
       "id": "hornero-focus-card",
@@ -701,7 +701,7 @@
     {
       "id": "hornero-pomodoro",
       "name": "Hornero Pomodoro",
-      "version": "2.2.1",
+      "version": "2.2.2",
       "description": "Pomodoro 2.0: compact bar focus timer with a popover, deadline-correct timing across sleep/reload, a typed session-length setting and a completion toast. No processes, no network.",
       "author": "HorneroOS contributors",
       "license": "MIT",
@@ -736,7 +736,7 @@
       },
       "trust": "official",
       "path": "plugins/hornero-pomodoro",
-      "sha256": "d8084ef167ba771a9c72d64f0b8504abafb360828b024e8206a5237b08da78fc"
+      "sha256": "dff3d5e31cc33ac59d47177c198a47a07c4b529d7f1b950256921ebbebfe4ef6"
     },
     {
       "id": "hornero-quick-notes",
