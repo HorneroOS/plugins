@@ -375,7 +375,7 @@
     {
       "id": "hornero-dual-clock",
       "name": "Hornero Dual Clock",
-      "version": "2.1.0",
+      "version": "2.1.1",
       "description": "Dual Clock 2.0: local time next to a second zone (UTC by default, as in 1.x) in the bar, with a details popover. Pure-JS rule-based offsets, no processes or network.",
       "author": "HorneroOS contributors",
       "license": "MIT",
@@ -419,7 +419,7 @@
       },
       "trust": "official",
       "path": "plugins/hornero-dual-clock",
-      "sha256": "ab04388199eaa04bc7013d9607120ca6f96b6759c286ec6ed838160fb31d2e62"
+      "sha256": "da93aa4babbcc45b2bf11177ddfdb9d1387a27ad2da3029c413fbacf66f917e9"
     },
     {
       "id": "hornero-focus-card",
@@ -701,7 +701,7 @@
     {
       "id": "hornero-pomodoro",
       "name": "Hornero Pomodoro",
-      "version": "2.2.0",
+      "version": "2.2.1",
       "description": "Pomodoro 2.0: compact bar focus timer with a popover, deadline-correct timing across sleep/reload, a typed session-length setting and a completion toast. No processes, no network.",
       "author": "HorneroOS contributors",
       "license": "MIT",
@@ -736,7 +736,7 @@
       },
       "trust": "official",
       "path": "plugins/hornero-pomodoro",
-      "sha256": "a56464a9adf3cecdc7efc0ce461a03c6a4754c8e41cb54d41d56d751c489f424"
+      "sha256": "f1aafcbce7cbdb26685f25fdb797e7be0137cd41571a0765c9b150373aeee632"
     },
     {
       "id": "hornero-quick-notes",
@@ -848,7 +848,7 @@
     {
       "id": "hornero-studio-audio",
       "name": "Hornero Studio Audio",
-      "version": "2.3.0",
+      "version": "2.3.1",
       "description": "Audio Extensions 2.0: bar indicator, popover and dashboard card for the Studio audio mode and Temporary Performance state from the typed horneroctl contract. Read-only; mode changes stay in the CLI and Control Center.",
       "author": "HorneroOS contributors",
       "license": "MIT",
@@ -877,7 +877,7 @@
       },
       "trust": "official",
       "path": "plugins/hornero-studio-audio",
-      "sha256": "5bf16a67d41701a5aa602b64bdc89b13f499ed6447b3d9b10f2c2c751e7af6ff"
+      "sha256": "549bd9939430c0513e8512e992f37383228fd954004d9c30565b2b1a4a5624f1"
     },
     {
       "id": "hornero-studio-jobs",

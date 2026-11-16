@@ -196,7 +196,7 @@ Item {
             const p = root.secondParts(Time.date);
             return root.localTimeText(Time.date) + "\n" + root.fmtHms(p.hours, p.minutes, p.seconds) + " " + root.secondSuffix(p);
         }
-        tooltipText: i18n.tr("Dual clock: activate for time zone details")
+        tooltipText: popover.opened ? "" : i18n.tr("Dual clock: activate for time zone details")
         accessibleName: {
             const p = root.secondParts(Time.date);
             return i18n.tr("Local time %1, %2 time %3").arg(root.localTimeText(Time.date)).arg(root.cityName(root.secondZone)).arg(root.fmtHms(p.hours, p.minutes, p.seconds));

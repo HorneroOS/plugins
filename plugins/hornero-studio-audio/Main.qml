@@ -121,7 +121,7 @@ Item {
             // One native icon per mode; the mode name lives in the tooltip.
             iconName: !root.available ? "music_off" : root.mode === "low-latency" ? "speed" : root.mode === "advanced" ? "tune" : "graphic_eq"
             iconFill: root.performance ? 1 : 0
-            tooltipText: root.statusText
+            tooltipText: popover.opened ? "" : root.statusText
             accessibleName: i18n.tr("Studio audio details")
             onClicked: popover.toggle()
         }
