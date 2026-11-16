@@ -121,7 +121,7 @@ Item {
             // One native icon per mode; the mode name lives in the tooltip.
             iconName: !root.available ? "music_off" : root.mode === "low-latency" ? "speed" : root.mode === "advanced" ? "tune" : "graphic_eq"
             iconFill: root.performance ? 1 : 0
-            tooltipText: root.statusText
+            tooltipText: popover.opened ? "" : root.statusText
             accessibleName: i18n.tr("Studio audio details")
             onClicked: popover.toggle()
         }
@@ -153,8 +153,8 @@ Item {
         // subtitle, a caption state line, then label/value rows — no card
         // title, hero metrics, outlined chip or floating tooltip.
         Column {
-            width: 300
-            spacing: Theme.spacingSmall
+            width: 320
+            spacing: Theme.spacing
 
             UiText {
                 role: "subtitle"
@@ -207,7 +207,7 @@ Item {
             }
 
             UiButton {
-                variant: "tonal"
+                width: parent.width
                 text: i18n.tr("Refresh")
                 accessibleName: i18n.tr("Refresh studio mode")
                 onClicked: root.refresh()

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedFrom": "98b7ae64a05983ee8acd5f42b9896f47b5394cec",
+  "generatedFrom": "9884efc0d9b1e408ca003ae9621d028971169daf",
   "plugins": [
     {
       "id": "hornero-agenda",
@@ -375,7 +375,7 @@
     {
       "id": "hornero-dual-clock",
       "name": "Hornero Dual Clock",
-      "version": "2.1.0",
+      "version": "2.1.1",
       "description": "Dual Clock 2.0: local time next to a second zone (UTC by default, as in 1.x) in the bar, with a details popover. Pure-JS rule-based offsets, no processes or network.",
       "author": "HorneroOS contributors",
       "license": "MIT",
@@ -419,7 +419,7 @@
       },
       "trust": "official",
       "path": "plugins/hornero-dual-clock",
-      "sha256": "ab04388199eaa04bc7013d9607120ca6f96b6759c286ec6ed838160fb31d2e62"
+      "sha256": "c2edf3775e781fb42197bef9600520ecf1aef8942dd39e1579838c903aca5f18"
     },
     {
       "id": "hornero-focus-card",
@@ -701,7 +701,7 @@
     {
       "id": "hornero-pomodoro",
       "name": "Hornero Pomodoro",
-      "version": "2.2.0",
+      "version": "2.2.1",
       "description": "Pomodoro 2.0: compact bar focus timer with a popover, deadline-correct timing across sleep/reload, a typed session-length setting and a completion toast. No processes, no network.",
       "author": "HorneroOS contributors",
       "license": "MIT",
@@ -736,7 +736,7 @@
       },
       "trust": "official",
       "path": "plugins/hornero-pomodoro",
-      "sha256": "a56464a9adf3cecdc7efc0ce461a03c6a4754c8e41cb54d41d56d751c489f424"
+      "sha256": "d8084ef167ba771a9c72d64f0b8504abafb360828b024e8206a5237b08da78fc"
     },
     {
       "id": "hornero-quick-notes",
@@ -848,7 +848,7 @@
     {
       "id": "hornero-studio-audio",
       "name": "Hornero Studio Audio",
-      "version": "2.3.0",
+      "version": "2.3.1",
       "description": "Audio Extensions 2.0: bar indicator, popover and dashboard card for the Studio audio mode and Temporary Performance state from the typed horneroctl contract. Read-only; mode changes stay in the CLI and Control Center.",
       "author": "HorneroOS contributors",
       "license": "MIT",
@@ -877,7 +877,7 @@
       },
       "trust": "official",
       "path": "plugins/hornero-studio-audio",
-      "sha256": "5bf16a67d41701a5aa602b64bdc89b13f499ed6447b3d9b10f2c2c751e7af6ff"
+      "sha256": "d9083013c85a208eebc169d9b47d131263a1cb9c36a2b24d641cb9c7222f742f"
     },
     {
       "id": "hornero-studio-jobs",

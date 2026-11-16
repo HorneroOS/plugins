@@ -152,7 +152,7 @@ Item {
         iconName: root.finished ? "alarm" : "timer"
         iconFill: root.running || root.finished ? 1 : 0
         text: root.finished ? i18n.tr("Done") : root.fmt(root.remainingSeconds)
-        tooltipText: i18n.tr("Pomodoro: activate for timer controls")
+        tooltipText: popover.opened ? "" : i18n.tr("Pomodoro: activate for timer controls")
         accessibleName: root.finished ? i18n.tr("Pomodoro finished") : i18n.tr("Pomodoro %1 remaining").arg(root.fmt(root.remainingSeconds))
         onClicked: popover.toggle()
     }
@@ -164,8 +164,8 @@ Item {
         accessibleName: i18n.tr("Pomodoro")
 
         Column {
-            width: 280
-            spacing: Theme.spacingSmall
+            width: 320
+            spacing: Theme.spacing
 
             UiText {
                 role: "subtitle"
