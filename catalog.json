@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedFrom": "d69ab55936252172fcf40af53a9b1330324eb543",
+  "generatedFrom": "7da2ec759a285c43087e24bd47574bbf8e893904",
   "plugins": [
     {
       "id": "hornero-agenda",
@@ -151,7 +151,7 @@
     {
       "id": "hornero-calculator",
       "name": "Hornero Calculator",
-      "version": "2.1.0",
+      "version": "2.2.0",
       "description": "Utility Tools 2.0 calculator: bar quick action and compact dashboard detail over a safe tokenizer/recursive-descent parser (+ - * / %, parentheses, decimals, unary minus). Division by zero shows Error.",
       "author": "HorneroOS contributors",
       "license": "MIT",
@@ -176,7 +176,7 @@
       },
       "trust": "official",
       "path": "plugins/hornero-calculator",
-      "sha256": "ef3b8d5c3a0c6c857e4f8f8710311c91cc4423f60c89a90016d9fed9bb66089d"
+      "sha256": "aa7f809bd2ee202b15f904424bd0da9966c124b7d707ef63459ab202c75e8dcb"
     },
     {
       "id": "hornero-calendar",
@@ -848,7 +848,7 @@
     {
       "id": "hornero-studio-audio",
       "name": "Hornero Studio Audio",
-      "version": "2.1.0",
+      "version": "2.2.0",
       "description": "Audio Extensions 2.0: bar indicator, popover and dashboard card for the Studio audio mode and Temporary Performance state from the typed horneroctl contract. Read-only; mode changes stay in the CLI and Control Center.",
       "author": "HorneroOS contributors",
       "license": "MIT",
@@ -877,7 +877,7 @@
       },
       "trust": "official",
       "path": "plugins/hornero-studio-audio",
-      "sha256": "b6e67c3d3d962c3cf60d78d43ab2c2e1c8335bee5023d0c865a27ba8240ddc4e"
+      "sha256": "2a41a532d9979332f1571a5c4cece52eb33f728fde5d79ed9c446e077c3d5308"
     },
     {
       "id": "hornero-studio-jobs",
