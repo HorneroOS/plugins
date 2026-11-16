@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedFrom": "74187b00d13f8aad49a583b02fd8bf5c7e59c8f5",
+  "generatedFrom": "9884efc0d9b1e408ca003ae9621d028971169daf",
   "plugins": [
     {
       "id": "hornero-agenda",
@@ -419,7 +419,7 @@
       },
       "trust": "official",
       "path": "plugins/hornero-dual-clock",
-      "sha256": "da93aa4babbcc45b2bf11177ddfdb9d1387a27ad2da3029c413fbacf66f917e9"
+      "sha256": "c2edf3775e781fb42197bef9600520ecf1aef8942dd39e1579838c903aca5f18"
     },
     {
       "id": "hornero-focus-card",
@@ -736,7 +736,7 @@
       },
       "trust": "official",
       "path": "plugins/hornero-pomodoro",
-      "sha256": "f1aafcbce7cbdb26685f25fdb797e7be0137cd41571a0765c9b150373aeee632"
+      "sha256": "d8084ef167ba771a9c72d64f0b8504abafb360828b024e8206a5237b08da78fc"
     },
     {
       "id": "hornero-quick-notes",
@@ -877,7 +877,7 @@
       },
       "trust": "official",
       "path": "plugins/hornero-studio-audio",
-      "sha256": "549bd9939430c0513e8512e992f37383228fd954004d9c30565b2b1a4a5624f1"
+      "sha256": "d9083013c85a208eebc169d9b47d131263a1cb9c36a2b24d641cb9c7222f742f"
     },
     {
       "id": "hornero-studio-jobs",
