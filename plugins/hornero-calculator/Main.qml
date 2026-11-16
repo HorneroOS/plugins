@@ -175,7 +175,7 @@ Item {
                 visible: root.quickText === ""
                 width: parent.width
                 kind: "empty"
-                message: i18n.tr("Type an expression and press Compute. Division by zero shows Error.")
+                message: i18n.tr("Type an expression and press Enter.")
             }
 
             UiText {
@@ -184,11 +184,6 @@ Item {
                 text: root.quickText
             }
 
-            UiText {
-                width: parent.width
-                role: "caption"
-                text: i18n.tr("Full controls are in the dashboard Utilities panel.")
-            }
         }
     }
 }

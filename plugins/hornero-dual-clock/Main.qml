@@ -185,7 +185,7 @@ Item {
         const absMin = Math.abs(diffMin);
         const hours = Math.floor(absMin / 60);
         const mins = absMin % 60;
-        return sign + i18n.formatNumber(hours) + ":" + pad2(mins) + " " + (diffMin > 0 ? i18n.tr("ahead of local time") : i18n.tr("behind local time"));
+        return sign + String(hours) + ":" + pad2(mins) + " " + (diffMin > 0 ? i18n.tr("ahead of local time") : i18n.tr("behind local time"));
     }
 
     UiButton {
@@ -250,8 +250,9 @@ Item {
             }
 
             UiText {
+                width: parent.width
                 role: "caption"
-                text: i18n.tr("Other zones follow the DST rules built into this extension; there is no system timezone database for zones outside its table.")
+                text: i18n.tr("Daylight saving follows built-in rules.")
             }
         }
     }

@@ -21,5 +21,6 @@
   "Tokyo": "Tokio",
   "UTC": "UTC",
   "ahead of local time": "por delante de la hora local",
-  "behind local time": "por detrás de la hora local"
+  "behind local time": "por detrás de la hora local",
+  "Daylight saving follows built-in rules.": "El horario de verano sigue reglas integradas."
 }
