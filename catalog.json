@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedFrom": "01544b56c6ea63d6033d0ffd7503fe494216c14c",
+  "generatedFrom": "d69ab55936252172fcf40af53a9b1330324eb543",
   "plugins": [
     {
       "id": "hornero-agenda",
@@ -151,7 +151,7 @@
     {
       "id": "hornero-calculator",
       "name": "Hornero Calculator",
-      "version": "2.0.1",
+      "version": "2.1.0",
       "description": "Utility Tools 2.0 calculator: bar quick action and compact dashboard detail over a safe tokenizer/recursive-descent parser (+ - * / %, parentheses, decimals, unary minus). Division by zero shows Error.",
       "author": "HorneroOS contributors",
       "license": "MIT",
@@ -176,7 +176,7 @@
       },
       "trust": "official",
       "path": "plugins/hornero-calculator",
-      "sha256": "f0e91164b886bd4dd0ae1e1da8463f3392cdd8ef6750d83c70999a5039131dbf"
+      "sha256": "ef3b8d5c3a0c6c857e4f8f8710311c91cc4423f60c89a90016d9fed9bb66089d"
     },
     {
       "id": "hornero-calendar",
@@ -424,7 +424,7 @@
     {
       "id": "hornero-focus-card",
       "name": "Hornero Focus Card",
-      "version": "2.0.0",
+      "version": "2.1.0",
       "description": "Focus Card 2.0: dashboard card with the locale date and a rotating original one-line focus reminder, from PluginKit Time. Keyboard Previous/Next and pause, optional own leading line, no processes or network.",
       "author": "HorneroOS contributors",
       "license": "MIT",
@@ -457,7 +457,7 @@
       },
       "trust": "official",
       "path": "plugins/hornero-focus-card",
-      "sha256": "71eceb1b491b2371ed956c7dd49c9a6bd33cf105b0edc246e35376a1c7652f94"
+      "sha256": "871fc1c8572c4e844fb2f26b2760b4b2ea3a390dc5bee953f833f1d76dbf6ade"
     },
     {
       "id": "hornero-json-tools",
@@ -701,7 +701,7 @@
     {
       "id": "hornero-pomodoro",
       "name": "Hornero Pomodoro",
-      "version": "2.0.0",
+      "version": "2.1.0",
       "description": "Pomodoro 2.0: compact bar focus timer with a popover, deadline-correct timing across sleep/reload, a typed session-length setting and a completion toast. No processes, no network.",
       "author": "HorneroOS contributors",
       "license": "MIT",
@@ -736,7 +736,7 @@
       },
       "trust": "official",
       "path": "plugins/hornero-pomodoro",
-      "sha256": "2fbdacc6a1e03c91e7c1c461ce49ddca4bdc56a353386b59b2e712b3b852d047"
+      "sha256": "a138e310acd528b9a75fc75e6bad28f83570451b5391d35aec92c346fd82fedf"
     },
     {
       "id": "hornero-quick-notes",
@@ -779,7 +779,7 @@
     {
       "id": "hornero-quiet-notes",
       "name": "Hornero Quiet Notes",
-      "version": "2.0.0",
+      "version": "2.1.0",
       "description": "Quiet Notes 2.0: dashboard card for one short session-only intention. The line is never saved (in-memory only, as in 1.x) and the card says so. Keyboard-first capture, no processes or network.",
       "author": "HorneroOS contributors",
       "license": "MIT",
@@ -806,7 +806,7 @@
       },
       "trust": "official",
       "path": "plugins/hornero-quiet-notes",
-      "sha256": "6e7c53610e1ed3a16361ade283577a45c9b36ce08534f05228bd69560cc6706d"
+      "sha256": "8e2a04a22021803c61c80e7b10330e67d5893a2d06a10f78d0427719e80140b6"
     },
     {
       "id": "hornero-stopwatch",
@@ -848,7 +848,7 @@
     {
       "id": "hornero-studio-audio",
       "name": "Hornero Studio Audio",
-      "version": "2.0.0",
+      "version": "2.1.0",
       "description": "Audio Extensions 2.0: bar indicator, popover and dashboard card for the Studio audio mode and Temporary Performance state from the typed horneroctl contract. Read-only; mode changes stay in the CLI and Control Center.",
       "author": "HorneroOS contributors",
       "license": "MIT",
@@ -877,12 +877,12 @@
       },
       "trust": "official",
       "path": "plugins/hornero-studio-audio",
-      "sha256": "1f079648e3706cf79d2afea145e6aa498dd584ce5d8d2ce58fbf22f4c42b00c9"
+      "sha256": "b6e67c3d3d962c3cf60d78d43ab2c2e1c8335bee5023d0c865a27ba8240ddc4e"
     },
     {
       "id": "hornero-studio-jobs",
       "name": "Hornero Studio Jobs",
-      "version": "1.0.1",
+      "version": "1.1.0",
       "description": "Render and export job monitor for HorneroOS Studio: shows queued, running, finished and interrupted jobs from the typed horneroctl studio jobs contract. Read-only; jobs are submitted and cancelled from the CLI or Control Center.",
       "author": "HorneroOS contributors",
       "license": "MIT",
@@ -898,7 +898,7 @@
       },
       "trust": "official",
       "path": "plugins/hornero-studio-jobs",
-      "sha256": "e827778fc17f23974c38ce51d7db8adca3123fca2534f944d0e7619db05888ef"
+      "sha256": "601ed0dc2778c7542cbf74fdce355c6c6650f8076037735b76e98ea6f8a400b0"
     },
     {
       "id": "hornero-sun-card",
