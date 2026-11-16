@@ -211,8 +211,8 @@ Item {
         accessibleName: i18n.tr("Dual Clock")
 
         Column {
-            width: 300
-            spacing: Theme.spacingSmall
+            width: 320
+            spacing: Theme.spacing
 
             UiText {
                 role: "subtitle"

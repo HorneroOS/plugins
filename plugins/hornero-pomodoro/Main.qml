@@ -164,8 +164,8 @@ Item {
         accessibleName: i18n.tr("Pomodoro")
 
         Column {
-            width: 280
-            spacing: Theme.spacingSmall
+            width: 320
+            spacing: Theme.spacing
 
             UiText {
                 role: "subtitle"

@@ -153,8 +153,8 @@ Item {
         // subtitle, a caption state line, then label/value rows — no card
         // title, hero metrics, outlined chip or floating tooltip.
         Column {
-            width: 300
-            spacing: Theme.spacingSmall
+            width: 320
+            spacing: Theme.spacing
 
             UiText {
                 role: "subtitle"
@@ -207,7 +207,7 @@ Item {
             }
 
             UiButton {
-                variant: "tonal"
+                width: parent.width
                 text: i18n.tr("Refresh")
                 accessibleName: i18n.tr("Refresh studio mode")
                 onClicked: root.refresh()
