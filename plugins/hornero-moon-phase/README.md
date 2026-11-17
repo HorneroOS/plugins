@@ -34,7 +34,8 @@ them.
   `showNextPhases` (boolean, default **true**; additive derived
   rows) and `dataDensity` (enum `compact`/`standard`/`detailed`,
   default **`standard`** — the 1.x density; `detailed` adds the
-  approximation note in the widget).
+  approximation note in the widget). `hemisphere` (enum `north`/`south`,
+  default **north**) mirrors the lit side of the disc for the southern sky.
 - 1.x declared no settings, so no stored values migrate.
 - No processes, no network, no facade subscription: the hourly
   timer only recomputes local arithmetic, as in 1.x.

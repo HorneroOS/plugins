@@ -27,7 +27,10 @@ The host suspends desktop widgets in the `gaming` experience.
 ## Settings
 
 `showCores` (default `true`), `showTemperatures` (default `true`),
-`warnPercent` (50-100, default `85`).
+`warnPercent` (50-100, default `85`), `showGpu` and `showDisk` (default
+`true`), `temperatureUnit` (`celsius` default, or `fahrenheit`; a display
+conversion of the provider's Celsius value). The scope window length is fixed
+by the shared Telemetry history, so it is not a setting.
 
 ## Enable
 

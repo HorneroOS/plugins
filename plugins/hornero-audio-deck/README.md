@@ -25,7 +25,8 @@ widgets in the `gaming` experience.
 
 ## Settings
 
-`showSpectrum` (default `true`), `showArtist` (default `true`).
+`showSpectrum` (default `true`), `showArtist` (default `true`), `bandCount` (4-24, default `24`; fewer bands
+average neighbouring real bands, more are never invented).
 
 ## Enable
 

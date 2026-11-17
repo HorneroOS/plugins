@@ -2,7 +2,7 @@
   "schemaVersion": 3,
   "id": "hornero-calendar",
   "name": "Hornero Calendar",
-  "version": "3.0.2",
+  "version": "3.1.0",
   "description": "Calendar 3.0 on Hornero Signal: a desktop widget with a display clock, the full date and a square-celled month grid over the shared time provider. Dates only; no events source.",
   "author": "HorneroOS contributors",
   "license": "MIT",
@@ -31,6 +31,10 @@
       "minShellVersion": "1.2.79"
     },
     "changelog": [
+      {
+        "version": "3.1.0",
+        "notes": "Setting: date format (long, short or ISO)."
+      },
       {
         "version": "3.0.2",
         "notes": "The duplicate shell time line is off by default (it printed 06:48AM under the clock)."
@@ -94,6 +98,16 @@
           "sunday"
         ],
         "description": "First weekday column of the month grid. PluginKit does not expose the locale week start."
+      },
+      "dateStyle": {
+        "type": "enum",
+        "default": "long",
+        "options": [
+          "long",
+          "short",
+          "iso"
+        ],
+        "description": "Date line format: long (17 November 2026), short (17 Nov 2026) or iso (2026-11-17)."
       }
     },
     "providers": [

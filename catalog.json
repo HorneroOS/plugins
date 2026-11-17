@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedFrom": "6c38e4887208bc5ca67f2424144628400029c7c9",
+  "generatedFrom": "4451501570f7f9e336c2aa6908b4b1193058f979",
   "plugins": [
     {
       "id": "hornero-agenda",
@@ -72,7 +72,7 @@
     {
       "id": "hornero-audio-deck",
       "name": "Hornero Audio Deck",
-      "version": "1.0.0",
+      "version": "1.1.0",
       "description": "Audio Deck: a desktop instrument over the shared media, audio and spectrum providers: the real PipeWire spectrum as VU strips, the current track and the output volume. Real data only.",
       "author": "HorneroOS contributors",
       "license": "MIT",
@@ -97,12 +97,19 @@
             "type": "boolean",
             "default": true,
             "description": "Show the artist and album line of the current track."
+          },
+          "bandCount": {
+            "type": "integer",
+            "default": 24,
+            "minimum": 4,
+            "maximum": 24,
+            "description": "Spectrum bands drawn. Fewer bands average neighbouring bands of the real PipeWire spectrum; it never draws more than the provider reports."
           }
         }
       },
       "trust": "official",
       "path": "plugins/hornero-audio-deck",
-      "sha256": "dfb8f554e31402d5b546577007fbc62f36fc8f0e4a3be5a7591b9a4c61f515f2"
+      "sha256": "64986ae0fc1042bc15cefb28816d5ef5deb743df6927433f021b0cb4b3f105b3"
     },
     {
       "id": "hornero-base-converter",
@@ -207,7 +214,7 @@
     {
       "id": "hornero-calendar",
       "name": "Hornero Calendar",
-      "version": "3.0.2",
+      "version": "3.1.0",
       "description": "Calendar 3.0 on Hornero Signal: a desktop widget with a display clock, the full date and a square-celled month grid over the shared time provider. Dates only; no events source.",
       "author": "HorneroOS contributors",
       "license": "MIT",
@@ -241,6 +248,16 @@
               "sunday"
             ],
             "description": "First weekday column of the month grid. PluginKit does not expose the locale week start."
+          },
+          "dateStyle": {
+            "type": "enum",
+            "default": "long",
+            "options": [
+              "long",
+              "short",
+              "iso"
+            ],
+            "description": "Date line format: long (17 November 2026), short (17 Nov 2026) or iso (2026-11-17)."
           }
         },
         "providers": [
@@ -249,7 +266,7 @@
       },
       "trust": "official",
       "path": "plugins/hornero-calendar",
-      "sha256": "2ce33e847091c4ffb5e53bfc20cd25bf621642365825f69af7e258f073f862b7"
+      "sha256": "fc89b4bddcd7dbd566687db826e8291219e51d9d8966cf2db1ad09c7f5be9261"
     },
     {
       "id": "hornero-color-converter",
@@ -593,7 +610,7 @@
     {
       "id": "hornero-moon-phase",
       "name": "Hornero Moon Phase",
-      "version": "3.0.2",
+      "version": "3.1.0",
       "description": "Moon Phase: desktop widget and bar indicator for the approximate moon phase and illumination from the 1.x synodic approximation, plus Desktop Widgets 2.0 size classes, per-display slot display and hide-with-restore. Always labelled approximate.",
       "author": "HorneroOS contributors",
       "license": "MIT",
@@ -628,12 +645,21 @@
               "detailed"
             ],
             "description": "compact shows only the phase name; standard keeps the 1.x rows; detailed adds the approximation note."
+          },
+          "hemisphere": {
+            "type": "enum",
+            "default": "north",
+            "options": [
+              "north",
+              "south"
+            ],
+            "description": "Where you observe from. The waxing moon is lit on the right in the northern hemisphere and on the left in the southern one."
           }
         }
       },
       "trust": "official",
       "path": "plugins/hornero-moon-phase",
-      "sha256": "0d5ba5b9796232d71fb1e3d67eaefa83c2ff312c5348067504b0836e35069a29"
+      "sha256": "b36019c031351429284e15f3b46072faa1a8f30a9ff320f5f28d85b2d20f8b2b"
     },
     {
       "id": "hornero-network-monitor",
@@ -671,7 +697,7 @@
     {
       "id": "hornero-network-scope",
       "name": "Hornero Network Scope",
-      "version": "1.0.0",
+      "version": "1.1.0",
       "description": "Network Scope: a desktop instrument over the shared network provider: download and upload oscilloscopes with stated scales, current rates, Wi-Fi signal and session totals. Real telemetry only.",
       "author": "HorneroOS contributors",
       "license": "MIT",
@@ -694,12 +720,23 @@
             "type": "boolean",
             "default": false,
             "description": "Show the Wi-Fi network name (personal data; off by default on an always-visible desktop widget)."
+          },
+          "scale": {
+            "type": "enum",
+            "default": "auto",
+            "options": [
+              "auto",
+              "1 MiB/s",
+              "10 MiB/s",
+              "100 MiB/s"
+            ],
+            "description": "Vertical scale of both traces. auto follows the recent peak; a fixed scale makes traces comparable over time (samples above it are clipped at the top)."
           }
         }
       },
       "trust": "official",
       "path": "plugins/hornero-network-scope",
-      "sha256": "e2deacb3cd68e94c17efd9caf64552db89cf8e0b3f0eabd26b5e5b52b9bb905e"
+      "sha256": "210c1f4654afdd5b7a3baa64e8743240169bd598345ce84e7e2c98745956e2ab"
     },
     {
       "id": "hornero-now-playing",
@@ -1047,7 +1084,7 @@
     {
       "id": "hornero-system-insight",
       "name": "Hornero System Insight",
-      "version": "1.0.1",
+      "version": "1.1.0",
       "description": "System Insight: a desktop instrument over the shared system provider: a CPU oscilloscope from the shared Telemetry history, segmented meters, per-core load strips and temperatures. Real telemetry only.",
       "author": "HorneroOS contributors",
       "license": "MIT",
@@ -1077,12 +1114,31 @@
             "minimum": 50,
             "maximum": 100,
             "description": "Usage percent at or above which a meter segment turns signal (the visual language default is 85)."
+          },
+          "showGpu": {
+            "type": "boolean",
+            "default": true,
+            "description": "Show the GPU meter (it already reads as unavailable when the system provider has no GPU data)."
+          },
+          "showDisk": {
+            "type": "boolean",
+            "default": true,
+            "description": "Show the disk usage meter."
+          },
+          "temperatureUnit": {
+            "type": "enum",
+            "default": "celsius",
+            "options": [
+              "celsius",
+              "fahrenheit"
+            ],
+            "description": "Unit for the CPU and GPU temperatures. The provider reports Celsius; Fahrenheit is a display conversion."
           }
         }
       },
       "trust": "official",
       "path": "plugins/hornero-system-insight",
-      "sha256": "967ec465f5973240b7966ac1aef9833d7012aaea52540f22c5a78d51f769e44e"
+      "sha256": "0c406f533293748335ccd18bbb8be81fb01633406d9e708081b223b07ec8c33a"
     },
     {
       "id": "hornero-system-monitor",

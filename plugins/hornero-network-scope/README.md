@@ -30,7 +30,10 @@ desktop widgets in the `gaming` experience.
 
 ## Settings
 
-`showSessionTotals` (default `true`), `showNetworkName` (default `false`).
+`showSessionTotals` (default `true`), `showNetworkName` (default `false`), `scale` (`auto` default, or a fixed
+`1 MiB/s`, `10 MiB/s`, `100 MiB/s`; samples above a fixed scale are clipped).
+There is no interface setting: the shared network provider reports the
+active connection only.
 
 ## Enable
 

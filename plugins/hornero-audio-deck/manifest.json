@@ -2,7 +2,7 @@
   "schemaVersion": 3,
   "id": "hornero-audio-deck",
   "name": "Hornero Audio Deck",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Audio Deck: a desktop instrument over the shared media, audio and spectrum providers: the real PipeWire spectrum as VU strips, the current track and the output volume. Real data only.",
   "author": "HorneroOS contributors",
   "license": "MIT",
@@ -31,6 +31,10 @@
       "minShellVersion": "1.0.0"
     },
     "changelog": [
+      {
+        "version": "1.1.0",
+        "notes": "Setting: number of spectrum bands (4 to 24); more bands than the provider reports are never invented, fewer average neighbouring real bands."
+      },
       {
         "version": "1.0.0",
         "notes": "Initial release: real PipeWire spectrum as phosphor VU strips, now playing and output volume over the shared providers (PluginKit 3 desktop widget)."
@@ -61,6 +65,13 @@
         "type": "boolean",
         "default": true,
         "description": "Show the artist and album line of the current track."
+      },
+      "bandCount": {
+        "type": "integer",
+        "default": 24,
+        "minimum": 4,
+        "maximum": 24,
+        "description": "Spectrum bands drawn. Fewer bands average neighbouring bands of the real PipeWire spectrum; it never draws more than the provider reports."
       }
     }
   }
