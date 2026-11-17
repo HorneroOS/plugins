@@ -43,16 +43,13 @@ Item {
         id: card
 
         anchors.fill: parent
+        title: i18n.tr("Microphone")
+        channel: 12
         Accessible.name: i18n.tr("Microphone")
 
         Column {
             width: parent.width
-            spacing: Theme.spacingSmall
-
-            UiText {
-                role: "title"
-                text: i18n.tr("Microphone")
-            }
+            spacing: Theme.spacing.small
 
             UiState {
                 visible: !Audio.hasSource
@@ -64,30 +61,37 @@ Item {
             Column {
                 visible: Audio.hasSource
                 width: parent.width
-                spacing: Theme.spacingSmall
+                spacing: Theme.spacing.small
 
                 UiStack {
                     orientation: root.hostOrientation
                     compact: root.hostCompact
 
                     UiMetric {
+                        size: "value"
                         label: i18n.tr("Input")
                         value: Audio.sourceMuted ? i18n.tr("Muted") : root.showPercentage ? i18n.tr("%1%").arg(root.percent) : i18n.tr("Mic on")
                     }
 
                     UiChip {
                         text: Audio.sourceMuted ? i18n.tr("Muted") : i18n.tr("Mic on")
-                        tone: Audio.sourceMuted ? "error" : "primary"
+                        tone: Audio.sourceMuted ? "neutral" : "phosphor"
                     }
                 }
 
-                UiProgress {
+                UiMeterRow {
                     width: parent.width
-                    value: Math.max(0, Math.min(1, Audio.sourceVolume))
+                    label: i18n.tr("IN")
+                    value: Audio.sourceMuted ? 0 : Math.max(0, Math.min(1, Audio.sourceVolume))
+                    valueText: Audio.sourceMuted ? i18n.tr("Muted") : i18n.tr("%1 %").arg(root.percent)
+                    available: Audio.hasSource
+                    valueWidth: 72
+                    threshold: 1.01
                 }
 
                 UiButton {
-                    variant: "ghost"
+                    variant: "quiet"
+                    glyph: Audio.sourceMuted ? "microphone-off" : "microphone"
                     text: Audio.sourceMuted ? i18n.tr("Unmute") : i18n.tr("Mute")
                     enabled: Audio.hasSource
                     tooltipText: Audio.sourceMuted ? i18n.tr("Unmute microphone") : i18n.tr("Mute microphone")

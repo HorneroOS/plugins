@@ -111,7 +111,7 @@ Item {
     UiButton {
         id: indicator
 
-        variant: "ghost"
+        variant: "quiet"
         text: root.hostCompact ? i18n.formatNumber(root.bpm) : i18n.tr("%1 BPM").arg(i18n.formatNumber(root.bpm))
         tooltipText: i18n.tr("Metronome: activate for controls")
         accessibleName: i18n.tr("Metronome %1 beats per minute").arg(i18n.formatNumber(root.bpm))
@@ -126,7 +126,7 @@ Item {
 
         Column {
             width: 280
-            spacing: Theme.spacingSmall
+            spacing: Theme.spacing.small
 
             UiText {
                 role: "title"
@@ -140,21 +140,22 @@ Item {
                 Rectangle {
                     width: 14
                     height: 14
-                    radius: 7
-                    color: root.beatOn ? (root.accentBeat ? Theme.tertiary : Theme.primary) : Theme.surfaceContainerHighest
+                    radius: Theme.rounding.small
+                    color: root.beatOn ? (root.accentBeat ? Theme.palette.phosphor : Theme.palette.signal) : Theme.palette.lifted
                     border.width: 1
-                    border.color: Theme.componentBorder
+                    border.color: Theme.palette.ruleStrong
                     Accessible.name: root.beatOn ? i18n.tr("Metronome beat on") : i18n.tr("Metronome beat off")
                 }
 
                 UiMetric {
+                    size: "value"
                     label: i18n.tr("Tempo")
                     value: i18n.tr("%1 BPM").arg(i18n.formatNumber(root.bpm))
                 }
 
                 UiChip {
                     text: root.running ? i18n.tr("Running") : i18n.tr("Stopped")
-                    tone: root.running ? "primary" : "neutral"
+                    tone: root.running ? "live" : "neutral"
                 }
             }
 
@@ -174,22 +175,24 @@ Item {
                 compact: root.hostCompact
 
                 UiButton {
-                    variant: "ghost"
-                    text: "-"
+                    variant: "quiet"
+                    glyph: "minus"
                     tooltipText: i18n.tr("Decrease BPM")
                     accessibleName: i18n.tr("Decrease BPM")
                     onClicked: root.setBpm(root.bpm - 1)
                 }
 
                 UiButton {
-                    variant: "ghost"
-                    text: "+"
+                    variant: "quiet"
+                    glyph: "plus"
                     tooltipText: i18n.tr("Increase BPM")
                     accessibleName: i18n.tr("Increase BPM")
                     onClicked: root.setBpm(root.bpm + 1)
                 }
 
                 UiButton {
+                    variant: "primary"
+                    glyph: root.running ? "player-stop" : "player-play"
                     text: root.running ? i18n.tr("Stop") : i18n.tr("Start")
                     tooltipText: root.running ? i18n.tr("Stop the metronome") : i18n.tr("Start the metronome")
                     accessibleName: root.running ? i18n.tr("Stop metronome") : i18n.tr("Start metronome")

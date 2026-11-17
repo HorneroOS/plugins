@@ -107,6 +107,14 @@ Item {
         }
     }
 
+    function modeGlyph() {
+        if (!available)
+            return "music-off";
+        if (mode === "low-latency")
+            return "gauge";
+        return mode === "advanced" ? "adjustments" : "wave-sine";
+    }
+
     UiStack {
         id: stack
 
@@ -117,10 +125,9 @@ Item {
         UiButton {
             id: indicator
 
-            variant: "ghost"
+            variant: "quiet"
             // One native icon per mode; the mode name lives in the tooltip.
-            iconName: !root.available ? "music_off" : root.mode === "low-latency" ? "speed" : root.mode === "advanced" ? "tune" : "graphic_eq"
-            iconFill: root.performance ? 1 : 0
+            glyph: root.modeGlyph()
             tooltipText: popover.opened ? "" : root.statusText
             accessibleName: i18n.tr("Studio audio details")
             onClicked: popover.toggle()
@@ -154,7 +161,7 @@ Item {
         // title, hero metrics, outlined chip or floating tooltip.
         Column {
             width: 320
-            spacing: Theme.spacing
+            spacing: Theme.spacing.normal
 
             UiText {
                 role: "subtitle"
@@ -177,7 +184,7 @@ Item {
             Column {
                 visible: root.available
                 width: parent.width
-                spacing: Theme.spacingSmall
+                spacing: Theme.spacing.small
 
                 UiDetailRow {
                     width: parent.width
@@ -208,7 +215,7 @@ Item {
 
             UiActionRow {
                 width: parent.width
-                iconName: "refresh"
+                glyph: "refresh"
                 text: i18n.tr("Refresh")
                 accessibleName: i18n.tr("Refresh studio mode")
                 onClicked: root.refresh()

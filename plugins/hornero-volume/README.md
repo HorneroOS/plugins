@@ -1,6 +1,6 @@
 # Hornero Volume
 
-Audio Extensions 2.0 (manifest v2, HorneroOS/plugins#25): one
+Audio Extensions 3.0 (manifest v3, PluginKit 3 on Hornero Signal, HorneroOS/plugins#25): one
 package, two surfaces over the shared PluginKit `Audio` facade
 (event-pushed by the shell PipeWire service; the surfaces hold a
 `Subscription { domain: "audio" }` lease and never poll, and no
@@ -46,9 +46,8 @@ shell-side PluginKit Audio expansion first.
 - 1.x kept mute/step buttons inline in the bar; 2.0 moves them
   into the popover and dashboard card to keep the bar compact
   (issue acceptance).
-- Installing this manifest v2 package needs a shell/`horneroctl`
-  that accepts `schemaVersion` 2, `translations` and
-  `marketplace`.
+- Installing this package needs a shell with PluginKit 3 (Hornero Signal): it declares
+  `schemaVersion: 3` and `capabilities.providers`, and earlier shells refuse or cannot render it.
 
 Both surfaces use PluginKit `Ui*` primitives, host context,
 host-owned tooltips, accessible names, Theme tokens and an

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedFrom": "1b3dbfc0718738288f542e8f0fe697b176891975",
+  "generatedFrom": "b639bea8576e9ca097d7ad723013363571e12ca9",
   "plugins": [
     {
       "id": "hornero-agenda",
@@ -504,7 +504,7 @@
     {
       "id": "hornero-metronome",
       "name": "Hornero Metronome",
-      "version": "2.0.0",
+      "version": "3.0.0",
       "description": "Metronome 2.0: compact bar metronome with a popover (BPM slider plus minus/plus), deadline-scheduled beats that skip missed beats after sleep, and optional first-beat accent. No processes, no network.",
       "author": "HorneroOS contributors",
       "license": "MIT",
@@ -538,12 +538,12 @@
       },
       "trust": "official",
       "path": "plugins/hornero-metronome",
-      "sha256": "bea5cbb282de165d2edaf6cf86f0cb1ee562d629b9bb43539fa7fcba47ad9df5"
+      "sha256": "c21db62e21f902e046d62c246fa383f385a31e65d95c7f740f6fba49a1af757d"
     },
     {
       "id": "hornero-microphone",
       "name": "Hornero Microphone",
-      "version": "2.0.0",
+      "version": "3.0.0",
       "description": "Audio Extensions 2.0: compact bar indicator, details popover and dashboard card for microphone state over the shared PluginKit Audio facade, with honest muted and no-input-device states. Never records audio.",
       "author": "HorneroOS contributors",
       "license": "MIT",
@@ -564,11 +564,14 @@
             "default": true,
             "description": "Keep the bar indicator visible, labelled as no input device, when no source is present."
           }
-        }
+        },
+        "providers": [
+          "audio"
+        ]
       },
       "trust": "official",
       "path": "plugins/hornero-microphone",
-      "sha256": "dc380d657c1f6d75d681b1d7cb12370756c46db768b8cf58ca00d47db6af7b5c"
+      "sha256": "5a1fb7c547a38b0af7b315ee1e9532e195c385feb7dbd5bcc104efc1fc3b6ab5"
     },
     {
       "id": "hornero-moon-phase",
@@ -666,7 +669,7 @@
     {
       "id": "hornero-now-playing",
       "name": "Hornero Now Playing",
-      "version": "2.0.0",
+      "version": "3.0.0",
       "description": "Now Playing 2.0: compact bar indicator, details popover and dashboard card over the shared PluginKit Media (MPRIS) facade, with graceful no-player and idle-player states.",
       "author": "HorneroOS contributors",
       "license": "MIT",
@@ -694,11 +697,14 @@
             "maximum": 240,
             "description": "Maximum width in pixels for the track title in the bar."
           }
-        }
+        },
+        "providers": [
+          "media"
+        ]
       },
       "trust": "official",
       "path": "plugins/hornero-now-playing",
-      "sha256": "e5456fb198019c0cc87c07c122a268a18649f309bd3cf656feb69b49505d0f6f"
+      "sha256": "028fa9f14a494c22a953cbb15f8bc996788710bfabcf65a6873132ce3b031432"
     },
     {
       "id": "hornero-pomodoro",
@@ -850,7 +856,7 @@
     {
       "id": "hornero-studio-audio",
       "name": "Hornero Studio Audio",
-      "version": "2.3.2",
+      "version": "3.0.0",
       "description": "Audio Extensions 2.0: bar indicator, popover and dashboard card for the Studio audio mode and Temporary Performance state from the typed horneroctl contract. Read-only; mode changes stay in the CLI and Control Center.",
       "author": "HorneroOS contributors",
       "license": "MIT",
@@ -875,11 +881,14 @@
             "default": true,
             "description": "Keep the bar indicator visible, labelled as unavailable, when horneroctl returns no usable studio mode."
           }
-        }
+        },
+        "providers": [
+          "audio"
+        ]
       },
       "trust": "official",
       "path": "plugins/hornero-studio-audio",
-      "sha256": "33a9abbb370aead4c8758221be178e914d7fde37ef6e46713dd0a429d99a0dec"
+      "sha256": "0879699a1709f9483c884d9dafffbe434678b4bd4d888ddc3a086677e10a18a2"
     },
     {
       "id": "hornero-studio-jobs",
@@ -900,7 +909,7 @@
       },
       "trust": "official",
       "path": "plugins/hornero-studio-jobs",
-      "sha256": "3a1c77265d2cad1c98b98599342f7b9ae9c629c32acd25db3335e91d471bf8b5"
+      "sha256": "75bbbe012a5bf69007452d6f8d00bf1b7f379486a4b8d6fc976167b7ddb2ad3f"
     },
     {
       "id": "hornero-sun-card",
@@ -1151,7 +1160,7 @@
     {
       "id": "hornero-volume",
       "name": "Hornero Volume",
-      "version": "2.0.0",
+      "version": "3.0.0",
       "description": "Audio Extensions 2.0: compact bar indicator, details popover and dashboard card for output volume over the shared PluginKit Audio facade, with honest muted and no-output-device states.",
       "author": "HorneroOS contributors",
       "license": "MIT",
@@ -1172,11 +1181,14 @@
             "default": true,
             "description": "Keep the bar indicator visible, labelled as no output device, when no sink is present."
           }
-        }
+        },
+        "providers": [
+          "audio"
+        ]
       },
       "trust": "official",
       "path": "plugins/hornero-volume",
-      "sha256": "c927fff9c17af2a471770ff2d7cc5e43e20b5885ec536057d9328f34c6813394"
+      "sha256": "466c51c2bfae4f9bb31a6b045959c5fc7ee9acf8c3f55c368a01d34a43abdcaa"
     },
     {
       "id": "hornero-weather",

@@ -1,8 +1,8 @@
 {
-  "schemaVersion": 2,
+  "schemaVersion": 3,
   "id": "hornero-now-playing",
   "name": "Hornero Now Playing",
-  "version": "2.0.0",
+  "version": "3.0.0",
   "description": "Now Playing 2.0: compact bar indicator, details popover and dashboard card over the shared PluginKit Media (MPRIS) facade, with graceful no-player and idle-player states.",
   "author": "HorneroOS contributors",
   "license": "MIT",
@@ -28,6 +28,10 @@
       "minShellVersion": "1.0.0"
     },
     "changelog": [
+      {
+        "version": "3.0.0",
+        "notes": "PluginKit 3 on Hornero Signal: Hornero Glyph transport and indicator in place of emoji/unicode symbols, instrument module header."
+      },
       {
         "version": "2.0.0",
         "notes": "Compact bar indicator with host-owned details popover, dashboard card, typed settings, host-context layout and Spanish catalog, over the shared PluginKit Media facade."
@@ -66,6 +70,9 @@
         "maximum": 240,
         "description": "Maximum width in pixels for the track title in the bar."
       }
-    }
+    },
+    "providers": [
+      "media"
+    ]
   }
 }

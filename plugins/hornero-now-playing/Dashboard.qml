@@ -44,16 +44,13 @@ Item {
         id: card
 
         anchors.fill: parent
+        title: i18n.tr("Now Playing")
+        channel: 10
         Accessible.name: i18n.tr("Now Playing")
 
         Column {
             width: parent.width
-            spacing: Theme.spacingSmall
-
-            UiText {
-                role: "title"
-                text: i18n.tr("Now Playing")
-            }
+            spacing: Theme.spacing.small
 
             UiState {
                 visible: !Media.hasPlayer
@@ -72,30 +69,33 @@ Item {
             Column {
                 visible: Media.hasPlayer
                 width: parent.width
-                spacing: Theme.spacingSmall
+                spacing: Theme.spacing.small
 
                 UiStack {
                     orientation: root.hostOrientation
                     compact: root.hostCompact
 
                     UiMetric {
+                        size: "value"
                         label: i18n.tr("Player")
                         value: Media.identity
                     }
 
                     UiChip {
                         text: Media.isPlaying ? i18n.tr("Playing") : i18n.tr("Paused")
-                        tone: Media.isPlaying ? "primary" : "neutral"
+                        tone: Media.isPlaying ? "signal" : "neutral"
                     }
                 }
 
                 UiMetric {
+                    size: "value"
                     visible: Media.title.length > 0
                     label: i18n.tr("Track")
                     value: Media.title
                 }
 
                 UiMetric {
+                    size: "value"
                     visible: root.showArtist && Media.artist.length > 0
                     label: i18n.tr("Artist")
                     value: Media.artist
@@ -106,23 +106,24 @@ Item {
                     compact: root.hostCompact
 
                     UiButton {
-                        variant: "ghost"
-                        text: "⏮"
+                        variant: "quiet"
+                        glyph: "player-skip-back"
                         tooltipText: i18n.tr("Previous track")
                         accessibleName: i18n.tr("Previous track")
                         onClicked: Media.previous()
                     }
 
                     UiButton {
-                        text: Media.isPlaying ? "⏸" : "▶"
+                        variant: "primary"
+                        glyph: Media.isPlaying ? "player-pause" : "player-play"
                         tooltipText: Media.isPlaying ? i18n.tr("Pause") : i18n.tr("Play")
                         accessibleName: Media.isPlaying ? i18n.tr("Pause") : i18n.tr("Play")
                         onClicked: Media.playPause()
                     }
 
                     UiButton {
-                        variant: "ghost"
-                        text: "⏭"
+                        variant: "quiet"
+                        glyph: "player-skip-forward"
                         tooltipText: i18n.tr("Next track")
                         accessibleName: i18n.tr("Next track")
                         onClicked: Media.next()

@@ -1,6 +1,6 @@
 # Hornero Studio Audio
 
-Audio Extensions 2.0 (manifest v2, HorneroOS/plugins#25): one
+Audio Extensions 3.0 (manifest v3, PluginKit 3 on Hornero Signal, HorneroOS/plugins#25): one
 package, two surfaces. Studio mode and Temporary Performance
 come from the existing typed contract
 `horneroctl --json studio mode` (HorneroOS/hornero#286/#287);
@@ -54,9 +54,8 @@ instead of a mouse-only area).
 - The 1.x mouse-only click-to-refresh is replaced by the
   popover Refresh button (keyboard contract); the 60-second
   timer behaviour is unchanged at the default.
-- Installing this manifest v2 package needs a shell/`horneroctl`
-  that accepts `schemaVersion` 2, `translations` and
-  `marketplace`.
+- Installing this package needs a shell with PluginKit 3 (Hornero Signal): it declares
+  `schemaVersion: 3` and `capabilities.providers`, and earlier shells refuse or cannot render it.
 
 Both surfaces use PluginKit `Ui*` primitives, host context,
 host-owned tooltips, accessible names, Theme tokens (1.x used
