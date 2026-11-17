@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedFrom": "7f92d9ad98f586ca3e04fa0557c2591b66b5a7b3",
+  "generatedFrom": "e9ad9954537a300a881ed7f98fc34f6ade6e5eda",
   "plugins": [
     {
       "id": "hornero-agenda",
@@ -254,8 +254,8 @@
     {
       "id": "hornero-color-converter",
       "name": "Hornero Color Converter",
-      "version": "3.0.0",
-      "description": "Utility Tools 2.0 color converter: bar quick hex action and compact dashboard detail converting validated #RGB/#RRGGBB to RGB and HSL and RGB back to hex. Invalid hex shows an error.",
+      "version": "3.1.0",
+      "description": "Utility Tools 2.0 color converter: bar quick hex action and compact dashboard detail converting validated #RGB/#RRGGBB to RGB and HSL and RGB back to hex. Invalid hex shows an error. Shows the current Hornero Chromatic seeds and renders a palette template.",
       "author": "HorneroOS contributors",
       "license": "MIT",
       "homepage": "https://github.com/HorneroOS/plugins",
@@ -280,7 +280,7 @@
       },
       "trust": "official",
       "path": "plugins/hornero-color-converter",
-      "sha256": "de6abc1f5d606a6e4aa72c6f02e734750547a042437fe71257f2dd07ef240837"
+      "sha256": "ac38d016806370ad5bfcbd6e1ffe82bb8d861807f1702e5fa2850de730e9a27c"
     },
     {
       "id": "hornero-countdown",

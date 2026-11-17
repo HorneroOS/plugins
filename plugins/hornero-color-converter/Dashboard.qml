@@ -55,6 +55,15 @@ Item {
         return { "ok": true, "text": "RGB: " + c.r + ", " + c.g + ", " + c.b + "\nHSL: " + hsl.h + ", " + hsl.s + "%, " + hsl.l + "%", "r": c.r, "g": c.g, "b": c.b };
     }
     // LOGIC-END
+    // Hornero Chromatic (RFC 0002): the dynamic palette's seed colours.
+    // Theme.chromatic is null for curated themes; Theme.revision changes
+    // once per settled palette change, so the sample ink below is
+    // re-derived after a recolour (never per transition step).
+    readonly property var seeds: Theme.chromatic && Theme.chromatic.seeds ? Theme.chromatic.seeds : []
+    readonly property color seedInk: {
+        const revision = Theme.revision;
+        return revision >= 0 && root.seeds.length > 0 ? Theme.ensureContrast(Theme.palette.ink, root.seeds[0], 4.5) : Theme.palette.ink;
+    }
     property string errorText: ""
     property var rgb: null
     function applyHex() {
@@ -95,6 +104,42 @@ Item {
             UiText {
                 width: parent.width; Accessible.name: i18n.tr("RGB and HSL output")
                 text: root.rgb ? quickResult(toHex(root.rgb.r, root.rgb.g, root.rgb.b)).text : i18n.tr("No valid color yet")
+            }
+            UiText {
+                visible: root.seeds.length > 0
+                width: parent.width
+                role: "caption"
+                text: i18n.tr("Palette seeds") + (Theme.chromatic ? " · " + Theme.chromatic.variant + " · " + Theme.chromatic.mode : "")
+            }
+            Row {
+                visible: root.seeds.length > 0
+                spacing: Theme.spacing.small
+                Repeater {
+                    model: root.seeds
+                    Rectangle {
+                        id: seedChip
+                        required property string modelData
+                        width: 64
+                        height: 28
+                        radius: Theme.rounding.small
+                        color: modelData
+                        border.width: 1
+                        border.color: Theme.palette.ruleStrong
+                        Accessible.role: Accessible.Button
+                        Accessible.name: i18n.tr("Use seed colour") + " " + modelData
+                        Accessible.onPressAction: { hexInput.text = modelData; root.applyHex(); }
+                        UiText {
+                            anchors.centerIn: parent
+                            text: seedChip.modelData
+                            color: Theme.ensureContrast(Theme.palette.ink, seedChip.modelData, 4.5)
+                        }
+                        MouseArea {
+                            anchors.fill: parent
+                            cursorShape: Qt.PointingHandCursor
+                            onClicked: { hexInput.text = seedChip.modelData; root.applyHex(); }
+                        }
+                    }
+                }
             }
             UiState { visible: root.errorText !== ""; width: parent.width; kind: "error"; message: root.errorText }
             Row {

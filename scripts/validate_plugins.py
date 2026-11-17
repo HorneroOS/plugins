@@ -49,7 +49,7 @@ ROOT = Path(__file__).resolve().parent.parent
 ID_RE = re.compile(r"^[a-z0-9][a-z0-9-]{0,47}$")
 SEMVER_RE = re.compile(r"^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(-[0-9A-Za-z.-]+)?(\+[0-9A-Za-z.-]+)?$")
 REQUIRED = ["schemaVersion", "id", "name", "version", "description", "author", "license", "entrypoint", "files", "capabilities"]
-ALLOWED_FIELDS = set(REQUIRED) | {"homepage", "placement", "signing", "surfaces", "translations", "marketplace"}
+ALLOWED_FIELDS = set(REQUIRED) | {"homepage", "placement", "signing", "surfaces", "translations", "marketplace", "theme"}
 DASHBOARD_CARD_SIZES = ("compact", "standard", "wide")
 ACTION_RE = re.compile(r"^[a-z][a-z0-9_]{0,63}$")
 MARKETPLACE_SCREENSHOT_SUFFIXES = (".png", ".jpg", ".jpeg", ".webp")
@@ -259,6 +259,7 @@ def validate_manifest_fields(tag: str, manifest: dict) -> list:
     errors += validate_surfaces(tag, manifest, safe_files)
     errors += validate_translations_declaration(tag, manifest, safe_files)
     errors += validate_marketplace(tag, manifest, safe_files)
+    errors += validate_theme(tag, manifest, safe_files)
     caps = manifest.get("capabilities")
     if caps is not None:
         if not isinstance(caps, dict) or not {"processCommands", "networkHosts", "settings"} <= set(caps) <= {"processCommands", "networkHosts", "settings", "actions", "providers"}:
@@ -266,6 +267,93 @@ def validate_manifest_fields(tag: str, manifest: dict) -> list:
         else:
             errors += validate_capabilities(tag, caps, manifest.get("schemaVersion"))
     return errors
+
+
+# Theme templates (RFC 0002 §12.2, plugins#70): mirror of the shell
+# validator (scripts/validate_plugin.py). Rendered by horneroctl only into
+# ${XDG_CACHE_HOME}/hornero/themes/ext/<id>/<output>.
+THEME_MAX_TEMPLATES = 8
+THEME_OUTPUT_RE = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$")
+THEME_ROLES = (
+    "ground", "sunken", "base", "panel", "raised", "lifted", "ink", "inkMuted",
+    "inkFaint", "rule", "ruleStrong", "focus", "signal", "glow", "onSignal",
+    "signalWell", "onSignalWell", "cue", "onCue", "cueWell", "onCueWell",
+    "phosphor", "onPhosphor", "phosphorWell", "onPhosphorWell", "alert",
+    "onAlert", "alertWell", "onAlertWell", "inverse", "onInverse",
+    "inverseSignal", "scrim", "shadow",
+) + tuple(f"term{i}" for i in range(16))
+THEME_FILTERS = ("hex", "bare", "rgb", "r", "g", "b")
+THEME_TAG_RE = re.compile(r"\{\{(.*?)\}\}", re.DOTALL)
+THEME_VALUE_RE = re.compile(r"^(?P<name>[A-Za-z][A-Za-z0-9]*)(?:\.(?P<filter>[a-z]+)(?:\s+(?P<alpha>[0-9]*\.?[0-9]+))?)?$")
+THEME_MAX_BYTES = 64 * 1024
+
+
+def validate_theme(tag: str, manifest: dict, safe_files: set) -> list:
+    if "theme" not in manifest:
+        return []
+    theme = manifest["theme"]
+    if not isinstance(theme, dict) or set(theme) != {"templates"}:
+        return [f"{tag}: theme must be an object with exactly templates"]
+    templates = theme["templates"]
+    if not isinstance(templates, list) or not 1 <= len(templates) <= THEME_MAX_TEMPLATES:
+        return [f"{tag}: theme.templates must be a list of 1 to {THEME_MAX_TEMPLATES} entries"]
+    errors, outputs, files = [], set(), set()
+    for i, entry in enumerate(templates):
+        where = f"{tag}: theme.templates[{i}]"
+        if not isinstance(entry, dict) or set(entry) != {"template", "output"}:
+            errors.append(f"{where} must have exactly template and output")
+            continue
+        template, output = entry["template"], entry["output"]
+        if not is_safe_relpath(template) or not str(template).endswith(".tmpl"):
+            errors.append(f"{where}.template must be a safe relative .tmpl path")
+        elif template not in safe_files:
+            errors.append(f"{where}.template must be listed in files")
+        elif template in files:
+            errors.append(f"{where}.template is declared twice: {template}")
+        files.add(template)
+        if not isinstance(output, str) or not THEME_OUTPUT_RE.match(output) or ".." in output:
+            errors.append(f"{where}.output must be a plain file name (no directory, absolute path or '..'); the host writes it under the extension's cache directory")
+        elif output in outputs:
+            errors.append(f"{where}.output duplicates another template output: {output}")
+        outputs.add(output)
+    return errors
+
+
+def check_theme_template(relative: str, text: str) -> list:
+    """Strict grammar of the Chromatic template contract; errors carry file:line."""
+    if len(text.encode("utf-8")) > THEME_MAX_BYTES:
+        return [f"{relative} exceeds {THEME_MAX_BYTES} bytes"]
+    stack = []
+    for match in THEME_TAG_RE.finditer(text):
+        where = f"{relative}:{text.count(chr(10), 0, match.start()) + 1}"
+        body = match.group(1).strip()
+        if body in ("#dark", "#light"):
+            stack.append(body[1:])
+            continue
+        if body in ("/dark", "/light"):
+            if not stack or stack.pop() != body[1:]:
+                return [f"{where}: unbalanced section {{{{{body}}}}}"]
+            continue
+        value = THEME_VALUE_RE.match(body)
+        if not value:
+            return [f"{where}: unsupported template expression {{{{{body}}}}}"]
+        name, flt, alpha = value.group("name", "filter", "alpha")
+        if name in ("mode", "id"):
+            if flt:
+                return [f"{where}: {name} takes no filter"]
+            continue
+        if name not in THEME_ROLES:
+            return [f"{where}: unknown palette role {name!r}"]
+        if flt == "rgba":
+            if alpha is None or not 0 <= float(alpha) <= 1:
+                return [f"{where}: rgba needs an alpha between 0 and 1"]
+        elif flt is not None and (flt not in THEME_FILTERS or alpha is not None):
+            return [f"{where}: unsupported filter {flt!r}"]
+    if stack:
+        return [f"{relative}: section {{{{#{stack[-1]}}}}} is never closed"]
+    if "{{" in THEME_TAG_RE.sub("", text) or "}}" in THEME_TAG_RE.sub("", text):
+        return [f"{relative}: stray template delimiter"]
+    return []
 
 
 def semver_key(version: str):
@@ -864,6 +952,12 @@ def validate_plugin_dir(plugin_dir: Path):
                 errors.append(f"{tag}: executable file not allowed: {path.relative_to(plugin_dir)}")
             if path.suffix in BINARY_SUFFIXES:
                 errors.append(f"{tag}: binary file not allowed: {path.relative_to(plugin_dir)}")
+    declared_theme = manifest.get("theme")
+    if isinstance(declared_theme, dict) and isinstance(declared_theme.get("templates"), list):
+        for item in declared_theme["templates"]:
+            template = item.get("template") if isinstance(item, dict) else None
+            if isinstance(template, str) and is_safe_relpath(template) and (plugin_dir / template).is_file():
+                errors += [f"{tag}: {e}" for e in check_theme_template(template, (plugin_dir / template).read_text(encoding="utf-8", errors="replace"))]
     entry = plugin_dir / str(manifest.get("entrypoint", ""))
     if not entry.is_file():
         errors.append(f"{tag}: entrypoint missing: {manifest.get('entrypoint')}")

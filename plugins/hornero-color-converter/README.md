@@ -72,3 +72,20 @@ Validation and conversion are the 1.x rules: only `#RGB`/`#RRGGBB` hex parses (i
 ## PluginKit 3
 
 This package targets PluginKit 3 on Hornero Signal (`schemaVersion: 3`): colours, type, spacing and glyphs come from the shared Theme tokens and Hornero Glyph names, and the shared data domains it reads are declared in `capabilities.providers`. Shells older than Hornero Signal cannot load it.
+
+## Hornero Chromatic reference (3.1.0)
+
+This package is the reference extension for Hornero Chromatic (RFC 0002,
+plugins#70). When the desktop uses the dynamic palette, the dashboard panel
+shows its seed colours from `Theme.chromatic` (read-only status, never a
+wallpaper path) and clicking a seed loads it into the converter. The sample
+ink is derived with `Theme.ensureContrast()` and re-evaluated when
+`Theme.revision` changes, so it follows a recolour without depending on shell
+internals. Curated themes report `Theme.chromatic === null` and the strip is
+hidden.
+
+`manifest.json` also declares one theme template (`palette.json.tmpl` to
+`palette.json`). `horneroctl` renders it from the live palette into
+`${XDG_CACHE_HOME}/hornero/themes/ext/hornero-color-converter/palette.json`
+whenever the palette changes; the extension runs no command and no process.
+Needs a shell that ships the PluginKit `Theme.chromatic` API (1.3.0 or newer).

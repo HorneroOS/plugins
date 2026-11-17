@@ -18,9 +18,11 @@
   "Hex from RGB:": "Hex desde RGB:",
   "Invalid hex: use #RGB or #RRGGBB with hex digits.": "Hex inválido: usá #RGB o #RRGGBB con dígitos hex.",
   "No valid color yet": "Todavía no hay un color válido",
+  "Palette seeds": "Semillas de la paleta",
   "Quick hex color": "Color hex rápido",
   "RGB and HSL output": "Salida RGB y HSL",
   "Red 0-255": "Rojo 0-255",
   "Red value": "Valor rojo",
-  "Type a hex color like #336699 and press Convert hex.": "Escribí un color hex como #336699 y tocá Convertir hex."
+  "Type a hex color like #336699 and press Convert hex.": "Escribí un color hex como #336699 y tocá Convertir hex.",
+  "Use seed colour": "Usar el color semilla"
 }
