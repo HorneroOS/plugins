@@ -73,7 +73,9 @@ Item {
         }
 
         Column {
-            visible: !root.hostCompact && root.hostOrientation !== "vertical"
+            // Idle: the music glyph and its tooltip say it; "No player" does
+            // not belong in the bar.
+            visible: !root.hostCompact && root.hostOrientation !== "vertical" && Media.hasPlayer
             spacing: 0
 
             UiText {

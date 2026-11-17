@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedFrom": "fc34867aa1670ee29d78623e92f32eac917f4014",
+  "generatedFrom": "e5b3660b8ff629986ebb0db16d7808a026ee19a3",
   "plugins": [
     {
       "id": "hornero-agenda",
@@ -560,7 +560,7 @@
     {
       "id": "hornero-microphone",
       "name": "Hornero Microphone",
-      "version": "3.0.0",
+      "version": "3.0.1",
       "description": "Audio Extensions 2.0: compact bar indicator, details popover and dashboard card for microphone state over the shared PluginKit Audio facade, with honest muted and no-input-device states. Never records audio.",
       "author": "HorneroOS contributors",
       "license": "MIT",
@@ -588,7 +588,7 @@
       },
       "trust": "official",
       "path": "plugins/hornero-microphone",
-      "sha256": "5a1fb7c547a38b0af7b315ee1e9532e195c385feb7dbd5bcc104efc1fc3b6ab5"
+      "sha256": "272b332d925a3fc910dc13395079b38c7ac2160b372f64aec387c95e92fa720b"
     },
     {
       "id": "hornero-moon-phase",
@@ -704,7 +704,7 @@
     {
       "id": "hornero-now-playing",
       "name": "Hornero Now Playing",
-      "version": "3.0.0",
+      "version": "3.0.1",
       "description": "Now Playing 2.0: compact bar indicator, details popover and dashboard card over the shared PluginKit Media (MPRIS) facade, with graceful no-player and idle-player states.",
       "author": "HorneroOS contributors",
       "license": "MIT",
@@ -739,7 +739,7 @@
       },
       "trust": "official",
       "path": "plugins/hornero-now-playing",
-      "sha256": "028fa9f14a494c22a953cbb15f8bc996788710bfabcf65a6873132ce3b031432"
+      "sha256": "d4815386499451188979c445f670d9830fe50beb34333a51ff89608be59fe04e"
     },
     {
       "id": "hornero-pomodoro",
@@ -949,7 +949,7 @@
     {
       "id": "hornero-sun-card",
       "name": "Hornero Sun Card",
-      "version": "3.0.0",
+      "version": "3.0.1",
       "description": "Sun Card 2.0: dashboard astronomy card and contextual bar indicator with sunrise/sunset from PluginKit Weather plus derived day length, sun progress and next sun event. Approximations are labelled derived.",
       "author": "HorneroOS contributors",
       "license": "MIT",
@@ -993,7 +993,7 @@
       },
       "trust": "official",
       "path": "plugins/hornero-sun-card",
-      "sha256": "f63fe98c8d0935d26fcb2ec1c708294df26f09b4d05bdb43064bd51dc657551c"
+      "sha256": "c4b5c497614e665953d9d309e3bd071d561eed328cdc7bef826936635cdc3cbe"
     },
     {
       "id": "hornero-system-health",
@@ -1239,7 +1239,7 @@
     {
       "id": "hornero-volume",
       "name": "Hornero Volume",
-      "version": "3.0.0",
+      "version": "3.0.1",
       "description": "Audio Extensions 2.0: compact bar indicator, details popover and dashboard card for output volume over the shared PluginKit Audio facade, with honest muted and no-output-device states.",
       "author": "HorneroOS contributors",
       "license": "MIT",
@@ -1267,12 +1267,12 @@
       },
       "trust": "official",
       "path": "plugins/hornero-volume",
-      "sha256": "466c51c2bfae4f9bb31a6b045959c5fc7ee9acf8c3f55c368a01d34a43abdcaa"
+      "sha256": "984908ded978e227c57223aebacf16360ac58e290c7fd507f0862218567990a1"
     },
     {
       "id": "hornero-weather",
       "name": "Hornero Weather",
-      "version": "3.0.0",
+      "version": "3.0.1",
       "description": "Weather 2.0: dashboard card and contextual bar indicator complementing native Weather with configurable density, a local wind-threshold alert and forecast detail from the PluginKit Weather facade only.",
       "author": "HorneroOS contributors",
       "license": "MIT",
@@ -1329,7 +1329,7 @@
       },
       "trust": "official",
       "path": "plugins/hornero-weather",
-      "sha256": "bc8185c0127fee3c67d051ed3fd526ea11ac452686a628bbbd3cf4d3d051c96f"
+      "sha256": "66183b2a74537593f6d0648f5ee8d4bb1c68804b6e58a4ba1934505c48e83909"
     },
     {
       "id": "hornero-world-clock",

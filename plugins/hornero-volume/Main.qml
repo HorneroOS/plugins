@@ -63,7 +63,9 @@ Item {
         }
 
         UiText {
-            visible: !root.hostCompact && root.hostOrientation !== "vertical"
+            // No device: the muted glyph and its tooltip say it; a sentence
+            // does not belong in a 25 px bar.
+            visible: !root.hostCompact && root.hostOrientation !== "vertical" && Audio.hasSink
             role: "body"
             text: root.statusText
         }
