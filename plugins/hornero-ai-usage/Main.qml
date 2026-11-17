@@ -119,7 +119,7 @@ Item {
                             Layout.preferredWidth: 1
                             size: "value"
                             visible: !root.hostCompact
-                            label: i18n.tr("Input tokens")
+                            label: i18n.tr("Tokens in")
                             value: i18n.formatNumber(Number(modelData.inputTokens || 0))
                         }
 
@@ -128,7 +128,7 @@ Item {
                             Layout.preferredWidth: 1
                             size: "value"
                             visible: !root.hostCompact
-                            label: i18n.tr("Output tokens")
+                            label: i18n.tr("Tokens out")
                             value: i18n.formatNumber(Number(modelData.outputTokens || 0))
                         }
                     }

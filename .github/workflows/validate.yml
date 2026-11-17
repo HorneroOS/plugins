@@ -25,6 +25,21 @@ jobs:
         run: python3 scripts/validate_plugins.py
       - name: Catalog is fresh
         run: python3 scripts/gen_catalog.py --check
+      # The shell validator is the canonical PluginKit contract. Every
+      # schemaVersion 3 package must pass it unchanged. The shell revision
+      # is pinned and bumped together with the catalogue.
+      - name: Check out the pinned shell (validator only)
+        uses: actions/checkout@v4
+        with:
+          repository: HorneroOS/shell
+          ref: 02cc16bff80bd706062573f05d0d4b4813ab127e
+          path: .shell
+          sparse-checkout: |
+            scripts
+            schemas
+            assets/fonts
+      - name: Shell validator accepts every PluginKit 3 package
+        run: python3 scripts/shell_parity.py .shell
       - name: Install minisign for isolated signature tests
         run: sudo apt-get update && sudo apt-get install --yes minisign
       - name: Community registry schema and signature tests
