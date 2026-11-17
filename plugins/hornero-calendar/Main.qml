@@ -189,7 +189,7 @@ Item {
         UiText {
             width: parent.width
             role: "caption"
-            text: i18n.tr("No calendar events source is available to extensions yet; this widget shows dates only.")
+            text: i18n.tr("Dates only: no calendar events source yet.")
         }
     }
 }

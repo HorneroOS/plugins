@@ -170,7 +170,7 @@ Item {
         UiText {
             width: parent.width
             role: "caption"
-            text: i18n.tr("Date facts from the system clock; extensions have no calendar events source yet.")
+            text: i18n.tr("System clock dates only; no events source yet.")
         }
     }
 }

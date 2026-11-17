@@ -2,5 +2,5 @@
   "Calendar": "Calendario",
   "Calendar: %1": "Calendario: %1",
   "Desktop widget": "Widget de escritorio",
-  "No calendar events source is available to extensions yet; this widget shows dates only.": "Todavía no hay una fuente de eventos de calendario disponible para las extensiones; este widget solo muestra fechas."
+  "Dates only: no calendar events source yet.": "Solo fechas: todavía no hay fuente de eventos."
 }
