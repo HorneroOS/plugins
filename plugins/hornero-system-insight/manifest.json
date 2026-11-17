@@ -2,7 +2,7 @@
   "schemaVersion": 3,
   "id": "hornero-system-insight",
   "name": "Hornero System Insight",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "System Insight: a desktop instrument over the shared system provider: a CPU oscilloscope from the shared Telemetry history, segmented meters, per-core load strips and temperatures. Real telemetry only.",
   "author": "HorneroOS contributors",
   "license": "MIT",
@@ -31,6 +31,10 @@
       "minShellVersion": "1.0.0"
     },
     "changelog": [
+      {
+        "version": "1.1.1",
+        "notes": "The oscilloscope shrinks (down to 48 px) on short frames so the temperature row is no longer clipped."
+      },
       {
         "version": "1.1.0",
         "notes": "Settings: show or hide the GPU and disk meters, and show temperatures in Celsius or Fahrenheit."

@@ -27,7 +27,11 @@ Item {
     readonly property int contentWidth: hostAvailableWidth > 0 ? hostAvailableWidth : 520
     readonly property int contentHeight: hostAvailableHeight > 0 ? hostAvailableHeight : 330
     readonly property bool tall: contentHeight >= 330
-    readonly property int scopeHeight: Math.max(72, Math.min(150, Math.round(contentHeight * (tall ? 0.34 : 0.42))))
+    // The scope takes what the fixed rows leave, never less than 48 px, so a
+    // short frame (1280x800) shrinks the trace instead of clipping the
+    // temperature row. rows is a separate column, so there is no loop.
+    readonly property int preferredScopeHeight: Math.max(72, Math.min(150, Math.round(contentHeight * (tall ? 0.34 : 0.42))))
+    readonly property int scopeHeight: Math.max(48, Math.min(preferredScopeHeight, contentHeight - rows.implicitHeight - Theme.spacing.smaller))
 
     implicitWidth: contentWidth
     implicitHeight: column.implicitHeight
@@ -88,113 +92,120 @@ Item {
             unavailableText: i18n.tr("Collecting samples from the shared system provider.")
         }
 
-        UiMeterRow {
-            width: parent.width
-            label: i18n.tr("CPU")
-            value: System.cpuPerc
-            valueText: root.pct(System.cpuPerc)
-            threshold: root.warnPercent / 100
-        }
+        Column {
+            id: rows
 
-        UiMeterRow {
             width: parent.width
-            label: i18n.tr("MEM")
-            value: System.memPerc
-            valueText: root.pct(System.memPerc)
-            available: System.memTotal > 0
-            threshold: root.warnPercent / 100
-        }
+            spacing: Theme.spacing.smaller
 
-        UiMeterRow {
-            visible: root.showGpu
-            width: parent.width
-            label: i18n.tr("GPU")
-            value: System.gpuPerc
-            valueText: root.pct(System.gpuPerc)
-            available: System.gpuAvailable
-            threshold: root.warnPercent / 100
-        }
-
-        UiMeterRow {
-            visible: root.showDisk
-            width: parent.width
-            label: i18n.tr("DISK")
-            value: System.storagePerc
-            valueText: root.pct(System.storagePerc)
-            available: System.storageAvailable
-            threshold: root.warnPercent / 100
-        }
-
-        UiStack {
-            visible: root.showTemperatures
-            width: parent.width
-
-            UiMetric {
-                Layout.fillWidth: true
-                Layout.preferredWidth: 1
-                size: "value"
-                label: i18n.tr("CPU TEMP")
-                value: System.cpuTempAvailable ? root.temp(System.cpuTemp) : ""
-                unit: root.fahrenheit ? "°F" : "°C"
-                available: System.cpuTempAvailable
+            UiMeterRow {
+                width: parent.width
+                label: i18n.tr("CPU")
+                value: System.cpuPerc
+                valueText: root.pct(System.cpuPerc)
+                threshold: root.warnPercent / 100
             }
 
-            UiMetric {
-                Layout.fillWidth: true
-                Layout.preferredWidth: 1
-                size: "value"
-                label: i18n.tr("GPU TEMP")
-                value: System.gpuTempAvailable ? root.temp(System.gpuTemp) : ""
-                unit: root.fahrenheit ? "°F" : "°C"
-                available: System.gpuTempAvailable
-            }
-
-            UiMetric {
-                Layout.fillWidth: true
-                Layout.preferredWidth: 1
-                size: "value"
-                label: i18n.tr("MEMORY")
-                value: System.memTotal > 0 ? root.gib(System.memUsed) + " / " + root.gib(System.memTotal) : ""
-                unit: "GiB"
+            UiMeterRow {
+                width: parent.width
+                label: i18n.tr("MEM")
+                value: System.memPerc
+                valueText: root.pct(System.memPerc)
                 available: System.memTotal > 0
-            }
-        }
-
-        // Per-logical-CPU load from the same sample as the scope: one
-        // vertical strip per core (cores are not a time series, so there
-        // is no trace for them).
-        Item {
-            visible: root.showCores && root.tall && System.cores.length > 0
-            width: parent.width
-            height: coreRow.implicitHeight + coresLabel.implicitHeight + Theme.spacing.small
-
-            UiText {
-                id: coresLabel
-
-                role: "eyebrow"
-                text: i18n.tr("CORES")
+                threshold: root.warnPercent / 100
             }
 
-            Row {
-                id: coreRow
+            UiMeterRow {
+                visible: root.showGpu
+                width: parent.width
+                label: i18n.tr("GPU")
+                value: System.gpuPerc
+                valueText: root.pct(System.gpuPerc)
+                available: System.gpuAvailable
+                threshold: root.warnPercent / 100
+            }
 
-                anchors.top: coresLabel.bottom
-                anchors.topMargin: Theme.spacing.small
-                spacing: Theme.spacing.small
+            UiMeterRow {
+                visible: root.showDisk
+                width: parent.width
+                label: i18n.tr("DISK")
+                value: System.storagePerc
+                valueText: root.pct(System.storagePerc)
+                available: System.storageAvailable
+                threshold: root.warnPercent / 100
+            }
 
-                Repeater {
-                    model: System.cores
+            UiStack {
+                visible: root.showTemperatures
+                width: parent.width
 
-                    delegate: UiSegmentMeter {
-                        required property real modelData
+                UiMetric {
+                    Layout.fillWidth: true
+                    Layout.preferredWidth: 1
+                    size: "value"
+                    label: i18n.tr("CPU TEMP")
+                    value: System.cpuTempAvailable ? root.temp(System.cpuTemp) : ""
+                    unit: root.fahrenheit ? "°F" : "°C"
+                    available: System.cpuTempAvailable
+                }
 
-                        orientation: "vertical"
-                        count: 10
-                        segmentThickness: 4
-                        segmentLength: 12
-                        value: modelData
-                        threshold: root.warnPercent / 100
-                        accessibleName: i18n.tr("Core load")
+                UiMetric {
+                    Layout.fillWidth: true
+                    Layout.preferredWidth: 1
+                    size: "value"
+                    label: i18n.tr("GPU TEMP")
+                    value: System.gpuTempAvailable ? root.temp(System.gpuTemp) : ""
+                    unit: root.fahrenheit ? "°F" : "°C"
+                    available: System.gpuTempAvailable
+                }
+
+                UiMetric {
+                    Layout.fillWidth: true
+                    Layout.preferredWidth: 1
+                    size: "value"
+                    label: i18n.tr("MEMORY")
+                    value: System.memTotal > 0 ? root.gib(System.memUsed) + " / " + root.gib(System.memTotal) : ""
+                    unit: "GiB"
+                    available: System.memTotal > 0
+                }
+            }
+
+            // Per-logical-CPU load from the same sample as the scope: one
+            // vertical strip per core (cores are not a time series, so there
+            // is no trace for them).
+            Item {
+                visible: root.showCores && root.tall && System.cores.length > 0
+                width: parent.width
+                height: coreRow.implicitHeight + coresLabel.implicitHeight + Theme.spacing.small
+
+                UiText {
+                    id: coresLabel
+
+                    role: "eyebrow"
+                    text: i18n.tr("CORES")
+                }
+
+                Row {
+                    id: coreRow
+
+                    anchors.top: coresLabel.bottom
+                    anchors.topMargin: Theme.spacing.small
+                    spacing: Theme.spacing.small
+
+                    Repeater {
+                        model: System.cores
+
+                        delegate: UiSegmentMeter {
+                            required property real modelData
+
+                            orientation: "vertical"
+                            count: 10
+                            segmentThickness: 4
+                            segmentLength: 12
+                            value: modelData
+                            threshold: root.warnPercent / 100
+                            accessibleName: i18n.tr("Core load")
+                        }
                     }
                 }
             }
