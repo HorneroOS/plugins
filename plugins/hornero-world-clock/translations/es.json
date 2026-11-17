@@ -18,5 +18,12 @@
   "UTC": "UTC",
   "World Clock": "Reloj mundial",
   "tomorrow": "mañana",
-  "yesterday": "ayer"
+  "yesterday": "ayer",
+  "behind local time": "por detrás de la hora local",
+  "World Clock: activate for time zone details": "Reloj mundial: activá para ver los detalles de zonas horarias",
+  "Daylight saving follows built-in rules.": "El horario de verano sigue reglas integradas.",
+  "Same offset as local time": "Mismo desplazamiento que la hora local",
+  "ahead of local time": "por delante de la hora local",
+  "Local time %1, %2 time %3": "Hora local %1, hora en %2 %3",
+  "%1 local, %2 %3": "%1 local, %2 %3"
 }

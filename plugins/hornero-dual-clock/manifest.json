@@ -2,7 +2,7 @@
   "schemaVersion": 3,
   "id": "hornero-dual-clock",
   "name": "Hornero Dual Clock",
-  "version": "3.0.2",
+  "version": "3.0.3",
   "description": "Dual Clock 2.0: local time next to a second zone (UTC by default, as in 1.x) in the bar, with a details popover. Pure-JS rule-based offsets, no processes or network.",
   "author": "HorneroOS contributors",
   "license": "MIT",
@@ -21,6 +21,10 @@
       "minShellVersion": "1.2.74"
     },
     "changelog": [
+      {
+        "version": "3.0.3",
+        "notes": "Deprecated in favour of hornero-world-clock."
+      },
       {
         "version": "3.0.2",
         "notes": "Vertical rail stacks HH over mm like the native clock (HH:mm was elided)."
@@ -53,7 +57,11 @@
         "version": "1.0.1",
         "notes": "Local time next to UTC in the bar for coordinating across time zones; themed text and vertical two-line layout."
       }
-    ]
+    ],
+    "deprecation": {
+      "message": "Retired: World Clock now has the same bar indicator (local time over a second zone, barZone and barShowSeconds) plus its dashboard card.",
+      "replacedBy": "hornero-world-clock"
+    }
   },
   "files": [
     "Main.qml",

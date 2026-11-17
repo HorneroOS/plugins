@@ -121,3 +121,35 @@ Improving the keepers visually and functionally beyond Pomodoro; the planned mer
 - **hornero-forge-board 1.0.0**: token handling decision: no token field, no storage; it runs `gh run list` and `gh pr list --author @me` through the CLI session the user created with `gh auth login`. Declared `processCommands: ["gh"]`, `networkHosts: ["api.github.com"]`. Repository names must match `owner/name` before reaching argv. Missing or signed-out gh shows an explicit state. A QA VM capture caught the header claiming CI GREEN with gh missing; fixed in 1.0.1.
 - **Still planned, not done**: Dual Clock into World Clock, Sun Card into Weather, Stopwatch into Countdown, Volume/Microphone into Audio Deck, the visual pass on the instruments (System Insight, Network Scope, Audio Deck, Calendar, Moon Phase, Weather) and Studio Jobs settings. Those need replacement coverage built first, so no deprecation is published for them.
 - **QA VM**: success states of Containers and Device Battery were captured with **labelled fixture shims** for `podman` and `upower` (fake executables in the guest, see `docs/evidence/catalog-audit/vm-shims/`); the Git Board and Port Watch captures use real tools. Control Center settings pages could not be captured: pointer clicks in the VM only hover (no activation), and the shell has no IPC to open a plugin's settings. Desktop widgets that do not fit are reported by the shell ("Hidden, no room on the desktop"), seen with seven widgets at 1280x800.
+
+## Second follow-up: replacements built, then deprecated
+
+- **Weather 3.1.0 absorbs Sun Card**: day length, next sun event and daylight progress (derived, labelled) behind `showSunProgress`; bar indicator `barIndicator = sun` shows sunrise and sunset. Sun Card is deprecated.
+- **World Clock 3.2.0 absorbs Dual Clock**: new bar surface (`barZone`, `barShowSeconds`) sharing the zone rule table verbatim (tested). Dual Clock is deprecated.
+- **Countdown 3.1.0 absorbs Stopwatch**: one indicator, popover switches countdown/stopwatch, Stopwatch stored keys carry over. Stopwatch is deprecated.
+- **Studio Jobs 2.1.0**: the settings gap is closed (`refreshSeconds`, `maxRows`, `showAdapter`, `showFinished`).
+- **Not absorbed**: Volume and Microphone. Audio Deck is a desktop widget; folding interactive volume and mute controls into it would not be the same function, so they stay until Audio Deck has a bar surface worth shipping.
+- **Platform status**: apiLevel 4 settings v2 (shell#602), per-instance widgets (#603), command contributions (#605), tile and panel contributions (#613) and atmosphere (#608) are open PRs, not on main, so nothing here uses them yet. Planned adoption once merged: settings v2 `list` for Git Board repositories and Port Watch ports (replacing semicolon strings), `colour` for the Colour tool default, `visibleWhen` for the Pomodoro hook, per-instance Git Board and World Clock, a Toolbox launcher command, a Pomodoro tile, and the atmosphere tokens for the instrument pass.
+- **Instrument visual pass** (System Insight, Network Scope, Audio Deck, Calendar, Moon Phase): deliberately not started. Their look depends on the atmosphere tokens (#608) and the shared mascot empty state; restyling them now would be redone.
+
+## CPU measurements (QA VM, 2026-11-17)
+
+Shell process CPU, one extension enabled at a time with its widget visible, experience Everyday, single 40 s sample each (VM noise about 1 pp; raw data in `docs/evidence/catalog-audit/vm3-cpu.txt`):
+
+| Enabled | CPU (% of one core) |
+|---|--:|
+| none (baseline) | 5.5 |
+| git-board | 5.5 |
+| port-watch | 6.9 |
+| containers (podman shim) | 6.8 |
+| device-battery (upower shim) | 6.5 |
+| forge-board (gh missing) | 6.8 |
+| toolbox | 5.6 |
+| pomodoro | 8.5 |
+| countdown | 6.6 |
+| weather | 6.6 |
+| world-clock | 5.2 |
+| studio-jobs | 5.6 |
+| all 11 | 7.8 |
+
+Reading: the process-spawning cards cost about 1 pp, everything else is within noise, and all eleven together cost 2.3 pp. Pomodoro's 8.5 is an unexplained outlier (it keeps a 2 s settings re-read timer while idle) and stays `unverified` until repeated. These are VM numbers, not host numbers.

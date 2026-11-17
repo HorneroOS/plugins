@@ -40,3 +40,10 @@ Quickshell; it is not sandboxed.
 ## PluginKit 3
 
 This package targets PluginKit 3 on Hornero Signal (`schemaVersion: 3`): colours, type, spacing and glyphs come from the shared Theme tokens and Hornero Glyph names, and the shared data domains it reads are declared in `capabilities.providers`. Shells older than Hornero Signal cannot load it.
+
+## Stopwatch absorbed (3.1.0)
+
+The popover switches between the countdown and a stopwatch (`defaultMode`,
+`showTenths`). The indicator follows whichever is running, countdown first. The
+stopwatch keeps Stopwatch 2.x's anchor-based timing and stored keys, so an
+existing stopwatch resumes.

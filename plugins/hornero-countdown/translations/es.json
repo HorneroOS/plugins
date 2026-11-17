@@ -20,5 +20,18 @@
   "Set countdown to %1 minutes": "Poner la cuenta regresiva en %1 minutos",
   "Start": "Iniciar",
   "Start countdown": "Iniciar la cuenta regresiva",
-  "Start the countdown": "Iniciá la cuenta regresiva"
+  "Start the countdown": "Iniciá la cuenta regresiva",
+  "Reset stopwatch": "Reiniciar el cronómetro",
+  "Start stopwatch": "Iniciar el cronómetro",
+  "Stopwatch %1": "Cronómetro %1",
+  "Timers: activate for countdown and stopwatch": "Temporizadores: activá para cuenta regresiva y cronómetro",
+  "Pause the stopwatch": "Pausá el cronómetro",
+  "Elapsed": "Transcurrido",
+  "Show the countdown": "Mostrar la cuenta regresiva",
+  "Resume": "Seguir",
+  "Start the stopwatch": "Iniciá el cronómetro",
+  "Stopwatch": "Cronómetro",
+  "Pause stopwatch": "Pausar el cronómetro",
+  "Reset the stopwatch": "Reiniciá el cronómetro",
+  "Show the stopwatch": "Mostrar el cronómetro"
 }

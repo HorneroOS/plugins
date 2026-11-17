@@ -1,0 +1,14 @@
+baseline (none enabled) | 5.5% of one core | rss=719MiB
+only git-board | 5.5% of one core | rss=715MiB
+only port-watch | 6.9% of one core | rss=725MiB
+only containers | 6.8% of one core | rss=740MiB
+only device-battery | 6.5% of one core | rss=771MiB
+only forge-board | 6.8% of one core | rss=789MiB
+only toolbox | 5.6% of one core | rss=791MiB
+only pomodoro | 8.5% of one core | rss=797MiB
+only countdown | 6.6% of one core | rss=799MiB
+only weather | 6.6% of one core | rss=799MiB
+only world-clock | 5.2% of one core | rss=801MiB
+only studio-jobs | 5.6% of one core | rss=800MiB
+all 11 enabled | 7.8% of one core | rss=801MiB
+finished

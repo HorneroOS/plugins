@@ -2,7 +2,7 @@
   "schemaVersion": 3,
   "id": "hornero-world-clock",
   "name": "Hornero World Clock",
-  "version": "3.0.1",
+  "version": "3.2.0",
   "description": "World Clock 2.0: dashboard card with local, UTC and three selectable cities. Pure-JS rule-based offsets (fixed, EU, US and southern DST rules) labelled per row; no processes or network.",
   "author": "HorneroOS contributors",
   "license": "MIT",
@@ -14,6 +14,10 @@
       "entrypoint": "Main.qml",
       "size": "standard",
       "category": "Time"
+    },
+    "bar": {
+      "entrypoint": "Bar.qml",
+      "section": "clock"
     }
   },
   "translations": {
@@ -28,6 +32,10 @@
       "minShellVersion": "1.0.0"
     },
     "changelog": [
+      {
+        "version": "3.2.0",
+        "notes": "Absorbs Dual Clock: a bar indicator with local time over a second zone (barZone, barShowSeconds) and a popover with dates, offsets and the difference."
+      },
       {
         "version": "3.0.1",
         "notes": "Plain wording in footnotes and labels (no internal terms)."
@@ -48,6 +56,7 @@
   },
   "files": [
     "Main.qml",
+    "Bar.qml",
     "README.md",
     "LICENSE",
     "translations/es.json"
@@ -132,6 +141,30 @@
         "type": "boolean",
         "default": true,
         "description": "Use 24-hour times (the 1.x behaviour); off shows 12-hour AM/PM."
+      },
+      "barZone": {
+        "type": "enum",
+        "default": "utc",
+        "options": [
+          "utc",
+          "buenos-aires",
+          "new-york",
+          "chicago",
+          "los-angeles",
+          "london",
+          "madrid",
+          "berlin",
+          "new-delhi",
+          "tokyo",
+          "sydney",
+          "auckland"
+        ],
+        "description": "Bar indicator: the second time zone shown under your local time."
+      },
+      "barShowSeconds": {
+        "type": "boolean",
+        "default": false,
+        "description": "Bar indicator: show seconds in the local and second-zone times."
       }
     },
     "providers": [

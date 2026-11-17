@@ -31,6 +31,10 @@ Item {
         domain: "weather"
     }
 
+    Subscription {
+        domain: "time"
+    }
+
     Translations {
         id: i18n
 
@@ -58,9 +62,53 @@ Item {
         const value = Number(pluginSettings.value("windAlertKmh", 50));
         return isFinite(value) && value >= 1 ? Math.min(200, Math.floor(value)) : 50;
     }
+    readonly property bool showSunProgress: pluginSettings.value("showSunProgress", true) !== false
     readonly property bool compactDensity: dataDensity === "compact" || hostCompact
     readonly property bool detailedDensity: dataDensity === "detailed"
     readonly property bool windHigh: Weather.ready && isFinite(Number(Weather.windSpeed)) && Number(Weather.windSpeed) >= windAlertKmh
+
+    // Derived from today's two sunrise/sunset strings and the clock (labelled
+    // as such); an unparseable string reads Unavailable, never a guess.
+    function parseMinutes(value) {
+        const match = /^(\d{1,2}):(\d{2})(?:\s*(AM|PM))?$/i.exec(String(value || "").trim());
+        if (!match)
+            return -1;
+        let hours = Number(match[1]);
+        const minutes = Number(match[2]);
+        const marker = match[3] ? match[3].toUpperCase() : "";
+        if (minutes > 59)
+            return -1;
+        if (marker) {
+            if (hours < 1 || hours > 12)
+                return -1;
+            hours = marker === "AM" ? (hours === 12 ? 0 : hours) : (hours === 12 ? 12 : hours + 12);
+        } else if (hours > 23) {
+            return -1;
+        }
+        return hours * 60 + minutes;
+    }
+
+    readonly property int sunriseMinutes: parseMinutes(Weather.sunrise)
+    readonly property int sunsetMinutes: parseMinutes(Weather.sunset)
+    readonly property int nowMinutes: Time.hours * 60 + Time.minutes
+    readonly property bool sunTimesValid: sunriseMinutes >= 0 && sunsetMinutes > sunriseMinutes
+    readonly property real sunProgress: sunTimesValid ? Math.max(0, Math.min(1, (nowMinutes - sunriseMinutes) / (sunsetMinutes - sunriseMinutes))) : 0
+
+    function durationText(totalMinutes) {
+        if (totalMinutes < 0)
+            return i18n.tr("Unavailable");
+        return i18n.tr("%1 h %2 min").arg(String(Math.floor(totalMinutes / 60))).arg(String(totalMinutes % 60));
+    }
+
+    function nextEventText() {
+        if (!sunTimesValid)
+            return i18n.tr("Unavailable");
+        if (nowMinutes < sunriseMinutes)
+            return i18n.tr("Sunrise in %1").arg(durationText(sunriseMinutes - nowMinutes));
+        if (nowMinutes < sunsetMinutes)
+            return i18n.tr("Sunset in %1").arg(durationText(sunsetMinutes - nowMinutes));
+        return i18n.tr("Unavailable today");
+    }
 
     function forecastLine(entry) {
         if (!entry)
@@ -195,6 +243,30 @@ Item {
                     glyph: "sunset"
                     label: i18n.tr("Sunset")
                     value: Weather.sunset
+                }
+
+                UiDetailRow {
+                    visible: !root.compactDensity && root.showSunTimes && root.showSunProgress
+                    width: parent.width
+                    glyph: "sun"
+                    label: i18n.tr("Day length")
+                    value: root.durationText(root.sunTimesValid ? root.sunsetMinutes - root.sunriseMinutes : -1)
+                }
+
+                UiText {
+                    visible: !root.compactDensity && root.showSunTimes && root.showSunProgress
+                    width: parent.width
+                    role: "caption"
+                    text: i18n.tr("Next sun event") + ": " + root.nextEventText()
+                }
+
+                UiPartition {
+                    visible: !root.compactDensity && root.showSunTimes && root.showSunProgress && root.sunTimesValid
+                    width: parent.width
+                    total: 1
+                    used: root.sunProgress
+                    usedLabel: i18n.tr("Sun progress")
+                    Accessible.name: i18n.tr("Sun progress")
                 }
 
                 UiText {

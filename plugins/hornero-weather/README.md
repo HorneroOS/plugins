@@ -67,3 +67,10 @@ QML plugins run with your user privileges — Hornero Shell does not sandbox the
 ## PluginKit 3
 
 This package targets PluginKit 3 on Hornero Signal (`schemaVersion: 3`): colours, type, spacing and glyphs come from the shared Theme tokens and Hornero Glyph names, and the shared data domains it reads are declared in `capabilities.providers`. Shells older than Hornero Signal cannot load it.
+
+## Sun Card absorbed (3.1.0)
+
+Day length, the next sun event and daylight progress (all derived from today's
+sunrise and sunset strings and the clock, and labelled so; unparseable values
+read Unavailable) are on the card behind `showSunProgress`. The bar indicator
+can show sunrise and sunset instead of the temperature (`barIndicator: sun`).

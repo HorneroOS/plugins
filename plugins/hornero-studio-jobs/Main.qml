@@ -37,8 +37,19 @@ Item {
         pluginId: "hornero-studio-jobs"
     }
 
+    Settings {
+        id: pluginSettings
+
+        pluginId: "hornero-studio-jobs"
+    }
+
+    readonly property int maxRows: Math.max(1, Math.min(8, Number(pluginSettings.value("maxRows", 4)) || 4))
+    readonly property int refreshSeconds: Math.max(5, Math.min(300, Number(pluginSettings.value("refreshSeconds", 30)) || 30))
+    readonly property bool showAdapter: pluginSettings.value("showAdapter", true) !== false
+    readonly property bool showFinished: pluginSettings.value("showFinished", true) !== false
+
     Timer {
-        interval: 30000
+        interval: root.refreshSeconds * 1000
         repeat: true
         running: true
         onTriggered: root.refresh()
@@ -60,9 +71,10 @@ Item {
                 const data = (env && env.data) || {};
                 const count = parseInt(data.count || "0", 10);
                 const rows = [];
-                for (let i = 0; i < count && rows.length < 4; i++) {
+                for (let i = 0; i < count && rows.length < root.maxRows; i++) {
                     const parts = String(data["job_" + i] || "").split("\t");
-                    if (parts.length === 5) {
+                    const finished = parts[1] === "succeeded" || parts[1] === "failed" || parts[1] === "cancelled";
+                    if (parts.length === 5 && (root.showFinished || !finished)) {
                         rows.push({
                             "id": parts[0],
                             "state": parts[1],
@@ -169,7 +181,7 @@ Item {
                         UiText {
                             width: parent.width
                             role: "caption"
-                            text: modelData.adapter + " · " + root.stateName(modelData.state)
+                            text: (root.showAdapter ? modelData.adapter + " · " : "") + root.stateName(modelData.state)
                             elide: Text.ElideRight
                             wrapMode: Text.NoWrap
                         }
