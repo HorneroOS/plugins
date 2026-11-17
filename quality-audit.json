@@ -730,6 +730,51 @@
       "replacement": "hornero-pomodoro"
     },
     {
+      "id": "hornero-forge-board",
+      "classification": "needs-upgrade",
+      "valueProposition": "Forge Board 1.0: latest CI run and your open pull requests (review and check state) for named GitHub repositories, through the signed-in gh CLI; no token handling.",
+      "nativeOverlap": "No native equivalent. Complements hornero-git-board, which is local-only.",
+      "dimensions": {
+        "tooltips": {
+          "status": "na",
+          "note": "No interactive controls: read-only card (static probe)."
+        },
+        "accessibility": {
+          "status": "na",
+          "note": "No interactive controls; rows carry Accessible.name (static probe)."
+        },
+        "translation": {
+          "status": "pass",
+          "note": "All literals go through PluginKit Translations; es catalogue complete (static probe)."
+        },
+        "settings": {
+          "status": "pass",
+          "note": "Five typed settings read via PluginKit Settings (static probe)."
+        },
+        "themeTokens": {
+          "status": "pass",
+          "note": "Colours come from Ui* primitives and Theme.palette tokens (static probe)."
+        },
+        "screenshots": {
+          "status": "pass",
+          "note": "docs/screenshots/hornero-forge-board.png: offscreen fixture render of gh output, Signal Night (fixture, not real repositories)."
+        },
+        "orientation": {
+          "status": "na",
+          "note": "Dashboard card or desktop widget: the host fixes the size."
+        },
+        "loadingErrorStates": {
+          "status": "pass",
+          "note": "Missing gh and signed-out gh states render; checked in the QA VM where gh is not installed (see evidence)."
+        },
+        "performance": {
+          "status": "unverified",
+          "note": "Two short gh calls per repository per refresh (default 5 minutes), paused in Gaming; no CPU measurement."
+        }
+      },
+      "issue": "HorneroOS/plugins#80"
+    },
+    {
       "id": "hornero-git-board",
       "classification": "needs-upgrade",
       "valueProposition": "Git Board 1.0: read-only status of the repositories you name (branch, ahead/behind, staged/changed/untracked/conflicted counts, last commit) as a dashboard card and desktop widget.",

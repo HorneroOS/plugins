@@ -39,6 +39,7 @@ class Structure(unittest.TestCase):
             ("hornero-device-battery", "DEVICES-LOGIC"),
             ("hornero-pomodoro", "POMODORO-LOGIC"),
             ("hornero-toolbox", "TOOLBOX-LOGIC"),
+            ("hornero-forge-board", "FORGE-LOGIC"),
         ]:
             self.assertIn("function", block(plugin, marker), plugin)
 
@@ -322,6 +323,50 @@ class Toolbox(unittest.TestCase):
         self.assertEqual(js(self.P, self.M, "transformText('hello wORLD', 'title-case')"), "Hello World")
         self.assertEqual(js(self.P, self.M, "transformText('abc', 'reverse')"), "cba")
         self.assertEqual(js(self.P, self.M, "[countWordsText('  a b  c '), countLinesText('a\\nb')]"), [3, 2])
+
+
+@unittest.skipUnless(NODE, "node not available")
+class ForgeBoard(unittest.TestCase):
+    P, M = "hornero-forge-board", "FORGE-LOGIC"
+
+    def test_manifest_has_no_token_surface(self):
+        m = json.loads((ROOT / "plugins" / self.P / "manifest.json").read_text())
+        self.assertEqual(m["capabilities"]["processCommands"], ["gh"])
+        self.assertEqual(m["capabilities"]["networkHosts"], ["api.github.com"])
+        for key in m["capabilities"]["settings"]:
+            self.assertNotIn("token", key.lower())
+        code = (ROOT / "plugins" / self.P / "Main.qml").read_text()
+        for verb in ['"merge"', '"comment"', '"rerun"', '"create"', '"edit"', '"close"', '"auth"', "GH_TOKEN"]:
+            self.assertNotIn(verb, code)
+
+    def test_repo_names_are_validated(self):
+        text = "HorneroOS/plugins, --repo=x/y; a/b c/d;evil/../x -R/x HorneroOS/plugins ok/ok.git"
+        r = js(self.P, self.M, f"splitRepos({json.dumps(text)}, 6)")
+        self.assertEqual(r, ["HorneroOS/plugins", "a/b", "c/d", "ok/ok.git"])
+
+    def test_run_and_checks(self):
+        run = json.dumps([{"status": "completed", "conclusion": "failure", "displayTitle": "ci", "headBranch": "main"}])
+        r = js(self.P, self.M, f"parseRun({json.dumps(run)})")
+        self.assertEqual((r["state"], r["branch"]), ("fail", "main"))
+        self.assertEqual(js(self.P, self.M, "parseRun('[]')")["state"], "none")
+        self.assertEqual(js(self.P, self.M, "parseRun('not json')")["state"], "unknown")
+        run = json.dumps([{"status": "in_progress", "conclusion": ""}])
+        self.assertEqual(js(self.P, self.M, f"parseRun({json.dumps(run)})")["state"], "running")
+        roll = json.dumps([{"status": "COMPLETED", "conclusion": "SUCCESS"}, {"status": "IN_PROGRESS", "conclusion": ""}])
+        self.assertEqual(js(self.P, self.M, f"checkState({roll})"), "running")
+        roll = json.dumps([{"status": "COMPLETED", "conclusion": "SUCCESS"}, {"status": "COMPLETED", "conclusion": "FAILURE"}])
+        self.assertEqual(js(self.P, self.M, f"checkState({roll})"), "fail")
+        self.assertEqual(js(self.P, self.M, "checkState([])"), "none")
+        self.assertEqual(js(self.P, self.M, "worst(['pass', 'running', 'fail'])"), "fail")
+
+    def test_prs(self):
+        prs = json.dumps([{"number": 81, "title": "x", "isDraft": True, "reviewDecision": "", "statusCheckRollup": []},
+                          {"number": 82, "title": "y", "isDraft": False, "reviewDecision": "APPROVED", "statusCheckRollup": [{"status": "COMPLETED", "conclusion": "SUCCESS"}]}])
+        r = js(self.P, self.M, f"parsePrs({json.dumps(prs)}, 1)")
+        self.assertEqual(len(r), 1)
+        self.assertTrue(r[0]["draft"])
+        r = js(self.P, self.M, f"parsePrs({json.dumps(prs)}, 5)")
+        self.assertEqual((r[1]["review"], r[1]["checks"]), ("APPROVED", "pass"))
 
 
 if __name__ == "__main__":
