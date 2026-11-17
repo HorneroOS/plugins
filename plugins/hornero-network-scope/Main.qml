@@ -52,6 +52,11 @@ Item {
     readonly property bool showTotals: pluginSettings.value("showSessionTotals", true) !== false
     readonly property bool showNetworkName: pluginSettings.value("showNetworkName", false) === true
 
+    readonly property string scaleSetting: String(pluginSettings.value("scale", "auto"))
+    // Fixed scales in bytes per second; anything else (including a
+    // value the host did not validate) is auto.
+    readonly property real fixedScale: scaleSetting === "1 MiB/s" ? 1048576 : scaleSetting === "10 MiB/s" ? 10485760 : scaleSetting === "100 MiB/s" ? 104857600 : 0
+
     readonly property var downWindow: Telemetry.window("netDown")
     readonly property var upWindow: Telemetry.window("netUp")
 
@@ -84,8 +89,8 @@ Item {
         return (f <= 1 ? 1 : f <= 2 ? 2 : f <= 5 ? 5 : 10) * exp;
     }
 
-    readonly property real downScale: niceMax(Math.max(peakOf(downWindow) || 0, peakOf(Telemetry.previousWindow("netDown")) || 0))
-    readonly property real upScale: niceMax(Math.max(peakOf(upWindow) || 0, peakOf(Telemetry.previousWindow("netUp")) || 0))
+    readonly property real downScale: fixedScale > 0 ? fixedScale : niceMax(Math.max(peakOf(downWindow) || 0, peakOf(Telemetry.previousWindow("netDown")) || 0))
+    readonly property real upScale: fixedScale > 0 ? fixedScale : niceMax(Math.max(peakOf(upWindow) || 0, peakOf(Telemetry.previousWindow("netUp")) || 0))
     readonly property bool ratesAvailable: valid(Network.downloadSpeed) && valid(Network.uploadSpeed)
 
     Column {

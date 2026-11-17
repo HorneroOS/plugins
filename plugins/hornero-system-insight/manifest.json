@@ -2,7 +2,7 @@
   "schemaVersion": 3,
   "id": "hornero-system-insight",
   "name": "Hornero System Insight",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "System Insight: a desktop instrument over the shared system provider: a CPU oscilloscope from the shared Telemetry history, segmented meters, per-core load strips and temperatures. Real telemetry only.",
   "author": "HorneroOS contributors",
   "license": "MIT",
@@ -31,6 +31,10 @@
       "minShellVersion": "1.0.0"
     },
     "changelog": [
+      {
+        "version": "1.1.0",
+        "notes": "Settings: show or hide the GPU and disk meters, and show temperatures in Celsius or Fahrenheit."
+      },
       {
         "version": "1.0.1",
         "notes": "Taller default frame so the per-core strip is drawn instead of a header with nothing under it."
@@ -70,6 +74,25 @@
         "minimum": 50,
         "maximum": 100,
         "description": "Usage percent at or above which a meter segment turns signal (the visual language default is 85)."
+      },
+      "showGpu": {
+        "type": "boolean",
+        "default": true,
+        "description": "Show the GPU meter (it already reads as unavailable when the system provider has no GPU data)."
+      },
+      "showDisk": {
+        "type": "boolean",
+        "default": true,
+        "description": "Show the disk usage meter."
+      },
+      "temperatureUnit": {
+        "type": "enum",
+        "default": "celsius",
+        "options": [
+          "celsius",
+          "fahrenheit"
+        ],
+        "description": "Unit for the CPU and GPU temperatures. The provider reports Celsius; Fahrenheit is a display conversion."
       }
     }
   }

@@ -2,7 +2,7 @@
   "schemaVersion": 3,
   "id": "hornero-network-scope",
   "name": "Hornero Network Scope",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Network Scope: a desktop instrument over the shared network provider: download and upload oscilloscopes with stated scales, current rates, Wi-Fi signal and session totals. Real telemetry only.",
   "author": "HorneroOS contributors",
   "license": "MIT",
@@ -32,6 +32,10 @@
     },
     "changelog": [
       {
+        "version": "1.1.0",
+        "notes": "Setting: fix the oscilloscope scale at 1, 10 or 100 MiB/s instead of auto-scaling to the recent peak."
+      },
+      {
         "version": "1.0.0",
         "notes": "Initial release: cue-toned download and upload oscilloscopes over the shared Telemetry history, Wi-Fi signal meter and session totals (PluginKit 3 desktop widget)."
       }
@@ -59,6 +63,17 @@
         "type": "boolean",
         "default": false,
         "description": "Show the Wi-Fi network name (personal data; off by default on an always-visible desktop widget)."
+      },
+      "scale": {
+        "type": "enum",
+        "default": "auto",
+        "options": [
+          "auto",
+          "1 MiB/s",
+          "10 MiB/s",
+          "100 MiB/s"
+        ],
+        "description": "Vertical scale of both traces. auto follows the recent peak; a fixed scale makes traces comparable over time (samples above it are clipped at the top)."
       }
     }
   }

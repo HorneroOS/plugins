@@ -38,6 +38,9 @@ source, not to this package.
   the grid's first column. PluginKit `Translations` resolves
   the locale for formatting but does not expose the locale's
   first weekday, so this is a setting rather than a guess.
+- `dateStyle` (enum `long`/`short`/`iso`, default **long**) formats the
+  date line (`17 November 2026`, `17 Nov 2026`, `2026-11-17`). There is no
+  events source: the widget shows dates only.
 - 1.x declared no settings, so no stored values migrate.
   Settings changed in Control Center apply from the next
   plugin reload, as in the other families.

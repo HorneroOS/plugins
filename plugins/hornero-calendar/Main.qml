@@ -51,6 +51,11 @@ Item {
     readonly property bool twentyFourHour: pluginSettings.value("twentyFourHour", true) !== false
     readonly property bool showShellTime: pluginSettings.value("showShellTime", false) === true
     readonly property bool showMonthGrid: pluginSettings.value("showMonthGrid", true) !== false
+    readonly property string dateStyle: {
+        const value = String(pluginSettings.value("dateStyle", "long"));
+        return value === "short" || value === "iso" ? value : "long";
+    }
+    readonly property string dateFormat: dateStyle === "iso" ? "yyyy-MM-dd" : dateStyle === "short" ? "d MMM yyyy" : "d MMMM yyyy"
     readonly property string weekStart: {
         const value = pluginSettings.value("weekStart", "monday");
         return value === "sunday" ? "sunday" : "monday";
@@ -127,7 +132,7 @@ Item {
 
                 UiText {
                     role: "caption"
-                    text: i18n.formatDateTime(Time.date, "d MMMM yyyy")
+                    text: i18n.formatDateTime(Time.date, root.dateFormat)
                 }
 
                 UiText {

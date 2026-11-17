@@ -50,6 +50,9 @@ Item {
 
     readonly property bool showCores: pluginSettings.value("showCores", true) !== false
     readonly property bool showTemperatures: pluginSettings.value("showTemperatures", true) !== false
+    readonly property bool showGpu: pluginSettings.value("showGpu", true) !== false
+    readonly property bool showDisk: pluginSettings.value("showDisk", true) !== false
+    readonly property bool fahrenheit: pluginSettings.value("temperatureUnit", "celsius") === "fahrenheit"
     readonly property int warnPercent: {
         const value = Number(pluginSettings.value("warnPercent", 85));
         return isFinite(value) && value >= 50 ? Math.min(100, Math.floor(value)) : 85;
@@ -57,6 +60,11 @@ Item {
 
     function pct(v) {
         return isFinite(Number(v)) ? Math.round(Math.max(0, Math.min(1, Number(v))) * 100) + " %" : "—";
+    }
+
+    // Display conversion only; the provider reports Celsius.
+    function temp(celsius) {
+        return Math.round(root.fahrenheit ? Number(celsius) * 9 / 5 + 32 : Number(celsius)).toString();
     }
 
     function gib(kib) {
@@ -98,6 +106,7 @@ Item {
         }
 
         UiMeterRow {
+            visible: root.showGpu
             width: parent.width
             label: i18n.tr("GPU")
             value: System.gpuPerc
@@ -107,6 +116,7 @@ Item {
         }
 
         UiMeterRow {
+            visible: root.showDisk
             width: parent.width
             label: i18n.tr("DISK")
             value: System.storagePerc
@@ -124,8 +134,8 @@ Item {
                 Layout.preferredWidth: 1
                 size: "value"
                 label: i18n.tr("CPU TEMP")
-                value: System.cpuTempAvailable ? Math.round(System.cpuTemp).toString() : ""
-                unit: "°C"
+                value: System.cpuTempAvailable ? root.temp(System.cpuTemp) : ""
+                unit: root.fahrenheit ? "°F" : "°C"
                 available: System.cpuTempAvailable
             }
 
@@ -134,8 +144,8 @@ Item {
                 Layout.preferredWidth: 1
                 size: "value"
                 label: i18n.tr("GPU TEMP")
-                value: System.gpuTempAvailable ? Math.round(System.gpuTemp).toString() : ""
-                unit: "°C"
+                value: System.gpuTempAvailable ? root.temp(System.gpuTemp) : ""
+                unit: root.fahrenheit ? "°F" : "°C"
                 available: System.gpuTempAvailable
             }
 

@@ -2,7 +2,7 @@
   "schemaVersion": 3,
   "id": "hornero-moon-phase",
   "name": "Hornero Moon Phase",
-  "version": "3.0.2",
+  "version": "3.1.0",
   "description": "Moon Phase: desktop widget and bar indicator for the approximate moon phase and illumination from the 1.x synodic approximation, plus Desktop Widgets 2.0 size classes, per-display slot display and hide-with-restore. Always labelled approximate.",
   "author": "HorneroOS contributors",
   "license": "MIT",
@@ -34,6 +34,10 @@
       "minShellVersion": "1.2.79"
     },
     "changelog": [
+      {
+        "version": "3.1.0",
+        "notes": "Setting: hemisphere, which mirrors the lit side of the disc for the southern hemisphere."
+      },
       {
         "version": "3.0.2",
         "notes": "Illumination caption can no longer overflow the widget."
@@ -99,6 +103,15 @@
           "detailed"
         ],
         "description": "compact shows only the phase name; standard keeps the 1.x rows; detailed adds the approximation note."
+      },
+      "hemisphere": {
+        "type": "enum",
+        "default": "north",
+        "options": [
+          "north",
+          "south"
+        ],
+        "description": "Where you observe from. The waxing moon is lit on the right in the northern hemisphere and on the left in the southern one."
       }
     }
   }

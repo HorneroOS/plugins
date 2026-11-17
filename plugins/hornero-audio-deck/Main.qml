@@ -60,15 +60,34 @@ Item {
     readonly property bool showSpectrum: pluginSettings.value("showSpectrum", true) !== false
     readonly property bool showArtist: pluginSettings.value("showArtist", true) !== false
 
+    readonly property int bandCount: {
+        const value = Math.floor(Number(pluginSettings.value("bandCount", 24)));
+        return isFinite(value) ? Math.max(4, Math.min(24, value)) : 24;
+    }
+
     // Real PipeWire bands (0-1), capped so the strips stay readable.
+    // Fewer bands than the provider reports average neighbouring real
+    // bands; more are never invented.
     readonly property var bands: {
         const s = Audio.spectrum;
         if (!s || s.length === undefined)
             return [];
-        const out = [];
+        const source = [];
         const n = Math.min(24, s.length);
         for (let i = 0; i < n; i++)
-            out.push(Math.max(0, Math.min(1, Number(s[i]) || 0)));
+            source.push(Math.max(0, Math.min(1, Number(s[i]) || 0)));
+        const want = Math.min(root.bandCount, source.length);
+        if (want >= source.length)
+            return source;
+        const out = [];
+        for (let b = 0; b < want; b++) {
+            const from = Math.floor(b * source.length / want);
+            const to = Math.max(from + 1, Math.floor((b + 1) * source.length / want));
+            let sum = 0;
+            for (let i = from; i < to; i++)
+                sum += source[i];
+            out.push(sum / (to - from));
+        }
         return out;
     }
     readonly property int bandWidth: bands.length > 0 ? Math.max(6, Math.min(16, Math.floor((contentWidth - (bands.length - 1) * Theme.spacing.small) / bands.length))) : 12

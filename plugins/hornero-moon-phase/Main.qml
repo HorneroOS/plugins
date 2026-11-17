@@ -50,6 +50,7 @@ Item {
         const value = String(pluginSettings.value("dataDensity", "standard"));
         return (value === "compact" || value === "detailed") ? value : "standard";
     }
+    readonly property bool southern: pluginSettings.value("hemisphere", "north") === "south"
     readonly property bool compactDensity: dataDensity === "compact" || hostCompact
     readonly property bool detailedDensity: dataDensity === "detailed"
     property real cycleDays: 29.530588853
@@ -100,6 +101,7 @@ Item {
 
     onIlluminationChanged: disc.requestPaint()
     onWaxingChanged: disc.requestPaint()
+    onSouthernChanged: disc.requestPaint()
 
     Column {
         id: column
@@ -135,8 +137,11 @@ Item {
                     for (let y = -r; y <= r; y++) {
                         const w = Math.sqrt(Math.max(0, r * r - y * y));
                         const t = w * k;
-                        const x0 = root.waxing ? t : -w;
-                        const x1 = root.waxing ? w : -t;
+                        // Northern sky: waxing is lit on the right. The
+                        // southern sky sees the disc mirrored.
+                        const litRight = root.waxing !== root.southern;
+                        const x0 = litRight ? t : -w;
+                        const x1 = litRight ? w : -t;
                         if (x1 > x0)
                             ctx.fillRect(cx + x0, cy + y, x1 - x0, 1);
                     }
