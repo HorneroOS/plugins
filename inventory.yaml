@@ -644,3 +644,23 @@ capabilities:
     inspiration_notes: "First-party HorneroOS plugin written for this catalogue; no upstream code is copied."
     hornero_equivalent: "plugins/hornero-equalizer"
     status: implemented
+  - id: hornero-emoji
+    name: Hornero Emoji
+    category: utilities
+    origin: {project: HorneroOS, url: "https://github.com/HorneroOS/plugins", license: MIT}
+    classification: hornero-original
+    license_status: verified
+    license_evidence: plugins/hornero-emoji/LICENSE
+    inspiration_notes: "First-party HorneroOS plugin written for this catalogue; no upstream code is copied."
+    hornero_equivalent: "plugins/hornero-emoji"
+    status: implemented
+  - id: hornero-clipboard
+    name: Hornero Clipboard
+    category: utilities
+    origin: {project: HorneroOS, url: "https://github.com/HorneroOS/plugins", license: MIT}
+    classification: hornero-original
+    license_status: verified
+    license_evidence: plugins/hornero-clipboard/LICENSE
+    inspiration_notes: "First-party HorneroOS plugin written for this catalogue; no upstream code is copied."
+    hornero_equivalent: "plugins/hornero-clipboard"
+    status: implemented

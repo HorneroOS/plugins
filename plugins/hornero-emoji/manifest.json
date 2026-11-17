@@ -1,0 +1,82 @@
+{
+  "schemaVersion": 3,
+  "id": "hornero-emoji",
+  "name": "Hornero Emoji",
+  "version": "1.0.0",
+  "description": "Emoji search in the launcher (>emoji) and an emoji picker card over the bundled Unicode 16.0 table. Local only: no history, no network, your skin tone and result count are settings.",
+  "author": "HorneroOS contributors",
+  "license": "MIT",
+  "homepage": "https://github.com/HorneroOS/plugins",
+  "entrypoint": "Main.qml",
+  "placement": "dashboard",
+  "surfaces": {
+    "dashboard": {
+      "entrypoint": "Main.qml",
+      "size": "standard",
+      "category": "Utilities"
+    },
+    "launcher": {
+      "entrypoint": "Launcher.qml"
+    }
+  },
+  "translations": {
+    "sourceLocale": "en",
+    "locales": [
+      "es"
+    ],
+    "directory": "translations"
+  },
+  "marketplace": {
+    "compatibility": {
+      "minShellVersion": "1.3.0"
+    },
+    "changelog": [
+      {
+        "version": "1.0.0",
+        "notes": "Initial release: >emoji launcher provider (several rows, Enter copies) and a dashboard picker over Unicode 16.0 names. Needs the Hornero Shell with multi-row launcher results; older shells keep the dashboard card and skip the launcher provider."
+      }
+    ]
+  },
+  "files": [
+    "Main.qml",
+    "Launcher.qml",
+    "EmojiData.qml",
+    "EmojiSearch.js",
+    "README.md",
+    "LICENSE",
+    "translations/es.json"
+  ],
+  "capabilities": {
+    "processCommands": [
+      "wl-copy"
+    ],
+    "networkHosts": [],
+    "settings": {
+      "skinTone": {
+        "type": "enum",
+        "default": "default",
+        "options": [
+          "default",
+          "light",
+          "medium-light",
+          "medium",
+          "medium-dark",
+          "dark"
+        ],
+        "description": "Skin tone applied to emoji that have tone variants (people, hands)."
+      },
+      "maxResults": {
+        "type": "integer",
+        "default": 12,
+        "minimum": 6,
+        "maximum": 24,
+        "description": "How many emoji the launcher and the card list at most."
+      },
+      "showGroup": {
+        "type": "boolean",
+        "default": true,
+        "description": "Show the emoji group (for example Animals & nature) next to the name."
+      }
+    }
+  }
+}

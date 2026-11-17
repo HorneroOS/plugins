@@ -346,6 +346,51 @@
       }
     },
     {
+      "id": "hornero-clipboard",
+      "classification": "needs-upgrade",
+      "valueProposition": "Private clipboard history for the launcher (>clipboard): in-memory text only, secrets skipped, retention and size limits, pause and clear commands.",
+      "nativeOverlap": "Hornero has no native clipboard history; the launcher provider and commands come through PluginKit 4.",
+      "dimensions": {
+        "tooltips": {
+          "status": "pass",
+          "note": "Interactive controls expose their purpose through Ui* accessible names and the host-owned tooltip layer (static probe)."
+        },
+        "accessibility": {
+          "status": "pass",
+          "note": "Every control carries an accessible name (static probe)."
+        },
+        "translation": {
+          "status": "pass",
+          "note": "All literals go through PluginKit Translations; es catalogue complete (static probe)."
+        },
+        "settings": {
+          "status": "pass",
+          "note": "Ten typed settings read via PluginKit Settings (static probe)."
+        },
+        "themeTokens": {
+          "status": "pass",
+          "note": "Colours come from Ui* primitives and Theme.palette tokens (static probe)."
+        },
+        "screenshots": {
+          "status": "fail",
+          "note": "No marketplace screenshot yet; a QA VM capture is recorded in the PR."
+        },
+        "orientation": {
+          "status": "na",
+          "note": "Dashboard card and launcher rows only: the host fixes their size."
+        },
+        "loadingErrorStates": {
+          "status": "pass",
+          "note": "A missing wl-paste leaves the history empty; the card says Recording text only until a copy arrives and never shows fabricated entries."
+        },
+        "performance": {
+          "status": "unverified",
+          "note": "Not measured yet."
+        }
+      },
+      "issue": "HorneroOS/plugins#62"
+    },
+    {
       "id": "hornero-color-converter",
       "classification": "deprecated-with-replacement",
       "valueProposition": "Color Converter 2.0: bar quick hex lookup plus compact Utilities dashboard panel with preview and RGB inputs, over the preserved validated conversions; declared launcher entrypoint carries the same tested logic for shell#250.",
@@ -679,6 +724,51 @@
         "date": "2026-11-17"
       },
       "replacement": "hornero-world-clock"
+    },
+    {
+      "id": "hornero-emoji",
+      "classification": "needs-upgrade",
+      "valueProposition": "Emoji search for the launcher (>emoji) and a dashboard picker over the bundled Unicode 16.0 names, with skin tone and result count as settings. Local only, no history.",
+      "nativeOverlap": "Native launcher has no emoji provider; this adds one through the plugin launcher contract.",
+      "dimensions": {
+        "tooltips": {
+          "status": "pass",
+          "note": "Interactive controls expose their purpose through Ui* accessible names and the host-owned tooltip layer (static probe)."
+        },
+        "accessibility": {
+          "status": "pass",
+          "note": "Every control carries an accessible name (static probe)."
+        },
+        "translation": {
+          "status": "pass",
+          "note": "All literals go through PluginKit Translations; es catalogue complete (static probe)."
+        },
+        "settings": {
+          "status": "pass",
+          "note": "Ten typed settings read via PluginKit Settings (static probe)."
+        },
+        "themeTokens": {
+          "status": "pass",
+          "note": "Colours come from Ui* primitives and Theme.palette tokens (static probe)."
+        },
+        "screenshots": {
+          "status": "fail",
+          "note": "No marketplace screenshot yet; a QA VM capture is recorded in the PR."
+        },
+        "orientation": {
+          "status": "na",
+          "note": "Dashboard card and launcher rows only: the host fixes their size."
+        },
+        "loadingErrorStates": {
+          "status": "pass",
+          "note": "No loading state (a bundled table); an empty search shows UiState empty."
+        },
+        "performance": {
+          "status": "unverified",
+          "note": "Not measured yet."
+        }
+      },
+      "issue": "HorneroOS/plugins#62"
     },
     {
       "id": "hornero-equalizer",
