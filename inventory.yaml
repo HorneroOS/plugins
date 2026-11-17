@@ -574,3 +574,43 @@ capabilities:
     inspiration_notes: "First-party HorneroOS plugin written for this catalogue; no upstream code is copied. Upstream ideas, where any, are credited in the researched entries above."
     hornero_equivalent: "plugins/hornero-audio-deck"
     status: implemented
+  - id: hornero-git-board
+    name: Hornero Git Board
+    category: widgets
+    origin: {project: HorneroOS, url: "https://github.com/HorneroOS/plugins", license: MIT}
+    classification: hornero-original
+    license_status: verified
+    license_evidence: plugins/hornero-git-board/LICENSE
+    inspiration_notes: "First-party HorneroOS plugin written for this catalogue; no upstream code is copied. Upstream ideas, where any, are credited in the researched entries above."
+    hornero_equivalent: "plugins/hornero-git-board"
+    status: implemented
+  - id: hornero-port-watch
+    name: Hornero Port Watch
+    category: widgets
+    origin: {project: HorneroOS, url: "https://github.com/HorneroOS/plugins", license: MIT}
+    classification: hornero-original
+    license_status: verified
+    license_evidence: plugins/hornero-port-watch/LICENSE
+    inspiration_notes: "First-party HorneroOS plugin written for this catalogue; no upstream code is copied. Upstream ideas, where any, are credited in the researched entries above."
+    hornero_equivalent: "plugins/hornero-port-watch"
+    status: implemented
+  - id: hornero-containers
+    name: Hornero Containers
+    category: widgets
+    origin: {project: HorneroOS, url: "https://github.com/HorneroOS/plugins", license: MIT}
+    classification: hornero-original
+    license_status: verified
+    license_evidence: plugins/hornero-containers/LICENSE
+    inspiration_notes: "First-party HorneroOS plugin written for this catalogue; no upstream code is copied. Upstream ideas, where any, are credited in the researched entries above."
+    hornero_equivalent: "plugins/hornero-containers"
+    status: implemented
+  - id: hornero-device-battery
+    name: Hornero Device Battery
+    category: widgets
+    origin: {project: HorneroOS, url: "https://github.com/HorneroOS/plugins", license: MIT}
+    classification: hornero-original
+    license_status: verified
+    license_evidence: plugins/hornero-device-battery/LICENSE
+    inspiration_notes: "First-party HorneroOS plugin written for this catalogue; no upstream code is copied. Upstream ideas, where any, are credited in the researched entries above."
+    hornero_equivalent: "plugins/hornero-device-battery"
+    status: implemented

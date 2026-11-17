@@ -2,7 +2,7 @@
   "schemaVersion": 3,
   "id": "hornero-system-health",
   "name": "Hornero System Health",
-  "version": "3.0.1",
+  "version": "3.0.2",
   "description": "System Health 3.0 on Hornero Signal: a health rack over the shared system, power and network providers: segmented meters that cross to signal at your thresholds, status chips and troubleshooting hints. Read-only.",
   "author": "HorneroOS contributors",
   "license": "MIT",
@@ -29,6 +29,10 @@
     },
     "changelog": [
       {
+        "version": "3.0.2",
+        "notes": "Deprecated: Retired: System Insight covers CPU, memory, GPU and disk meters with a configurable warning threshold; battery and network have their own indicators."
+      },
+      {
         "version": "3.0.1",
         "notes": "Plain wording in footnotes and labels (no internal terms)."
       },
@@ -44,7 +48,11 @@
         "version": "1.0.0",
         "notes": "Dashboard card summarising CPU, memory, storage, battery and network with honest unavailable states."
       }
-    ]
+    ],
+    "deprecation": {
+      "message": "Retired: System Insight covers CPU, memory, GPU and disk meters with a configurable warning threshold; battery and network have their own indicators.",
+      "replacedBy": "hornero-system-insight"
+    }
   },
   "files": [
     "Main.qml",

@@ -101,6 +101,55 @@
       }
     },
     {
+      "id": "hornero-audio-deck",
+      "classification": "needs-upgrade",
+      "valueProposition": "Audio Deck 1.0: a desktop instrument over the shared media, audio and spectrum providers: the real PipeWire spectrum as phosphor VU strips, the current track and the output volume. Real data only; no idle animation.",
+      "nativeOverlap": "Overlaps hornero-now-playing and hornero-volume on the same facades and the native media/volume displays; distinct value is the always-on spectrum instrument for the Signal desktop layer. The spectrum lease is released by showSpectrum; the widget has no controls.",
+      "dimensions": {
+        "tooltips": {
+          "status": "na",
+          "note": "No interactive controls: the desktop host owns placement, size and edit mode (static probe)."
+        },
+        "accessibility": {
+          "status": "na",
+          "note": "No interactive controls; the content root and instruments carry accessible names (static probe classifies non-interactive surfaces as na)."
+        },
+        "translation": {
+          "status": "pass",
+          "note": "All user-visible literals go through PluginKit Translations; es catalog declared in the manifest and checked complete for literal tr() strings (static probe). Facade-supplied text stays in the shell's language."
+        },
+        "settings": {
+          "status": "pass",
+          "note": "Typed settings declared in the manifest and read via PluginKit Settings (static probe)."
+        },
+        "themeTokens": {
+          "status": "pass",
+          "note": "Visible colours come from PluginKit Ui primitives/Theme tokens with no hard-coded chrome colours (static probe)."
+        },
+        "screenshots": {
+          "status": "pass",
+          "note": "docs/screenshots/hornero-audio-deck.png: offscreen fixture render of its night surfaces (offscreen-reviewed 2026-11-17 against the Signal Bezel; fixture data, not product telemetry). Day renders and every surface are in docs/evidence/offscreen/."
+        },
+        "orientation": {
+          "status": "na",
+          "note": "No bar surface: the host fixes the size of a dashboard card or desktop widget, so rail orientation does not apply."
+        },
+        "loadingErrorStates": {
+          "status": "pass",
+          "note": "QA VM: with no matching device/service the surface renders its empty/unavailable state instead of failing (observed in the dashboard Extensions tab and bar, 2026-11-17)."
+        },
+        "performance": {
+          "status": "pass",
+          "note": "QA VM (shell main + PluginKit 3, 3 vCPU llvmpipe, 2026-11-17): loads without a slow-load or load-churn flag; idle CPU of the shell process measured as one set, not per plugin: bare shell 9.2%, 6 desktop widgets 9.4%, 22 bar indicators 11.8%, 12 dashboard cards 11.5% of one core (VM measurement, noise about 0.5 pp; mission evidence plugin-e2e/idle-cpu.txt). Not a published estimate."
+        }
+      },
+      "issue": "HorneroOS/plugins#21",
+      "graphicalReview": {
+        "reviewer": "Claude Code agent (offscreen fixture review and QA VM captures; not a human design review)",
+        "date": "2026-11-17"
+      }
+    },
+    {
       "id": "hornero-base-converter",
       "classification": "needs-upgrade",
       "valueProposition": "Base Converter 2.0: bar quick conversion with an explicit 0x hex prefix plus compact Utilities dashboard detail, over the preserved safe-range validated conversions; declared launcher entrypoint carries the same tested logic for shell#250.",
@@ -346,6 +395,51 @@
       }
     },
     {
+      "id": "hornero-containers",
+      "classification": "needs-upgrade",
+      "valueProposition": "Containers 1.0: read-only Podman/Docker container roster (state, image, status, published ports).",
+      "nativeOverlap": "No native equivalent; read-only by design so it needs no lifecycle permissions.",
+      "dimensions": {
+        "tooltips": {
+          "status": "na",
+          "note": "No interactive controls: the dashboard card and desktop widget are read-only (static probe)."
+        },
+        "accessibility": {
+          "status": "na",
+          "note": "No interactive controls; rows and the content root carry Accessible.name (static probe classifies non-interactive surfaces as na)."
+        },
+        "translation": {
+          "status": "pass",
+          "note": "All user-visible literals go through PluginKit Translations; es catalog declared in the manifest and checked complete for literal tr() strings (static probe)."
+        },
+        "settings": {
+          "status": "pass",
+          "note": "Typed settings (enum, integer ranges, string length, boolean) declared in the manifest and read via PluginKit Settings (static probe)."
+        },
+        "themeTokens": {
+          "status": "pass",
+          "note": "Visible colours come from PluginKit Ui primitives/Theme.palette tokens with no hard-coded chrome colours (static probe)."
+        },
+        "screenshots": {
+          "status": "pass",
+          "note": "docs/screenshots/hornero-containers.png: offscreen fixture render of the dashboard card, Signal Night (fixture command output, not product telemetry). Day renders, desktop surface and real QA VM captures are in docs/evidence/catalog-audit/."
+        },
+        "orientation": {
+          "status": "na",
+          "note": "No bar surface: the host fixes the size of a dashboard card or desktop widget."
+        },
+        "loadingErrorStates": {
+          "status": "pass",
+          "note": "QA VM: with neither Podman nor Docker installed the card shows its error state (found and fixed: a missing executable never reports an exit, so a watchdog now surfaces the failure)."
+        },
+        "performance": {
+          "status": "unverified",
+          "note": "One short-lived read-only process per refresh, paused in the Gaming experience; no CPU measurement taken yet. Process: podman, docker only."
+        }
+      },
+      "issue": "HorneroOS/plugins#21"
+    },
+    {
       "id": "hornero-countdown",
       "classification": "needs-upgrade",
       "valueProposition": "Countdown 2.0 bar timer: compact indicator plus popover with 5/10/25 presets, progress, start/pause and reset, deadline-based timing persisted across sleep/reload and a completion toast. No sound. Pure QML, no processes or network.",
@@ -442,6 +536,51 @@
         "reviewer": "Claude Code agent (offscreen fixture review and QA VM captures; not a human design review)",
         "date": "2026-11-17"
       }
+    },
+    {
+      "id": "hornero-device-battery",
+      "classification": "needs-upgrade",
+      "valueProposition": "Device Battery 1.0: charge of wireless controllers, mice, keyboards, headsets and pens from UPower.",
+      "nativeOverlap": "The native battery indicator and PluginKit Power cover only the laptop battery; peripherals are not exposed by PluginKit.",
+      "dimensions": {
+        "tooltips": {
+          "status": "na",
+          "note": "No interactive controls: the dashboard card and desktop widget are read-only (static probe)."
+        },
+        "accessibility": {
+          "status": "na",
+          "note": "No interactive controls; rows and the content root carry Accessible.name (static probe classifies non-interactive surfaces as na)."
+        },
+        "translation": {
+          "status": "pass",
+          "note": "All user-visible literals go through PluginKit Translations; es catalog declared in the manifest and checked complete for literal tr() strings (static probe)."
+        },
+        "settings": {
+          "status": "pass",
+          "note": "Typed settings (enum, integer ranges, string length, boolean) declared in the manifest and read via PluginKit Settings (static probe)."
+        },
+        "themeTokens": {
+          "status": "pass",
+          "note": "Visible colours come from PluginKit Ui primitives/Theme.palette tokens with no hard-coded chrome colours (static probe)."
+        },
+        "screenshots": {
+          "status": "pass",
+          "note": "docs/screenshots/hornero-device-battery.png: offscreen fixture render of the dashboard card, Signal Night (fixture command output, not product telemetry). Day renders, desktop surface and real QA VM captures are in docs/evidence/catalog-audit/."
+        },
+        "orientation": {
+          "status": "na",
+          "note": "No bar surface: the host fixes the size of a dashboard card or desktop widget."
+        },
+        "loadingErrorStates": {
+          "status": "pass",
+          "note": "QA VM: with upower not installed the card shows its error state (same missing-executable watchdog fix). The success state is fixture-rendered offscreen only."
+        },
+        "performance": {
+          "status": "unverified",
+          "note": "One short-lived read-only process per refresh, paused in the Gaming experience; no CPU measurement taken yet. Process: upower only."
+        }
+      },
+      "issue": "HorneroOS/plugins#21"
     },
     {
       "id": "hornero-disk-usage",
@@ -543,7 +682,7 @@
     },
     {
       "id": "hornero-focus-card",
-      "classification": "needs-upgrade",
+      "classification": "deprecated-with-replacement",
       "valueProposition": "Focus Card 2.0: dashboard card with the locale date from PluginKit Time and a rotating original one-line focus reminder (optional own leading line via the customLine setting). Stores no note; Previous/Next and a pause toggle replace the 1.x mouse-only click. Pure QML, no processes or network.",
       "nativeOverlap": "Focus/session overlap with hornero-quiet-notes and hornero-pomodoro reviewed under #29, not consolidated: Quiet Notes holds your ephemeral line, Pomodoro times a session, Focus Card shows shipped reminders and stores no note, so there is no user text to migrate between them.",
       "dimensions": {
@@ -584,11 +723,56 @@
           "note": "QA VM (shell main + PluginKit 3, 3 vCPU llvmpipe, 2026-11-17): loads without a slow-load or load-churn flag; idle CPU of the shell process measured as one set, not per plugin: bare shell 9.2%, 6 desktop widgets 9.4%, 22 bar indicators 11.8%, 12 dashboard cards 11.5% of one core (VM measurement, noise about 0.5 pp; mission evidence plugin-e2e/idle-cpu.txt). Not a published estimate."
         }
       },
-      "issue": "https://github.com/HorneroOS/plugins/issues/29",
       "graphicalReview": {
         "reviewer": "Claude Code agent (offscreen fixture review and QA VM captures; not a human design review)",
         "date": "2026-11-17"
-      }
+      },
+      "replacement": "hornero-pomodoro"
+    },
+    {
+      "id": "hornero-git-board",
+      "classification": "needs-upgrade",
+      "valueProposition": "Git Board 1.0: read-only status of the repositories you name (branch, ahead/behind, staged/changed/untracked/conflicted counts, last commit) as a dashboard card and desktop widget.",
+      "nativeOverlap": "No native equivalent. Distinct from forge/PR status: it reads only local git and never fetches, so 'behind' is relative to your last fetch.",
+      "dimensions": {
+        "tooltips": {
+          "status": "na",
+          "note": "No interactive controls: the dashboard card and desktop widget are read-only (static probe)."
+        },
+        "accessibility": {
+          "status": "na",
+          "note": "No interactive controls; rows and the content root carry Accessible.name (static probe classifies non-interactive surfaces as na)."
+        },
+        "translation": {
+          "status": "pass",
+          "note": "All user-visible literals go through PluginKit Translations; es catalog declared in the manifest and checked complete for literal tr() strings (static probe)."
+        },
+        "settings": {
+          "status": "pass",
+          "note": "Typed settings (enum, integer ranges, string length, boolean) declared in the manifest and read via PluginKit Settings (static probe)."
+        },
+        "themeTokens": {
+          "status": "pass",
+          "note": "Visible colours come from PluginKit Ui primitives/Theme.palette tokens with no hard-coded chrome colours (static probe)."
+        },
+        "screenshots": {
+          "status": "pass",
+          "note": "docs/screenshots/hornero-git-board.png: offscreen fixture render of the dashboard card, Signal Night (fixture command output, not product telemetry). Day renders, desktop surface and real QA VM captures are in docs/evidence/catalog-audit/."
+        },
+        "orientation": {
+          "status": "na",
+          "note": "No bar surface: the host fixes the size of a dashboard card or desktop widget."
+        },
+        "loadingErrorStates": {
+          "status": "pass",
+          "note": "QA VM (image current, deployed from the plugins worktree, 2026-11-17): real repositories rendered as a desktop widget; a missing path shows the UNREADABLE error row."
+        },
+        "performance": {
+          "status": "unverified",
+          "note": "One short-lived read-only process per refresh, paused in the Gaming experience; no CPU measurement taken yet. Process: git only."
+        }
+      },
+      "issue": "HorneroOS/plugins#21"
     },
     {
       "id": "hornero-json-tools",
@@ -788,7 +972,7 @@
     },
     {
       "id": "hornero-network-monitor",
-      "classification": "needs-upgrade",
+      "classification": "deprecated-with-replacement",
       "valueProposition": "Network Monitor 3.0: Signal dashboard module over the shared network provider: a cue-toned download oscilloscope and upload trace from the shared Telemetry history with the scale stated, peaks, current speeds and session totals.",
       "nativeOverlap": "Overlaps the network rows in hornero-system-health and native current-rate displays; distinct value is shared-history oscilloscope, peaks alongside the shell-session totals. The facade exposes no interface, address or per-process traffic and none is shown.",
       "dimensions": {
@@ -829,7 +1013,56 @@
           "note": "QA VM (shell main + PluginKit 3, 3 vCPU llvmpipe, 2026-11-17): loads without a slow-load or load-churn flag; idle CPU of the shell process measured as one set, not per plugin: bare shell 9.2%, 6 desktop widgets 9.4%, 22 bar indicators 11.8%, 12 dashboard cards 11.5% of one core (VM measurement, noise about 0.5 pp; mission evidence plugin-e2e/idle-cpu.txt). Not a published estimate."
         }
       },
-      "issue": "https://github.com/HorneroOS/plugins/issues/26",
+      "graphicalReview": {
+        "reviewer": "Claude Code agent (offscreen fixture review and QA VM captures; not a human design review)",
+        "date": "2026-11-17"
+      },
+      "replacement": "hornero-network-scope"
+    },
+    {
+      "id": "hornero-network-scope",
+      "classification": "needs-upgrade",
+      "valueProposition": "Network Scope 1.0: a desktop instrument over the shared network provider: cue-toned download and upload oscilloscopes with stated scales, current rates, a Wi-Fi signal meter and session totals, real telemetry only.",
+      "nativeOverlap": "Overlaps hornero-network-monitor (dashboard card) and native rate displays on the same facade; distinct value is the always-on dual-scope desktop instrument for the Signal desktop layer. The facade exposes no interface, address or per-process traffic and none is shown; the network name is hidden by default.",
+      "dimensions": {
+        "tooltips": {
+          "status": "na",
+          "note": "No interactive controls: the desktop host owns placement, size and edit mode (static probe)."
+        },
+        "accessibility": {
+          "status": "na",
+          "note": "No interactive controls; the content root and instruments carry accessible names (static probe classifies non-interactive surfaces as na)."
+        },
+        "translation": {
+          "status": "pass",
+          "note": "All user-visible literals go through PluginKit Translations; es catalog declared in the manifest and checked complete for literal tr() strings (static probe). Facade-supplied text stays in the shell's language."
+        },
+        "settings": {
+          "status": "pass",
+          "note": "Typed settings declared in the manifest and read via PluginKit Settings (static probe)."
+        },
+        "themeTokens": {
+          "status": "pass",
+          "note": "Visible colours come from PluginKit Ui primitives/Theme tokens with no hard-coded chrome colours (static probe)."
+        },
+        "screenshots": {
+          "status": "pass",
+          "note": "docs/screenshots/hornero-network-scope.png: offscreen fixture render of its night surfaces (offscreen-reviewed 2026-11-17 against the Signal Bezel; fixture data, not product telemetry). Day renders and every surface are in docs/evidence/offscreen/."
+        },
+        "orientation": {
+          "status": "na",
+          "note": "No bar surface: the host fixes the size of a dashboard card or desktop widget, so rail orientation does not apply."
+        },
+        "loadingErrorStates": {
+          "status": "pass",
+          "note": "QA VM: with no matching device/service the surface renders its empty/unavailable state instead of failing (observed in the dashboard Extensions tab and bar, 2026-11-17)."
+        },
+        "performance": {
+          "status": "pass",
+          "note": "QA VM (shell main + PluginKit 3, 3 vCPU llvmpipe, 2026-11-17): loads without a slow-load or load-churn flag; idle CPU of the shell process measured as one set, not per plugin: bare shell 9.2%, 6 desktop widgets 9.4%, 22 bar indicators 11.8%, 12 dashboard cards 11.5% of one core (VM measurement, noise about 0.5 pp; mission evidence plugin-e2e/idle-cpu.txt). Not a published estimate."
+        }
+      },
+      "issue": "HorneroOS/plugins#21",
       "graphicalReview": {
         "reviewer": "Claude Code agent (offscreen fixture review and QA VM captures; not a human design review)",
         "date": "2026-11-17"
@@ -887,7 +1120,7 @@
     {
       "id": "hornero-pomodoro",
       "classification": "needs-upgrade",
-      "valueProposition": "Pomodoro 2.0 bar focus timer: compact indicator plus popover (remaining time, progress, start/pause, reset), deadline-based timing persisted across sleep/reload, typed focusMinutes setting (default 25) and a completion toast. Pure QML, no processes or network.",
+      "valueProposition": "Pomodoro 4: bar focus timer with short/long breaks, deadline-correct timing across sleep and reload, and an optional hook that switches to the Focus experience while focusing and restores the previous mode.",
       "nativeOverlap": "Timer family overlap with hornero-countdown and hornero-focus-card; distinct value is the 25-minute focus cycle.",
       "dimensions": {
         "tooltips": {
@@ -932,6 +1165,51 @@
         "reviewer": "Claude Code agent (offscreen fixture review and QA VM captures; not a human design review)",
         "date": "2026-11-17"
       }
+    },
+    {
+      "id": "hornero-port-watch",
+      "classification": "needs-upgrade",
+      "valueProposition": "Port Watch 1.0: listening TCP/UDP ports with bind reach (local, LAN, exposed) and owning process, plus watched ports shown as free.",
+      "nativeOverlap": "No native equivalent; complements the Network Scope rates (aggregate) with the socket table.",
+      "dimensions": {
+        "tooltips": {
+          "status": "na",
+          "note": "No interactive controls: the dashboard card and desktop widget are read-only (static probe)."
+        },
+        "accessibility": {
+          "status": "na",
+          "note": "No interactive controls; rows and the content root carry Accessible.name (static probe classifies non-interactive surfaces as na)."
+        },
+        "translation": {
+          "status": "pass",
+          "note": "All user-visible literals go through PluginKit Translations; es catalog declared in the manifest and checked complete for literal tr() strings (static probe)."
+        },
+        "settings": {
+          "status": "pass",
+          "note": "Typed settings (enum, integer ranges, string length, boolean) declared in the manifest and read via PluginKit Settings (static probe)."
+        },
+        "themeTokens": {
+          "status": "pass",
+          "note": "Visible colours come from PluginKit Ui primitives/Theme.palette tokens with no hard-coded chrome colours (static probe)."
+        },
+        "screenshots": {
+          "status": "pass",
+          "note": "docs/screenshots/hornero-port-watch.png: offscreen fixture render of the dashboard card, Signal Night (fixture command output, not product telemetry). Day renders, desktop surface and real QA VM captures are in docs/evidence/catalog-audit/."
+        },
+        "orientation": {
+          "status": "na",
+          "note": "No bar surface: the host fixes the size of a dashboard card or desktop widget."
+        },
+        "loadingErrorStates": {
+          "status": "pass",
+          "note": "QA VM: real `ss` output rendered; watched ports show as free."
+        },
+        "performance": {
+          "status": "unverified",
+          "note": "One short-lived read-only process per refresh, paused in the Gaming experience; no CPU measurement taken yet. Process: ss only."
+        }
+      },
+      "issue": "HorneroOS/plugins#21"
     },
     {
       "id": "hornero-quick-notes",
@@ -984,7 +1262,7 @@
     },
     {
       "id": "hornero-quiet-notes",
-      "classification": "needs-upgrade",
+      "classification": "deprecated-with-replacement",
       "valueProposition": "Quiet Notes 2.0: dashboard card for one short session-only intention, in-memory only as in 1.x and now labelled Session only - never saved. Keyboard-first capture (themed editor, Enter accepts, Esc cancels); the intention has deliberately no Settings key, only display preferences are stored.",
       "nativeOverlap": "Family overlap with hornero-quick-notes is deliberate and now labelled in both cards, not consolidated (#29 review): persisting a Quiet Notes line would break its privacy contract, so no migration path into Quick Notes exists; Focus Card stores no note either.",
       "dimensions": {
@@ -1025,11 +1303,11 @@
           "note": "QA VM (shell main + PluginKit 3, 3 vCPU llvmpipe, 2026-11-17): loads without a slow-load or load-churn flag; idle CPU of the shell process measured as one set, not per plugin: bare shell 9.2%, 6 desktop widgets 9.4%, 22 bar indicators 11.8%, 12 dashboard cards 11.5% of one core (VM measurement, noise about 0.5 pp; mission evidence plugin-e2e/idle-cpu.txt). Not a published estimate."
         }
       },
-      "issue": "https://github.com/HorneroOS/plugins/issues/29",
       "graphicalReview": {
         "reviewer": "Claude Code agent (offscreen fixture review and QA VM captures; not a human design review)",
         "date": "2026-11-17"
-      }
+      },
+      "replacement": "hornero-quick-notes"
     },
     {
       "id": "hornero-stopwatch",
@@ -1229,7 +1507,7 @@
     },
     {
       "id": "hornero-system-health",
-      "classification": "needs-upgrade",
+      "classification": "deprecated-with-replacement",
       "valueProposition": "System Health 2.0: dashboard health summary over the shared PluginKit System, Power and Network facades: the 1.x CPU/memory/storage/battery/network rows plus per-row health states and an overall verdict derived only from reported values and typed thresholds, with one-line troubleshooting hints. No SMART, battery-health or per-process data is exposed by PluginKit, so none is shown.",
       "nativeOverlap": "Reads the same facades as the native Performance view and hornero-system-monitor/-disk-usage/-network-monitor/-battery; distinct value is the combined health judgement (states, verdict, hints). History belongs to System Monitor, per-disk detail to Disk Usage.",
       "dimensions": {
@@ -1270,7 +1548,56 @@
           "note": "QA VM (shell main + PluginKit 3, 3 vCPU llvmpipe, 2026-11-17): loads without a slow-load or load-churn flag; idle CPU of the shell process measured as one set, not per plugin: bare shell 9.2%, 6 desktop widgets 9.4%, 22 bar indicators 11.8%, 12 dashboard cards 11.5% of one core (VM measurement, noise about 0.5 pp; mission evidence plugin-e2e/idle-cpu.txt). Not a published estimate."
         }
       },
-      "issue": "https://github.com/HorneroOS/plugins/issues/26",
+      "graphicalReview": {
+        "reviewer": "Claude Code agent (offscreen fixture review and QA VM captures; not a human design review)",
+        "date": "2026-11-17"
+      },
+      "replacement": "hornero-system-insight"
+    },
+    {
+      "id": "hornero-system-insight",
+      "classification": "needs-upgrade",
+      "valueProposition": "System Insight 1.0: a desktop instrument over the shared system provider: a CPU oscilloscope from the shared Telemetry history, segmented meters for CPU/memory/GPU/storage, per-core load strips and temperature readouts, real telemetry only.",
+      "nativeOverlap": "Overlaps the native Performance view and hornero-system-monitor (dashboard card) on the same facade; distinct value is the always-on desktop instrument with per-core strips for the Signal desktop layer. Unavailable sensors read as unavailable, never as zero.",
+      "dimensions": {
+        "tooltips": {
+          "status": "na",
+          "note": "No interactive controls: the desktop host owns placement, size and edit mode (static probe)."
+        },
+        "accessibility": {
+          "status": "na",
+          "note": "No interactive controls; the content root and instruments carry accessible names (static probe classifies non-interactive surfaces as na)."
+        },
+        "translation": {
+          "status": "pass",
+          "note": "All user-visible literals go through PluginKit Translations; es catalog declared in the manifest and checked complete for literal tr() strings (static probe). Facade-supplied text stays in the shell's language."
+        },
+        "settings": {
+          "status": "pass",
+          "note": "Typed settings declared in the manifest and read via PluginKit Settings (static probe)."
+        },
+        "themeTokens": {
+          "status": "pass",
+          "note": "Visible colours come from PluginKit Ui primitives/Theme tokens with no hard-coded chrome colours (static probe)."
+        },
+        "screenshots": {
+          "status": "pass",
+          "note": "docs/screenshots/hornero-system-insight.png: offscreen fixture render of its night surfaces (offscreen-reviewed 2026-11-17 against the Signal Bezel; fixture data, not product telemetry). Day renders and every surface are in docs/evidence/offscreen/."
+        },
+        "orientation": {
+          "status": "na",
+          "note": "No bar surface: the host fixes the size of a dashboard card or desktop widget, so rail orientation does not apply."
+        },
+        "loadingErrorStates": {
+          "status": "unverified",
+          "note": "Unavailable sensors/sources render an em dash or a labelled unavailable state instead of a value; presentation has not been verified graphically in a live shell."
+        },
+        "performance": {
+          "status": "pass",
+          "note": "QA VM (shell main + PluginKit 3, 3 vCPU llvmpipe, 2026-11-17): loads without a slow-load or load-churn flag; idle CPU of the shell process measured as one set, not per plugin: bare shell 9.2%, 6 desktop widgets 9.4%, 22 bar indicators 11.8%, 12 dashboard cards 11.5% of one core (VM measurement, noise about 0.5 pp; mission evidence plugin-e2e/idle-cpu.txt). Not a published estimate."
+        }
+      },
+      "issue": "HorneroOS/plugins#21",
       "graphicalReview": {
         "reviewer": "Claude Code agent (offscreen fixture review and QA VM captures; not a human design review)",
         "date": "2026-11-17"
@@ -1278,7 +1605,7 @@
     },
     {
       "id": "hornero-system-monitor",
-      "classification": "needs-upgrade",
+      "classification": "deprecated-with-replacement",
       "valueProposition": "System Monitor 3.0: Signal dashboard module over the shared system provider: a CPU oscilloscope from the shared Telemetry history, segmented meter rows for CPU/memory/GPU/storage that cross to signal at a typed threshold, and CPU/memory peak and CPU average readouts.",
       "nativeOverlap": "Overlaps the shell native Performance view and hornero-system-health on instantaneous percentages; distinct value is the shared-history oscilloscope with peak/average readouts and the threshold crossing, which neither keeps for extensions. Per-process/per-core data is not exposed by PluginKit and is not shown.",
       "dimensions": {
@@ -1319,11 +1646,11 @@
           "note": "QA VM (shell main + PluginKit 3, 3 vCPU llvmpipe, 2026-11-17): loads without a slow-load or load-churn flag; idle CPU of the shell process measured as one set, not per plugin: bare shell 9.2%, 6 desktop widgets 9.4%, 22 bar indicators 11.8%, 12 dashboard cards 11.5% of one core (VM measurement, noise about 0.5 pp; mission evidence plugin-e2e/idle-cpu.txt). Not a published estimate."
         }
       },
-      "issue": "https://github.com/HorneroOS/plugins/issues/26",
       "graphicalReview": {
         "reviewer": "Claude Code agent (offscreen fixture review and QA VM captures; not a human design review)",
         "date": "2026-11-17"
-      }
+      },
+      "replacement": "hornero-system-insight"
     },
     {
       "id": "hornero-text-tools",
@@ -1614,153 +1941,6 @@
         }
       },
       "issue": "https://github.com/HorneroOS/plugins/issues/28",
-      "graphicalReview": {
-        "reviewer": "Claude Code agent (offscreen fixture review and QA VM captures; not a human design review)",
-        "date": "2026-11-17"
-      }
-    },
-    {
-      "id": "hornero-system-insight",
-      "classification": "needs-upgrade",
-      "valueProposition": "System Insight 1.0: a desktop instrument over the shared system provider: a CPU oscilloscope from the shared Telemetry history, segmented meters for CPU/memory/GPU/storage, per-core load strips and temperature readouts, real telemetry only.",
-      "nativeOverlap": "Overlaps the native Performance view and hornero-system-monitor (dashboard card) on the same facade; distinct value is the always-on desktop instrument with per-core strips for the Signal desktop layer. Unavailable sensors read as unavailable, never as zero.",
-      "dimensions": {
-        "tooltips": {
-          "status": "na",
-          "note": "No interactive controls: the desktop host owns placement, size and edit mode (static probe)."
-        },
-        "accessibility": {
-          "status": "na",
-          "note": "No interactive controls; the content root and instruments carry accessible names (static probe classifies non-interactive surfaces as na)."
-        },
-        "translation": {
-          "status": "pass",
-          "note": "All user-visible literals go through PluginKit Translations; es catalog declared in the manifest and checked complete for literal tr() strings (static probe). Facade-supplied text stays in the shell's language."
-        },
-        "settings": {
-          "status": "pass",
-          "note": "Typed settings declared in the manifest and read via PluginKit Settings (static probe)."
-        },
-        "themeTokens": {
-          "status": "pass",
-          "note": "Visible colours come from PluginKit Ui primitives/Theme tokens with no hard-coded chrome colours (static probe)."
-        },
-        "screenshots": {
-          "status": "pass",
-          "note": "docs/screenshots/hornero-system-insight.png: offscreen fixture render of its night surfaces (offscreen-reviewed 2026-11-17 against the Signal Bezel; fixture data, not product telemetry). Day renders and every surface are in docs/evidence/offscreen/."
-        },
-        "orientation": {
-          "status": "na",
-          "note": "No bar surface: the host fixes the size of a dashboard card or desktop widget, so rail orientation does not apply."
-        },
-        "loadingErrorStates": {
-          "status": "unverified",
-          "note": "Unavailable sensors/sources render an em dash or a labelled unavailable state instead of a value; presentation has not been verified graphically in a live shell."
-        },
-        "performance": {
-          "status": "pass",
-          "note": "QA VM (shell main + PluginKit 3, 3 vCPU llvmpipe, 2026-11-17): loads without a slow-load or load-churn flag; idle CPU of the shell process measured as one set, not per plugin: bare shell 9.2%, 6 desktop widgets 9.4%, 22 bar indicators 11.8%, 12 dashboard cards 11.5% of one core (VM measurement, noise about 0.5 pp; mission evidence plugin-e2e/idle-cpu.txt). Not a published estimate."
-        }
-      },
-      "issue": "HorneroOS/plugins#21",
-      "graphicalReview": {
-        "reviewer": "Claude Code agent (offscreen fixture review and QA VM captures; not a human design review)",
-        "date": "2026-11-17"
-      }
-    },
-    {
-      "id": "hornero-network-scope",
-      "classification": "needs-upgrade",
-      "valueProposition": "Network Scope 1.0: a desktop instrument over the shared network provider: cue-toned download and upload oscilloscopes with stated scales, current rates, a Wi-Fi signal meter and session totals, real telemetry only.",
-      "nativeOverlap": "Overlaps hornero-network-monitor (dashboard card) and native rate displays on the same facade; distinct value is the always-on dual-scope desktop instrument for the Signal desktop layer. The facade exposes no interface, address or per-process traffic and none is shown; the network name is hidden by default.",
-      "dimensions": {
-        "tooltips": {
-          "status": "na",
-          "note": "No interactive controls: the desktop host owns placement, size and edit mode (static probe)."
-        },
-        "accessibility": {
-          "status": "na",
-          "note": "No interactive controls; the content root and instruments carry accessible names (static probe classifies non-interactive surfaces as na)."
-        },
-        "translation": {
-          "status": "pass",
-          "note": "All user-visible literals go through PluginKit Translations; es catalog declared in the manifest and checked complete for literal tr() strings (static probe). Facade-supplied text stays in the shell's language."
-        },
-        "settings": {
-          "status": "pass",
-          "note": "Typed settings declared in the manifest and read via PluginKit Settings (static probe)."
-        },
-        "themeTokens": {
-          "status": "pass",
-          "note": "Visible colours come from PluginKit Ui primitives/Theme tokens with no hard-coded chrome colours (static probe)."
-        },
-        "screenshots": {
-          "status": "pass",
-          "note": "docs/screenshots/hornero-network-scope.png: offscreen fixture render of its night surfaces (offscreen-reviewed 2026-11-17 against the Signal Bezel; fixture data, not product telemetry). Day renders and every surface are in docs/evidence/offscreen/."
-        },
-        "orientation": {
-          "status": "na",
-          "note": "No bar surface: the host fixes the size of a dashboard card or desktop widget, so rail orientation does not apply."
-        },
-        "loadingErrorStates": {
-          "status": "pass",
-          "note": "QA VM: with no matching device/service the surface renders its empty/unavailable state instead of failing (observed in the dashboard Extensions tab and bar, 2026-11-17)."
-        },
-        "performance": {
-          "status": "pass",
-          "note": "QA VM (shell main + PluginKit 3, 3 vCPU llvmpipe, 2026-11-17): loads without a slow-load or load-churn flag; idle CPU of the shell process measured as one set, not per plugin: bare shell 9.2%, 6 desktop widgets 9.4%, 22 bar indicators 11.8%, 12 dashboard cards 11.5% of one core (VM measurement, noise about 0.5 pp; mission evidence plugin-e2e/idle-cpu.txt). Not a published estimate."
-        }
-      },
-      "issue": "HorneroOS/plugins#21",
-      "graphicalReview": {
-        "reviewer": "Claude Code agent (offscreen fixture review and QA VM captures; not a human design review)",
-        "date": "2026-11-17"
-      }
-    },
-    {
-      "id": "hornero-audio-deck",
-      "classification": "needs-upgrade",
-      "valueProposition": "Audio Deck 1.0: a desktop instrument over the shared media, audio and spectrum providers: the real PipeWire spectrum as phosphor VU strips, the current track and the output volume. Real data only; no idle animation.",
-      "nativeOverlap": "Overlaps hornero-now-playing and hornero-volume on the same facades and the native media/volume displays; distinct value is the always-on spectrum instrument for the Signal desktop layer. The spectrum lease is released by showSpectrum; the widget has no controls.",
-      "dimensions": {
-        "tooltips": {
-          "status": "na",
-          "note": "No interactive controls: the desktop host owns placement, size and edit mode (static probe)."
-        },
-        "accessibility": {
-          "status": "na",
-          "note": "No interactive controls; the content root and instruments carry accessible names (static probe classifies non-interactive surfaces as na)."
-        },
-        "translation": {
-          "status": "pass",
-          "note": "All user-visible literals go through PluginKit Translations; es catalog declared in the manifest and checked complete for literal tr() strings (static probe). Facade-supplied text stays in the shell's language."
-        },
-        "settings": {
-          "status": "pass",
-          "note": "Typed settings declared in the manifest and read via PluginKit Settings (static probe)."
-        },
-        "themeTokens": {
-          "status": "pass",
-          "note": "Visible colours come from PluginKit Ui primitives/Theme tokens with no hard-coded chrome colours (static probe)."
-        },
-        "screenshots": {
-          "status": "pass",
-          "note": "docs/screenshots/hornero-audio-deck.png: offscreen fixture render of its night surfaces (offscreen-reviewed 2026-11-17 against the Signal Bezel; fixture data, not product telemetry). Day renders and every surface are in docs/evidence/offscreen/."
-        },
-        "orientation": {
-          "status": "na",
-          "note": "No bar surface: the host fixes the size of a dashboard card or desktop widget, so rail orientation does not apply."
-        },
-        "loadingErrorStates": {
-          "status": "pass",
-          "note": "QA VM: with no matching device/service the surface renders its empty/unavailable state instead of failing (observed in the dashboard Extensions tab and bar, 2026-11-17)."
-        },
-        "performance": {
-          "status": "pass",
-          "note": "QA VM (shell main + PluginKit 3, 3 vCPU llvmpipe, 2026-11-17): loads without a slow-load or load-churn flag; idle CPU of the shell process measured as one set, not per plugin: bare shell 9.2%, 6 desktop widgets 9.4%, 22 bar indicators 11.8%, 12 dashboard cards 11.5% of one core (VM measurement, noise about 0.5 pp; mission evidence plugin-e2e/idle-cpu.txt). Not a published estimate."
-        }
-      },
-      "issue": "HorneroOS/plugins#21",
       "graphicalReview": {
         "reviewer": "Claude Code agent (offscreen fixture review and QA VM captures; not a human design review)",
         "date": "2026-11-17"

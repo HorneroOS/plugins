@@ -1,0 +1,91 @@
+{
+  "schemaVersion": 3,
+  "id": "hornero-git-board",
+  "name": "Hornero Git Board",
+  "version": "1.0.0",
+  "description": "A read-only status board for the repositories you name: branch, ahead/behind, staged, changed, untracked and conflicted counts and the last commit. Local git only, no network, never writes.",
+  "author": "HorneroOS contributors",
+  "license": "MIT",
+  "homepage": "https://github.com/HorneroOS/plugins",
+  "entrypoint": "Main.qml",
+  "placement": "dashboard",
+  "surfaces": {
+    "dashboard": {
+      "entrypoint": "Main.qml",
+      "size": "standard",
+      "category": "Development"
+    },
+    "desktop": {
+      "entrypoint": "Main.qml",
+      "width": 380,
+      "height": 340,
+      "minWidth": 300,
+      "minHeight": 200,
+      "anchor": "top-left"
+    }
+  },
+  "translations": {
+    "sourceLocale": "en",
+    "locales": ["es"],
+    "directory": "translations"
+  },
+  "marketplace": {
+    "compatibility": {
+      "minShellVersion": "1.0.0"
+    },
+    "changelog": [
+      {
+        "version": "1.0.0",
+        "notes": "Initial release: per-repository branch, upstream drift, working-tree counts and last commit from local git, as a dashboard card and a desktop widget."
+      }
+    ]
+  },
+  "files": [
+    "Main.qml",
+    "README.md",
+    "LICENSE",
+    "translations/es.json"
+  ],
+  "capabilities": {
+    "processCommands": ["git"],
+    "networkHosts": [],
+    "settings": {
+      "repositories": {
+        "type": "string",
+        "default": "",
+        "maxLength": 1024,
+        "description": "Absolute repository paths separated by semicolons, for example /home/you/code/app;/home/you/code/lib. Empty scans nothing."
+      },
+      "maxRepositories": {
+        "type": "integer",
+        "default": 5,
+        "minimum": 1,
+        "maximum": 8,
+        "description": "How many of the listed repositories to read (each one costs two short git runs per refresh)."
+      },
+      "refreshSeconds": {
+        "type": "integer",
+        "default": 30,
+        "minimum": 10,
+        "maximum": 600,
+        "description": "Seconds between scans. Scanning pauses in the Gaming experience."
+      },
+      "sortBy": {
+        "type": "enum",
+        "default": "attention",
+        "options": ["attention", "path"],
+        "description": "Attention puts conflicted, dirty and unsynced repositories first; path keeps your order alphabetical."
+      },
+      "showLastCommit": {
+        "type": "boolean",
+        "default": true,
+        "description": "Show the last commit subject and age (one extra git run per repository)."
+      },
+      "showCleanDetails": {
+        "type": "boolean",
+        "default": true,
+        "description": "Keep the last commit line on clean repositories; off gives a tighter board."
+      }
+    }
+  }
+}

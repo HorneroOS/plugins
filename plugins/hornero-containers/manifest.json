@@ -1,0 +1,95 @@
+{
+  "schemaVersion": 3,
+  "id": "hornero-containers",
+  "name": "Hornero Containers",
+  "version": "1.0.0",
+  "description": "A read-only roster of your Podman and Docker containers: state, image, uptime and published ports. Never starts, stops or pulls anything. Says so plainly when no runtime answers.",
+  "author": "HorneroOS contributors",
+  "license": "MIT",
+  "homepage": "https://github.com/HorneroOS/plugins",
+  "entrypoint": "Main.qml",
+  "placement": "dashboard",
+  "surfaces": {
+    "dashboard": {
+      "entrypoint": "Main.qml",
+      "size": "standard",
+      "category": "Development"
+    },
+    "desktop": {
+      "entrypoint": "Main.qml",
+      "width": 400,
+      "height": 320,
+      "minWidth": 300,
+      "minHeight": 160,
+      "anchor": "top-right"
+    }
+  },
+  "translations": {
+    "sourceLocale": "en",
+    "locales": [
+      "es"
+    ],
+    "directory": "translations"
+  },
+  "marketplace": {
+    "compatibility": {
+      "minShellVersion": "1.0.0"
+    },
+    "changelog": [
+      {
+        "version": "1.0.0",
+        "notes": "Initial release: read-only Podman/Docker container roster with state, image, status and published ports, as a dashboard card and a desktop widget."
+      }
+    ]
+  },
+  "files": [
+    "Main.qml",
+    "README.md",
+    "LICENSE",
+    "translations/es.json"
+  ],
+  "capabilities": {
+    "processCommands": [
+      "podman",
+      "docker"
+    ],
+    "networkHosts": [],
+    "settings": {
+      "runtime": {
+        "type": "enum",
+        "default": "auto",
+        "options": [
+          "auto",
+          "podman",
+          "docker",
+          "both"
+        ],
+        "description": "Auto tries Podman first and falls back to Docker; both merges the two lists."
+      },
+      "showStopped": {
+        "type": "boolean",
+        "default": true,
+        "description": "List stopped and exited containers after the running ones."
+      },
+      "showPorts": {
+        "type": "boolean",
+        "default": true,
+        "description": "Show published ports (host to container)."
+      },
+      "maxRows": {
+        "type": "integer",
+        "default": 8,
+        "minimum": 3,
+        "maximum": 20,
+        "description": "Most containers to list; running ones come first."
+      },
+      "refreshSeconds": {
+        "type": "integer",
+        "default": 15,
+        "minimum": 5,
+        "maximum": 300,
+        "description": "Seconds between runtime queries. Querying pauses in the Gaming experience."
+      }
+    }
+  }
+}

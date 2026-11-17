@@ -2,7 +2,7 @@
   "schemaVersion": 3,
   "id": "hornero-focus-card",
   "name": "Hornero Focus Card",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "Focus Card 2.0: dashboard card with the locale date and a rotating original one-line focus reminder, from PluginKit Time. Keyboard Previous/Next and pause, optional own leading line, no processes or network.",
   "author": "HorneroOS contributors",
   "license": "MIT",
@@ -22,6 +22,10 @@
     },
     "changelog": [
       {
+        "version": "3.0.1",
+        "notes": "Deprecated: Retired: a rotating phrase card is low value. Pomodoro now has breaks and an optional Focus experience hook."
+      },
+      {
         "version": "3.0.0",
         "notes": "PluginKit 3 on Hornero Signal: Hornero Glyph names, quiet variants, instrument module header."
       },
@@ -37,7 +41,11 @@
         "version": "1.0.1",
         "notes": "Dashboard card with a rotating original one-line focus reminder and the date."
       }
-    ]
+    ],
+    "deprecation": {
+      "message": "Retired: a rotating phrase card is low value. Pomodoro now has breaks and an optional Focus experience hook.",
+      "replacedBy": "hornero-pomodoro"
+    }
   },
   "files": [
     "Main.qml",
