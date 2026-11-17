@@ -124,8 +124,10 @@ Item {
     readonly property string summary: {
         if (!loaded || rows.length === 0)
             return "";
+        if (missingGh || authProblem)
+            return "";
         const w = worst(rows.map(r => r.run.state));
-        return w === "fail" ? i18n.tr("CI FAILING") : w === "running" ? i18n.tr("CI RUNNING") : i18n.tr("CI GREEN");
+        return w === "fail" ? i18n.tr("CI FAILING") : w === "running" ? i18n.tr("CI RUNNING") : w === "pass" ? i18n.tr("CI GREEN") : "";
     }
 
     function refresh(): void {

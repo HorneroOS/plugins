@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedFrom": "018e315178ba9b700509cc6ac78faf8f6b5104f1",
+  "generatedFrom": "e5a084d0d79b7a5c57c96f7a2530fa1e6c2dd9fc",
   "plugins": [
     {
       "id": "hornero-agenda",
@@ -611,6 +611,62 @@
       "trust": "official",
       "path": "plugins/hornero-focus-card",
       "sha256": "73a72346857fce411c223e7098c471abca4db8026b0589231abb5ee1e052755b"
+    },
+    {
+      "id": "hornero-forge-board",
+      "name": "Hornero Forge Board",
+      "version": "1.0.1",
+      "description": "CI and pull-request status for the GitHub repositories you name, through the gh CLI session you already signed in. Read-only; stores and sees no token.",
+      "author": "HorneroOS contributors",
+      "license": "MIT",
+      "homepage": "https://github.com/HorneroOS/plugins",
+      "placement": "dashboard",
+      "category": "utilities",
+      "capabilities": {
+        "processCommands": [
+          "gh"
+        ],
+        "networkHosts": [
+          "api.github.com"
+        ],
+        "settings": {
+          "repositories": {
+            "type": "string",
+            "default": "",
+            "maxLength": 400,
+            "description": "GitHub repositories as owner/name separated by spaces, commas or semicolons. Empty requests nothing."
+          },
+          "maxRepositories": {
+            "type": "integer",
+            "default": 4,
+            "minimum": 1,
+            "maximum": 6,
+            "description": "How many listed repositories to query (two gh calls each per refresh)."
+          },
+          "refreshMinutes": {
+            "type": "integer",
+            "default": 5,
+            "minimum": 2,
+            "maximum": 60,
+            "description": "Minutes between refreshes. Requests pause in the Gaming experience."
+          },
+          "showPullRequests": {
+            "type": "boolean",
+            "default": true,
+            "description": "Also list your open pull requests (author: you) with review and check state."
+          },
+          "maxPullRequests": {
+            "type": "integer",
+            "default": 3,
+            "minimum": 1,
+            "maximum": 5,
+            "description": "Most pull requests shown per repository."
+          }
+        }
+      },
+      "trust": "official",
+      "path": "plugins/hornero-forge-board",
+      "sha256": "f333a4d7c70f3f60ce7e2aafcbce9c4a8f4704cdbec186e31aa1012f954ad033"
     },
     {
       "id": "hornero-git-board",
