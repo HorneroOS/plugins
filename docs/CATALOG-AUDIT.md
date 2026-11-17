@@ -131,3 +131,25 @@ Improving the keepers visually and functionally beyond Pomodoro; the planned mer
 - **Not absorbed**: Volume and Microphone. Audio Deck is a desktop widget; folding interactive volume and mute controls into it would not be the same function, so they stay until Audio Deck has a bar surface worth shipping.
 - **Platform status**: apiLevel 4 settings v2 (shell#602), per-instance widgets (#603), command contributions (#605), tile and panel contributions (#613) and atmosphere (#608) are open PRs, not on main, so nothing here uses them yet. Planned adoption once merged: settings v2 `list` for Git Board repositories and Port Watch ports (replacing semicolon strings), `colour` for the Colour tool default, `visibleWhen` for the Pomodoro hook, per-instance Git Board and World Clock, a Toolbox launcher command, a Pomodoro tile, and the atmosphere tokens for the instrument pass.
 - **Instrument visual pass** (System Insight, Network Scope, Audio Deck, Calendar, Moon Phase): deliberately not started. Their look depends on the atmosphere tokens (#608) and the shared mascot empty state; restyling them now would be redone.
+
+## CPU measurements (QA VM, 2026-11-17)
+
+Shell process CPU, one extension enabled at a time with its widget visible, experience Everyday, single 40 s sample each (VM noise about 1 pp; raw data in `docs/evidence/catalog-audit/vm3-cpu.txt`):
+
+| Enabled | CPU (% of one core) |
+|---|--:|
+| none (baseline) | 5.5 |
+| git-board | 5.5 |
+| port-watch | 6.9 |
+| containers (podman shim) | 6.8 |
+| device-battery (upower shim) | 6.5 |
+| forge-board (gh missing) | 6.8 |
+| toolbox | 5.6 |
+| pomodoro | 8.5 |
+| countdown | 6.6 |
+| weather | 6.6 |
+| world-clock | 5.2 |
+| studio-jobs | 5.6 |
+| all 11 | 7.8 |
+
+Reading: the process-spawning cards cost about 1 pp, everything else is within noise, and all eleven together cost 2.3 pp. Pomodoro's 8.5 is an unexplained outlier (it keeps a 2 s settings re-read timer while idle) and stays `unverified` until repeated. These are VM numbers, not host numbers.
