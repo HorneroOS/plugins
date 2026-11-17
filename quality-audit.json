@@ -742,7 +742,7 @@
         },
         "settings": {
           "status": "pass",
-          "note": "Typed showSessionTotals/showHistory (true) and sampleSeconds (5) settings declared in the manifest and read via PluginKit Settings; the plugin stored no settings before 2.0 and 1.x speeds/totals stay visible by default (static probe)."
+          "note": "Typed showSessionTotals/showHistory (true) settings declared in the manifest and read via PluginKit Settings; 1.x speeds/totals stay visible by default and 3.0 dropped sampleSeconds (static probe)."
         },
         "themeTokens": {
           "status": "pass",
@@ -1192,7 +1192,7 @@
         },
         "settings": {
           "status": "pass",
-          "note": "Typed warnPercent (90), showTemperatures/showHistory (true) and sampleSeconds (5) settings declared in the manifest and read via PluginKit Settings; the plugin stored no settings before 2.0 and 1.x rows stay visible by default (static probe)."
+          "note": "Typed warnPercent (90), showTemperatures and showHistory (true) settings declared in the manifest and read via PluginKit Settings; 3.0 dropped sampleSeconds (static probe)."
         },
         "themeTokens": {
           "status": "pass",
@@ -1486,6 +1486,141 @@
         }
       },
       "issue": "https://github.com/HorneroOS/plugins/issues/28"
+    },
+    {
+      "id": "hornero-system-insight",
+      "classification": "needs-upgrade",
+      "valueProposition": "System Insight 1.0: a desktop instrument over the shared system provider: a CPU oscilloscope from the shared Telemetry history, segmented meters for CPU/memory/GPU/storage, per-core load strips and temperature readouts, real telemetry only.",
+      "nativeOverlap": "Overlaps the native Performance view and hornero-system-monitor (dashboard card) on the same facade; distinct value is the always-on desktop instrument with per-core strips for the Signal desktop layer. Unavailable sensors read as unavailable, never as zero.",
+      "dimensions": {
+        "tooltips": {
+          "status": "na",
+          "note": "No interactive controls: the desktop host owns placement, size and edit mode (static probe)."
+        },
+        "accessibility": {
+          "status": "na",
+          "note": "No interactive controls; the content root and instruments carry accessible names (static probe classifies non-interactive surfaces as na)."
+        },
+        "translation": {
+          "status": "pass",
+          "note": "All user-visible literals go through PluginKit Translations; es catalog declared in the manifest and checked complete for literal tr() strings (static probe). Facade-supplied text stays in the shell's language."
+        },
+        "settings": {
+          "status": "pass",
+          "note": "Typed settings declared in the manifest and read via PluginKit Settings (static probe)."
+        },
+        "themeTokens": {
+          "status": "pass",
+          "note": "Visible colours come from PluginKit Ui primitives/Theme tokens with no hard-coded chrome colours (static probe)."
+        },
+        "screenshots": {
+          "status": "fail",
+          "note": "No screenshot under docs/screenshots/<id>.png yet; graphical capture is outstanding."
+        },
+        "orientation": {
+          "status": "unverified",
+          "note": "Layout follows the host's content box (hostAvailableWidth/Height); position, size and edit mode are owned by the PluginKit 3 desktop host and have not had a graphical review in a live shell."
+        },
+        "loadingErrorStates": {
+          "status": "unverified",
+          "note": "Unavailable sensors/sources render an em dash or a labelled unavailable state instead of a value; presentation has not been verified graphically in a live shell."
+        },
+        "performance": {
+          "status": "unverified",
+          "note": "Not profiled on a host. Static cadence only: no own timer, process or file poll; shared provider leases only (docs/PLUGINS.md, Instrumentation cost); runtime cost is unverified."
+        }
+      },
+      "issue": "HorneroOS/plugins#21"
+    },
+    {
+      "id": "hornero-network-scope",
+      "classification": "needs-upgrade",
+      "valueProposition": "Network Scope 1.0: a desktop instrument over the shared network provider: cue-toned download and upload oscilloscopes with stated scales, current rates, a Wi-Fi signal meter and session totals, real telemetry only.",
+      "nativeOverlap": "Overlaps hornero-network-monitor (dashboard card) and native rate displays on the same facade; distinct value is the always-on dual-scope desktop instrument for the Signal desktop layer. The facade exposes no interface, address or per-process traffic and none is shown; the network name is hidden by default.",
+      "dimensions": {
+        "tooltips": {
+          "status": "na",
+          "note": "No interactive controls: the desktop host owns placement, size and edit mode (static probe)."
+        },
+        "accessibility": {
+          "status": "na",
+          "note": "No interactive controls; the content root and instruments carry accessible names (static probe classifies non-interactive surfaces as na)."
+        },
+        "translation": {
+          "status": "pass",
+          "note": "All user-visible literals go through PluginKit Translations; es catalog declared in the manifest and checked complete for literal tr() strings (static probe). Facade-supplied text stays in the shell's language."
+        },
+        "settings": {
+          "status": "pass",
+          "note": "Typed settings declared in the manifest and read via PluginKit Settings (static probe)."
+        },
+        "themeTokens": {
+          "status": "pass",
+          "note": "Visible colours come from PluginKit Ui primitives/Theme tokens with no hard-coded chrome colours (static probe)."
+        },
+        "screenshots": {
+          "status": "fail",
+          "note": "No screenshot under docs/screenshots/<id>.png yet; graphical capture is outstanding."
+        },
+        "orientation": {
+          "status": "unverified",
+          "note": "Layout follows the host's content box (hostAvailableWidth/Height); position, size and edit mode are owned by the PluginKit 3 desktop host and have not had a graphical review in a live shell."
+        },
+        "loadingErrorStates": {
+          "status": "unverified",
+          "note": "Unavailable sensors/sources render an em dash or a labelled unavailable state instead of a value; presentation has not been verified graphically in a live shell."
+        },
+        "performance": {
+          "status": "unverified",
+          "note": "Not profiled on a host. Static cadence only: no own timer, process or file poll; shared provider leases only (docs/PLUGINS.md, Instrumentation cost); runtime cost is unverified."
+        }
+      },
+      "issue": "HorneroOS/plugins#21"
+    },
+    {
+      "id": "hornero-audio-deck",
+      "classification": "needs-upgrade",
+      "valueProposition": "Audio Deck 1.0: a desktop instrument over the shared media, audio and spectrum providers: the real PipeWire spectrum as phosphor VU strips, the current track and the output volume. Real data only; no idle animation.",
+      "nativeOverlap": "Overlaps hornero-now-playing and hornero-volume on the same facades and the native media/volume displays; distinct value is the always-on spectrum instrument for the Signal desktop layer. The spectrum lease is released by showSpectrum; the widget has no controls.",
+      "dimensions": {
+        "tooltips": {
+          "status": "na",
+          "note": "No interactive controls: the desktop host owns placement, size and edit mode (static probe)."
+        },
+        "accessibility": {
+          "status": "na",
+          "note": "No interactive controls; the content root and instruments carry accessible names (static probe classifies non-interactive surfaces as na)."
+        },
+        "translation": {
+          "status": "pass",
+          "note": "All user-visible literals go through PluginKit Translations; es catalog declared in the manifest and checked complete for literal tr() strings (static probe). Facade-supplied text stays in the shell's language."
+        },
+        "settings": {
+          "status": "pass",
+          "note": "Typed settings declared in the manifest and read via PluginKit Settings (static probe)."
+        },
+        "themeTokens": {
+          "status": "pass",
+          "note": "Visible colours come from PluginKit Ui primitives/Theme tokens with no hard-coded chrome colours (static probe)."
+        },
+        "screenshots": {
+          "status": "fail",
+          "note": "No screenshot under docs/screenshots/<id>.png yet; graphical capture is outstanding."
+        },
+        "orientation": {
+          "status": "unverified",
+          "note": "Layout follows the host's content box (hostAvailableWidth/Height); position, size and edit mode are owned by the PluginKit 3 desktop host and have not had a graphical review in a live shell."
+        },
+        "loadingErrorStates": {
+          "status": "unverified",
+          "note": "Unavailable sensors/sources render an em dash or a labelled unavailable state instead of a value; presentation has not been verified graphically in a live shell."
+        },
+        "performance": {
+          "status": "unverified",
+          "note": "Not profiled on a host. Static cadence only: no own timer, process or file poll; shared provider leases only (docs/PLUGINS.md, Instrumentation cost); runtime cost is unverified."
+        }
+      },
+      "issue": "HorneroOS/plugins#21"
     }
   ]
 }

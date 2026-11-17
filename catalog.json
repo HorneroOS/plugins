@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedFrom": "c80659743db74c84d01589f10a5abe1c8a19be47",
+  "generatedFrom": "fc34867aa1670ee29d78623e92f32eac917f4014",
   "plugins": [
     {
       "id": "hornero-agenda",
@@ -68,6 +68,41 @@
       "trust": "official",
       "path": "plugins/hornero-ai-usage",
       "sha256": "7918808354d40f584d5a54a28830a4dac879fdab9bbda72512836f0139218919"
+    },
+    {
+      "id": "hornero-audio-deck",
+      "name": "Hornero Audio Deck",
+      "version": "1.0.0",
+      "description": "Audio Deck: a desktop instrument over the shared media, audio and spectrum providers: the real PipeWire spectrum as VU strips, the current track and the output volume. Real data only.",
+      "author": "HorneroOS contributors",
+      "license": "MIT",
+      "homepage": "https://github.com/HorneroOS/plugins",
+      "placement": "desktop",
+      "category": "media",
+      "capabilities": {
+        "processCommands": [],
+        "networkHosts": [],
+        "providers": [
+          "media",
+          "audio",
+          "spectrum"
+        ],
+        "settings": {
+          "showSpectrum": {
+            "type": "boolean",
+            "default": true,
+            "description": "Show the spectrum. It holds the shared `spectrum` lease, which runs the PipeWire visualiser only while this is on and the widget is loaded."
+          },
+          "showArtist": {
+            "type": "boolean",
+            "default": true,
+            "description": "Show the artist and album line of the current track."
+          }
+        }
+      },
+      "trust": "official",
+      "path": "plugins/hornero-audio-deck",
+      "sha256": "dfb8f554e31402d5b546577007fbc62f36fc8f0e4a3be5a7591b9a4c61f515f2"
     },
     {
       "id": "hornero-base-converter",
@@ -634,6 +669,39 @@
       "sha256": "e8baadd29ffaf53d2e008d1f369c0d0a41ca0c3e24d505a0e1f195193705de2e"
     },
     {
+      "id": "hornero-network-scope",
+      "name": "Hornero Network Scope",
+      "version": "1.0.0",
+      "description": "Network Scope: a desktop instrument over the shared network provider: download and upload oscilloscopes with stated scales, current rates, Wi-Fi signal and session totals. Real telemetry only.",
+      "author": "HorneroOS contributors",
+      "license": "MIT",
+      "homepage": "https://github.com/HorneroOS/plugins",
+      "placement": "desktop",
+      "category": "system",
+      "capabilities": {
+        "processCommands": [],
+        "networkHosts": [],
+        "providers": [
+          "network"
+        ],
+        "settings": {
+          "showSessionTotals": {
+            "type": "boolean",
+            "default": true,
+            "description": "Show the downloaded/uploaded totals since the shell started."
+          },
+          "showNetworkName": {
+            "type": "boolean",
+            "default": false,
+            "description": "Show the Wi-Fi network name (personal data; off by default on an always-visible desktop widget)."
+          }
+        }
+      },
+      "trust": "official",
+      "path": "plugins/hornero-network-scope",
+      "sha256": "e2deacb3cd68e94c17efd9caf64552db89cf8e0b3f0eabd26b5e5b52b9bb905e"
+    },
+    {
       "id": "hornero-now-playing",
       "name": "Hornero Now Playing",
       "version": "3.0.0",
@@ -975,6 +1043,46 @@
       "trust": "official",
       "path": "plugins/hornero-system-health",
       "sha256": "757db0357baca8fdd286f7c42c5e96503c8d55f0b14f200b8b7862725797cb7b"
+    },
+    {
+      "id": "hornero-system-insight",
+      "name": "Hornero System Insight",
+      "version": "1.0.0",
+      "description": "System Insight: a desktop instrument over the shared system provider: a CPU oscilloscope from the shared Telemetry history, segmented meters, per-core load strips and temperatures. Real telemetry only.",
+      "author": "HorneroOS contributors",
+      "license": "MIT",
+      "homepage": "https://github.com/HorneroOS/plugins",
+      "placement": "desktop",
+      "category": "system",
+      "capabilities": {
+        "processCommands": [],
+        "networkHosts": [],
+        "providers": [
+          "system"
+        ],
+        "settings": {
+          "showCores": {
+            "type": "boolean",
+            "default": true,
+            "description": "Show one vertical load strip per logical CPU when the widget is tall enough."
+          },
+          "showTemperatures": {
+            "type": "boolean",
+            "default": true,
+            "description": "Show CPU/GPU temperatures and memory use when the system provider reports them."
+          },
+          "warnPercent": {
+            "type": "integer",
+            "default": 85,
+            "minimum": 50,
+            "maximum": 100,
+            "description": "Usage percent at or above which a meter segment turns signal (the visual language default is 85)."
+          }
+        }
+      },
+      "trust": "official",
+      "path": "plugins/hornero-system-insight",
+      "sha256": "c929f3b63d6ab304b1a6176effbc007d288b9855064eb084578051656f2bbd98"
     },
     {
       "id": "hornero-system-monitor",

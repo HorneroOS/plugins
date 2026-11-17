@@ -1,0 +1,12 @@
+{
+  "Network Scope": "Osciloscopio de red",
+  "WI-FI": "WI-FI",
+  "WIRED": "CABLEADA",
+  "OFFLINE": "SIN CONEXIÓN",
+  "DOWN": "BAJADA",
+  "UP": "SUBIDA",
+  "Network": "Red",
+  "SESSION DOWN": "BAJADA (SESIÓN)",
+  "SESSION UP": "SUBIDA (SESIÓN)",
+  "Collecting samples from the shared network provider.": "Recolectando muestras del proveedor compartido de red."
+}

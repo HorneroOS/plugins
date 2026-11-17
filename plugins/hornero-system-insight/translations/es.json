@@ -1,0 +1,14 @@
+{
+  "%1 SAMPLES": "%1 MUESTRAS",
+  "System Insight": "System Insight",
+  "CPU": "CPU",
+  "MEM": "MEM",
+  "GPU": "GPU",
+  "DISK": "DISCO",
+  "CPU TEMP": "TEMP CPU",
+  "GPU TEMP": "TEMP GPU",
+  "MEMORY": "MEMORIA",
+  "CORES": "NÚCLEOS",
+  "Core load": "Carga del núcleo",
+  "Collecting samples from the shared system provider.": "Recolectando muestras del proveedor compartido del sistema."
+}
