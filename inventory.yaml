@@ -634,3 +634,13 @@ capabilities:
     inspiration_notes: "First-party HorneroOS plugin written for this catalogue; no upstream code is copied. Upstream ideas, where any, are credited in the researched entries above."
     hornero_equivalent: "plugins/hornero-forge-board"
     status: implemented
+  - id: hornero-emoji
+    name: Hornero Emoji
+    category: utilities
+    origin: {project: HorneroOS, url: "https://github.com/HorneroOS/plugins", license: MIT}
+    classification: hornero-original
+    license_status: verified
+    license_evidence: plugins/hornero-emoji/LICENSE
+    inspiration_notes: "First-party HorneroOS plugin written for this catalogue; no upstream code is copied."
+    hornero_equivalent: "plugins/hornero-emoji"
+    status: implemented
