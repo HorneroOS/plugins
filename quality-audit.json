@@ -5,16 +5,16 @@
     {
       "id": "hornero-agenda",
       "classification": "needs-upgrade",
-      "valueProposition": "Agenda 2.0: desktop widget of date facts from PluginKit Time: the 1.x weekday/day/month, ISO week, day of year and days remaining, plus quarter, ISO week-year, days remaining in the month and a year-progress bar. No events: PluginKit has no calendar data source; Desktop Widgets 2.0 (2.1.0) adds read-only per-display slot display, persisted size classes and hide-with-restore. Moving remains Control Center/shell-owned: PluginKit Desktop has no setter.",
+      "valueProposition": "Agenda 3.0: desktop widget of date facts from PluginKit Time: the 1.x weekday/day/month, ISO week, day of year and days remaining, plus quarter, ISO week-year, days remaining in the month and a year-progress bar. No events: PluginKit has no calendar data source; On Hornero Signal the host owns the frame, position, size and edit mode (PluginKit 3 desktop widgets).",
       "nativeOverlap": "Overlaps hornero-calendar on date display; distinct value is ISO week/week-year, day-of-year, remaining-day counts and year progress as labelled metrics.",
       "dimensions": {
         "tooltips": {
-          "status": "pass",
-          "note": "The Placement & size UiButton, Show widget restore button and popover actions carry PluginKit tooltipText (host-owned UiTooltip, static probe)."
+          "status": "na",
+          "note": "No interactive controls: the host owns placement, size and edit mode, so tooltips do not apply (static probe)."
         },
         "accessibility": {
-          "status": "pass",
-          "note": "UiButton/UiPopover accessibleName on the desktop controls and restore button, Accessible.name on the card; no mouse-only MouseArea (static probe). Live AT-SPI behaviour is not verified."
+          "status": "na",
+          "note": "No interactive controls; the content root carries Accessible.name (static probe classifies non-interactive surfaces as na)."
         },
         "translation": {
           "status": "pass",
@@ -22,7 +22,7 @@
         },
         "settings": {
           "status": "pass",
-          "note": "Typed showIsoWeek/showDayOfYear/showYearProgress row toggles (boolean, default true) declared in the manifest and read via PluginKit Settings; defaults keep every 1.x row visible (static probe). Plus sizeClass (enum, default standard = pre-#32 size) and showOnDesktop (boolean, default true) for Desktop Widgets 2.0, written/reset via PluginKit Settings from the desktop popover (static probe)."
+          "note": "Typed showIsoWeek/showDayOfYear/showYearProgress row toggles (boolean, default true) declared in the manifest and read via PluginKit Settings; defaults keep every 1.x row visible (static probe). The 2.x sizeClass/showOnDesktop settings are gone: the host owns size and position."
         },
         "themeTokens": {
           "status": "pass",
@@ -34,7 +34,7 @@
         },
         "orientation": {
           "status": "unverified",
-          "note": "Host context plus the persisted size class drive the desktop layout and Desktop.position labels the per-display slot, but placement, popover anchoring and size classes across desktop slots and monitors have not had a graphical/live-shell review; the shell desktop host still caps width at 300 and reports hostCompact false."
+          "note": "Layout follows the host's content box (hostAvailableWidth); position, size and edit mode are owned by the PluginKit 3 desktop host and have not had a graphical review in a live shell."
         },
         "loadingErrorStates": {
           "status": "unverified",
@@ -230,16 +230,16 @@
     {
       "id": "hornero-calendar",
       "classification": "needs-upgrade",
-      "valueProposition": "Calendar 2.0: desktop widget keeping the 1.x large time, full locale date and shell time line, plus the current month grid with today marked, computed with UTC day math from PluginKit Time. Shows no events: PluginKit has no calendar data source, and the widget says so; Desktop Widgets 2.0 (2.1.0) adds read-only per-display slot display, persisted size classes and hide-with-restore. Moving remains Control Center/shell-owned: PluginKit Desktop has no setter.",
+      "valueProposition": "Calendar 3.0: desktop widget keeping the 1.x large time, full locale date and shell time line, plus the current month grid with today marked, computed with UTC day math from PluginKit Time. Shows no events: PluginKit has no calendar data source, and the widget says so; On Hornero Signal the host owns the frame, position, size and edit mode (PluginKit 3 desktop widgets).",
       "nativeOverlap": "Overlaps hornero-agenda (date facts) and the shell clock; distinct value is the month grid on the desktop. No events overlap exists to consolidate: no PluginKit facade exposes appointments.",
       "dimensions": {
         "tooltips": {
-          "status": "pass",
-          "note": "The Placement & size UiButton, Show widget restore button and popover actions carry PluginKit tooltipText (host-owned UiTooltip, static probe)."
+          "status": "na",
+          "note": "No interactive controls: the host owns placement, size and edit mode, so tooltips do not apply (static probe)."
         },
         "accessibility": {
-          "status": "pass",
-          "note": "UiButton/UiPopover accessibleName on the desktop controls and restore button, Accessible.name on the card; no mouse-only MouseArea (static probe). Live AT-SPI behaviour is not verified."
+          "status": "na",
+          "note": "No interactive controls; the content root carries Accessible.name (static probe classifies non-interactive surfaces as na)."
         },
         "translation": {
           "status": "pass",
@@ -247,7 +247,7 @@
         },
         "settings": {
           "status": "pass",
-          "note": "Typed twentyFourHour/showShellTime/showMonthGrid (boolean, default true) and weekStart (enum, default monday) settings declared in the manifest and read via PluginKit Settings; defaults keep every 1.x element visible (static probe). Plus sizeClass (enum, default standard = pre-#32 size) and showOnDesktop (boolean, default true) for Desktop Widgets 2.0, written/reset via PluginKit Settings from the desktop popover (static probe)."
+          "note": "Typed twentyFourHour/showShellTime/showMonthGrid (boolean, default true) and weekStart (enum, default monday) settings declared in the manifest and read via PluginKit Settings; defaults keep every 1.x element visible (static probe). The 2.x sizeClass/showOnDesktop settings are gone: the host owns size and position."
         },
         "themeTokens": {
           "status": "pass",
@@ -259,7 +259,7 @@
         },
         "orientation": {
           "status": "unverified",
-          "note": "Host context plus the persisted size class drive the desktop layout and Desktop.position labels the per-display slot, but placement, popover anchoring and size classes across desktop slots and monitors have not had a graphical/live-shell review; the shell desktop host still caps width at 300 and reports hostCompact false."
+          "note": "Layout follows the host's content box (hostAvailableWidth); position, size and edit mode are owned by the PluginKit 3 desktop host and have not had a graphical review in a live shell."
         },
         "loadingErrorStates": {
           "status": "unverified",
@@ -680,16 +680,16 @@
     {
       "id": "hornero-moon-phase",
       "classification": "needs-upgrade",
-      "valueProposition": "Moon Phase 2.0: desktop widget plus contextual bar indicator keeping the 1.x pure-JS synodic approximation (phase name, ~illumination, ~age) and adding approximate days to next new/full moons derived from the same age. Always labelled approximate; Desktop Widgets 2.0 (2.1.0) adds read-only per-display slot display, persisted size classes and hide-with-restore. Moving remains Control Center/shell-owned: PluginKit Desktop has no setter.",
+      "valueProposition": "Moon Phase 3.0: desktop widget plus contextual bar indicator keeping the 1.x pure-JS synodic approximation (phase name, ~illumination, ~age) and adding approximate days to next new/full moons derived from the same age. Always labelled approximate; On Hornero Signal the host owns the frame, position, size and edit mode (PluginKit 3 desktop widgets).",
       "nativeOverlap": "Overlaps hornero-sun-card and hornero-weather on sky/ambient data; distinct value is the lunar phase approximation. No PluginKit facade exposes lunar data, moonrise/moonset or an ephemeris, so those are not shown and no ephemeris accuracy is claimed.",
       "dimensions": {
         "tooltips": {
           "status": "pass",
-          "note": "The bar indicator, Placement & size UiButton, Show widget restore button and popover actions carry PluginKit tooltipText (host-owned UiTooltip, static probe)."
+          "note": "The bar indicator and its popover actions carry PluginKit tooltipText (host-owned UiTooltip, static probe); the desktop widget has no interactive controls."
         },
         "accessibility": {
           "status": "pass",
-          "note": "UiButton/UiPopover accessibleName on the bar and desktop controls and restore button, UiProgress accessibleName and Accessible.name on the widget; no mouse-only MouseArea (static probe). Live AT-SPI behaviour is not verified."
+          "note": "UiButton/UiPopover accessibleName on the bar indicator and Accessible.name on the widget and moon disc; no mouse-only MouseArea (static probe). Live AT-SPI behaviour is not verified."
         },
         "translation": {
           "status": "pass",
@@ -697,7 +697,7 @@
         },
         "settings": {
           "status": "pass",
-          "note": "Typed showIllumination/showAge/showNextPhases (true) and dataDensity (standard) settings declared in the manifest and read via PluginKit Settings; the plugin stored no settings before 2.0 and 1.x rows stay visible by default (static probe). Plus sizeClass (enum, default standard = pre-#32 size) and showOnDesktop (boolean, default true) for Desktop Widgets 2.0, written/reset via PluginKit Settings from the desktop popover (static probe)."
+          "note": "Typed showIllumination/showAge/showNextPhases (true) and dataDensity (standard) settings declared in the manifest and read via PluginKit Settings; the plugin stored no settings before 2.0 and 1.x rows stay visible by default (static probe). The 2.x sizeClass/showOnDesktop settings are gone: the host owns size and position."
         },
         "themeTokens": {
           "status": "pass",
@@ -709,7 +709,7 @@
         },
         "orientation": {
           "status": "unverified",
-          "note": "Host context plus the persisted size class drive the desktop layout and Desktop.position labels the per-display slot, but placement, popover anchoring and size classes across desktop slots and monitors have not had a graphical/live-shell review; the shell desktop host still caps width at 300 and reports hostCompact false."
+          "note": "Layout follows the host's content box (hostAvailableWidth); position, size and edit mode are owned by the PluginKit 3 desktop host and have not had a graphical review in a live shell."
         },
         "loadingErrorStates": {
           "status": "unverified",

@@ -1,8 +1,8 @@
 {
-  "schemaVersion": 2,
+  "schemaVersion": 3,
   "id": "hornero-sun-card",
   "name": "Hornero Sun Card",
-  "version": "2.0.0",
+  "version": "3.0.0",
   "description": "Sun Card 2.0: dashboard astronomy card and contextual bar indicator with sunrise/sunset from PluginKit Weather plus derived day length, sun progress and next sun event. Approximations are labelled derived.",
   "author": "HorneroOS contributors",
   "license": "MIT",
@@ -31,6 +31,10 @@
       "minShellVersion": "1.0.0"
     },
     "changelog": [
+      {
+        "version": "3.0.0",
+        "notes": "PluginKit 3 on Hornero Signal: tokens and variant names ported."
+      },
       {
         "version": "2.0.0",
         "notes": "Weather & Astronomy 2.0: astronomy detail derived from the facade sunrise/sunset strings (day length, sun progress, next sun event), contextual bar indicator, configurable density, typed settings, host-context layout and Spanish catalog. Solar noon, twilight and moon times are not exposed by the facade and are labelled unavailable."
@@ -77,6 +81,10 @@
         ],
         "description": "compact shows only sunrise/sunset; standard keeps the 1.x rows plus astronomy; detailed adds the unavailable-fields note."
       }
-    }
+    },
+    "providers": [
+      "weather",
+      "time"
+    ]
   }
 }

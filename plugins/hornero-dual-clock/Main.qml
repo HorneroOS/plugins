@@ -191,7 +191,7 @@ Item {
     UiButton {
         id: indicator
 
-        variant: "ghost"
+        variant: "quiet"
         text: {
             const p = root.secondParts(Time.date);
             return root.localTimeText(Time.date) + "\n" + root.fmtHms(p.hours, p.minutes, p.seconds) + " " + root.secondSuffix(p);
@@ -212,7 +212,7 @@ Item {
 
         Column {
             width: 320
-            spacing: Theme.spacing
+            spacing: Theme.spacing.normal
 
             UiText {
                 role: "subtitle"

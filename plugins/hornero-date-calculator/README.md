@@ -42,10 +42,8 @@ exists. Until then, searching for this tool in the shell launcher
 will not run it -- the bar quick action above is the hosted
 quick path, and claiming otherwise would be false.
 
-PluginKit also has **no text-input, combo-box or spin-box
-primitive** (same `qmldir`); those controls stay
-`QtQuick.Controls` with `Accessible.name` and `ToolTip.text`, as
-in 1.x, while buttons/text/cards/states/stacks use `Ui*`.
+PluginKit 3 ships the Signal text controls (`UiTextField`, `UiTextArea`, `UiComboBox`, `UiSpinBox`); text input here uses them with an
+`accessibleName` and `tooltipText`, like every other control.
 
 ## Logic preserved from 1.x
 
@@ -68,3 +66,7 @@ Dates must be real `YYYY-MM-DD` dates (`2026-02-30` is rejected) and all math st
 - No processes, no network. Original HorneroOS code, MIT
   licensed. Plugin QML runs with your user privileges inside
   Quickshell; it is not sandboxed.
+
+## PluginKit 3
+
+This package targets PluginKit 3 on Hornero Signal (`schemaVersion: 3`): colours, type, spacing and glyphs come from the shared Theme tokens and Hornero Glyph names, and the shared data domains it reads are declared in `capabilities.providers`. Shells older than Hornero Signal cannot load it.

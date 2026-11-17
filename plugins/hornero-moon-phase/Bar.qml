@@ -68,7 +68,7 @@ Item {
     UiButton {
         id: indicator
 
-        variant: "ghost"
+        variant: "quiet"
         text: root.hostCompact ? "~" + String(Math.round(root.illumination * 100)) + "%" : i18n.tr("Moon ~%1%").arg(String(Math.round(root.illumination * 100)))
         tooltipText: i18n.tr("Moon Phase: activate for details (approximate)")
         accessibleName: i18n.tr("Moon Phase details (approximate)")
@@ -83,7 +83,7 @@ Item {
 
         Column {
             width: 260
-            spacing: Theme.spacingSmall
+            spacing: Theme.spacing.small
 
             UiText {
                 role: "title"

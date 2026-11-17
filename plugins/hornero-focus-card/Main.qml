@@ -114,11 +114,11 @@ Item {
         width: root.hostAvailableWidth > 0 ? Math.min(root.hostAvailableWidth, 320) : 320
         Accessible.name: i18n.tr("Focus: %1").arg(root.currentLine)
         title: root.showDate ? i18n.formatDateTime(Time.date, "dddd, d MMMM") : i18n.tr("Focus")
-        icon: "self_improvement"
+        glyph: "leaf"
 
         Column {
             width: parent.width
-            spacing: Theme.spacingSmall
+            spacing: Theme.spacing.small
 
             UiText {
                 role: "title"
@@ -136,16 +136,16 @@ Item {
                 compact: root.hostCompact
 
                 UiButton {
-                    variant: "tonal"
-                    iconName: "chevron_left"
+                    variant: "secondary"
+                    glyph: "chevron-left"
                     tooltipText: i18n.tr("Show the previous focus line")
                     accessibleName: i18n.tr("Previous focus line")
                     onClicked: root.lineIndex = root.previousIndex(root.currentIndex, root.lines.length)
                 }
 
                 UiButton {
-                    variant: "tonal"
-                    iconName: "chevron_right"
+                    variant: "secondary"
+                    glyph: "chevron-right"
                     tooltipText: i18n.tr("Show the next focus line")
                     accessibleName: i18n.tr("Next focus line")
                     onClicked: root.lineIndex = root.nextIndex(root.currentIndex, root.lines.length)

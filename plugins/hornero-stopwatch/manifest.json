@@ -1,8 +1,8 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 3,
   "id": "hornero-stopwatch",
   "name": "Hornero Stopwatch",
-  "version": "2.0.0",
+  "version": "3.0.0",
   "description": "Stopwatch 2.0: compact bar stopwatch with a popover, wall-clock-anchored elapsed time correct across sleep/reload and an optional tenths display. Pure QML, no processes or network.",
   "author": "HorneroOS contributors",
   "license": "MIT",
@@ -47,6 +47,10 @@
   },
   "marketplace": {
     "changelog": [
+      {
+        "version": "3.0.0",
+        "notes": "PluginKit 3 on Hornero Signal: tokens and variant names ported."
+      },
       {
         "version": "2.0.0",
         "notes": "Productivity Timers 2.0: compact indicator plus popover controls, wall-clock-anchored timing persisted across sleep/reload (no per-tick drift), typed showTenths setting (default on), Theme tokens and Argentine Spanish translation."

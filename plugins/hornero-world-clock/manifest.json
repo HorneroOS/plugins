@@ -1,8 +1,8 @@
 {
-  "schemaVersion": 2,
+  "schemaVersion": 3,
   "id": "hornero-world-clock",
   "name": "Hornero World Clock",
-  "version": "2.0.0",
+  "version": "3.0.0",
   "description": "World Clock 2.0: dashboard card with local, UTC and three selectable cities. Pure-JS rule-based offsets (fixed, EU, US and southern DST rules) labelled per row; no processes or network.",
   "author": "HorneroOS contributors",
   "license": "MIT",
@@ -29,6 +29,10 @@
     },
     "changelog": [
       {
+        "version": "3.0.0",
+        "notes": "PluginKit 3 on Hornero Signal: tokens and variant names ported."
+      },
+      {
         "version": "2.0.0",
         "notes": "Time and Agenda 2.0: dashboard card (Time category) on the shared Time facade with no own timer, three selectable city slots (defaults Buenos Aires, Madrid, Tokyo as in 1.x), EU/US/southern DST rules with per-row offset and DST labels, locale dates, typed settings and Argentine Spanish catalog."
       },
@@ -51,19 +55,58 @@
       "city1": {
         "type": "enum",
         "default": "buenos-aires",
-        "options": ["utc", "buenos-aires", "new-york", "chicago", "los-angeles", "london", "madrid", "berlin", "new-delhi", "tokyo", "sydney", "auckland"],
+        "options": [
+          "utc",
+          "buenos-aires",
+          "new-york",
+          "chicago",
+          "los-angeles",
+          "london",
+          "madrid",
+          "berlin",
+          "new-delhi",
+          "tokyo",
+          "sydney",
+          "auckland"
+        ],
         "description": "First city row. Only zones with a built-in DST rule are offered."
       },
       "city2": {
         "type": "enum",
         "default": "madrid",
-        "options": ["utc", "buenos-aires", "new-york", "chicago", "los-angeles", "london", "madrid", "berlin", "new-delhi", "tokyo", "sydney", "auckland"],
+        "options": [
+          "utc",
+          "buenos-aires",
+          "new-york",
+          "chicago",
+          "los-angeles",
+          "london",
+          "madrid",
+          "berlin",
+          "new-delhi",
+          "tokyo",
+          "sydney",
+          "auckland"
+        ],
         "description": "Second city row. Only zones with a built-in DST rule are offered."
       },
       "city3": {
         "type": "enum",
         "default": "tokyo",
-        "options": ["utc", "buenos-aires", "new-york", "chicago", "los-angeles", "london", "madrid", "berlin", "new-delhi", "tokyo", "sydney", "auckland"],
+        "options": [
+          "utc",
+          "buenos-aires",
+          "new-york",
+          "chicago",
+          "los-angeles",
+          "london",
+          "madrid",
+          "berlin",
+          "new-delhi",
+          "tokyo",
+          "sydney",
+          "auckland"
+        ],
         "description": "Third city row. Only zones with a built-in DST rule are offered."
       },
       "showLocal": {
@@ -86,6 +129,9 @@
         "default": true,
         "description": "Use 24-hour times (the 1.x behaviour); off shows 12-hour AM/PM."
       }
-    }
+    },
+    "providers": [
+      "time"
+    ]
   }
 }

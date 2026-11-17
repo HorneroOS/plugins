@@ -1,8 +1,8 @@
 {
-  "schemaVersion": 2,
+  "schemaVersion": 3,
   "id": "hornero-weather",
   "name": "Hornero Weather",
-  "version": "2.0.0",
+  "version": "3.0.0",
   "description": "Weather 2.0: dashboard card and contextual bar indicator complementing native Weather with configurable density, a local wind-threshold alert and forecast detail from the PluginKit Weather facade only.",
   "author": "HorneroOS contributors",
   "license": "MIT",
@@ -31,6 +31,10 @@
       "minShellVersion": "1.0.0"
     },
     "changelog": [
+      {
+        "version": "3.0.0",
+        "notes": "PluginKit 3 on Hornero Signal: tokens and variant names ported."
+      },
       {
         "version": "2.0.0",
         "notes": "Weather & Astronomy 2.0: dashboard card plus contextual bar indicator, configurable density and forecast days, local high-wind threshold alert, typed settings, host-context layout and Spanish catalog. Only PluginKit Weather fields are shown; official alerts and multi-location are not exposed by the facade and are labelled unavailable."
@@ -91,6 +95,9 @@
         "maximum": 200,
         "description": "Local high-wind alert threshold in km/h. Not an official alert; 1.x had no threshold."
       }
-    }
+    },
+    "providers": [
+      "weather"
+    ]
   }
 }

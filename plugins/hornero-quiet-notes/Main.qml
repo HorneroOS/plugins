@@ -95,11 +95,11 @@ Item {
         width: root.hostAvailableWidth > 0 ? Math.min(root.hostAvailableWidth, 320) : 320
         Accessible.name: root.note.length > 0 ? i18n.tr("Session intention: %1").arg(root.note) : i18n.tr("Session intention: not set")
         title: i18n.tr("Session intention")
-        icon: "edit_note"
+        glyph: "edit"
 
         Column {
             width: parent.width
-            spacing: Theme.spacingSmall
+            spacing: Theme.spacing.small
 
             UiChip {
                 text: i18n.tr("Session only — never saved")
@@ -113,17 +113,16 @@ Item {
                 text: root.note.length > 0 ? root.note : i18n.tr("No intention set yet.")
             }
 
-            TextField {
+            UiTextField {
                 id: input
 
                 visible: root.editing
                 width: parent.width
                 maximumLength: root.maxLength
                 placeholderText: i18n.tr("One line for this session...")
-                color: Theme.onSurface
+                color: Theme.palette.ink
                 Accessible.name: i18n.tr("Session intention editor")
-                ToolTip.text: i18n.tr("Session intention (Enter accepts, Esc cancels; never saved)")
-                ToolTip.visible: hovered
+                tooltipText: i18n.tr("Session intention (Enter accepts, Esc cancels; never saved)")
                 onAccepted: root.closeEditor(true)
                 Keys.onEscapePressed: root.closeEditor(false)
             }
@@ -150,7 +149,7 @@ Item {
 
                 UiButton {
                     visible: !root.editing && root.note.length > 0
-                    variant: "ghost"
+                    variant: "quiet"
                     text: i18n.tr("Clear")
                     tooltipText: i18n.tr("Erase this session intention")
                     accessibleName: i18n.tr("Clear session intention")
@@ -167,7 +166,7 @@ Item {
 
                 UiButton {
                     visible: root.editing
-                    variant: "ghost"
+                    variant: "quiet"
                     text: i18n.tr("Cancel")
                     tooltipText: i18n.tr("Discard this edit (Esc)")
                     accessibleName: i18n.tr("Cancel editing")

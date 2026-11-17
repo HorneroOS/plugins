@@ -1,9 +1,9 @@
 {
-  "schemaVersion": 2,
+  "schemaVersion": 3,
   "id": "hornero-agenda",
   "name": "Hornero Agenda",
-  "version": "2.1.1",
-  "description": "Agenda: desktop widget of date facts from PluginKit Time (weekday, ISO week and week-year, day of year, remaining days, year progress) with Desktop Widgets 2.0 size classes, per-display slot display and hide-with-restore. No events backend.",
+  "version": "3.0.0",
+  "description": "Agenda 3.0 on Hornero Signal: a desktop widget of date facts (day, ISO week, quarter, day of year, days remaining) with a year partition bar, from the shared time provider. Dates only; no events source.",
   "author": "HorneroOS contributors",
   "license": "MIT",
   "homepage": "https://github.com/HorneroOS/plugins",
@@ -11,7 +11,12 @@
   "placement": "desktop",
   "surfaces": {
     "desktop": {
-      "entrypoint": "Main.qml"
+      "entrypoint": "Main.qml",
+      "width": 320,
+      "height": 340,
+      "minWidth": 260,
+      "minHeight": 280,
+      "anchor": "top-left"
     }
   },
   "translations": {
@@ -26,6 +31,10 @@
       "minShellVersion": "1.2.79"
     },
     "changelog": [
+      {
+        "version": "3.0.0",
+        "notes": "PluginKit 3 desktop widget on Hornero Signal: host-owned frame, position and size (sizeClass and showOnDesktop settings removed); day readout, ISO week/quarter/day-of-year readouts and a year partition bar with a dimension line."
+      },
       {
         "version": "2.1.1",
         "notes": "Popover actions use the native full-width UiActionRow (shell 1.2.79 PluginKit) instead of small buttons."
@@ -68,22 +77,10 @@
         "type": "boolean",
         "default": true,
         "description": "Show the elapsed fraction of the year as a progress bar."
-      },
-      "sizeClass": {
-        "type": "enum",
-        "default": "standard",
-        "options": [
-          "compact",
-          "standard",
-          "wide"
-        ],
-        "description": "Desktop widget size class within the host width cap (300 logical px today); standard keeps the 2.0 size. This sizes content, not the slot."
-      },
-      "showOnDesktop": {
-        "type": "boolean",
-        "default": true,
-        "description": "Show the widget content on the desktop (the 2.0 behaviour). Off leaves a visible Show widget button so the content can always be restored."
       }
-    }
+    },
+    "providers": [
+      "time"
+    ]
   }
 }

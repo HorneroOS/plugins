@@ -1,12 +1,12 @@
 {
   "schemaVersion": 1,
-  "generatedFrom": "b639bea8576e9ca097d7ad723013363571e12ca9",
+  "generatedFrom": "07a80c5514a9f3660e0eaa4902c82dca08c0d216",
   "plugins": [
     {
       "id": "hornero-agenda",
       "name": "Hornero Agenda",
-      "version": "2.1.1",
-      "description": "Agenda: desktop widget of date facts from PluginKit Time (weekday, ISO week and week-year, day of year, remaining days, year progress) with Desktop Widgets 2.0 size classes, per-display slot display and hide-with-restore. No events backend.",
+      "version": "3.0.0",
+      "description": "Agenda 3.0 on Hornero Signal: a desktop widget of date facts (day, ISO week, quarter, day of year, days remaining) with a year partition bar, from the shared time provider. Dates only; no events source.",
       "author": "HorneroOS contributors",
       "license": "MIT",
       "homepage": "https://github.com/HorneroOS/plugins",
@@ -30,27 +30,15 @@
             "type": "boolean",
             "default": true,
             "description": "Show the elapsed fraction of the year as a progress bar."
-          },
-          "sizeClass": {
-            "type": "enum",
-            "default": "standard",
-            "options": [
-              "compact",
-              "standard",
-              "wide"
-            ],
-            "description": "Desktop widget size class within the host width cap (300 logical px today); standard keeps the 2.0 size. This sizes content, not the slot."
-          },
-          "showOnDesktop": {
-            "type": "boolean",
-            "default": true,
-            "description": "Show the widget content on the desktop (the 2.0 behaviour). Off leaves a visible Show widget button so the content can always be restored."
           }
-        }
+        },
+        "providers": [
+          "time"
+        ]
       },
       "trust": "official",
       "path": "plugins/hornero-agenda",
-      "sha256": "c954388558c5aa521aeef8d022c15410e22ebaae960837ca4915a6d0228f5270"
+      "sha256": "16e9a13b8af86c8093c5ab2fc333bfa896c4168e6147da40fe43649ac48c0703"
     },
     {
       "id": "hornero-ai-usage",
@@ -184,8 +172,8 @@
     {
       "id": "hornero-calendar",
       "name": "Hornero Calendar",
-      "version": "2.1.1",
-      "description": "Calendar: desktop widget with date/time header and current month grid from PluginKit Time, plus Desktop Widgets 2.0 size classes, per-display slot display and hide-with-restore. Locale dates, no events backend, no processes or network.",
+      "version": "3.0.0",
+      "description": "Calendar 3.0 on Hornero Signal: a desktop widget with a display clock, the full date and a square-celled month grid over the shared time provider. Dates only; no events source.",
       "author": "HorneroOS contributors",
       "license": "MIT",
       "homepage": "https://github.com/HorneroOS/plugins",
@@ -218,27 +206,15 @@
               "sunday"
             ],
             "description": "First weekday column of the month grid. PluginKit does not expose the locale week start."
-          },
-          "sizeClass": {
-            "type": "enum",
-            "default": "standard",
-            "options": [
-              "compact",
-              "standard",
-              "wide"
-            ],
-            "description": "Desktop widget size class within the host width cap (300 logical px today); standard keeps the 2.0 size. This sizes content, not the slot."
-          },
-          "showOnDesktop": {
-            "type": "boolean",
-            "default": true,
-            "description": "Show the widget content on the desktop (the 2.0 behaviour). Off leaves a visible Show widget button so the content can always be restored."
           }
-        }
+        },
+        "providers": [
+          "time"
+        ]
       },
       "trust": "official",
       "path": "plugins/hornero-calendar",
-      "sha256": "8088ac692168b87f22a68943d1189bee8d1b3b0fa55d3f976fd6623df70982ba"
+      "sha256": "2e9d299aea990dcf43ae5a8bfa2185a710cb439dee7b1fe5435562e4478d41b3"
     },
     {
       "id": "hornero-color-converter",
@@ -274,7 +250,7 @@
     {
       "id": "hornero-countdown",
       "name": "Hornero Countdown",
-      "version": "2.0.0",
+      "version": "3.0.0",
       "description": "Countdown 2.0: compact bar countdown (5/10/25 presets) with a popover, progress, deadline-correct timing across sleep/reload and a completion toast. No sound, no processes, no network.",
       "author": "HorneroOS contributors",
       "license": "MIT",
@@ -316,12 +292,12 @@
       },
       "trust": "official",
       "path": "plugins/hornero-countdown",
-      "sha256": "db4ead36a1c6b6871457bb929868be8214844f195a0072e53f11714f6ec1094c"
+      "sha256": "c3e730610484874aa87da44cd8e0014e980bbc8aef6edc363645dfb766ea2f33"
     },
     {
       "id": "hornero-date-calculator",
       "name": "Hornero Date Calculator",
-      "version": "2.0.0",
+      "version": "3.0.0",
       "description": "Utility Tools 2.0 date calculator: bar quick action and compact dashboard detail for days-between and add-days on validated YYYY-MM-DD dates, using UTC math to avoid DST drift.",
       "author": "HorneroOS contributors",
       "license": "MIT",
@@ -341,7 +317,7 @@
       },
       "trust": "official",
       "path": "plugins/hornero-date-calculator",
-      "sha256": "2fd8823f1f85e77a1bf770f0b963d2407c7e796e2ddddd033f1f5a6c1cfc28c0"
+      "sha256": "a745a31a30136bb846f28a7af89ede0c1dad56bbe3cfad9f1783a7c783acb735"
     },
     {
       "id": "hornero-disk-usage",
@@ -381,7 +357,7 @@
     {
       "id": "hornero-dual-clock",
       "name": "Hornero Dual Clock",
-      "version": "2.1.2",
+      "version": "3.0.0",
       "description": "Dual Clock 2.0: local time next to a second zone (UTC by default, as in 1.x) in the bar, with a details popover. Pure-JS rule-based offsets, no processes or network.",
       "author": "HorneroOS contributors",
       "license": "MIT",
@@ -421,16 +397,19 @@
             "default": true,
             "description": "Use 24-hour times (the 1.x behaviour); off shows 12-hour AM/PM."
           }
-        }
+        },
+        "providers": [
+          "time"
+        ]
       },
       "trust": "official",
       "path": "plugins/hornero-dual-clock",
-      "sha256": "7ff7268366b0526be6b7b9baf45d56b6c2fb367bbcbfdab444edb97eb77835b6"
+      "sha256": "531a0d9dd0b83b839d571eefe173bd794cf3f5bed2246b640f05c2a3b4a6f764"
     },
     {
       "id": "hornero-focus-card",
       "name": "Hornero Focus Card",
-      "version": "2.1.0",
+      "version": "3.0.0",
       "description": "Focus Card 2.0: dashboard card with the locale date and a rotating original one-line focus reminder, from PluginKit Time. Keyboard Previous/Next and pause, optional own leading line, no processes or network.",
       "author": "HorneroOS contributors",
       "license": "MIT",
@@ -459,11 +438,14 @@
             "maxLength": 140,
             "description": "Optional own focus line, shown first in the rotation. Empty (the 1.x behaviour) rotates the built-in lines only."
           }
-        }
+        },
+        "providers": [
+          "time"
+        ]
       },
       "trust": "official",
       "path": "plugins/hornero-focus-card",
-      "sha256": "871fc1c8572c4e844fb2f26b2760b4b2ea3a390dc5bee953f833f1d76dbf6ade"
+      "sha256": "ed4567e399fed745c29829fccfa157f2028b4d6ed8e79b4b23a91944aa291f3e"
     },
     {
       "id": "hornero-json-tools",
@@ -576,7 +558,7 @@
     {
       "id": "hornero-moon-phase",
       "name": "Hornero Moon Phase",
-      "version": "2.1.1",
+      "version": "3.0.0",
       "description": "Moon Phase: desktop widget and bar indicator for the approximate moon phase and illumination from the 1.x synodic approximation, plus Desktop Widgets 2.0 size classes, per-display slot display and hide-with-restore. Always labelled approximate.",
       "author": "HorneroOS contributors",
       "license": "MIT",
@@ -611,27 +593,12 @@
               "detailed"
             ],
             "description": "compact shows only the phase name; standard keeps the 1.x rows; detailed adds the approximation note."
-          },
-          "sizeClass": {
-            "type": "enum",
-            "default": "standard",
-            "options": [
-              "compact",
-              "standard",
-              "wide"
-            ],
-            "description": "Desktop widget size class within the host width cap (300 logical px today); standard keeps the 2.0 size. This sizes content, not the slot."
-          },
-          "showOnDesktop": {
-            "type": "boolean",
-            "default": true,
-            "description": "Show the widget content on the desktop (the 2.0 behaviour). Off leaves a visible Show widget button so the content can always be restored."
           }
         }
       },
       "trust": "official",
       "path": "plugins/hornero-moon-phase",
-      "sha256": "c14333914dadf238641ad913aed44a5c05a3956906a1d5efe4bc36a3dac520a3"
+      "sha256": "419fa2cd145101cd4a1e3bdacdc7d65eece265acac8d7cc1b725591d8878b945"
     },
     {
       "id": "hornero-network-monitor",
@@ -709,7 +676,7 @@
     {
       "id": "hornero-pomodoro",
       "name": "Hornero Pomodoro",
-      "version": "2.2.2",
+      "version": "3.0.0",
       "description": "Pomodoro 2.0: compact bar focus timer with a popover, deadline-correct timing across sleep/reload, a typed session-length setting and a completion toast. No processes, no network.",
       "author": "HorneroOS contributors",
       "license": "MIT",
@@ -744,12 +711,12 @@
       },
       "trust": "official",
       "path": "plugins/hornero-pomodoro",
-      "sha256": "dff3d5e31cc33ac59d47177c198a47a07c4b529d7f1b950256921ebbebfe4ef6"
+      "sha256": "fbdbf58d41873cf13eab65a7e4ce4b52f966df403df4eeeb62bb7790ade0c05e"
     },
     {
       "id": "hornero-quick-notes",
       "name": "Hornero Quick Notes",
-      "version": "2.0.0",
+      "version": "3.0.0",
       "description": "Quick Notes 2.0: dashboard card with one persistent note saved through PluginKit Settings (same key as 1.x). Debounced autosave, Ctrl+S, flush on unload, clear confirmation, no processes or network.",
       "author": "HorneroOS contributors",
       "license": "MIT",
@@ -782,12 +749,12 @@
       },
       "trust": "official",
       "path": "plugins/hornero-quick-notes",
-      "sha256": "bafb43dbac46548dee3dc0e8be09e75d961f8f2f5551a28721d5f6355991324d"
+      "sha256": "d1053391b2a4a7c5d0fcc316df4c43b46986399c9fd28bfecc470ecf16f27144"
     },
     {
       "id": "hornero-quiet-notes",
       "name": "Hornero Quiet Notes",
-      "version": "2.1.0",
+      "version": "3.0.0",
       "description": "Quiet Notes 2.0: dashboard card for one short session-only intention. The line is never saved (in-memory only, as in 1.x) and the card says so. Keyboard-first capture, no processes or network.",
       "author": "HorneroOS contributors",
       "license": "MIT",
@@ -814,12 +781,12 @@
       },
       "trust": "official",
       "path": "plugins/hornero-quiet-notes",
-      "sha256": "8e2a04a22021803c61c80e7b10330e67d5893a2d06a10f78d0427719e80140b6"
+      "sha256": "6059eb2eed5f8d35dced15cd1337a729702382cd352a4fe55981e952537e8004"
     },
     {
       "id": "hornero-stopwatch",
       "name": "Hornero Stopwatch",
-      "version": "2.0.0",
+      "version": "3.0.0",
       "description": "Stopwatch 2.0: compact bar stopwatch with a popover, wall-clock-anchored elapsed time correct across sleep/reload and an optional tenths display. Pure QML, no processes or network.",
       "author": "HorneroOS contributors",
       "license": "MIT",
@@ -851,7 +818,7 @@
       },
       "trust": "official",
       "path": "plugins/hornero-stopwatch",
-      "sha256": "0cc043047688207dc24bcef4086db4dce87ae20d6cf1a8f929a93bb47c82f4bd"
+      "sha256": "46033c243800ee2d85f346ff1f1af6f870c761b30996940448121302a4cdab80"
     },
     {
       "id": "hornero-studio-audio",
@@ -914,7 +881,7 @@
     {
       "id": "hornero-sun-card",
       "name": "Hornero Sun Card",
-      "version": "2.0.0",
+      "version": "3.0.0",
       "description": "Sun Card 2.0: dashboard astronomy card and contextual bar indicator with sunrise/sunset from PluginKit Weather plus derived day length, sun progress and next sun event. Approximations are labelled derived.",
       "author": "HorneroOS contributors",
       "license": "MIT",
@@ -950,11 +917,15 @@
             ],
             "description": "compact shows only sunrise/sunset; standard keeps the 1.x rows plus astronomy; detailed adds the unavailable-fields note."
           }
-        }
+        },
+        "providers": [
+          "weather",
+          "time"
+        ]
       },
       "trust": "official",
       "path": "plugins/hornero-sun-card",
-      "sha256": "94727d67b8cd9083d478f4a006e6d5dc21975c690653fb233011a8bfffe33ef6"
+      "sha256": "f63fe98c8d0935d26fcb2ec1c708294df26f09b4d05bdb43064bd51dc657551c"
     },
     {
       "id": "hornero-system-health",
@@ -1193,7 +1164,7 @@
     {
       "id": "hornero-weather",
       "name": "Hornero Weather",
-      "version": "2.0.0",
+      "version": "3.0.0",
       "description": "Weather 2.0: dashboard card and contextual bar indicator complementing native Weather with configurable density, a local wind-threshold alert and forecast detail from the PluginKit Weather facade only.",
       "author": "HorneroOS contributors",
       "license": "MIT",
@@ -1243,16 +1214,19 @@
             "maximum": 200,
             "description": "Local high-wind alert threshold in km/h. Not an official alert; 1.x had no threshold."
           }
-        }
+        },
+        "providers": [
+          "weather"
+        ]
       },
       "trust": "official",
       "path": "plugins/hornero-weather",
-      "sha256": "651e20784b4754811a5bde2947bd4412a94944916252dd4007b948cccac6b894"
+      "sha256": "bc8185c0127fee3c67d051ed3fd526ea11ac452686a628bbbd3cf4d3d051c96f"
     },
     {
       "id": "hornero-world-clock",
       "name": "Hornero World Clock",
-      "version": "2.0.0",
+      "version": "3.0.0",
       "description": "World Clock 2.0: dashboard card with local, UTC and three selectable cities. Pure-JS rule-based offsets (fixed, EU, US and southern DST rules) labelled per row; no processes or network.",
       "author": "HorneroOS contributors",
       "license": "MIT",
@@ -1340,11 +1314,14 @@
             "default": true,
             "description": "Use 24-hour times (the 1.x behaviour); off shows 12-hour AM/PM."
           }
-        }
+        },
+        "providers": [
+          "time"
+        ]
       },
       "trust": "official",
       "path": "plugins/hornero-world-clock",
-      "sha256": "339e912e05c2913590b7e07fe7a50704541ac9c9493f8813ae9a06dd33958f31"
+      "sha256": "624215c3d139e179023034490b35369c90884703298713648170ae0ec0fac692"
     }
   ]
 }

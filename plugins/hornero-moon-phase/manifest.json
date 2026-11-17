@@ -1,8 +1,8 @@
 {
-  "schemaVersion": 2,
+  "schemaVersion": 3,
   "id": "hornero-moon-phase",
   "name": "Hornero Moon Phase",
-  "version": "2.1.1",
+  "version": "3.0.0",
   "description": "Moon Phase: desktop widget and bar indicator for the approximate moon phase and illumination from the 1.x synodic approximation, plus Desktop Widgets 2.0 size classes, per-display slot display and hide-with-restore. Always labelled approximate.",
   "author": "HorneroOS contributors",
   "license": "MIT",
@@ -11,7 +11,12 @@
   "placement": "desktop",
   "surfaces": {
     "desktop": {
-      "entrypoint": "Main.qml"
+      "entrypoint": "Main.qml",
+      "width": 320,
+      "height": 300,
+      "minWidth": 260,
+      "minHeight": 240,
+      "anchor": "bottom-left"
     },
     "bar": {
       "entrypoint": "Bar.qml"
@@ -29,6 +34,10 @@
       "minShellVersion": "1.2.79"
     },
     "changelog": [
+      {
+        "version": "3.0.0",
+        "notes": "PluginKit 3 desktop widget on Hornero Signal: host-owned frame, position and size (sizeClass and showOnDesktop settings removed); the moon disc is drawn from the same approximate illumination, one scanline per row. Bar indicator unchanged in meaning."
+      },
       {
         "version": "2.1.1",
         "notes": "Popover actions use the native full-width UiActionRow (shell 1.2.79 PluginKit) instead of small buttons."
@@ -82,21 +91,6 @@
           "detailed"
         ],
         "description": "compact shows only the phase name; standard keeps the 1.x rows; detailed adds the approximation note."
-      },
-      "sizeClass": {
-        "type": "enum",
-        "default": "standard",
-        "options": [
-          "compact",
-          "standard",
-          "wide"
-        ],
-        "description": "Desktop widget size class within the host width cap (300 logical px today); standard keeps the 2.0 size. This sizes content, not the slot."
-      },
-      "showOnDesktop": {
-        "type": "boolean",
-        "default": true,
-        "description": "Show the widget content on the desktop (the 2.0 behaviour). Off leaves a visible Show widget button so the content can always be restored."
       }
     }
   }

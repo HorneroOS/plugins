@@ -1,33 +1,36 @@
 import QtQuick
+import QtQuick.Layouts
 import Hornero.PluginKit
 
-// Hornero Calendar 2.0 - desktop widget over PluginKit Time.
-// Keeps the 1.x header (large time, full locale date, shell time
-// line) and adds the current month as a grid with today marked,
-// computed from the local calendar fields of Time.date with UTC
-// day math (see the DATE-LOGIC block), so DST transitions in the
-// system zone cannot shift a cell. There is no calendar or
-// events source in PluginKit - no facade exposes appointments -
-// so this widget shows the calendar itself and nothing else: no
-// fabricated events backend, and upcoming entries would need a
-// real shell data source first. Month and weekday names come
-// from Translations.formatDateTime in the resolved locale; the
-// locale's first-weekday is not exposed by the facade, so the
-// week start is a typed setting instead of a guess.
+// Hornero Calendar 3.0 (PluginKit 3, Hornero Signal): desktop widget over
+// the shared `time` provider. The host owns the module frame, header,
+// position, size and edit mode; this entrypoint lays out content in the
+// host's content box: a display clock, the full locale date and the current
+// month as a square-celled grid with today in `signal`. Cells come from the
+// local calendar fields of Time.date with UTC day math (DATE-LOGIC), so DST
+// transitions cannot shift a cell. PluginKit has no calendar or events
+// source, so the widget shows the calendar itself and nothing else: no
+// fabricated events. Month and weekday names come from
+// Translations.formatDateTime in the resolved locale; the locale's
+// first-weekday is not exposed by the facade, so the week start is a typed
+// setting rather than a guess.
 Item {
     id: root
 
-    // Host context (opt-in): defaults keep a desktop card.
-    property string hostOrientation: "horizontal"
-    property string hostEdge: "none"
+    // Host context: the desktop host injects the content box.
     property string hostSurface: "desktop"
     property int hostAvailableWidth: 0
     property int hostAvailableHeight: 0
-    property bool hostCompact: false
     property string hostScreenName: ""
 
-    implicitWidth: desktopVisible ? sizeClassWidth(sizeClass, hostAvailableWidth, 260) : showWidgetButton.implicitWidth
-    implicitHeight: desktopVisible ? card.implicitHeight : showWidgetButton.implicitHeight
+    // Host frame header (shell docs/PLUGINS.md "Desktop widgets").
+    readonly property string widgetTitle: i18n.tr("Calendar")
+    readonly property string widgetContext: i18n.formatDateTime(Time.date, "MMMM yyyy")
+
+    readonly property int contentWidth: hostAvailableWidth > 0 ? hostAvailableWidth : 300
+
+    implicitWidth: contentWidth
+    implicitHeight: column.implicitHeight
 
     Subscription {
         domain: "time"
@@ -45,12 +48,6 @@ Item {
         pluginId: "hornero-calendar"
     }
 
-    // Typed settings: defaults keep every 1.x element visible
-    // exactly as before (24-hour large clock, full date, shell
-    // time line). The month grid is additive. 1.x stored no
-    // settings, so no stored values migrate. Settings are read
-    // when the widget loads and apply from the next reload, as
-    // in the other 2.0 families.
     readonly property bool twentyFourHour: pluginSettings.value("twentyFourHour", true) !== false
     readonly property bool showShellTime: pluginSettings.value("showShellTime", true) !== false
     readonly property bool showMonthGrid: pluginSettings.value("showMonthGrid", true) !== false
@@ -58,92 +55,6 @@ Item {
         const value = pluginSettings.value("weekStart", "monday");
         return value === "sunday" ? "sunday" : "monday";
     }
-    // DESKTOP-LOGIC-BEGIN (pure JS: slot and size-class normalization)
-    function desktopSlots() {
-        return ["top-left", "top-center", "top-right", "middle-left", "middle-center", "middle-right", "bottom-left", "bottom-center", "bottom-right"];
-    }
-    function normalizeSlot(slot) {
-        return desktopSlots().indexOf(slot) >= 0 ? slot : "bottom-right";
-    }
-    function normalizeSizeClass(value) {
-        return (value === "compact" || value === "wide") ? value : "standard";
-    }
-    function nextSizeClass(value) {
-        const current = normalizeSizeClass(value);
-        return current === "compact" ? "standard" : current === "standard" ? "wide" : "compact";
-    }
-    function sizeClassWidth(value, hostCap, standardWidth) {
-        const limit = hostCap > 0 ? hostCap : 300;
-        const current = normalizeSizeClass(value);
-        if (current === "compact")
-            return Math.min(220, limit);
-        if (current === "wide")
-            return limit;
-        return Math.min(standardWidth, limit);
-    }
-    function sizeClassCompact(value) {
-        return normalizeSizeClass(value) === "compact";
-    }
-    // DESKTOP-LOGIC-END
-
-    // Desktop Widgets 2.0 (#32): the shell owns the canonical slot
-    // (Desktop.position is read-only; users move widgets in Control
-    // Center), so this widget only reads its slot for the current
-    // display and persists its own size class and visibility as
-    // typed Settings. Unknown or malformed stored values normalize
-    // to the defaults above, and the hidden state always leaves a
-    // visible restore button, so content can never be trapped
-    // without a recovery path.
-    property string sizeClass: normalizeSizeClass(String(pluginSettings.value("sizeClass", "standard")))
-    property bool desktopVisible: pluginSettings.value("showOnDesktop", true) !== false
-    readonly property bool compactClass: sizeClassCompact(sizeClass)
-    readonly property string effectiveScreen: hostScreenName !== "" ? hostScreenName : Screen.name
-    readonly property string desktopSlot: normalizeSlot(Desktop.position("hornero-calendar", effectiveScreen))
-
-    function applySizeClass(value) {
-        const normalized = normalizeSizeClass(value);
-        sizeClass = normalized;
-        pluginSettings.setValue("sizeClass", normalized);
-    }
-    function applyDesktopVisible(value) {
-        desktopVisible = value;
-        pluginSettings.setValue("showOnDesktop", value);
-    }
-    function resetDesktopLayout() {
-        pluginSettings.resetValue("sizeClass");
-        pluginSettings.resetValue("showOnDesktop");
-        sizeClass = "standard";
-        desktopVisible = true;
-        Notifications.toast(i18n.tr("Desktop widget"), i18n.tr("Size and visibility reset to defaults."), "");
-    }
-    function slotLabel(slot) {
-        switch (normalizeSlot(slot)) {
-        case "top-left":
-            return i18n.tr("Top left");
-        case "top-center":
-            return i18n.tr("Top center");
-        case "top-right":
-            return i18n.tr("Top right");
-        case "middle-left":
-            return i18n.tr("Middle left");
-        case "middle-center":
-            return i18n.tr("Middle center");
-        case "middle-right":
-            return i18n.tr("Middle right");
-        case "bottom-left":
-            return i18n.tr("Bottom left");
-        case "bottom-center":
-            return i18n.tr("Bottom center");
-        default:
-            return i18n.tr("Bottom right");
-        }
-    }
-    function sizeClassLabel() {
-        return sizeClass === "compact" ? i18n.tr("Compact") : sizeClass === "wide" ? i18n.tr("Wide") : i18n.tr("Standard");
-    }
-
-    readonly property int cellWidth: compactClass ? 24 : sizeClass === "wide" ? 34 : 30
-    readonly property int cellHeight: compactClass ? 18 : sizeClass === "wide" ? 26 : 22
 
     // DATE-LOGIC-BEGIN (pure JS on calendar fields, UTC day math)
     function daysInMonth(year, month) {
@@ -168,6 +79,9 @@ Item {
 
     readonly property int weekStartDay: weekStart === "sunday" ? 0 : 1
     readonly property var cells: monthCells(Time.date.getFullYear(), Time.date.getMonth(), weekStartDay)
+    readonly property int gap: 2
+    readonly property int cellWidth: Math.max(18, Math.floor((contentWidth - gap * 6) / 7))
+    readonly property int cellHeight: 26
 
     function weekdayHeaders() {
         // 1 January 2024 was a Monday; noon local dates that week
@@ -181,193 +95,101 @@ Item {
     }
     readonly property var headers: weekdayHeaders()
 
-    UiCard {
-        id: card
+    // Column index (0 = first column) of Saturday and Sunday for muting.
+    function isWeekend(column) {
+        const day = (weekStartDay + column) % 7;
+        return day === 0 || day === 6;
+    }
 
-        visible: root.desktopVisible
-        anchors.fill: parent
+    Column {
+        id: column
+
+        width: root.contentWidth
+        spacing: Theme.spacing.smaller
         Accessible.name: i18n.tr("Calendar: %1").arg(i18n.formatDateTime(Time.date, "dddd, d MMMM yyyy"))
 
-        Column {
-            width: parent.width
-            spacing: Theme.spacingSmall
+        Row {
+            spacing: Theme.spacing.normal
 
             UiText {
-                anchors.horizontalCenter: parent.horizontalCenter
-                role: "title"
+                anchors.verticalCenter: parent.verticalCenter
+                role: "display"
                 text: i18n.formatDateTime(Time.date, root.twentyFourHour ? "HH:mm" : "h:mm ap")
             }
 
-            UiText {
-                anchors.horizontalCenter: parent.horizontalCenter
-                role: "body"
-                text: i18n.formatDateTime(Time.date, "dddd, d MMMM yyyy")
-            }
-
-            UiText {
-                visible: root.showShellTime && !root.compactClass
-                anchors.horizontalCenter: parent.horizontalCenter
-                role: "caption"
-                text: Time.timeStr
-            }
-
             Column {
-                visible: root.showMonthGrid
-                anchors.horizontalCenter: parent.horizontalCenter
-                spacing: Theme.spacingSmall
+                anchors.verticalCenter: parent.verticalCenter
 
                 UiText {
-                    anchors.horizontalCenter: parent.horizontalCenter
                     role: "body"
-                    text: i18n.formatDateTime(Time.date, "MMMM yyyy")
+                    text: i18n.formatDateTime(Time.date, "dddd")
                 }
 
-                Grid {
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    columns: 7
-                    columnSpacing: 2
-                    rowSpacing: 2
-
-                    Repeater {
-                        model: root.headers
-
-                        delegate: Text {
-                            required property string modelData
-
-                            width: root.cellWidth
-                            height: 20
-                            horizontalAlignment: Text.AlignHCenter
-                            verticalAlignment: Text.AlignVCenter
-                            color: Theme.onSurfaceVariant
-                            font.family: Theme.fontFamily
-                            font.pixelSize: Theme.fontSizeSmall
-                            font.bold: true
-                            text: modelData
-                        }
-                    }
-
-                    Repeater {
-                        model: root.cells
-
-                        delegate: Rectangle {
-                            required property int modelData
-
-                            width: root.cellWidth
-                            height: root.cellHeight
-                            radius: Theme.roundingSmall
-                            color: modelData === Time.date.getDate() ? Theme.primaryContainer : Theme.surface
-
-                            Text {
-                                anchors.centerIn: parent
-                                color: modelData === Time.date.getDate() ? Theme.onPrimaryContainer : Theme.onSurface
-                                font.family: Theme.fontFamily
-                                font.pixelSize: Theme.fontSizeSmall
-                                font.bold: modelData === Time.date.getDate()
-                                text: modelData > 0 ? i18n.formatNumber(modelData) : ""
-                            }
-                        }
-                    }
+                UiText {
+                    role: "caption"
+                    text: i18n.formatDateTime(Time.date, "d MMMM yyyy")
                 }
-            }
 
-            UiText {
-                visible: !root.compactClass
-                anchors.horizontalCenter: parent.horizontalCenter
-                role: "caption"
-                text: i18n.tr("No calendar events source is available to extensions yet; this widget shows dates only.")
-            }
-
-            UiButton {
-                id: desktopControlsButton
-
-                anchors.horizontalCenter: parent.horizontalCenter
-                variant: "ghost"
-                text: i18n.tr("Placement & size")
-                tooltipText: i18n.tr("Placement, size and visibility")
-                accessibleName: i18n.tr("Desktop widget placement and size")
-                onClicked: desktopPopover.toggle()
+                UiText {
+                    visible: root.showShellTime
+                    role: "caption"
+                    text: Time.timeStr
+                }
             }
         }
-    }
 
-    UiButton {
-        id: showWidgetButton
+        Grid {
+            visible: root.showMonthGrid
+            columns: 7
+            columnSpacing: root.gap
+            rowSpacing: root.gap
 
-        visible: !root.desktopVisible
-        anchors.centerIn: parent
-        variant: "ghost"
-        text: i18n.tr("Show widget")
-        tooltipText: i18n.tr("Show hidden desktop widget")
-        accessibleName: i18n.tr("Show hidden desktop widget")
-        onClicked: root.applyDesktopVisible(true)
-    }
+            Repeater {
+                model: root.headers
 
-    UiPopover {
-        id: desktopPopover
+                delegate: UiText {
+                    required property string modelData
+                    required property int index
 
-        target: desktopControlsButton
-        accessibleName: i18n.tr("Desktop widget placement and size")
-
-        Column {
-            width: 260
-            spacing: Theme.spacingSmall
-
-            UiText {
-                role: "title"
-                text: i18n.tr("Desktop widget")
-            }
-
-            UiMetric {
-                label: i18n.tr("Display")
-                value: root.effectiveScreen !== "" ? root.effectiveScreen : i18n.tr("Unknown display")
-            }
-
-            UiMetric {
-                label: i18n.tr("Slot")
-                value: root.slotLabel(root.desktopSlot)
-            }
-
-            UiText {
-                width: parent.width
-                role: "caption"
-                text: i18n.tr("Move this widget from Control Center, Extensions. Extensions cannot move themselves; the saved slot is kept per display and a new or unknown display uses Bottom right.")
-            }
-
-            UiMetric {
-                label: i18n.tr("Size class")
-                value: root.sizeClassLabel()
-            }
-
-            UiActionRow {
-                width: parent.width
-                iconName: "aspect_ratio"
-                text: i18n.tr("Use next size class")
-                tooltipText: i18n.tr("Use next size class")
-                accessibleName: i18n.tr("Use next size class")
-                onClicked: root.applySizeClass(nextSizeClass(root.sizeClass))
-            }
-
-            UiActionRow {
-                width: parent.width
-                iconName: "visibility_off"
-                text: i18n.tr("Hide widget content")
-                tooltipText: i18n.tr("Hide widget content")
-                accessibleName: i18n.tr("Hide widget content")
-                onClicked: {
-                    root.applyDesktopVisible(false);
-                    desktopPopover.close();
+                    width: root.cellWidth
+                    horizontalAlignment: Text.AlignHCenter
+                    role: "eyebrow"
+                    color: root.isWeekend(index) ? Theme.palette.inkFaint : Theme.palette.inkMuted
+                    text: modelData
                 }
             }
 
-            UiActionRow {
-                width: parent.width
-                iconName: "restart_alt"
-                text: i18n.tr("Reset size and visibility")
-                tooltipText: i18n.tr("Reset size and visibility")
-                accessibleName: i18n.tr("Reset size and visibility")
-                onClicked: root.resetDesktopLayout()
+            Repeater {
+                model: root.cells
+
+                delegate: Rectangle {
+                    id: cell
+
+                    required property int modelData
+                    required property int index
+                    readonly property bool today: modelData > 0 && modelData === Time.date.getDate()
+
+                    width: root.cellWidth
+                    height: root.cellHeight
+                    radius: 0
+                    color: today ? Theme.palette.signal : modelData > 0 ? Theme.palette.sunken : "transparent"
+                    border.width: modelData > 0 && !today ? 1 : 0
+                    border.color: Theme.palette.rule
+
+                    UiText {
+                        anchors.centerIn: parent
+                        role: "value"
+                        color: cell.today ? Theme.palette.onSignal : root.isWeekend(cell.index % 7) ? Theme.palette.inkMuted : Theme.palette.ink
+                        text: cell.modelData > 0 ? i18n.formatNumber(cell.modelData) : ""
+                    }
+                }
             }
+        }
+
+        UiText {
+            width: parent.width
+            role: "caption"
+            text: i18n.tr("No calendar events source is available to extensions yet; this widget shows dates only.")
         }
     }
 }
-

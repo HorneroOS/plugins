@@ -81,7 +81,7 @@ Item {
 
         UiButton {
             id: indicator
-            variant: "ghost"
+            variant: "quiet"
             text: "31"
             tooltipText: i18n.tr("Date Calculator: activate for a quick date calculation")
             accessibleName: i18n.tr("Date Calculator quick action")
@@ -104,17 +104,16 @@ Item {
 
         Column {
             width: 300
-            spacing: Theme.spacingSmall
+            spacing: Theme.spacing.small
 
             UiText { role: "title"; text: i18n.tr("Date Calculator") }
 
-            TextField {
+            UiTextField {
                 id: quickInput
                 width: parent.width
                 placeholderText: i18n.tr("2026-01-01 2026-02-01")
                 Accessible.name: i18n.tr("Quick date calculation")
-                ToolTip.text: i18n.tr("Quick date calculation")
-                ToolTip.visible: hovered
+                tooltipText: i18n.tr("Quick date calculation")
                 onAccepted: root.runQuick()
             }
 

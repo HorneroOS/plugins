@@ -1,8 +1,8 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 3,
   "id": "hornero-countdown",
   "name": "Hornero Countdown",
-  "version": "2.0.0",
+  "version": "3.0.0",
   "description": "Countdown 2.0: compact bar countdown (5/10/25 presets) with a popover, progress, deadline-correct timing across sleep/reload and a completion toast. No sound, no processes, no network.",
   "author": "HorneroOS contributors",
   "license": "MIT",
@@ -57,6 +57,10 @@
   },
   "marketplace": {
     "changelog": [
+      {
+        "version": "3.0.0",
+        "notes": "PluginKit 3 on Hornero Signal: tokens, glyph and variant names ported; task progress via UiProgress."
+      },
       {
         "version": "2.0.0",
         "notes": "Productivity Timers 2.0: compact indicator plus popover with presets and progress, deadline-correct timing persisted across sleep/reload, typed defaultMinutes setting (default 5), completion toast, Theme tokens and Argentine Spanish translation."

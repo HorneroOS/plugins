@@ -66,3 +66,7 @@ Original HorneroOS code, MIT licensed. Plugin QML runs with
 your user privileges inside Quickshell; it is not sandboxed.
 This plugin declares zero process commands and zero network
 hosts in its manifest.
+
+## PluginKit 3
+
+This package targets PluginKit 3 on Hornero Signal (`schemaVersion: 3`): colours, type, spacing and glyphs come from the shared Theme tokens and Hornero Glyph names, and the shared data domains it reads are declared in `capabilities.providers`. Shells older than Hornero Signal cannot load it.

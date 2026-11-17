@@ -1,8 +1,8 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 3,
   "id": "hornero-pomodoro",
   "name": "Hornero Pomodoro",
-  "version": "2.2.2",
+  "version": "3.0.0",
   "description": "Pomodoro 2.0: compact bar focus timer with a popover, deadline-correct timing across sleep/reload, a typed session-length setting and a completion toast. No processes, no network.",
   "author": "HorneroOS contributors",
   "license": "MIT",
@@ -50,6 +50,10 @@
   },
   "marketplace": {
     "changelog": [
+      {
+        "version": "3.0.0",
+        "notes": "PluginKit 3 on Hornero Signal: Hornero Glyph indicator (hourglass/bell) in place of Material names, no icon fill axis."
+      },
       {
         "version": "2.2.2",
         "notes": "Popover: session length in whole minutes (was 25.00)."

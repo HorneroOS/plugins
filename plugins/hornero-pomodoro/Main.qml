@@ -148,9 +148,8 @@ Item {
     UiButton {
         id: indicator
 
-        variant: root.finished && root.flashOn && !Theme.reducedMotion ? "primary" : "ghost"
-        iconName: root.finished ? "alarm" : "timer"
-        iconFill: root.running || root.finished ? 1 : 0
+        variant: root.finished && root.flashOn && !Theme.reducedMotion ? "primary" : "quiet"
+        glyph: root.finished ? "bell" : "hourglass"
         text: root.finished ? i18n.tr("Done") : root.fmt(root.remainingSeconds)
         tooltipText: popover.opened ? "" : i18n.tr("Pomodoro: activate for timer controls")
         accessibleName: root.finished ? i18n.tr("Pomodoro finished") : i18n.tr("Pomodoro %1 remaining").arg(root.fmt(root.remainingSeconds))
@@ -165,7 +164,7 @@ Item {
 
         Column {
             width: 320
-            spacing: Theme.spacing
+            spacing: Theme.spacing.normal
 
             UiText {
                 role: "subtitle"
@@ -205,7 +204,7 @@ Item {
                 }
 
                 UiButton {
-                    variant: "tonal"
+                    variant: "secondary"
                     text: i18n.tr("Reset")
                     accessibleName: i18n.tr("Reset pomodoro")
                     onClicked: root.resetTimer()

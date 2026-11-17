@@ -1,4 +1,5 @@
 import QtQuick
+import QtQuick.Layouts
 import Hornero.PluginKit
 
 // Hornero Countdown 2.0 - bar countdown with 5/10/25 minute
@@ -140,7 +141,7 @@ Item {
     UiButton {
         id: indicator
 
-        variant: root.finished && root.flashOn && !Theme.reducedMotion ? "primary" : "ghost"
+        variant: root.finished && root.flashOn && !Theme.reducedMotion ? "primary" : "quiet"
         text: root.finished ? i18n.tr("DONE") : root.fmt(root.remainingSeconds)
         tooltipText: i18n.tr("Countdown: activate for timer controls")
         accessibleName: root.finished ? i18n.tr("Countdown finished") : i18n.tr("Countdown %1 remaining").arg(root.fmt(root.remainingSeconds))
@@ -155,7 +156,7 @@ Item {
 
         Column {
             width: 280
-            spacing: Theme.spacingSmall
+            spacing: Theme.spacing.small
 
             UiText {
                 role: "title"
@@ -163,17 +164,21 @@ Item {
             }
 
             UiStack {
+                width: parent.width
                 orientation: root.hostOrientation
                 compact: root.hostCompact
 
                 UiMetric {
+                    Layout.fillWidth: true
+                    Layout.preferredWidth: 1
+                    size: "value"
                     label: i18n.tr("Remaining")
                     value: root.finished ? i18n.tr("DONE") : root.fmt(root.remainingSeconds)
                 }
 
                 UiChip {
                     text: root.finished ? i18n.tr("Finished") : root.running ? i18n.tr("Running") : i18n.tr("Paused")
-                    tone: root.finished ? "error" : root.running ? "primary" : "neutral"
+                    tone: root.finished ? "alert" : root.running ? "signal" : "neutral"
                 }
             }
 
@@ -193,7 +198,7 @@ Item {
                     UiButton {
                         required property var modelData
 
-                        variant: "ghost"
+                        variant: "quiet"
                         text: i18n.tr("%1m").arg(i18n.formatNumber(Number(modelData)))
                         tooltipText: i18n.tr("Set countdown to %1 minutes").arg(i18n.formatNumber(Number(modelData)))
                         accessibleName: i18n.tr("Set countdown to %1 minutes").arg(i18n.formatNumber(Number(modelData)))
@@ -214,7 +219,7 @@ Item {
                 }
 
                 UiButton {
-                    variant: "ghost"
+                    variant: "quiet"
                     text: i18n.tr("Reset")
                     tooltipText: i18n.tr("Reset the countdown")
                     accessibleName: i18n.tr("Reset countdown")

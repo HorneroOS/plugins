@@ -1,4 +1,5 @@
 import QtQuick
+import QtQuick.Layouts
 import Hornero.PluginKit
 
 // Sun Card 2.0: astronomy dashboard card over PluginKit Weather
@@ -107,26 +108,24 @@ Item {
     UiCard {
         id: card
 
+        title: i18n.tr("Sun Card")
+        channel: 16
         anchors.fill: parent
         Accessible.name: i18n.tr("Sun Card")
 
         Column {
             width: parent.width
-            spacing: Theme.spacingSmall
+            spacing: Theme.spacing.small
 
             UiStack {
                 orientation: root.hostOrientation
                 compact: root.hostCompact
 
-                UiText {
-                    role: "title"
-                    text: i18n.tr("Sun Card")
-                }
 
                 UiChip {
                     visible: Weather.ready && root.sunTimesValid
                     text: root.sunUp ? i18n.tr("Daytime (derived)") : i18n.tr("Night (derived)")
-                    tone: root.sunUp ? "primary" : "neutral"
+                    tone: root.sunUp ? "signal" : "neutral"
                 }
             }
 
@@ -154,9 +153,10 @@ Item {
             Column {
                 visible: Weather.ready
                 width: parent.width
-                spacing: Theme.spacingSmall
+                spacing: Theme.spacing.small
 
                 UiMetric {
+                    size: "value"
                     visible: !root.compactDensity && root.showTemperature
                     label: i18n.tr("Temperature")
                     value: Weather.temp
@@ -168,47 +168,61 @@ Item {
                     text: Weather.description
                 }
 
-                UiMetric {
-                    label: i18n.tr("Sunrise")
-                    value: Weather.sunrise
+                UiStack {
+                    width: parent.width
+                    orientation: root.hostOrientation
+                    compact: root.hostCompact
+
+                    UiMetric {
+                        Layout.fillWidth: true
+                        Layout.preferredWidth: 1
+                        size: "value"
+                        label: i18n.tr("Sunrise")
+                        value: Weather.sunrise
+                    }
+
+                    UiMetric {
+                        Layout.fillWidth: true
+                        Layout.preferredWidth: 1
+                        size: "value"
+                        label: i18n.tr("Sunset")
+                        value: Weather.sunset
+                    }
                 }
 
-                UiMetric {
-                    label: i18n.tr("Sunset")
-                    value: Weather.sunset
-                }
-
-                UiMetric {
+                UiDetailRow {
                     visible: !root.compactDensity && root.showHumidity
+                    width: parent.width
                     label: i18n.tr("Humidity")
-                    value: String(Weather.humidity)
-                    unit: "%"
+                    value: String(Weather.humidity) + " %"
                 }
 
                 Column {
                     visible: root.showAstronomy
                     width: parent.width
-                    spacing: Theme.spacingSmall
+                    spacing: Theme.spacing.small
 
-                    UiMetric {
+                    UiDetailRow {
+                        width: parent.width
+                        glyph: "sun"
                         label: i18n.tr("Day length (derived)")
                         value: root.durationText(root.dayLengthMinutes)
                     }
 
-                    UiMetric {
-                        label: i18n.tr("Next sun event (derived)")
-                        value: root.nextEventText()
-                    }
-
                     UiText {
+                        width: parent.width
                         role: "caption"
-                        text: i18n.tr("Sun progress (derived)")
+                        text: i18n.tr("Next sun event (derived)") + ": " + root.nextEventText()
                     }
 
-                    UiProgress {
+                    // Daylight elapsed between today's sunrise and sunset
+                    // (derived from the two strings and the clock only).
+                    UiPartition {
                         width: parent.width
-                        value: root.sunProgress
-                        accessibleName: i18n.tr("Sun progress (derived)")
+                        total: 1
+                        used: root.sunProgress
+                        usedLabel: i18n.tr("Sun progress (derived)")
+                        Accessible.name: i18n.tr("Sun progress (derived)")
                     }
                 }
 
