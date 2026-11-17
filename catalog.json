@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedFrom": "32402cdaae9c6989cdec0d737e8ad921849044cb",
+  "generatedFrom": "541a9a4d8638e390e8b71dea185658f44da1fce7",
   "plugins": [
     {
       "id": "hornero-agenda",
@@ -596,6 +596,68 @@
       "trust": "official",
       "path": "plugins/hornero-dual-clock",
       "sha256": "8f26d204ec914a0b81abacb978c83c1e171102f34140fa2c7244a4c36613f4cb"
+    },
+    {
+      "id": "hornero-equalizer",
+      "name": "Hornero Equalizer",
+      "version": "1.0.0",
+      "description": "A live spectrum analyser for the bar and its popover over the shell's real PipeWire spectrum. Honest by design: an analyser, not a sound filter; it draws nothing while nothing plays and holds the analyser only while a player is playing.",
+      "author": "HorneroOS contributors",
+      "license": "MIT",
+      "homepage": "https://github.com/HorneroOS/plugins",
+      "placement": "bar",
+      "category": "utilities",
+      "capabilities": {
+        "processCommands": [],
+        "networkHosts": [],
+        "providers": [
+          "audio",
+          "media",
+          "spectrum"
+        ],
+        "settings": {
+          "barBands": {
+            "type": "integer",
+            "default": 8,
+            "minimum": 4,
+            "maximum": 12,
+            "description": "How many bands the bar indicator draws."
+          },
+          "popoverBands": {
+            "type": "integer",
+            "default": 16,
+            "minimum": 8,
+            "maximum": 24,
+            "description": "How many bands the popover analyser draws."
+          },
+          "peakHold": {
+            "type": "boolean",
+            "default": true,
+            "description": "Draw a peak tick above each popover band, derived from recent real samples."
+          },
+          "analyseWhen": {
+            "type": "enum",
+            "default": "playing",
+            "options": [
+              "playing",
+              "always"
+            ],
+            "description": "playing runs the shared analyser only while a media player plays; always also covers apps without a player."
+          },
+          "whenSilent": {
+            "type": "enum",
+            "default": "glyph",
+            "options": [
+              "glyph",
+              "hide"
+            ],
+            "description": "glyph keeps the indicator button while silent; hide removes it until sound plays."
+          }
+        }
+      },
+      "trust": "official",
+      "path": "plugins/hornero-equalizer",
+      "sha256": "aac98882d099c995b3a414f90aa4e0049f27e670a9a69327776cd2c1d03d9d8b"
     },
     {
       "id": "hornero-focus-card",
