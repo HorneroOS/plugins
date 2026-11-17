@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedFrom": "4451501570f7f9e336c2aa6908b4b1193058f979",
+  "generatedFrom": "7ee6760826438e6df727dc4791100ee32c9c20db",
   "plugins": [
     {
       "id": "hornero-agenda",
@@ -1084,7 +1084,7 @@
     {
       "id": "hornero-system-insight",
       "name": "Hornero System Insight",
-      "version": "1.1.0",
+      "version": "1.1.1",
       "description": "System Insight: a desktop instrument over the shared system provider: a CPU oscilloscope from the shared Telemetry history, segmented meters, per-core load strips and temperatures. Real telemetry only.",
       "author": "HorneroOS contributors",
       "license": "MIT",
@@ -1138,7 +1138,7 @@
       },
       "trust": "official",
       "path": "plugins/hornero-system-insight",
-      "sha256": "0c406f533293748335ccd18bbb8be81fb01633406d9e708081b223b07ec8c33a"
+      "sha256": "f45c114733edee1d75cc8e1a8dcddd4ef0889fe097b05e53774bb86309038f45"
     },
     {
       "id": "hornero-system-monitor",
