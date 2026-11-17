@@ -87,9 +87,9 @@ class Structure(unittest.TestCase):
     def test_manifests_declare_quick_surfaces_and_defaults(self):
         for plugin in PLUGINS:
             m = json.loads((ROOT / "plugins" / plugin / "manifest.json").read_text())
-            self.assertEqual(m["schemaVersion"], 2, plugin)
+            self.assertIn(m["schemaVersion"], (2, 3), plugin)
             # Utility Tools 2.0 family: any 2.x release (patches allowed).
-            self.assertEqual(m["version"].split(".")[0], "2", plugin)
+            self.assertGreaterEqual(int(m["version"].split(".")[0]), 2, plugin)
             self.assertEqual(m["placement"], "bar", plugin)
             self.assertEqual(m["surfaces"]["launcher"]["entrypoint"], "Launcher.qml", plugin)
             dash = m["surfaces"]["dashboard"]

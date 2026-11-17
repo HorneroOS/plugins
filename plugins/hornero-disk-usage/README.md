@@ -1,6 +1,6 @@
 # Hornero Disk Usage
 
-Disk Usage 2.0 (manifest v2): a dashboard card over the shared
+Disk Usage 3.0 (manifest v3, PluginKit 3 on Hornero Signal): a dashboard card over the shared
 PluginKit `System.disks` facade (holding a
 `Subscription { domain: "system" }` lease). The shell service
 reports each disk as `{ mount, used, total, free, perc }` in
@@ -26,10 +26,8 @@ about the drive.
 - Absolute sizes are corrected from the 1.x KiB-as-bytes
   formatting (above); percentages were and remain the
   service-reported fraction.
-- Installing this manifest v2 package needs a shell /
-  `horneroctl` that accepts `schemaVersion` 2, the dashboard
-  surface hints, the `translations` declaration and the
-  `marketplace` block.
+- Installing this package needs a shell with PluginKit 3 (Hornero Signal): it declares
+  `schemaVersion: 3` and `capabilities.providers`, and earlier shells refuse or cannot render it.
 
 ## The 8 Hornero quality questions
 

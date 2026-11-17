@@ -1,9 +1,9 @@
 {
-  "schemaVersion": 2,
+  "schemaVersion": 3,
   "id": "hornero-disk-usage",
   "name": "Hornero Disk Usage",
-  "version": "2.0.0",
-  "description": "Disk Usage 2.0: dashboard card over the shared PluginKit System.disks facade with per-disk used/total/free space, a most-full summary and near-full alerts. No invented SMART data. Read-only.",
+  "version": "3.0.0",
+  "description": "Disk Usage 3.0 on Hornero Signal: every physical disk as a partition bar with a dimension line, free space and a near-full flag from the shared system provider. Read-only.",
   "author": "HorneroOS contributors",
   "license": "MIT",
   "homepage": "https://github.com/HorneroOS/plugins",
@@ -28,6 +28,10 @@
       "minShellVersion": "1.0.0"
     },
     "changelog": [
+      {
+        "version": "3.0.0",
+        "notes": "PluginKit 3 on Hornero Signal: per-disk UiPartition bars with dimension lines and a signal-toned near-full flag."
+      },
       {
         "version": "2.0.0",
         "notes": "Per-disk card on the shared System.disks facade: used/total/free in correct KiB units, most-full summary, near-full alerts, typed settings and Spanish catalog. No SMART data invented."
@@ -60,6 +64,9 @@
         "default": true,
         "description": "Show free space under each disk (additive in 2.0) and the nearly-full hint."
       }
-    }
+    },
+    "providers": [
+      "system"
+    ]
   }
 }

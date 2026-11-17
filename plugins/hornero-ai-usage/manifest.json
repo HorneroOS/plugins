@@ -1,8 +1,8 @@
 {
-  "schemaVersion": 2,
+  "schemaVersion": 3,
   "id": "hornero-ai-usage",
   "name": "Hornero AI Usage",
-  "version": "2.0.1",
+  "version": "3.0.0",
   "description": "AI Usage 2.0: bar indicator, provider switcher popover and dashboard card over the normalized horneroctl agent usage records. Quota is shown only when a provider record carries it; otherwise it is unknown.",
   "author": "HorneroOS contributors",
   "license": "MIT",
@@ -49,6 +49,10 @@
       "minShellVersion": "1.2.79"
     },
     "changelog": [
+      {
+        "version": "3.0.0",
+        "notes": "PluginKit 3 on Hornero Signal: instrument module header and a segmented quota meter that appears only when the provider reports a limit; quota stays unknown otherwise."
+      },
       {
         "version": "2.0.1",
         "notes": "Popover actions use the native full-width UiActionRow (shell 1.2.79 PluginKit) instead of small buttons."

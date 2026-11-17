@@ -1,4 +1,5 @@
 import QtQuick
+import QtQuick.Layouts
 import Quickshell.Io
 import Hornero.PluginKit
 
@@ -121,16 +122,13 @@ Item {
         id: card
 
         anchors.fill: parent
+        title: i18n.tr("Uptime")
+        channel: 9
         Accessible.name: i18n.tr("Uptime")
 
         Column {
             width: parent.width
-            spacing: Theme.spacingSmall
-
-            UiText {
-                role: "title"
-                text: i18n.tr("Uptime")
-            }
+            spacing: Theme.spacing.small
 
             UiState {
                 visible: !root.hasData && !root.failed
@@ -149,24 +147,33 @@ Item {
             Column {
                 visible: root.hasData
                 width: parent.width
-                spacing: Theme.spacingSmall
+                spacing: Theme.spacing.small
 
                 UiStack {
+                    width: parent.width
                     orientation: root.hostOrientation
                     compact: root.hostCompact
 
                     UiMetric {
+                        Layout.fillWidth: true
+                        Layout.preferredWidth: 1
+                        size: "value"
                         label: i18n.tr("Uptime")
                         value: root.fmt(root.uptimeSeconds)
                     }
 
                     UiMetric {
+                        Layout.fillWidth: true
+                        Layout.preferredWidth: 1
+                        size: "value"
                         label: i18n.tr("Idle time")
-                        value: root.idleSeconds >= 0 ? root.fmt(root.idleSeconds) : i18n.tr("Unavailable")
+                        value: root.idleSeconds >= 0 ? root.fmt(root.idleSeconds) : ""
+                        available: root.idleSeconds >= 0
                     }
                 }
 
                 UiMetric {
+                    size: "value"
                     label: i18n.tr("Booted at (derived)")
                     value: root.bootText()
                 }
@@ -179,7 +186,7 @@ Item {
             }
 
             UiButton {
-                variant: "ghost"
+                variant: "quiet"
                 text: i18n.tr("Refresh")
                 tooltipText: i18n.tr("Read /proc/uptime again")
                 accessibleName: i18n.tr("Refresh uptime")

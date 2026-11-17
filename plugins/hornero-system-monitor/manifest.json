@@ -1,9 +1,9 @@
 {
-  "schemaVersion": 2,
+  "schemaVersion": 3,
   "id": "hornero-system-monitor",
   "name": "Hornero System Monitor",
-  "version": "2.0.0",
-  "description": "System Monitor 2.0: dashboard card over the shared PluginKit System facade with the 1.x usage bars plus in-card session history, peak/average readouts and a high-load alert. Read-only.",
+  "version": "3.0.0",
+  "description": "System Monitor 3.0 on Hornero Signal: a CPU oscilloscope from the shared Telemetry history, segmented meter rows for CPU, memory, GPU and storage with a user threshold, and peak/average readouts. Read-only.",
   "author": "HorneroOS contributors",
   "license": "MIT",
   "homepage": "https://github.com/HorneroOS/plugins",
@@ -28,6 +28,10 @@
       "minShellVersion": "1.0.0"
     },
     "changelog": [
+      {
+        "version": "3.0.0",
+        "notes": "PluginKit 3 on Hornero Signal: oscilloscope and segmented meters over the shared Telemetry history; Material tokens and the hand-drawn sparkline are gone. The sampleSeconds setting and Clear history button are removed (history is the shared 120-sample window)."
+      },
       {
         "version": "2.0.0",
         "notes": "Dashboard card on the shared System facade: 1.x bars plus session history sparkline, peak/average, high-load alert, typed settings, host-context layout and Spanish catalog."
@@ -63,15 +67,11 @@
       "showHistory": {
         "type": "boolean",
         "default": true,
-        "description": "Show the in-card session history sampled from the shared System facade while the card is loaded."
-      },
-      "sampleSeconds": {
-        "type": "integer",
-        "default": 5,
-        "minimum": 1,
-        "maximum": 60,
-        "description": "Seconds between history samples read from the already-live shared System facade."
+        "description": "Show the CPU oscilloscope and peak/average readouts from the shared telemetry history."
       }
-    }
+    },
+    "providers": [
+      "system"
+    ]
   }
 }

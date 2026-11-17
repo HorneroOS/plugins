@@ -1,6 +1,6 @@
 # Hornero AI Usage
 
-AI Usage 2.0 (manifest v2): one package, two surfaces over the
+AI Usage 3.0 (manifest v3, PluginKit 3 on Hornero Signal): one package, two surfaces over the
 normalized `horneroctl agent usage --json` records (hornero#407).
 
 - **Dashboard** (`"placement": "dashboard"`, primary): one block per
@@ -48,9 +48,8 @@ English source strings with an Argentine Spanish catalog
   installs keep working with their previous numbers.
 - The plugin declared no settings before 2.0, so no stored values
   migrate; `refreshSeconds` starts at the previous hardcoded 60 s.
-- Installing this manifest v2 package needs a shell/`horneroctl`
-  that accepts `schemaVersion` 2 and the `translations`
-  declaration.
+- Installing this package needs a shell with PluginKit 3 (Hornero Signal): it declares
+  `schemaVersion: 3` and `capabilities.providers`, and earlier shells refuse or cannot render it.
 
 Original HorneroOS code, MIT licensed. Plugin QML runs with your
 user privileges inside Quickshell; it is not sandboxed.

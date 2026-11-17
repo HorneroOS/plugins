@@ -96,22 +96,22 @@ Item {
 
     function stateIcon(state: string): string {
         if (state === "succeeded")
-            return "check_circle";
+            return "circle-check";
         if (state === "failed" || state === "cancelled")
-            return "error";
+            return "alert-circle";
         if (state === "running")
-            return "progress_activity";
-        return "schedule";
+            return "player-play";
+        return "clock";
     }
 
     function stateColor(state: string): color {
         if (state === "succeeded")
-            return Theme.success;
+            return Theme.palette.phosphor;
         if (state === "failed" || state === "cancelled")
-            return Theme.error;
+            return Theme.palette.alert;
         if (state === "running")
-            return Theme.primary;
-        return Theme.onSurfaceVariant;
+            return Theme.palette.signal;
+        return Theme.palette.inkMuted;
     }
 
     UiCard {
@@ -119,11 +119,12 @@ Item {
 
         width: parent.width
         title: i18n.tr("Studio jobs")
-        icon: "movie"
+        glyph: "movie"
+        channel: 7
 
         Column {
             width: parent.width
-            spacing: Theme.spacingSmall
+            spacing: Theme.spacing.small
 
             UiState {
                 visible: !root.available
@@ -146,17 +147,16 @@ Item {
                     required property var modelData
 
                     width: parent.width
-                    spacing: Theme.spacingSmall
+                    spacing: Theme.spacing.small
 
                     UiIcon {
                         anchors.verticalCenter: parent.verticalCenter
-                        icon: root.stateIcon(modelData.state)
-                        fill: modelData.state === "succeeded" ? 1 : 0
+                        name: root.stateIcon(modelData.state)
                         color: root.stateColor(modelData.state)
                     }
 
                     Column {
-                        width: parent.width - Theme.iconSize * 2 - Theme.spacingSmall
+                        width: parent.width - Theme.font.size.larger * 2 - Theme.spacing.small - (modelData.state === "running" ? liveChip.width + Theme.spacing.small : 0)
                         spacing: 0
 
                         UiText {
@@ -173,6 +173,16 @@ Item {
                             elide: Text.ElideRight
                             wrapMode: Text.NoWrap
                         }
+                    }
+
+                    // On-air chip only while a job is really running.
+                    UiChip {
+                        id: liveChip
+
+                        visible: modelData.state === "running"
+                        anchors.verticalCenter: parent.verticalCenter
+                        text: i18n.tr("running")
+                        tone: "live"
                     }
                 }
             }

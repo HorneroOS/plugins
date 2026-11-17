@@ -1,14 +1,15 @@
 import QtQuick
+import QtQuick.Layouts
 import Hornero.PluginKit
 
-// Network Monitor 2.0: dashboard card over the shared PluginKit
-// Network facade, adding an in-card session history (speed
-// samples taken while this card is loaded) with peak readouts on
-// top of the 1.x current speeds and session totals. The PluginKit
-// facade exposes only speeds and totals -- no interface list, IP
-// or per-process traffic -- so none of that is shown. Sampling
-// reads the already-live shared singleton behind Subscription; no
-// extra network access or polling of its own is created.
+// Network Monitor 3.0 (PluginKit 3, Hornero Signal): the dashboard
+// module for the shared `network` provider. A download oscilloscope in
+// `cue` (network) drawn from the shared Telemetry history with its scale
+// stated in the eyebrow, an upload sparkline, current speeds and session
+// totals as readouts. The facade exposes only speeds and totals -- no
+// interface list, IP or per-process traffic -- so none of that is shown.
+// The card holds a `network` lease and reads shared values; it creates
+// no timer, process or network access of its own.
 Item {
     id: root
 
@@ -40,19 +41,11 @@ Item {
         pluginId: "hornero-network-monitor"
     }
 
-    // Typed settings: defaults keep every 1.x row visible (speeds
-    // and session totals). History is additive; the plugin stored
-    // no settings before 2.0, so no stored values migrate.
     readonly property bool showSessionTotals: pluginSettings.value("showSessionTotals", true) !== false
     readonly property bool showHistory: pluginSettings.value("showHistory", true) !== false
-    readonly property int sampleSeconds: {
-        const value = Number(pluginSettings.value("sampleSeconds", 5));
-        return isFinite(value) && value >= 1 ? Math.min(60, Math.floor(value)) : 5;
-    }
-    readonly property int maxSamples: 30
 
-    property var downHistory: []
-    property var upHistory: []
+    readonly property var downWindow: Telemetry.window("netDown")
+    readonly property var upWindow: Telemetry.window("netUp")
 
     function valid(v) {
         return v !== undefined && v !== null && isFinite(Number(v));
@@ -60,7 +53,7 @@ Item {
 
     function fmt(bytes) {
         if (!valid(bytes))
-            return i18n.tr("Unavailable");
+            return "";
         const units = ["B", "KiB", "MiB", "GiB", "TiB"];
         let v = Math.max(0, Number(bytes) || 0);
         let i = 0;
@@ -72,179 +65,163 @@ Item {
     }
 
     function fmtSpeed(bytes) {
-        return valid(bytes) ? fmt(bytes) + "/s" : i18n.tr("Unavailable");
+        return valid(bytes) ? fmt(bytes) + "/s" : "";
     }
 
     function peakOf(samples) {
-        let peak = 0;
-        for (let i = 0; i < samples.length; i++)
-            peak = Math.max(peak, samples[i]);
-        return peak;
+        return samples.length > 0 ? Math.max.apply(null, samples) : NaN;
     }
 
-    function pushSample(samples, value) {
-        const next = samples.slice();
-        next.push(value);
-        while (next.length > root.maxSamples)
-            next.shift();
-        return next;
+    // Plot scale: the window peak rounded up to a 1/2/5 step so the
+    // eyebrow can state a clean per-division value (4 divisions).
+    function niceMax(peak) {
+        if (!valid(peak) || peak <= 0)
+            return 1024;
+        const exp = Math.pow(10, Math.floor(Math.log(peak) / Math.LN10));
+        const f = peak / exp;
+        return (f <= 1 ? 1 : f <= 2 ? 2 : f <= 5 ? 5 : 10) * exp;
     }
 
-    function sample() {
-        if (valid(Network.downloadSpeed))
-            downHistory = pushSample(downHistory, Math.max(0, Number(Network.downloadSpeed)));
-        if (valid(Network.uploadSpeed))
-            upHistory = pushSample(upHistory, Math.max(0, Number(Network.uploadSpeed)));
-        spark.requestPaint();
-    }
-
-    function clearHistory() {
-        downHistory = [];
-        upHistory = [];
-        spark.requestPaint();
-    }
-
+    readonly property real downScale: niceMax(Math.max(peakOf(downWindow) || 0, peakOf(Telemetry.previousWindow("netDown")) || 0))
+    readonly property real upScale: niceMax(peakOf(upWindow))
     readonly property bool speedsAvailable: valid(Network.downloadSpeed) && valid(Network.uploadSpeed)
-    readonly property real downPeak: peakOf(downHistory)
-    readonly property real upPeak: peakOf(upHistory)
-
-    Timer {
-        interval: root.sampleSeconds * 1000
-        running: root.showHistory
-        repeat: true
-        triggeredOnStart: true
-        onTriggered: root.sample()
-    }
 
     UiCard {
         id: card
 
         anchors.fill: parent
+        title: i18n.tr("Network")
+        channel: 3
+        context: root.speedsAvailable ? i18n.tr("Reporting") : i18n.tr("Unavailable")
         Accessible.name: i18n.tr("Network Monitor")
 
         Column {
             width: parent.width
-            spacing: Theme.spacingSmall
-
-            UiStack {
-                orientation: root.hostOrientation
-                compact: root.hostCompact
-
-                UiText {
-                    role: "title"
-                    text: i18n.tr("Network")
-                }
-
-                UiChip {
-                    text: root.speedsAvailable ? i18n.tr("Reporting") : i18n.tr("Unavailable")
-                    tone: root.speedsAvailable ? "primary" : "neutral"
-                }
-            }
+            spacing: Theme.spacing.smaller
 
             UiState {
                 visible: !root.speedsAvailable
                 width: parent.width
-                kind: "empty"
+                kind: "unavailable"
                 message: i18n.tr("The Network service reported no usable speeds. The connection may be down or still starting; totals below stay as last reported.")
             }
 
+            UiScope {
+                visible: root.showHistory
+                width: parent.width
+                height: 92
+                label: i18n.tr("DOWN") + " · " + root.fmtSpeed(root.downScale / 4) + "/DIV"
+                context: Telemetry.windowSize + " " + i18n.tr("SAMPLES")
+                samples: root.downWindow
+                previous: Telemetry.previousWindow("netDown")
+                maximum: root.downScale
+                tone: "cue"
+                unavailableText: i18n.tr("Collecting samples from the shared Network service.")
+            }
+
+            Row {
+                visible: root.showHistory
+                width: parent.width
+                spacing: Theme.spacing.smaller
+
+                UiText {
+                    anchors.verticalCenter: parent.verticalCenter
+                    width: 40
+                    role: "eyebrow"
+                    text: i18n.tr("UP")
+                }
+
+                UiSparkline {
+                    anchors.verticalCenter: parent.verticalCenter
+                    width: parent.width - 40 - Theme.spacing.smaller
+                    height: 22
+                    values: root.upWindow
+                    maximum: root.upScale
+                    window: Telemetry.windowSize
+                    tone: "cue"
+                    accessibleName: i18n.tr("Upload history")
+                }
+            }
+
             UiStack {
+                width: parent.width
                 orientation: root.hostOrientation
                 compact: root.hostCompact
 
                 UiMetric {
+
+                    Layout.fillWidth: true
+
+                    Layout.preferredWidth: 1
                     label: i18n.tr("Download")
                     value: root.fmtSpeed(Network.downloadSpeed)
+                    available: root.speedsAvailable
+                    size: "value"
                 }
 
                 UiMetric {
+
+                    Layout.fillWidth: true
+
+                    Layout.preferredWidth: 1
                     label: i18n.tr("Upload")
                     value: root.fmtSpeed(Network.uploadSpeed)
+                    available: root.speedsAvailable
+                    size: "value"
                 }
             }
 
             UiStack {
                 visible: root.showSessionTotals
+                width: parent.width
                 orientation: root.hostOrientation
                 compact: root.hostCompact
 
                 UiMetric {
-                    label: i18n.tr("Downloaded (session)")
+
+                    Layout.fillWidth: true
+
+                    Layout.preferredWidth: 1
+                    label: i18n.tr("Session down")
                     value: root.fmt(Network.downloadTotal)
+                    size: "value"
                 }
 
                 UiMetric {
-                    label: i18n.tr("Uploaded (session)")
+
+                    Layout.fillWidth: true
+
+                    Layout.preferredWidth: 1
+                    label: i18n.tr("Session up")
                     value: root.fmt(Network.uploadTotal)
+                    size: "value"
                 }
             }
 
-            Column {
+            UiStack {
                 visible: root.showHistory
                 width: parent.width
-                spacing: Theme.spacingSmall
+                orientation: root.hostOrientation
+                compact: root.hostCompact
 
-                UiText {
-                    role: "caption"
-                    text: i18n.tr("Download history since this card loaded (not persisted)")
+                UiMetric {
+
+                    Layout.fillWidth: true
+
+                    Layout.preferredWidth: 1
+                    label: i18n.tr("Peak down")
+                    value: root.fmtSpeed(root.peakOf(root.downWindow))
+                    size: "value"
                 }
 
-                UiState {
-                    visible: root.downHistory.length < 2
-                    width: parent.width
-                    kind: "loading"
-                    message: i18n.tr("Collecting samples from the shared Network service.")
-                }
+                UiMetric {
 
-                Canvas {
-                    id: spark
+                    Layout.fillWidth: true
 
-                    visible: root.downHistory.length >= 2
-                    width: parent.width
-                    height: 36
-                    onPaint: {
-                        const ctx = getContext("2d");
-                        ctx.clearRect(0, 0, width, height);
-                        const samples = root.downHistory;
-                        const peak = root.downPeak;
-                        if (samples.length < 2 || width <= 0 || peak <= 0)
-                            return;
-                        ctx.strokeStyle = Theme.primary;
-                        ctx.lineWidth = 2;
-                        ctx.beginPath();
-                        for (let i = 0; i < samples.length; i++) {
-                            const x = width * i / (samples.length - 1);
-                            const y = height - 2 - (samples[i] / peak) * (height - 4);
-                            if (i === 0)
-                                ctx.moveTo(x, y);
-                            else
-                                ctx.lineTo(x, y);
-                        }
-                        ctx.stroke();
-                    }
-                }
-
-                UiStack {
-                    orientation: root.hostOrientation
-                    compact: root.hostCompact
-
-                    UiMetric {
-                        label: i18n.tr("Download peak")
-                        value: root.downHistory.length > 0 ? root.fmtSpeed(root.downPeak) : i18n.tr("Unavailable")
-                    }
-
-                    UiMetric {
-                        label: i18n.tr("Upload peak")
-                        value: root.upHistory.length > 0 ? root.fmtSpeed(root.upPeak) : i18n.tr("Unavailable")
-                    }
-                }
-
-                UiButton {
-                    variant: "ghost"
-                    text: i18n.tr("Clear history")
-                    tooltipText: i18n.tr("Forget the samples collected since this card loaded")
-                    accessibleName: i18n.tr("Clear history")
-                    onClicked: root.clearHistory()
+                    Layout.preferredWidth: 1
+                    label: i18n.tr("Peak up")
+                    value: root.fmtSpeed(root.peakOf(root.upWindow))
+                    size: "value"
                 }
             }
         }

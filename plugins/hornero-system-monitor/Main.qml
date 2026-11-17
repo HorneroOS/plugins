@@ -1,15 +1,15 @@
 import QtQuick
+import QtQuick.Layouts
 import Hornero.PluginKit
 
-// System Monitor 2.0: dashboard card over the shared PluginKit
-// System facade, adding what the native Performance view does not
-// keep for extensions: an in-card session history (samples of the
-// facade values taken while this card is loaded), peak/average
-// readouts and a high-load alert chip. The 1.x CPU/memory/GPU/
-// storage bars and temperature readouts are unchanged. History is
-// sampled from the shared singleton behind Subscription; this
-// card starts no timer, process or file poll of its own beyond
-// reading the already-live facade values on its sample tick.
+// System Monitor 3.0 (PluginKit 3, Hornero Signal): the dashboard
+// module for the shared `system` provider. A CPU oscilloscope drawn from
+// the shared Telemetry history (real samples, previous window as
+// persistence), segmented meter rows for CPU / memory / GPU / storage
+// that cross to `signal` at the user's threshold, and peak / average
+// readouts over the same window. The card starts no timer, process or
+// file poll of its own: it holds a `system` lease and reads the shared
+// facade and history.
 Item {
     id: root
 
@@ -41,27 +41,16 @@ Item {
         pluginId: "hornero-system-monitor"
     }
 
-    // Typed settings: defaults keep every 1.x row visible exactly
-    // as before (temperatures shown when reported). History and
-    // the alert chip are additive; the plugin stored no settings
-    // before 2.0, so no stored values migrate.
     readonly property int warnPercent: {
         const value = Number(pluginSettings.value("warnPercent", 90));
         return isFinite(value) && value >= 50 ? Math.min(100, Math.floor(value)) : 90;
     }
     readonly property bool showTemperatures: pluginSettings.value("showTemperatures", true) !== false
     readonly property bool showHistory: pluginSettings.value("showHistory", true) !== false
-    readonly property int sampleSeconds: {
-        const value = Number(pluginSettings.value("sampleSeconds", 5));
-        return isFinite(value) && value >= 1 ? Math.min(60, Math.floor(value)) : 5;
-    }
-    readonly property int maxSamples: 30
 
-    // Session history: fractions sampled from the facade while
-    // this card instance is loaded. Not persisted and not a
-    // shell-wide record; the label says so in the UI.
-    property var cpuHistory: []
-    property var memHistory: []
+    // Shared telemetry window of the CPU channel (0-1 samples).
+    readonly property var cpuWindow: Telemetry.window("cpu")
+    readonly property var memWindow: Telemetry.window("mem")
 
     function valid(v) {
         return v !== undefined && v !== null && isFinite(Number(v));
@@ -72,194 +61,131 @@ Item {
     }
 
     function pct(v) {
-        return valid(v) ? Math.round(clamp01(v) * 100) + "%" : i18n.tr("Unavailable");
+        return valid(v) ? Math.round(clamp01(v) * 100) + " %" : "—";
     }
 
     function peakOf(samples) {
-        let peak = 0;
-        for (let i = 0; i < samples.length; i++)
-            peak = Math.max(peak, samples[i]);
-        return peak;
+        return samples.length > 0 ? Math.max.apply(null, samples) : NaN;
     }
 
     function averageOf(samples) {
         if (samples.length === 0)
-            return 0;
+            return NaN;
         let sum = 0;
         for (let i = 0; i < samples.length; i++)
             sum += samples[i];
         return sum / samples.length;
     }
 
-    function pushSample(samples, value) {
-        const next = samples.slice();
-        next.push(value);
-        while (next.length > root.maxSamples)
-            next.shift();
-        return next;
+    function temperature(value, available) {
+        return root.showTemperatures && available && valid(value) ? "  " + Math.round(value) + " °C" : "";
     }
 
-    function sample() {
-        if (valid(System.cpuPerc))
-            cpuHistory = pushSample(cpuHistory, clamp01(System.cpuPerc));
-        if (valid(System.memPerc))
-            memHistory = pushSample(memHistory, clamp01(System.memPerc));
-        spark.requestPaint();
-    }
-
-    function clearHistory() {
-        cpuHistory = [];
-        memHistory = [];
-        spark.requestPaint();
-    }
-
-    readonly property bool anyHigh: (valid(System.cpuPerc) && clamp01(System.cpuPerc) * 100 >= warnPercent)
-        || (valid(System.memPerc) && clamp01(System.memPerc) * 100 >= warnPercent)
-        || (valid(System.gpuPerc) && clamp01(System.gpuPerc) * 100 >= warnPercent)
-        || (valid(System.storagePerc) && clamp01(System.storagePerc) * 100 >= warnPercent)
-
-    Timer {
-        interval: root.sampleSeconds * 1000
-        running: root.showHistory
-        repeat: true
-        triggeredOnStart: true
-        onTriggered: root.sample()
-    }
+    readonly property bool anyHigh: (System.cpuPerc * 100 >= warnPercent)
+        || (System.memPerc * 100 >= warnPercent)
+        || (System.gpuAvailable && System.gpuPerc * 100 >= warnPercent)
+        || (System.storageAvailable && System.storagePerc * 100 >= warnPercent)
 
     UiCard {
         id: card
 
         anchors.fill: parent
+        title: i18n.tr("System")
+        channel: 2
+        context: root.anyHigh ? i18n.tr("High load") : ""
         Accessible.name: i18n.tr("System Monitor")
 
         Column {
             width: parent.width
-            spacing: Theme.spacingSmall
+            spacing: Theme.spacing.smaller
+
+            UiScope {
+                visible: root.showHistory
+                width: parent.width
+                height: 92
+                label: i18n.tr("CPU") + " · 25 %/DIV"
+                context: Telemetry.windowSize + " " + i18n.tr("SAMPLES")
+                samples: root.cpuWindow
+                previous: Telemetry.previousWindow("cpu")
+                unavailableText: i18n.tr("Collecting samples from the shared System service.")
+            }
+
+            UiMeterRow {
+                width: parent.width
+                label: i18n.tr("CPU")
+                value: System.cpuPerc
+                valueText: root.pct(System.cpuPerc) + root.temperature(System.cpuTemp, System.cpuTempAvailable)
+                valueWidth: 96
+                threshold: root.warnPercent / 100
+            }
+
+            UiMeterRow {
+                width: parent.width
+                label: i18n.tr("MEM")
+                value: System.memPerc
+                valueText: root.pct(System.memPerc)
+                available: System.memTotal > 0
+                valueWidth: 96
+                threshold: root.warnPercent / 100
+            }
+
+            UiMeterRow {
+                width: parent.width
+                label: i18n.tr("GPU")
+                value: System.gpuPerc
+                valueText: root.pct(System.gpuPerc) + root.temperature(System.gpuTemp, System.gpuTempAvailable)
+                available: System.gpuAvailable
+                valueWidth: 96
+                threshold: root.warnPercent / 100
+            }
+
+            UiMeterRow {
+                width: parent.width
+                label: i18n.tr("DISK")
+                value: System.storagePerc
+                valueText: root.pct(System.storagePerc)
+                available: System.storageAvailable
+                valueWidth: 96
+                threshold: root.warnPercent / 100
+            }
 
             UiStack {
+                visible: root.showHistory
+                width: parent.width
                 orientation: root.hostOrientation
                 compact: root.hostCompact
 
-                UiText {
-                    role: "title"
-                    text: i18n.tr("System")
+                UiMetric {
+
+                    Layout.fillWidth: true
+
+                    Layout.preferredWidth: 1
+                    label: i18n.tr("CPU peak")
+                    value: isNaN(root.peakOf(root.cpuWindow)) ? "" : Math.round(root.peakOf(root.cpuWindow) * 100).toString()
+                    unit: "%"
+                    size: "value"
                 }
 
-                UiChip {
-                    visible: root.anyHigh
-                    text: i18n.tr("High load")
-                    tone: "error"
-                }
-            }
+                UiMetric {
 
-            Repeater {
-                model: [
-                    { "label": i18n.tr("CPU"), "value": System.cpuPerc, "detail": root.pct(System.cpuPerc) + (root.showTemperatures && root.valid(System.cpuTemp) && System.cpuTemp > 0 ? "  " + Math.round(System.cpuTemp) + " C" : "") },
-                    { "label": i18n.tr("Memory"), "value": System.memPerc, "detail": root.pct(System.memPerc) },
-                    { "label": i18n.tr("GPU"), "value": System.gpuPerc, "detail": root.pct(System.gpuPerc) + (root.showTemperatures && root.valid(System.gpuTemp) && System.gpuTemp > 0 ? "  " + Math.round(System.gpuTemp) + " C" : "") },
-                    { "label": i18n.tr("Storage"), "value": System.storagePerc, "detail": root.pct(System.storagePerc) }
-                ]
+                    Layout.fillWidth: true
 
-                delegate: Column {
-                    required property var modelData
-
-                    width: parent.width
-                    spacing: Theme.spacingSmall
-
-                    UiStack {
-                        orientation: root.hostOrientation
-                        compact: root.hostCompact
-
-                        UiMetric {
-                            label: modelData.label
-                            value: modelData.detail
-                        }
-
-                        UiChip {
-                            visible: root.valid(modelData.value) && root.clamp01(modelData.value) * 100 >= root.warnPercent
-                            text: i18n.tr("High")
-                            tone: "error"
-                        }
-                    }
-
-                    UiProgress {
-                        width: parent.width
-                        value: root.valid(modelData.value) ? root.clamp01(modelData.value) : 0
-                        accessibleName: modelData.label
-                    }
-                }
-            }
-
-            Column {
-                visible: root.showHistory
-                width: parent.width
-                spacing: Theme.spacingSmall
-
-                UiText {
-                    role: "caption"
-                    text: i18n.tr("CPU history since this card loaded (not persisted)")
+                    Layout.preferredWidth: 1
+                    label: i18n.tr("CPU avg")
+                    value: isNaN(root.averageOf(root.cpuWindow)) ? "" : Math.round(root.averageOf(root.cpuWindow) * 100).toString()
+                    unit: "%"
+                    size: "value"
                 }
 
-                UiState {
-                    visible: root.cpuHistory.length < 2
-                    width: parent.width
-                    kind: "loading"
-                    message: i18n.tr("Collecting samples from the shared System service.")
-                }
+                UiMetric {
 
-                Canvas {
-                    id: spark
+                    Layout.fillWidth: true
 
-                    visible: root.cpuHistory.length >= 2
-                    width: parent.width
-                    height: 36
-                    onPaint: {
-                        const ctx = getContext("2d");
-                        ctx.clearRect(0, 0, width, height);
-                        const samples = root.cpuHistory;
-                        if (samples.length < 2 || width <= 0)
-                            return;
-                        ctx.strokeStyle = Theme.primary;
-                        ctx.lineWidth = 2;
-                        ctx.beginPath();
-                        for (let i = 0; i < samples.length; i++) {
-                            const x = width * i / (samples.length - 1);
-                            const y = height - 2 - samples[i] * (height - 4);
-                            if (i === 0)
-                                ctx.moveTo(x, y);
-                            else
-                                ctx.lineTo(x, y);
-                        }
-                        ctx.stroke();
-                    }
-                }
-
-                UiStack {
-                    orientation: root.hostOrientation
-                    compact: root.hostCompact
-
-                    UiMetric {
-                        label: i18n.tr("CPU peak")
-                        value: root.cpuHistory.length > 0 ? root.pct(root.peakOf(root.cpuHistory)) : i18n.tr("Unavailable")
-                    }
-
-                    UiMetric {
-                        label: i18n.tr("CPU average")
-                        value: root.cpuHistory.length > 0 ? root.pct(root.averageOf(root.cpuHistory)) : i18n.tr("Unavailable")
-                    }
-
-                    UiMetric {
-                        label: i18n.tr("Memory peak")
-                        value: root.memHistory.length > 0 ? root.pct(root.peakOf(root.memHistory)) : i18n.tr("Unavailable")
-                    }
-                }
-
-                UiButton {
-                    variant: "ghost"
-                    text: i18n.tr("Clear history")
-                    tooltipText: i18n.tr("Forget the samples collected since this card loaded")
-                    accessibleName: i18n.tr("Clear history")
-                    onClicked: root.clearHistory()
+                    Layout.preferredWidth: 1
+                    label: i18n.tr("MEM peak")
+                    value: isNaN(root.peakOf(root.memWindow)) ? "" : Math.round(root.peakOf(root.memWindow) * 100).toString()
+                    unit: "%"
+                    size: "value"
                 }
             }
         }

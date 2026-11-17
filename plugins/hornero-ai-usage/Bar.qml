@@ -50,7 +50,7 @@ Item {
         id: indicator
 
         visible: usage.anyOk
-        variant: "ghost"
+        variant: "quiet"
         text: root.hostCompact ? i18n.tr("AI") : i18n.tr("AI %1").arg(i18n.formatNumber(usage.totalTokensAll))
         tooltipText: i18n.tr("AI usage: activate for provider details")
         accessibleName: i18n.tr("AI usage details")
@@ -65,7 +65,7 @@ Item {
 
         Column {
             width: 300
-            spacing: Theme.spacingSmall
+            spacing: Theme.spacing.small
 
             UiText {
                 role: "title"
@@ -89,7 +89,7 @@ Item {
                     UiButton {
                         required property var modelData
 
-                        variant: "ghost"
+                        variant: "quiet"
                         text: String(modelData.provider || "")
                         tooltipText: i18n.tr("Show %1 usage").arg(String(modelData.provider || ""))
                         accessibleName: i18n.tr("Show %1 usage").arg(String(modelData.provider || ""))
@@ -101,7 +101,7 @@ Item {
             Column {
                 visible: root.current !== null
                 width: parent.width
-                spacing: Theme.spacingSmall
+                spacing: Theme.spacing.small
 
                 UiStack {
                     orientation: root.hostOrientation
@@ -114,11 +114,12 @@ Item {
 
                     UiChip {
                         text: root.current ? root.statusText(String(root.current.status || "")) : ""
-                        tone: root.current && root.current.status === "ok" ? "primary" : root.current && root.current.status === "error" ? "error" : "neutral"
+                        tone: root.current && root.current.status === "ok" ? "phosphor" : root.current && root.current.status === "alert" ? "alert" : "neutral"
                     }
                 }
 
                 UiMetric {
+                    size: "value"
                     visible: root.current !== null && root.current.status === "ok"
                     label: i18n.tr("Total tokens")
                     value: root.current ? i18n.formatNumber(Number(root.current.totalTokens || 0)) : ""
@@ -134,16 +135,16 @@ Item {
                 Column {
                     visible: root.current !== null && root.current.status === "ok" && root.current.quota === "available"
                     width: parent.width
-                    spacing: Theme.spacingSmall
+                    spacing: Theme.spacing.small
 
-                    UiText {
-                        role: "caption"
-                        text: root.current ? i18n.tr("Quota used: %1%").arg(i18n.formatNumber(Math.round(Number(root.current.quotaUsedPercent || 0)))) : ""
-                    }
-
-                    UiProgress {
+                    // Shown only when the provider itself reports a limit.
+                    UiMeterRow {
                         width: parent.width
+                        label: i18n.tr("QUOTA")
+                        labelWidth: 56
+                        valueWidth: 56
                         value: root.current ? Math.max(0, Math.min(1, Number(root.current.quotaUsedPercent || 0) / 100)) : 0
+                        valueText: root.current ? i18n.formatNumber(Math.round(Number(root.current.quotaUsedPercent || 0))) + " %" : ""
                     }
 
                     UiText {
@@ -170,7 +171,7 @@ Item {
 
             UiActionRow {
                 width: parent.width
-                iconName: "refresh"
+                glyph: "refresh"
                 text: i18n.tr("Refresh")
                 tooltipText: i18n.tr("Reload AI usage from horneroctl")
                 accessibleName: i18n.tr("Refresh AI usage")

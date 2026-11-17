@@ -1,6 +1,6 @@
 # Hornero Battery
 
-Battery 2.0 (manifest v2, HorneroOS/plugins#31): one package, two
+Battery 3.0 (manifest v3, PluginKit 3 on Hornero Signal, HorneroOS/plugins#31): one package, two
 surfaces over the shared PluginKit `Power` facade (`hasBattery`,
 `percentage`, `charging`, `onBattery`, `stateText`; event-pushed
 by UPower through a `Subscription { domain: "power" }` lease,
@@ -27,12 +27,13 @@ empty state when opened.
 ## Honest limits (PluginKit Power surface)
 
 Verified against shell `docs/PLUGINS.md` and
-`plugin/qml/Hornero/PluginKit/Power.qml`. The facade exposes only
-the five properties above, so this package invents nothing else:
+`plugin/qml/Hornero/PluginKit/Power.qml` (PluginKit 3). Since
+Hornero Signal the facade also exposes time to empty / full, the
+energy rate, battery health and the power profile; 3.0 shows each
+only when UPower reports it (an em dash otherwise) and invents
+nothing else:
 
-- **No time remaining / time to full, battery health, capacity,
-  cycle count or power-profile member** exists; none is shown.
-  Adding them needs a shell-side PluginKit Power expansion first.
+- **No capacity or cycle-count member** exists; none is shown.
 - **No ready/valid or AC-online member**: `percentage` reads `0`
   when no battery is present (indistinguishable from a real 0%),
   `charging` is also true when fully charged (the detail states
@@ -57,9 +58,8 @@ extensions and this package adds no fake controls for them.
   default `20`) only adds a chip. The one intentional default
   change is `showWhenNoBattery` (`false`), the issue #31
   acceptance behaviour above.
-- Installing this manifest v2 package needs a shell/`horneroctl`
-  that accepts `schemaVersion` 2, `translations` and
-  `marketplace`.
+- Installing this package needs a shell with PluginKit 3 (Hornero Signal): it declares
+  `schemaVersion: 3` and `capabilities.providers`, and earlier shells refuse or cannot render it.
 
 Both surfaces use PluginKit `Ui*` primitives, host context,
 host-owned tooltip/popover, accessible names, Theme tokens and
