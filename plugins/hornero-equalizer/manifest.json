@@ -1,0 +1,90 @@
+{
+  "schemaVersion": 3,
+  "id": "hornero-equalizer",
+  "name": "Hornero Equalizer",
+  "version": "1.0.0",
+  "description": "A live spectrum analyser for the bar and its popover over the shell's real PipeWire spectrum. Honest by design: an analyser, not a sound filter; it draws nothing while nothing plays and holds the analyser only while a player is playing.",
+  "author": "HorneroOS contributors",
+  "license": "MIT",
+  "homepage": "https://github.com/HorneroOS/plugins",
+  "entrypoint": "Main.qml",
+  "placement": "bar",
+  "surfaces": {
+    "bar": {
+      "entrypoint": "Main.qml",
+      "section": "status"
+    }
+  },
+  "translations": {
+    "sourceLocale": "en",
+    "locales": [
+      "es"
+    ],
+    "directory": "translations"
+  },
+  "marketplace": {
+    "compatibility": {
+      "minShellVersion": "1.3.0"
+    },
+    "changelog": [
+      {
+        "version": "1.0.0",
+        "notes": "Initial release: bar equalizer bars and a popover analyser over Audio.spectrum, peak-hold ticks derived from the real samples, spectrum lease held only while a player is playing by default."
+      }
+    ]
+  },
+  "files": [
+    "Main.qml",
+    "README.md",
+    "LICENSE",
+    "translations/es.json"
+  ],
+  "capabilities": {
+    "processCommands": [],
+    "networkHosts": [],
+    "providers": [
+      "audio",
+      "media",
+      "spectrum"
+    ],
+    "settings": {
+      "barBands": {
+        "type": "integer",
+        "default": 8,
+        "minimum": 4,
+        "maximum": 12,
+        "description": "How many bands the bar indicator draws."
+      },
+      "popoverBands": {
+        "type": "integer",
+        "default": 16,
+        "minimum": 8,
+        "maximum": 24,
+        "description": "How many bands the popover analyser draws."
+      },
+      "peakHold": {
+        "type": "boolean",
+        "default": true,
+        "description": "Draw a peak tick above each popover band, derived from recent real samples."
+      },
+      "analyseWhen": {
+        "type": "enum",
+        "default": "playing",
+        "options": [
+          "playing",
+          "always"
+        ],
+        "description": "playing runs the shared analyser only while a media player plays; always also covers apps without a player."
+      },
+      "whenSilent": {
+        "type": "enum",
+        "default": "glyph",
+        "options": [
+          "glyph",
+          "hide"
+        ],
+        "description": "glyph keeps the indicator button while silent; hide removes it until sound plays."
+      }
+    }
+  }
+}
