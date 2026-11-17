@@ -1,4 +1,5 @@
 import QtQuick
+import QtQuick.Layouts
 import Hornero.PluginKit
 
 // System Health 2.0: dashboard health summary over the shared
@@ -69,7 +70,7 @@ Item {
     function pct(v) {
         if (!valid(v))
             return i18n.tr("Unavailable");
-        return Math.round(Math.max(0, Math.min(1, Number(v))) * 100) + "%";
+        return Math.round(Math.max(0, Math.min(1, Number(v))) * 100) + " %";
     }
 
     // Health state for a 0..1 usage fraction: derived only from
@@ -96,12 +97,7 @@ Item {
     function batteryText() {
         if (!Power.hasBattery)
             return i18n.tr("No battery");
-        var t = Power.percentage + "%";
-        if (Power.charging)
-            t += " (" + i18n.tr("charging") + ")";
-        else if (Power.stateText)
-            t += " (" + Power.stateText + ")";
-        return t;
+        return Power.percentage + " %" + (Power.charging ? " " + i18n.tr("CHG") : "");
     }
 
     // "none" (no battery fitted) is a normal desktop state, not a
@@ -133,9 +129,9 @@ Item {
 
     function stateTone(state) {
         if (state === "attention")
-            return "error";
+            return "signal";
         if (state === "ok")
-            return "primary";
+            return "phosphor";
         return "neutral";
     }
 
@@ -143,26 +139,14 @@ Item {
         id: card
 
         anchors.fill: parent
+        title: i18n.tr("System Health")
+        channel: 4
+        context: root.overallText
         Accessible.name: i18n.tr("System Health")
 
         Column {
             width: parent.width
-            spacing: Theme.spacingSmall
-
-            UiStack {
-                orientation: root.hostOrientation
-                compact: root.hostCompact
-
-                UiText {
-                    role: "title"
-                    text: i18n.tr("System Health")
-                }
-
-                UiChip {
-                    text: root.overallText
-                    tone: root.anyAttention ? "error" : root.anyUnavailable ? "neutral" : "primary"
-                }
-            }
+            spacing: Theme.spacing.smaller
 
             UiState {
                 visible: root.anyUnavailable && !root.anyAttention
@@ -173,38 +157,45 @@ Item {
 
             Repeater {
                 model: [
-                    { "label": i18n.tr("CPU"), "detail": root.pct(System.cpuPerc), "state": root.usageState(System.cpuPerc), "hint": i18n.tr("Sustained high CPU usually means a busy app or background job; check what is running if the system feels slow.") },
-                    { "label": i18n.tr("Memory"), "detail": root.pct(System.memPerc), "state": root.usageState(System.memPerc), "hint": i18n.tr("High memory use can push the system into swap; closing unused apps frees memory.") },
-                    { "label": i18n.tr("Storage"), "detail": root.pct(System.storagePerc), "state": root.usageState(System.storagePerc), "hint": i18n.tr("Nearly full storage can block updates and caches; free space or check the Disk Usage card per disk.") },
-                    { "label": i18n.tr("Battery"), "detail": root.batteryText(), "state": root.batteryState(), "hint": i18n.tr("Battery is low and not charging; connect the charger soon.") }
+                    { "label": i18n.tr("CPU"), "battery": false, "value": System.cpuPerc, "available": true, "detail": root.pct(System.cpuPerc), "state": root.usageState(System.cpuPerc), "hint": i18n.tr("Sustained high CPU usually means a busy app or background job; check what is running if the system feels slow.") },
+                    { "label": i18n.tr("MEM"), "battery": false, "value": System.memPerc, "available": System.memTotal > 0, "detail": root.pct(System.memPerc), "state": root.usageState(System.memPerc), "hint": i18n.tr("High memory use can push the system into swap; closing unused apps frees memory.") },
+                    { "label": i18n.tr("DISK"), "battery": false, "value": System.storagePerc, "available": System.storageAvailable, "detail": root.pct(System.storagePerc), "state": root.usageState(System.storagePerc), "hint": i18n.tr("Nearly full storage can block updates and caches; free space or check the Disk Usage card per disk.") },
+                    { "label": i18n.tr("BATT"), "battery": true, "value": Power.percentage / 100, "available": Power.hasBattery, "detail": root.batteryText(), "state": root.batteryState(), "hint": i18n.tr("Battery is low and not charging; connect the charger soon.") }
                 ]
 
                 delegate: Column {
                     required property var modelData
 
                     width: parent.width
-                    spacing: Theme.spacingSmall
+                    spacing: Theme.spacing.small
+
+                    UiMeterRow {
+                        width: parent.width
+                        label: modelData.label
+                        value: modelData.value
+                        available: modelData.available
+                        valueText: modelData.detail
+                        valueWidth: 96
+                        // A low battery crosses to signal at its own threshold.
+                        threshold: modelData.battery ? (modelData.state === "attention" ? 0 : 1.01) : root.warnPercent / 100
+                    }
 
                     UiStack {
+                        visible: root.showHints && modelData.state === "attention"
+                        width: parent.width
                         orientation: root.hostOrientation
                         compact: root.hostCompact
-
-                        UiMetric {
-                            label: modelData.label
-                            value: modelData.detail
-                        }
 
                         UiChip {
                             text: root.stateLabel(modelData.state)
                             tone: root.stateTone(modelData.state)
                         }
-                    }
 
-                    UiText {
-                        visible: root.showHints && modelData.state === "attention"
-                        width: parent.width
-                        role: "caption"
-                        text: modelData.hint
+                        UiText {
+                            Layout.fillWidth: true
+                            role: "caption"
+                            text: modelData.hint
+                        }
                     }
                 }
             }
@@ -212,20 +203,29 @@ Item {
             Column {
                 visible: root.showNetwork
                 width: parent.width
-                spacing: Theme.spacingSmall
+                spacing: Theme.spacing.small
 
                 UiStack {
+                    width: parent.width
                     orientation: root.hostOrientation
                     compact: root.hostCompact
 
                     UiMetric {
+                        Layout.fillWidth: true
+                        Layout.preferredWidth: 1
                         label: i18n.tr("Download")
                         value: root.fmtSpeed(Network.downloadSpeed)
+                        available: root.networkState() === "ok"
+                        size: "value"
                     }
 
                     UiMetric {
+                        Layout.fillWidth: true
+                        Layout.preferredWidth: 1
                         label: i18n.tr("Upload")
                         value: root.fmtSpeed(Network.uploadSpeed)
+                        available: root.networkState() === "ok"
+                        size: "value"
                     }
 
                     UiChip {

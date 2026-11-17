@@ -140,7 +140,7 @@ Item {
         UiButton {
             id: indicator
 
-            variant: "ghost"
+            variant: "quiet"
             text: root.hostCompact || root.hostOrientation === "vertical" ? "⏱" : root.statusText
             tooltipText: root.statusText
             accessibleName: i18n.tr("Uptime details")
@@ -164,7 +164,7 @@ Item {
 
         Column {
             width: 300
-            spacing: Theme.spacingSmall
+            spacing: Theme.spacing.small
 
             UiText {
                 role: "title"
@@ -188,24 +188,27 @@ Item {
             Column {
                 visible: root.hasData
                 width: parent.width
-                spacing: Theme.spacingSmall
+                spacing: Theme.spacing.small
 
                 UiStack {
                     orientation: root.hostOrientation
                     compact: root.hostCompact
 
                     UiMetric {
+                        size: "value"
                         label: i18n.tr("Uptime")
                         value: root.fmt(root.uptimeSeconds)
                     }
 
                     UiMetric {
+                        size: "value"
                         label: i18n.tr("Idle time")
                         value: root.idleSeconds >= 0 ? root.fmt(root.idleSeconds) : i18n.tr("Unavailable")
                     }
                 }
 
                 UiMetric {
+                    size: "value"
                     label: i18n.tr("Booted at (derived)")
                     value: root.bootText()
                 }
@@ -219,7 +222,7 @@ Item {
 
             UiActionRow {
                 width: parent.width
-                iconName: "refresh"
+                glyph: "refresh"
                 text: i18n.tr("Refresh")
                 tooltipText: i18n.tr("Read /proc/uptime again")
                 accessibleName: i18n.tr("Refresh uptime")

@@ -1,4 +1,5 @@
 import QtQuick
+import QtQuick.Layouts
 import Hornero.PluginKit
 
 // AI Usage 2.0 dashboard surface (primary): one block per provider
@@ -48,16 +49,13 @@ Item {
         id: card
 
         anchors.fill: parent
+        title: i18n.tr("AI Usage")
+        channel: 8
         Accessible.name: i18n.tr("AI Usage")
 
         Column {
             width: parent.width
-            spacing: Theme.spacingSmall
-
-            UiText {
-                role: "title"
-                text: i18n.tr("AI Usage")
-            }
+            spacing: Theme.spacing.small
 
             UiState {
                 visible: usage.loading && !usage.hasData
@@ -80,7 +78,7 @@ Item {
                     required property var modelData
 
                     width: parent.width
-                    spacing: Theme.spacingSmall
+                    spacing: Theme.spacing.small
 
                     UiStack {
                         orientation: root.hostOrientation
@@ -93,7 +91,7 @@ Item {
 
                         UiChip {
                             text: root.statusText(String(modelData.status || ""))
-                            tone: modelData.status === "ok" ? "primary" : modelData.status === "error" ? "error" : "neutral"
+                            tone: modelData.status === "ok" ? "phosphor" : modelData.status === "alert" ? "alert" : "neutral"
                         }
 
                         UiChip {
@@ -104,21 +102,31 @@ Item {
 
                     UiStack {
                         visible: modelData.status === "ok"
+                        width: parent.width
                         orientation: root.hostOrientation
                         compact: root.hostCompact
 
                         UiMetric {
+                            Layout.fillWidth: true
+                            Layout.preferredWidth: 1
+                            size: "value"
                             label: i18n.tr("Total tokens")
                             value: i18n.formatNumber(Number(modelData.totalTokens || 0))
                         }
 
                         UiMetric {
+                            Layout.fillWidth: true
+                            Layout.preferredWidth: 1
+                            size: "value"
                             visible: !root.hostCompact
                             label: i18n.tr("Input tokens")
                             value: i18n.formatNumber(Number(modelData.inputTokens || 0))
                         }
 
                         UiMetric {
+                            Layout.fillWidth: true
+                            Layout.preferredWidth: 1
+                            size: "value"
                             visible: !root.hostCompact
                             label: i18n.tr("Output tokens")
                             value: i18n.formatNumber(Number(modelData.outputTokens || 0))
@@ -154,16 +162,16 @@ Item {
                     Column {
                         visible: modelData.status === "ok" && modelData.quota === "available"
                         width: parent.width
-                        spacing: Theme.spacingSmall
+                        spacing: Theme.spacing.small
 
-                        UiText {
-                            role: "caption"
-                            text: i18n.tr("Quota used: %1%").arg(i18n.formatNumber(Math.round(Number(modelData.quotaUsedPercent || 0))))
-                        }
-
-                        UiProgress {
+                        // Shown only when the provider itself reports a limit.
+                        UiMeterRow {
                             width: parent.width
+                            label: i18n.tr("QUOTA")
+                            labelWidth: 56
+                            valueWidth: 56
                             value: Math.max(0, Math.min(1, Number(modelData.quotaUsedPercent || 0) / 100))
+                            valueText: i18n.formatNumber(Math.round(Number(modelData.quotaUsedPercent || 0))) + " %"
                         }
 
                         UiText {
@@ -197,7 +205,7 @@ Item {
 
             UiActionRow {
                 width: parent.width
-                iconName: "refresh"
+                glyph: "refresh"
                 text: i18n.tr("Refresh")
                 tooltipText: i18n.tr("Reload AI usage from horneroctl")
                 accessibleName: i18n.tr("Refresh AI usage")

@@ -140,7 +140,7 @@
     {
       "id": "hornero-battery",
       "classification": "needs-upgrade",
-      "valueProposition": "Battery 2.0 (#31): contextual bar indicator over the shared PluginKit Power facade, hidden by default when no battery is reported (showWhenNoBattery opt-in restores the permanent 1.x item), with an activation popover and dashboard card showing charge, mapped state and on-battery/charging flags plus a low-battery chip. No time-remaining, health or profile data is invented because PluginKit Power exposes none.",
+      "valueProposition": "Battery 2.0 (#31): contextual bar indicator over the shared PluginKit Power facade, hidden by default when no battery is reported (showWhenNoBattery opt-in restores the permanent 1.x item), with an activation popover and dashboard card showing charge, mapped state and on-battery/charging flags plus a low-battery chip. Time left, rate, health and power profile are shown only when the Power facade (UPower) reports them; nothing is invented.",
       "nativeOverlap": "Overlaps the shell native bar battery indicator and the battery row in hornero-system-health on instantaneous percentage/state; distinct extension value is the contextual (hidden-on-desktops) bar presence, the typed low-battery threshold and the dashboard card form.",
       "dimensions": {
         "tooltips": {
@@ -149,7 +149,7 @@
         },
         "accessibility": {
           "status": "pass",
-          "note": "UiButton/UiPopover accessibleName, UiProgress accessibleName and Accessible.name on the dashboard card; activation is a real button, no mouse-only MouseArea (static probe). Live AT-SPI behaviour is not verified."
+          "note": "UiButton/UiPopover accessibleName, UiMeterRow accessible name and Accessible.name on the dashboard card; activation is a real button, no mouse-only MouseArea (static probe). Live AT-SPI behaviour is not verified."
         },
         "translation": {
           "status": "pass",
@@ -419,7 +419,7 @@
         },
         "accessibility": {
           "status": "na",
-          "note": "No interactive controls in the entrypoint; the card carries Accessible.name and each UiProgress an accessibleName (static probe classifies non-interactive surfaces as na)."
+          "note": "No interactive controls in the entrypoint; the card carries Accessible.name and each UiPartition a labelled bar (static probe classifies non-interactive surfaces as na)."
         },
         "translation": {
           "status": "pass",
@@ -726,7 +726,7 @@
       "id": "hornero-network-monitor",
       "classification": "needs-upgrade",
       "valueProposition": "Network Monitor 3.0: Signal dashboard module over the shared network provider: a cue-toned download oscilloscope and upload trace from the shared Telemetry history with the scale stated, peaks, current speeds and session totals.",
-      "nativeOverlap": "Overlaps the network rows in hornero-system-health and native current-rate displays; distinct value is retained history/peaks alongside the shell-session totals. The facade exposes no interface, address or per-process traffic and none is shown.",
+      "nativeOverlap": "Overlaps the network rows in hornero-system-health and native current-rate displays; distinct value is shared-history oscilloscope, peaks alongside the shell-session totals. The facade exposes no interface, address or per-process traffic and none is shown.",
       "dimensions": {
         "tooltips": {
           "status": "na",
@@ -1176,7 +1176,7 @@
       "id": "hornero-system-monitor",
       "classification": "needs-upgrade",
       "valueProposition": "System Monitor 3.0: Signal dashboard module over the shared system provider: a CPU oscilloscope from the shared Telemetry history, segmented meter rows for CPU/memory/GPU/storage that cross to signal at a typed threshold, and CPU/memory peak and CPU average readouts.",
-      "nativeOverlap": "Overlaps the shell native Performance view and hornero-system-health on instantaneous percentages; distinct value is retained in-card history and the threshold alert, which neither keeps for extensions. Per-process/per-core data is not exposed by PluginKit and is not shown.",
+      "nativeOverlap": "Overlaps the shell native Performance view and hornero-system-health on instantaneous percentages; distinct value is the shared-history oscilloscope with peak/average readouts and the threshold crossing, which neither keeps for extensions. Per-process/per-core data is not exposed by PluginKit and is not shown.",
       "dimensions": {
         "tooltips": {
           "status": "na",
@@ -1208,7 +1208,7 @@
         },
         "loadingErrorStates": {
           "status": "unverified",
-          "note": "UiState loading placeholder covers the collecting-history state and unavailable facade values read as Unavailable; presentation has not been verified graphically in a live shell."
+          "note": "UiState loading placeholder covers the scope's collecting-samples state and unavailable facade values read as Unavailable; presentation has not been verified graphically in a live shell."
         },
         "performance": {
           "status": "unverified",

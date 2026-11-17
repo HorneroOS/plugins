@@ -1,6 +1,6 @@
 # Hornero System Health
 
-System Health 2.0 (manifest v2): a dashboard health summary
+System Health 3.0 (manifest v3, PluginKit 3 on Hornero Signal): a dashboard health summary
 over the shared PluginKit facades — `System` (`cpuPerc`,
 `memPerc`, `storagePerc`), `Power` (`hasBattery`, `percentage`,
 `charging`, `stateText`) and `Network` (`downloadSpeed`,
@@ -30,10 +30,8 @@ states this limit in the UI as well.
 - The 1.x battery wording is kept (percentage, `charging`, the
   shell-reported `stateText`, `No battery` on desktops); the
   state text remains shell-reported and untranslated, as in 1.x.
-- Installing this manifest v2 package needs a shell /
-  `horneroctl` that accepts `schemaVersion` 2, the dashboard
-  surface hints, the `translations` declaration and the
-  `marketplace` block.
+- Installing this package needs a shell with PluginKit 3 (Hornero Signal): it declares
+  `schemaVersion: 3` and `capabilities.providers`, and earlier shells refuse or cannot render it.
 
 ## The 8 Hornero quality questions
 

@@ -1,4 +1,5 @@
 import QtQuick
+import QtQuick.Layouts
 import Hornero.PluginKit
 
 // Disk Usage 2.0: dashboard card over the shared PluginKit
@@ -125,48 +126,43 @@ Item {
         id: card
 
         anchors.fill: parent
+        title: i18n.tr("Disk Usage")
+        channel: 5
+        context: root.anyNearFull ? i18n.tr("Nearly full") : ""
         Accessible.name: i18n.tr("Disk Usage")
 
         Column {
             width: parent.width
-            spacing: Theme.spacingSmall
-
-            UiStack {
-                orientation: root.hostOrientation
-                compact: root.hostCompact
-
-                UiText {
-                    role: "title"
-                    text: i18n.tr("Disk Usage")
-                }
-
-                UiChip {
-                    visible: root.anyNearFull
-                    text: i18n.tr("Nearly full")
-                    tone: "error"
-                }
-            }
+            spacing: Theme.spacing.smaller
 
             UiState {
                 visible: root.disks().length === 0
                 width: parent.width
-                kind: "empty"
+                kind: "unavailable"
                 message: i18n.tr("No disks reported by the System service.")
             }
 
             UiStack {
                 visible: root.mostFull !== null
+                width: parent.width
                 orientation: root.hostOrientation
                 compact: root.hostCompact
 
                 UiMetric {
+                    Layout.fillWidth: true
+                    Layout.preferredWidth: 1
                     label: i18n.tr("Disks")
                     value: String(root.disks().length)
+                    size: "value"
                 }
 
                 UiMetric {
+                    Layout.fillWidth: true
+                    Layout.preferredWidth: 1
                     label: i18n.tr("Most full")
-                    value: root.mostFull !== null ? root.nameOf(root.mostFull) + " " + Math.round(root.fracOf(root.mostFull) * 100) + "%" : i18n.tr("Unavailable")
+                    value: root.mostFull !== null ? root.nameOf(root.mostFull) + " " + Math.round(root.fracOf(root.mostFull) * 100) + " %" : ""
+                    tone: root.anyNearFull ? "signal" : ""
+                    size: "value"
                 }
             }
 
@@ -184,34 +180,45 @@ Item {
                     required property var modelData
 
                     width: parent.width
-                    spacing: Theme.spacingSmall
+                    spacing: Theme.spacing.small
 
                     UiStack {
+                        width: parent.width
                         orientation: root.hostOrientation
                         compact: root.hostCompact
 
-                        UiMetric {
-                            label: root.nameOf(modelData)
-                            value: root.fmtKiB(root.usedKiB(modelData)) + " / " + root.fmtKiB(root.totalKiB(modelData)) + " (" + Math.round(root.fracOf(modelData) * 100) + "%)"
+                        UiText {
+                            Layout.fillWidth: true
+                            role: "eyebrow"
+                            text: root.nameOf(modelData)
+                            elide: Text.ElideMiddle
                         }
 
                         UiChip {
                             visible: root.fracOf(modelData) * 100 >= root.warnPercent
                             text: i18n.tr("Nearly full")
-                            tone: "error"
+                            tone: "signal"
                         }
+
+                        UiText {
+                            role: "value"
+                            text: Math.round(root.fracOf(modelData) * 100) + " %"
+                        }
+                    }
+
+                    // Partition bar with a dimension line; GiB for the labels.
+                    UiPartition {
+                        width: parent.width
+                        total: root.totalKiB(modelData) / 1048576
+                        used: root.usedKiB(modelData) / 1048576
+                        usedLabel: root.fmtKiB(root.usedKiB(modelData))
+                        available: root.totalKiB(modelData) > 0
                     }
 
                     UiText {
                         visible: root.showFreeSpace
                         role: "caption"
-                        text: i18n.tr("Free") + ": " + root.fmtKiB(root.freeKiB(modelData))
-                    }
-
-                    UiProgress {
-                        width: parent.width
-                        value: Math.max(0, Math.min(1, root.fracOf(modelData)))
-                        accessibleName: root.nameOf(modelData)
+                        text: i18n.tr("Free") + ": " + root.fmtKiB(root.freeKiB(modelData)) + " / " + root.fmtKiB(root.totalKiB(modelData))
                     }
                 }
             }

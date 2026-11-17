@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedFrom": "120817e0b29bf74b52092688a5909c8ca140b9a4",
+  "generatedFrom": "1e997221f792439c95542dc11da5f55d86acad4d",
   "plugins": [
     {
       "id": "hornero-agenda",
@@ -55,7 +55,7 @@
     {
       "id": "hornero-ai-usage",
       "name": "Hornero AI Usage",
-      "version": "2.0.1",
+      "version": "3.0.0",
       "description": "AI Usage 2.0: bar indicator, provider switcher popover and dashboard card over the normalized horneroctl agent usage records. Quota is shown only when a provider record carries it; otherwise it is unknown.",
       "author": "HorneroOS contributors",
       "license": "MIT",
@@ -79,7 +79,7 @@
       },
       "trust": "official",
       "path": "plugins/hornero-ai-usage",
-      "sha256": "33b6df96b7ac57093f0dcfba21f52d60d03ba6482269a2d21eaad562df9e5d8e"
+      "sha256": "e4586c5b3af22d7a1b74373d3f7e6d4c9ed0931371bd2a4c00551ade3e485270"
     },
     {
       "id": "hornero-base-converter",
@@ -109,8 +109,8 @@
     {
       "id": "hornero-battery",
       "name": "Hornero Battery",
-      "version": "2.0.0",
-      "description": "Battery 2.0: contextual bar indicator over the PluginKit Power facade, hidden by default when no battery is reported, with a power-detail popover and dashboard card. Real no-battery/unknown states only.",
+      "version": "3.0.0",
+      "description": "Battery 3.0 on Hornero Signal: contextual bar indicator with a Hornero Glyph and a popover/dashboard module showing charge, time left, rate, health and power profile from the shared power provider. Read-only.",
       "author": "HorneroOS contributors",
       "license": "MIT",
       "homepage": "https://github.com/HorneroOS/plugins",
@@ -142,11 +142,14 @@
             "maximum": 50,
             "description": "Charge percent at or below which, while on battery, a low-battery chip is shown. Adds a chip only; 1.x had no threshold."
           }
-        }
+        },
+        "providers": [
+          "power"
+        ]
       },
       "trust": "official",
       "path": "plugins/hornero-battery",
-      "sha256": "6c52647f70ac6cd8233502e9d0690ce958bd6fc4bf11ac58fc0e14b9454cd66c"
+      "sha256": "c5c582a7128e84a5a9753d256f8025435613020893b4ebd234f38554c1e34574"
     },
     {
       "id": "hornero-calculator",
@@ -343,8 +346,8 @@
     {
       "id": "hornero-disk-usage",
       "name": "Hornero Disk Usage",
-      "version": "2.0.0",
-      "description": "Disk Usage 2.0: dashboard card over the shared PluginKit System.disks facade with per-disk used/total/free space, a most-full summary and near-full alerts. No invented SMART data. Read-only.",
+      "version": "3.0.0",
+      "description": "Disk Usage 3.0 on Hornero Signal: every physical disk as a partition bar with a dimension line, free space and a near-full flag from the shared system provider. Read-only.",
       "author": "HorneroOS contributors",
       "license": "MIT",
       "homepage": "https://github.com/HorneroOS/plugins",
@@ -366,11 +369,14 @@
             "default": true,
             "description": "Show free space under each disk (additive in 2.0) and the nearly-full hint."
           }
-        }
+        },
+        "providers": [
+          "system"
+        ]
       },
       "trust": "official",
       "path": "plugins/hornero-disk-usage",
-      "sha256": "b3a831cc208792eac60b9b7604afd239b2d87e5857f4b3a35cdeeaece6650d36"
+      "sha256": "78c035d5240df3fb96bf7de77fb696478e951c3a26dfff0ece4fc7132ea39e75"
     },
     {
       "id": "hornero-dual-clock",
@@ -627,8 +633,8 @@
     {
       "id": "hornero-network-monitor",
       "name": "Hornero Network Monitor",
-      "version": "2.0.0",
-      "description": "Network Monitor 2.0: dashboard card over the shared PluginKit Network facade with the 1.x speeds and session totals plus in-card history, peak readouts and honest unavailable states. Read-only.",
+      "version": "3.0.0",
+      "description": "Network Monitor 3.0 on Hornero Signal: a download oscilloscope and upload trace from the shared Telemetry history with peak readouts, plus current speeds and session totals. Read-only.",
       "author": "HorneroOS contributors",
       "license": "MIT",
       "homepage": "https://github.com/HorneroOS/plugins",
@@ -646,20 +652,16 @@
           "showHistory": {
             "type": "boolean",
             "default": true,
-            "description": "Show the in-card speed history sampled from the shared Network facade while the card is loaded."
-          },
-          "sampleSeconds": {
-            "type": "integer",
-            "default": 5,
-            "minimum": 1,
-            "maximum": 60,
-            "description": "Seconds between history samples read from the already-live shared Network facade."
+            "description": "Show the download oscilloscope, upload trace and peak readouts from the shared telemetry history."
           }
-        }
+        },
+        "providers": [
+          "network"
+        ]
       },
       "trust": "official",
       "path": "plugins/hornero-network-monitor",
-      "sha256": "e70c1501ba7f9d40824f4af9af7320fe8be4484750d3dab1412bf9d75be76381"
+      "sha256": "e8baadd29ffaf53d2e008d1f369c0d0a41ca0c3e24d505a0e1f195193705de2e"
     },
     {
       "id": "hornero-now-playing",
@@ -882,7 +884,7 @@
     {
       "id": "hornero-studio-jobs",
       "name": "Hornero Studio Jobs",
-      "version": "1.1.0",
+      "version": "2.0.0",
       "description": "Render and export job monitor for HorneroOS Studio: shows queued, running, finished and interrupted jobs from the typed horneroctl studio jobs contract. Read-only; jobs are submitted and cancelled from the CLI or Control Center.",
       "author": "HorneroOS contributors",
       "license": "MIT",
@@ -898,7 +900,7 @@
       },
       "trust": "official",
       "path": "plugins/hornero-studio-jobs",
-      "sha256": "601ed0dc2778c7542cbf74fdce355c6c6650f8076037735b76e98ea6f8a400b0"
+      "sha256": "3a1c77265d2cad1c98b98599342f7b9ae9c629c32acd25db3335e91d471bf8b5"
     },
     {
       "id": "hornero-sun-card",
@@ -948,8 +950,8 @@
     {
       "id": "hornero-system-health",
       "name": "Hornero System Health",
-      "version": "2.0.0",
-      "description": "System Health 2.0: dashboard health summary over the shared PluginKit System, Power and Network facades, with per-row health states, thresholds and troubleshooting hints. No invented SMART data.",
+      "version": "3.0.0",
+      "description": "System Health 3.0 on Hornero Signal: a health rack over the shared system, power and network providers: segmented meters that cross to signal at your thresholds, status chips and troubleshooting hints. Read-only.",
       "author": "HorneroOS contributors",
       "license": "MIT",
       "homepage": "https://github.com/HorneroOS/plugins",
@@ -983,17 +985,22 @@
             "default": true,
             "description": "Show a short troubleshooting hint under rows that need attention."
           }
-        }
+        },
+        "providers": [
+          "system",
+          "power",
+          "network"
+        ]
       },
       "trust": "official",
       "path": "plugins/hornero-system-health",
-      "sha256": "8c61627a42b02b8cfc50d2ea5150c5454dea042954a93fbb4c96b380c3dbf8c0"
+      "sha256": "757db0357baca8fdd286f7c42c5e96503c8d55f0b14f200b8b7862725797cb7b"
     },
     {
       "id": "hornero-system-monitor",
       "name": "Hornero System Monitor",
-      "version": "2.0.0",
-      "description": "System Monitor 2.0: dashboard card over the shared PluginKit System facade with the 1.x usage bars plus in-card session history, peak/average readouts and a high-load alert. Read-only.",
+      "version": "3.0.0",
+      "description": "System Monitor 3.0 on Hornero Signal: a CPU oscilloscope from the shared Telemetry history, segmented meter rows for CPU, memory, GPU and storage with a user threshold, and peak/average readouts. Read-only.",
       "author": "HorneroOS contributors",
       "license": "MIT",
       "homepage": "https://github.com/HorneroOS/plugins",
@@ -1018,20 +1025,16 @@
           "showHistory": {
             "type": "boolean",
             "default": true,
-            "description": "Show the in-card session history sampled from the shared System facade while the card is loaded."
-          },
-          "sampleSeconds": {
-            "type": "integer",
-            "default": 5,
-            "minimum": 1,
-            "maximum": 60,
-            "description": "Seconds between history samples read from the already-live shared System facade."
+            "description": "Show the CPU oscilloscope and peak/average readouts from the shared telemetry history."
           }
-        }
+        },
+        "providers": [
+          "system"
+        ]
       },
       "trust": "official",
       "path": "plugins/hornero-system-monitor",
-      "sha256": "1e9a4da368b53255703864a06bfaf505d395494101cf2b305c8fd948d483c014"
+      "sha256": "07eff5f001655704631beab17e4cb4d189878c2b35c6d0d12b6a0af174f83439"
     },
     {
       "id": "hornero-text-tools",
@@ -1109,7 +1112,7 @@
     {
       "id": "hornero-uptime",
       "name": "Hornero Uptime",
-      "version": "2.0.1",
+      "version": "3.0.0",
       "description": "Uptime 2.0: bar indicator plus popover/dashboard session detail (uptime, boot time, idle time) from /proc/uptime with the declared cat command. No PluginKit uptime facade exists; error state instead of a fabricated zero.",
       "author": "HorneroOS contributors",
       "license": "MIT",
@@ -1143,7 +1146,7 @@
       },
       "trust": "official",
       "path": "plugins/hornero-uptime",
-      "sha256": "93361d00b8f381ffed95091e32d155899a75a792f3e94cc509cb99617ba07aa3"
+      "sha256": "302cff238193520c146be128ccb9e36727d1f5a17dcc0fcb0d57426fbcca4bfa"
     },
     {
       "id": "hornero-volume",

@@ -1,8 +1,8 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 3,
   "id": "hornero-studio-jobs",
   "name": "Hornero Studio Jobs",
-  "version": "1.1.0",
+  "version": "2.0.0",
   "description": "Render and export job monitor for HorneroOS Studio: shows queued, running, finished and interrupted jobs from the typed horneroctl studio jobs contract. Read-only; jobs are submitted and cancelled from the CLI or Control Center.",
   "author": "HorneroOS contributors",
   "license": "MIT",
@@ -27,6 +27,10 @@
       "minShellVersion": "1.2.72"
     },
     "changelog": [
+      {
+        "version": "2.0.0",
+        "notes": "PluginKit 3 on Hornero Signal: instrument module with Hornero Glyph state icons in palette roles and an on-air chip for running jobs."
+      },
       {
         "version": "1.1.0",
         "notes": "Rebuilt on PluginKit: native card header, empty and unavailable states, one row per job with a semantic state icon. Needs Hornero Shell 1.2.72 (PluginKit UiIcon/iconName/card header)."

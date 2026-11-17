@@ -1,9 +1,9 @@
 {
-  "schemaVersion": 2,
+  "schemaVersion": 3,
   "id": "hornero-system-health",
   "name": "Hornero System Health",
-  "version": "2.0.0",
-  "description": "System Health 2.0: dashboard health summary over the shared PluginKit System, Power and Network facades, with per-row health states, thresholds and troubleshooting hints. No invented SMART data.",
+  "version": "3.0.0",
+  "description": "System Health 3.0 on Hornero Signal: a health rack over the shared system, power and network providers: segmented meters that cross to signal at your thresholds, status chips and troubleshooting hints. Read-only.",
   "author": "HorneroOS contributors",
   "license": "MIT",
   "homepage": "https://github.com/HorneroOS/plugins",
@@ -28,6 +28,10 @@
       "minShellVersion": "1.0.0"
     },
     "changelog": [
+      {
+        "version": "3.0.0",
+        "notes": "PluginKit 3 on Hornero Signal: segmented meter rows with threshold crossing to signal, status chips and instrument channel header; unavailable sources render as unavailable meters."
+      },
       {
         "version": "2.0.0",
         "notes": "Health summary on the shared System/Power/Network facades: per-row health states from typed thresholds, troubleshooting hints, honest unavailable states and Spanish catalog."
@@ -72,6 +76,11 @@
         "default": true,
         "description": "Show a short troubleshooting hint under rows that need attention."
       }
-    }
+    },
+    "providers": [
+      "system",
+      "power",
+      "network"
+    ]
   }
 }

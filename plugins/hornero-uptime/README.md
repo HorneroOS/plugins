@@ -1,6 +1,6 @@
 # Hornero Uptime
 
-Uptime 2.0 (manifest v2, HorneroOS/plugins#31): one package, two
+Uptime 3.0 (manifest v3, PluginKit 3 on Hornero Signal, HorneroOS/plugins#31): one package, two
 surfaces showing session length from `/proc/uptime`.
 
 - **Bar** (`"placement": "bar"`, primary): the 1.x compact label
@@ -47,9 +47,8 @@ process entirely.
   `showWhenUnavailable` (boolean, default `true`).
 - 1.x formatting is unchanged: `d/h/m` with days only when
   non-zero and minutes always shown.
-- Installing this manifest v2 package needs a shell/`horneroctl`
-  that accepts `schemaVersion` 2, `translations` and
-  `marketplace`.
+- Installing this package needs a shell with PluginKit 3 (Hornero Signal): it declares
+  `schemaVersion: 3` and `capabilities.providers`, and earlier shells refuse or cannot render it.
 
 Both surfaces use PluginKit `Ui*` primitives, host context,
 host-owned tooltip/popover, accessible names, Theme tokens and

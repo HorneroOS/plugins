@@ -1,9 +1,9 @@
 {
-  "schemaVersion": 2,
+  "schemaVersion": 3,
   "id": "hornero-battery",
   "name": "Hornero Battery",
-  "version": "2.0.0",
-  "description": "Battery 2.0: contextual bar indicator over the PluginKit Power facade, hidden by default when no battery is reported, with a power-detail popover and dashboard card. Real no-battery/unknown states only.",
+  "version": "3.0.0",
+  "description": "Battery 3.0 on Hornero Signal: contextual bar indicator with a Hornero Glyph and a popover/dashboard module showing charge, time left, rate, health and power profile from the shared power provider. Read-only.",
   "author": "HorneroOS contributors",
   "license": "MIT",
   "homepage": "https://github.com/HorneroOS/plugins",
@@ -28,6 +28,10 @@
       "minShellVersion": "1.0.0"
     },
     "changelog": [
+      {
+        "version": "3.0.0",
+        "notes": "PluginKit 3 on Hornero Signal: Hornero Glyph battery indicator in place of emoji, segmented charge meter that crosses to signal when low, and the details the Power facade now exposes (time to empty/full, energy rate, health, power profile), each shown only when reported."
+      },
       {
         "version": "2.0.0",
         "notes": "Battery & Uptime 2.0 (#31): no permanent 'No battery' bar item by default (showWhenNoBattery opt-in restores it), host-owned popover and dashboard card with charge/state/power-source detail from PluginKit Power only, low-battery chip, typed settings, host-context layout and Spanish catalog."
@@ -71,6 +75,9 @@
         "maximum": 50,
         "description": "Charge percent at or below which, while on battery, a low-battery chip is shown. Adds a chip only; 1.x had no threshold."
       }
-    }
+    },
+    "providers": [
+      "power"
+    ]
   }
 }

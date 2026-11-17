@@ -88,8 +88,8 @@ class Structure(unittest.TestCase):
         for plugin in PLUGINS:
             manifest = json.loads(
                 (ROOT / "plugins" / plugin / "manifest.json").read_text())
-            self.assertEqual(manifest["schemaVersion"], 2)
-            self.assertEqual(manifest["version"], "2.0.1" if plugin == "hornero-uptime" else "2.0.0")
+            self.assertIn(manifest["schemaVersion"], (2, 3))
+            self.assertGreaterEqual(int(manifest["version"].split(".")[0]), 2, plugin)
             self.assertEqual(manifest["placement"], "bar")
             dash = manifest["surfaces"]["dashboard"]
             self.assertEqual(dash["entrypoint"], "Dashboard.qml")

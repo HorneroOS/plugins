@@ -70,7 +70,7 @@ class DesktopBlockStructure(unittest.TestCase):
         for plugin in PLUGINS:
             m = manifest(plugin)
             self.assertEqual(m["placement"], "desktop", plugin)
-            self.assertEqual(m["schemaVersion"], 2, plugin)
+            self.assertIn(m["schemaVersion"], (2, 3), plugin)
             self.assertEqual(
                 m["surfaces"]["desktop"]["entrypoint"], m["entrypoint"], plugin
             )

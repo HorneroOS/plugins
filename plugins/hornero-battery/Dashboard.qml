@@ -1,4 +1,5 @@
 import QtQuick
+import QtQuick.Layouts
 import Hornero.PluginKit
 
 // Battery 2.0 dashboard surface (HorneroOS/plugins#31): the card
@@ -62,6 +63,30 @@ Item {
     }
     readonly property bool low: isLow(Power.hasBattery, Power.onBattery, Power.percentage, lowBatteryPercent)
 
+    function batteryGlyph() {
+        if (!Power.hasBattery)
+            return "plug-off";
+        if (root.low)
+            return "battery-exclamation";
+        if (Power.charging)
+            return "battery-charging";
+        const p = root.clampPercent(Power.percentage);
+        return p >= 88 ? "battery-4" : p >= 63 ? "battery-3" : p >= 38 ? "battery-2" : p >= 13 ? "battery-1" : "battery";
+    }
+
+    // Seconds from the Power facade (UPower) as "3 h 20 min"; empty when
+    // the platform reports none (0), never a guess.
+    function fmtDuration(seconds) {
+        const s = Number(seconds);
+        if (!isFinite(s) || s <= 0)
+            return "";
+        const h = Math.floor(s / 3600);
+        const m = Math.round((s % 3600) / 60);
+        return h > 0 ? i18n.tr("%1 h %2 min").arg(h).arg(m) : i18n.tr("%1 min").arg(m);
+    }
+
+    readonly property string remainingText: Power.charging ? fmtDuration(Power.timeToFull) : fmtDuration(Power.timeToEmpty)
+
     implicitWidth: hostAvailableWidth > 0 ? Math.min(360, hostAvailableWidth) : 320
     implicitHeight: card.implicitHeight
 
@@ -85,80 +110,83 @@ Item {
         id: card
 
         anchors.fill: parent
+        title: i18n.tr("Battery")
+        channel: 6
+        context: root.low ? i18n.tr("Low") : Power.hasBattery ? root.stateLabel(Power.stateText) : ""
         Accessible.name: i18n.tr("Battery")
 
         Column {
             width: parent.width
-            spacing: Theme.spacingSmall
-
-            UiStack {
-                orientation: root.hostOrientation
-                compact: root.hostCompact
-
-                UiText {
-                    role: "title"
-                    text: i18n.tr("Battery")
-                }
-
-                UiChip {
-                    visible: root.low
-                    text: i18n.tr("Low")
-                    tone: "error"
-                }
-            }
+            spacing: Theme.spacing.smaller
 
             UiState {
                 visible: !Power.hasBattery
                 width: parent.width
-                kind: "empty"
+                kind: "unavailable"
                 message: i18n.tr("No battery is reported by the Power service. The bar indicator stays hidden unless you enable 'show when no battery'.")
             }
 
             Column {
                 visible: Power.hasBattery
                 width: parent.width
-                spacing: Theme.spacingSmall
+                spacing: Theme.spacing.smaller
 
-                UiStack {
-                    orientation: root.hostOrientation
-                    compact: root.hostCompact
-
-                    UiMetric {
-                        label: i18n.tr("Charge")
-                        value: root.showPercentage ? i18n.tr("%1%").arg(root.clampPercent(Power.percentage)) : root.stateLabel(Power.stateText) !== "" ? root.stateLabel(Power.stateText) : i18n.tr("Unknown")
-                    }
-
-                    UiMetric {
-                        label: i18n.tr("State")
-                        value: root.stateLabel(Power.stateText) !== "" ? root.stateLabel(Power.stateText) : i18n.tr("Unknown")
-                    }
-                }
-
-                UiProgress {
+                UiMeterRow {
                     width: parent.width
+                    label: i18n.tr("CHG")
                     value: root.clampPercent(Power.percentage) / 100
-                    accessibleName: i18n.tr("Charge")
+                    valueText: i18n.tr("%1 %").arg(root.clampPercent(Power.percentage))
+                    threshold: root.low ? 0 : 1.01
                 }
 
                 UiStack {
+                    width: parent.width
                     orientation: root.hostOrientation
                     compact: root.hostCompact
 
                     UiMetric {
-                        label: i18n.tr("On battery")
-                        value: Power.onBattery ? i18n.tr("Yes") : i18n.tr("No")
+                        Layout.fillWidth: true
+                        Layout.preferredWidth: 1
+                        label: Power.charging ? i18n.tr("Time to full") : i18n.tr("Time left")
+                        value: root.remainingText
+                        available: root.remainingText !== ""
+                        size: "value"
                     }
 
                     UiMetric {
-                        label: i18n.tr("Charging")
-                        value: Power.charging ? i18n.tr("Yes") : i18n.tr("No")
+                        Layout.fillWidth: true
+                        Layout.preferredWidth: 1
+                        label: i18n.tr("Rate")
+                        value: Power.energyRate > 0 ? Power.energyRate.toFixed(1) : ""
+                        unit: "W"
+                        available: Power.energyRate > 0
+                        size: "value"
                     }
                 }
 
-                UiText {
+                UiStack {
                     width: parent.width
-                    role: "caption"
-                    text: i18n.tr("PluginKit Power does not expose time remaining, battery health or power profiles, so they are not shown. 'Not on battery' is reported as No above; the facade has no separate AC-online signal.")
+                    orientation: root.hostOrientation
+                    compact: root.hostCompact
+
+                    UiMetric {
+                        Layout.fillWidth: true
+                        Layout.preferredWidth: 1
+                        label: i18n.tr("Health")
+                        value: Power.healthAvailable ? String(Power.health) : ""
+                        unit: "%"
+                        available: Power.healthAvailable
+                        size: "value"
+                    }
+
+                    UiMetric {
+                        Layout.fillWidth: true
+                        Layout.preferredWidth: 1
+                        label: i18n.tr("Profile")
+                        value: Power.profile
+                        available: Power.profile !== ""
+                        size: "value"
+                    }
                 }
             }
         }
