@@ -123,41 +123,52 @@ Item {
         anchors.fill: parent
         Accessible.name: i18n.tr("Calculator")
         title: i18n.tr("Calculator")
-        icon: "calculate"
+        glyph: "calculator"
+        channel: 17
 
         Column {
             width: parent.width
-            spacing: Theme.spacingSmall
+            spacing: Theme.spacing.small
 
-            TextField {
+            UiTextField {
                 id: input
                 width: parent.width
+                mono: true
                 placeholderText: "e.g. (2 + 3) * 4"
-                Accessible.name: i18n.tr("Calculator expression")
-                ToolTip.text: i18n.tr("Calculator expression")
-                ToolTip.visible: hovered
+                accessibleName: i18n.tr("Calculator expression")
+                tooltipText: i18n.tr("Calculator expression")
                 onAccepted: root.compute()
             }
-            UiText {
+
+            // Result readout: a sunken well; an invalid expression reads
+            // alert (input error), never a made-up number.
+            UiMetric {
+                size: "value"
                 width: parent.width
-                role: "title"
-                color: root.result === "Error" ? Theme.error : Theme.onSurface
+                label: i18n.tr("Result")
+                value: root.result === "Error" ? i18n.tr("Error") : root.result
+                available: root.result !== ""
+                tone: root.result === "Error" ? "alert" : ""
                 Accessible.name: i18n.tr("Calculator result")
-                text: root.result === "" ? i18n.tr("Result") : (root.result === "Error" ? i18n.tr("Error") : "= " + root.result)
             }
+            // Keypad (#49): digits are quiet filled keys, operators and
+            // brackets sit one step back, "=" is the single primary action.
             Grid {
                 visible: root.showKeypad
                 width: parent.width
                 columns: 4
-                spacing: 6
+                columnSpacing: Theme.spacing.small
+                rowSpacing: Theme.spacing.small
+
                 Repeater {
                     model: ["7", "8", "9", "/", "4", "5", "6", "*", "1", "2", "3", "-", "0", ".", "%", "+", "(", ")", "C", "="]
+
                     delegate: UiButton {
                         required property var modelData
-                        width: (parent.width - 18) / 4
-                        // Keypad reads as a calculator, not a wireframe: quiet
-                        // tonal keys, "=" as the one primary action.
-                        variant: modelData === "=" ? "primary" : "tonal"
+                        readonly property bool digit: "0123456789.".indexOf(modelData) >= 0
+
+                        width: (parent.width - Theme.spacing.small * 3) / 4
+                        variant: modelData === "=" ? "primary" : digit ? "secondary" : "quiet"
                         text: modelData
                         accessibleName: modelData === "C" ? i18n.tr("Clear calculator") : (modelData === "=" ? i18n.tr("Compute result") : i18n.tr("Calculator key") + " " + modelData)
                         tooltipText: modelData === "C" ? i18n.tr("Clear") : (modelData === "=" ? i18n.tr("Compute result") : i18n.tr("Insert") + " " + modelData)

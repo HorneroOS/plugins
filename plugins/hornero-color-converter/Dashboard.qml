@@ -69,26 +69,27 @@ Item {
 
     UiCard {
         id: card
+        title: i18n.tr("Color Converter")
+        channel: 19
         anchors.fill: parent
         Accessible.name: i18n.tr("Color Converter")
 
         Column {
             width: parent.width
-            spacing: Theme.spacingSmall
+            spacing: Theme.spacing.small
 
-            UiText { role: "title"; text: i18n.tr("Color Converter") }
 
-            TextField {
+            UiTextField {
                 id: hexInput; width: parent.width; text: root.defaultHex; placeholderText: "#RGB or #RRGGBB"
                 Accessible.name: i18n.tr("Hex color input")
-                ToolTip.text: i18n.tr("Hex color, #RGB or #RRGGBB"); ToolTip.visible: hovered
+                tooltipText: i18n.tr("Hex color, #RGB or #RRGGBB")
                 onAccepted: root.applyHex()
             }
             UiButton { text: i18n.tr("Convert hex"); accessibleName: i18n.tr("Convert hex color"); tooltipText: i18n.tr("Convert hex to RGB and HSL"); onClicked: root.applyHex() }
             Rectangle {
-                width: parent.width; height: 36; radius: Theme.roundingSmall
+                width: parent.width; height: 36; radius: Theme.rounding.small
                 color: root.rgb ? toHex(root.rgb.r, root.rgb.g, root.rgb.b) : "transparent"
-                border.color: Theme.outline; visible: root.showPreview && root.rgb !== null
+                border.color: Theme.palette.ruleStrong; visible: root.showPreview && root.rgb !== null
                 Accessible.name: i18n.tr("Color preview")
             }
             UiText {
@@ -97,10 +98,11 @@ Item {
             }
             UiState { visible: root.errorText !== ""; width: parent.width; kind: "error"; message: root.errorText }
             Row {
-                spacing: 6
-                SpinBox { id: rSpin; from: 0; to: 255; value: 51; editable: true; Accessible.name: i18n.tr("Red value"); ToolTip.text: i18n.tr("Red 0-255"); ToolTip.visible: hovered; onValueModified: root.applyRgb() }
-                SpinBox { id: gSpin; from: 0; to: 255; value: 102; editable: true; Accessible.name: i18n.tr("Green value"); ToolTip.text: i18n.tr("Green 0-255"); ToolTip.visible: hovered; onValueModified: root.applyRgb() }
-                SpinBox { id: bSpin; from: 0; to: 255; value: 153; editable: true; Accessible.name: i18n.tr("Blue value"); ToolTip.text: i18n.tr("Blue 0-255"); ToolTip.visible: hovered; onValueModified: root.applyRgb() }
+                width: parent.width
+                spacing: Theme.spacing.small
+                UiSpinBox { id: rSpin; width: (parent.width - parent.spacing * 2) / 3; from: 0; to: 255; value: 51; editable: true; Accessible.name: i18n.tr("Red value"); tooltipText: i18n.tr("Red 0-255"); onValueModified: root.applyRgb() }
+                UiSpinBox { id: gSpin; width: (parent.width - parent.spacing * 2) / 3; from: 0; to: 255; value: 102; editable: true; Accessible.name: i18n.tr("Green value"); tooltipText: i18n.tr("Green 0-255"); onValueModified: root.applyRgb() }
+                UiSpinBox { id: bSpin; width: (parent.width - parent.spacing * 2) / 3; from: 0; to: 255; value: 153; editable: true; Accessible.name: i18n.tr("Blue value"); tooltipText: i18n.tr("Blue 0-255"); onValueModified: root.applyRgb() }
             }
             UiText { width: parent.width; role: "caption"; Accessible.name: i18n.tr("Hex from RGB output"); text: i18n.tr("Hex from RGB:") + " " + toHex(rSpin.value, gSpin.value, bSpin.value) }
             Component.onCompleted: root.applyHex()

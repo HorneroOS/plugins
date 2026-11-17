@@ -57,32 +57,34 @@ Item {
 
     UiCard {
         id: card
+        title: i18n.tr("Text Tools")
+        channel: 22
         anchors.fill: parent
         Accessible.name: i18n.tr("Text Tools")
 
         Column {
             width: parent.width
-            spacing: Theme.spacingSmall
+            spacing: Theme.spacing.small
 
-            UiText { role: "title"; text: i18n.tr("Text Tools") }
 
-            TextArea {
+            UiTextArea {
                 id: input; width: parent.width; height: 90; placeholderText: i18n.tr("Type or paste text...")
                 wrapMode: TextArea.Wrap; Accessible.name: i18n.tr("Text input")
-                ToolTip.text: i18n.tr("Text to transform"); ToolTip.visible: hovered
+                tooltipText: i18n.tr("Text to transform")
             }
             UiText {
                 visible: root.showCounts
                 width: parent.width; role: "caption"; Accessible.name: i18n.tr("Counts")
                 text: input.text.length + " " + i18n.tr("characters") + ", " + root.countWords() + " " + i18n.tr("words") + ", " + root.countLines() + " " + i18n.tr("lines")
             }
-            UiStack {
-                orientation: root.hostOrientation; compact: root.hostCompact
+            Flow {
+                width: parent.width
+                spacing: Theme.spacing.small
                 Repeater {
                     model: ["Uppercase", "Lowercase", "Title Case", "Reverse"]
                     delegate: UiButton {
                         required property var modelData
-                        variant: root.mode === String(modelData) ? "primary" : "ghost"
+                        variant: root.mode === String(modelData) ? "primary" : "quiet"
                         text: modelData
                         accessibleName: i18n.tr("Transform") + " " + modelData
                         tooltipText: i18n.tr("Show transformed output")
@@ -91,11 +93,11 @@ Item {
                 }
             }
             UiText { width: parent.width; role: "caption"; text: root.mode + " " + i18n.tr("output:") }
-            TextArea {
+            UiTextArea {
                 id: output; width: parent.width; height: 80; readOnly: true; selectByMouse: true
                 wrapMode: TextArea.Wrap; text: root.transformed()
                 Accessible.name: i18n.tr("Transformed text output")
-                ToolTip.text: i18n.tr("Transformed text (read-only, selectable)"); ToolTip.visible: hovered
+                tooltipText: i18n.tr("Transformed text (read-only, selectable)")
             }
         }
     }

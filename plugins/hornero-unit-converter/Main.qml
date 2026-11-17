@@ -94,7 +94,7 @@ Item {
 
         UiButton {
             id: indicator
-            variant: "ghost"
+            variant: "quiet"
             text: "⇄"
             tooltipText: i18n.tr("Unit Converter: activate for a quick conversion")
             accessibleName: i18n.tr("Unit Converter quick action")
@@ -117,17 +117,16 @@ Item {
 
         Column {
             width: 300
-            spacing: Theme.spacingSmall
+            spacing: Theme.spacing.small
 
             UiText { role: "title"; text: i18n.tr("Unit Converter") }
 
-            TextField {
+            UiTextField {
                 id: quickInput
                 width: parent.width
                 placeholderText: i18n.tr("e.g. 10 km to mi")
                 Accessible.name: i18n.tr("Quick unit conversion")
-                ToolTip.text: i18n.tr("Quick unit conversion")
-                ToolTip.visible: hovered
+                tooltipText: i18n.tr("Quick unit conversion")
                 onAccepted: root.runQuick()
             }
 

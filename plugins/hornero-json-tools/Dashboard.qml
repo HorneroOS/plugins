@@ -49,31 +49,32 @@ Item {
 
     UiCard {
         id: card
+        title: i18n.tr("JSON Tools")
+        channel: 21
         anchors.fill: parent
         Accessible.name: i18n.tr("JSON Tools")
 
         Column {
             width: parent.width
-            spacing: Theme.spacingSmall
+            spacing: Theme.spacing.small
 
-            UiText { role: "title"; text: i18n.tr("JSON Tools") }
 
-            TextArea {
+            UiTextArea {
                 id: input; width: parent.width; height: 90; placeholderText: "{\"key\": 1}"
                 wrapMode: TextArea.Wrap; Accessible.name: i18n.tr("JSON input")
-                ToolTip.text: i18n.tr("JSON to format or minify"); ToolTip.visible: hovered
+                tooltipText: i18n.tr("JSON to format or minify")
             }
             UiStack {
                 orientation: root.hostOrientation; compact: root.hostCompact
                 UiButton { text: i18n.tr("Format"); accessibleName: i18n.tr("Format JSON"); tooltipText: i18n.tr("Format JSON"); onClicked: root.formatJson() }
-                UiButton { variant: "ghost"; text: i18n.tr("Minify"); accessibleName: i18n.tr("Minify JSON"); tooltipText: i18n.tr("Minify JSON"); onClicked: root.minifyJson() }
+                UiButton { variant: "quiet"; text: i18n.tr("Minify"); accessibleName: i18n.tr("Minify JSON"); tooltipText: i18n.tr("Minify JSON"); onClicked: root.minifyJson() }
             }
             UiState { visible: root.errorText !== ""; width: parent.width; kind: "error"; message: root.errorText }
-            TextArea {
+            UiTextArea {
                 id: output; width: parent.width; height: 90; readOnly: true; selectByMouse: true
                 wrapMode: TextArea.Wrap; placeholderText: i18n.tr("Output")
                 Accessible.name: i18n.tr("JSON output")
-                ToolTip.text: i18n.tr("JSON output (read-only, selectable)"); ToolTip.visible: hovered
+                tooltipText: i18n.tr("JSON output (read-only, selectable)")
             }
         }
     }

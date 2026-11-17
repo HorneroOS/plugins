@@ -61,7 +61,7 @@ Item {
 
         UiButton {
             id: indicator
-            variant: "ghost"
+            variant: "quiet"
             text: "{}"
             tooltipText: i18n.tr("JSON Tools: activate for a quick format check")
             accessibleName: i18n.tr("JSON Tools quick action")
@@ -84,17 +84,16 @@ Item {
 
         Column {
             width: 300
-            spacing: Theme.spacingSmall
+            spacing: Theme.spacing.small
 
             UiText { role: "title"; text: i18n.tr("JSON Tools") }
 
-            TextField {
+            UiTextField {
                 id: quickInput
                 width: parent.width
                 placeholderText: i18n.tr("JSON to format")
                 Accessible.name: i18n.tr("Quick JSON input")
-                ToolTip.text: i18n.tr("Quick JSON input")
-                ToolTip.visible: hovered
+                tooltipText: i18n.tr("Quick JSON input")
                 onAccepted: root.runQuick()
             }
 

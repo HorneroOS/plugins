@@ -9,9 +9,8 @@ import Hornero.PluginKit
 // is hosted today. The declared launcher surface (Launcher.qml) is
 // a validated declaration only until the shell launcher provider
 // host (HorneroOS/shell#250) exists; no parallel launcher and no
-// invented PluginKit launcher member is used here. PluginKit has
-// no text-input primitive, so the query field is a QtQuick.Controls
-// TextField with an accessible name and tooltip.
+// invented PluginKit launcher member is used here. The query field
+// is the PluginKit 3 UiTextField with an accessible name and tooltip.
 Item {
     id: root
 
@@ -126,8 +125,8 @@ Item {
 
         UiButton {
             id: indicator
-            variant: "ghost"
-            iconName: "calculate"
+            variant: "quiet"
+            glyph: "calculator"
             tooltipText: i18n.tr("Calculator: activate for a quick expression")
             accessibleName: i18n.tr("Calculator quick action")
             onClicked: popover.toggle()
@@ -149,17 +148,16 @@ Item {
 
         Column {
             width: 300
-            spacing: Theme.spacingSmall
+            spacing: Theme.spacing.small
 
             UiText { role: "title"; text: i18n.tr("Calculator") }
 
-            TextField {
+            UiTextField {
                 id: quickInput
                 width: parent.width
                 placeholderText: i18n.tr("e.g. (2 + 3) * 4")
                 Accessible.name: i18n.tr("Quick calculator expression")
-                ToolTip.text: i18n.tr("Quick calculator expression")
-                ToolTip.visible: hovered
+                tooltipText: i18n.tr("Quick calculator expression")
                 onAccepted: root.runQuick()
                 onTextChanged: { if (root.liveResult) root.runQuick(); }
             }

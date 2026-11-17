@@ -92,40 +92,39 @@ Item {
 
     UiCard {
         id: card
+        title: i18n.tr("Unit Converter")
+        channel: 23
         anchors.fill: parent
         Accessible.name: i18n.tr("Unit Converter")
 
         Column {
             width: parent.width
-            spacing: Theme.spacingSmall
+            spacing: Theme.spacing.small
 
-            UiText { role: "title"; text: i18n.tr("Unit Converter") }
 
-            ComboBox {
+            UiComboBox {
                 id: categoryBox
                 width: parent.width
                 model: ["Length", "Mass", "Temperature"]
                 currentIndex: root.defaultCategory === "mass" ? 1 : (root.defaultCategory === "temperature" ? 2 : 0)
                 Accessible.name: i18n.tr("Conversion category")
-                ToolTip.text: i18n.tr("Conversion category")
-                ToolTip.visible: hovered
+                tooltipText: i18n.tr("Conversion category")
                 onCurrentIndexChanged: { fromBox.currentIndex = 0; toBox.currentIndex = 1; }
             }
-            TextField {
+            UiTextField {
                 id: input
                 width: parent.width
                 text: "1"
                 placeholderText: i18n.tr("Value")
                 Accessible.name: i18n.tr("Value to convert")
-                ToolTip.text: i18n.tr("Value to convert")
-                ToolTip.visible: hovered
+                tooltipText: i18n.tr("Value to convert")
                 inputMethodHints: Qt.ImhFormattedNumbersOnly
             }
             Row {
                 width: parent.width
                 spacing: 8
-                ComboBox { id: fromBox; width: (parent.width - parent.spacing) / 2; model: root.units; currentIndex: 0; Accessible.name: i18n.tr("From unit"); ToolTip.text: i18n.tr("From unit"); ToolTip.visible: hovered }
-                ComboBox { id: toBox; width: (parent.width - parent.spacing) / 2; model: root.units; currentIndex: 1; Accessible.name: i18n.tr("To unit"); ToolTip.text: i18n.tr("To unit"); ToolTip.visible: hovered }
+                UiComboBox { id: fromBox; width: (parent.width - parent.spacing) / 2; model: root.units; currentIndex: 0; Accessible.name: i18n.tr("From unit"); tooltipText: i18n.tr("From unit") }
+                UiComboBox { id: toBox; width: (parent.width - parent.spacing) / 2; model: root.units; currentIndex: 1; Accessible.name: i18n.tr("To unit"); tooltipText: i18n.tr("To unit") }
             }
             UiText { width: parent.width; Accessible.name: i18n.tr("Conversion result"); text: root.resultText() }
         }

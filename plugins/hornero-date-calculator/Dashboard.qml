@@ -70,6 +70,8 @@ Item {
 
     UiCard {
         id: card
+        title: i18n.tr("Date Calculator")
+        channel: 20
         anchors.fill: parent
         Accessible.name: i18n.tr("Date Calculator")
 
@@ -77,7 +79,6 @@ Item {
             width: parent.width
             spacing: Theme.spacing.small
 
-            UiText { role: "title"; text: i18n.tr("Date Calculator") }
 
             UiText { visible: root.showUtcNote; width: parent.width; role: "caption"; text: i18n.tr("All math uses UTC to avoid DST drift.") }
             UiTextField { id: startInput; width: parent.width; placeholderText: "Start YYYY-MM-DD"; Accessible.name: i18n.tr("Start date"); tooltipText: i18n.tr("Start date YYYY-MM-DD") }

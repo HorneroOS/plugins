@@ -185,7 +185,7 @@
     {
       "id": "hornero-calculator",
       "classification": "needs-upgrade",
-      "valueProposition": "Calculator 2.0: bar quick expression with popover result plus compact Utilities dashboard panel with the 1.x keypad, over the preserved safe parser (no dynamic execution); declared launcher entrypoint carries the same tested logic for shell#250.",
+      "valueProposition": "Calculator 3.0: bar quick action and dashboard keypad on Hornero Signal: digits as secondary keys, operators quiet, one primary equals key (#49), a mono expression field and a result readout well that reads alert on an invalid expression.",
       "nativeOverlap": "No native shell calculator identified; overlaps converter tools only as another dashboard utility.",
       "dimensions": {
         "tooltips": {

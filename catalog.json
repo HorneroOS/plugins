@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedFrom": "07a80c5514a9f3660e0eaa4902c82dca08c0d216",
+  "generatedFrom": "c80659743db74c84d01589f10a5abe1c8a19be47",
   "plugins": [
     {
       "id": "hornero-agenda",
@@ -72,7 +72,7 @@
     {
       "id": "hornero-base-converter",
       "name": "Hornero Base Converter",
-      "version": "2.0.0",
+      "version": "3.0.0",
       "description": "Utility Tools 2.0 base converter: bar quick action (decimal or 0x hex) and compact dashboard detail converting decimal integers to binary/octal/hex and hex back. Invalid digits show errors.",
       "author": "HorneroOS contributors",
       "license": "MIT",
@@ -92,7 +92,7 @@
       },
       "trust": "official",
       "path": "plugins/hornero-base-converter",
-      "sha256": "0789307a9e58f79073d061691823b537a4fd74639750ae19470a25e4330c01fb"
+      "sha256": "2c8ffc09c9f610411a5aefc1d024dac70001c431b15f9ae9c56a815351c88d76"
     },
     {
       "id": "hornero-battery",
@@ -142,7 +142,7 @@
     {
       "id": "hornero-calculator",
       "name": "Hornero Calculator",
-      "version": "2.2.1",
+      "version": "3.0.0",
       "description": "Utility Tools 2.0 calculator: bar quick action and compact dashboard detail over a safe tokenizer/recursive-descent parser (+ - * / %, parentheses, decimals, unary minus). Division by zero shows Error.",
       "author": "HorneroOS contributors",
       "license": "MIT",
@@ -167,7 +167,7 @@
       },
       "trust": "official",
       "path": "plugins/hornero-calculator",
-      "sha256": "757e02d949b5f5b2175851e5c4002780ecabcc6bbdf8d35a65ef54d447d8be8e"
+      "sha256": "6318fb859d904f2e3b72228975f678b4d471db8aa61a2c39a9f8c600bdd73da7"
     },
     {
       "id": "hornero-calendar",
@@ -219,7 +219,7 @@
     {
       "id": "hornero-color-converter",
       "name": "Hornero Color Converter",
-      "version": "2.0.0",
+      "version": "3.0.0",
       "description": "Utility Tools 2.0 color converter: bar quick hex action and compact dashboard detail converting validated #RGB/#RRGGBB to RGB and HSL and RGB back to hex. Invalid hex shows an error.",
       "author": "HorneroOS contributors",
       "license": "MIT",
@@ -245,7 +245,7 @@
       },
       "trust": "official",
       "path": "plugins/hornero-color-converter",
-      "sha256": "94d63bcba0532c2ab8c2351e502684d076385aa97741655b41947a285b61b2d0"
+      "sha256": "de6abc1f5d606a6e4aa72c6f02e734750547a042437fe71257f2dd07ef240837"
     },
     {
       "id": "hornero-countdown",
@@ -317,7 +317,7 @@
       },
       "trust": "official",
       "path": "plugins/hornero-date-calculator",
-      "sha256": "a745a31a30136bb846f28a7af89ede0c1dad56bbe3cfad9f1783a7c783acb735"
+      "sha256": "420a558b4d9650fbb3309dd52b1d51cec9a4cfc411a977afc8e30842fc9ab5d9"
     },
     {
       "id": "hornero-disk-usage",
@@ -450,7 +450,7 @@
     {
       "id": "hornero-json-tools",
       "name": "Hornero JSON Tools",
-      "version": "2.0.0",
+      "version": "3.0.0",
       "description": "Utility Tools 2.0 JSON tools: bar quick format/validate action and compact dashboard detail with Format and Minify using JSON parse/stringify only. Parser errors are shown.",
       "author": "HorneroOS contributors",
       "license": "MIT",
@@ -481,7 +481,7 @@
       },
       "trust": "official",
       "path": "plugins/hornero-json-tools",
-      "sha256": "2dd8e98bd5553462f13dca936e42a45a753844d3b2f70b9baacdf790e0582f06"
+      "sha256": "5e9e16c6598b850cab835736434bda8ad1ccc0ffba54af7688b7c00e23fd45d0"
     },
     {
       "id": "hornero-metronome",
@@ -1019,7 +1019,7 @@
     {
       "id": "hornero-text-tools",
       "name": "Hornero Text Tools",
-      "version": "2.0.0",
+      "version": "3.0.0",
       "description": "Utility Tools 2.0 text tools: bar quick transform and compact dashboard detail with Uppercase, Lowercase, Title Case and Reverse plus character, word and line counts. Pure QML.",
       "author": "HorneroOS contributors",
       "license": "MIT",
@@ -1050,12 +1050,12 @@
       },
       "trust": "official",
       "path": "plugins/hornero-text-tools",
-      "sha256": "2f541a54e57e6b8e22141a91c5f032442e171285654a608b4b8017c58f23e15c"
+      "sha256": "6b4044f32261db0379c6f40c88e789ebe4953b964b42d70e84a4e908aac59e4a"
     },
     {
       "id": "hornero-unit-converter",
       "name": "Hornero Unit Converter",
-      "version": "2.0.0",
+      "version": "3.0.0",
       "description": "Utility Tools 2.0 unit converter: bar quick action (10 km to mi) and compact dashboard detail for length (m, km, mi, ft), mass (kg, lb) and temperature (C, F, K). Pure JS, no processes or network.",
       "author": "HorneroOS contributors",
       "license": "MIT",
@@ -1087,7 +1087,7 @@
       },
       "trust": "official",
       "path": "plugins/hornero-unit-converter",
-      "sha256": "d04680ce811b30749f979b880c957866e7699a6051236c0e5cd033387931f1e0"
+      "sha256": "e0116d6153475c298568d840ae276488886a2cf6a648e465ccf5097be3f81f0a"
     },
     {
       "id": "hornero-uptime",

@@ -74,7 +74,7 @@ Item {
 
         UiButton {
             id: indicator
-            variant: "ghost"
+            variant: "quiet"
             text: "#"
             tooltipText: i18n.tr("Color Converter: activate for a quick hex conversion")
             accessibleName: i18n.tr("Color Converter quick action")
@@ -97,17 +97,16 @@ Item {
 
         Column {
             width: 300
-            spacing: Theme.spacingSmall
+            spacing: Theme.spacing.small
 
             UiText { role: "title"; text: i18n.tr("Color Converter") }
 
-            TextField {
+            UiTextField {
                 id: quickInput
                 width: parent.width
                 placeholderText: i18n.tr("#RGB or #RRGGBB")
                 Accessible.name: i18n.tr("Quick hex color")
-                ToolTip.text: i18n.tr("Quick hex color")
-                ToolTip.visible: hovered
+                tooltipText: i18n.tr("Quick hex color")
                 onAccepted: root.runQuick()
             }
 

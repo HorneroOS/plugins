@@ -72,7 +72,7 @@ Item {
 
         UiButton {
             id: indicator
-            variant: "ghost"
+            variant: "quiet"
             text: "01"
             tooltipText: i18n.tr("Base Converter: activate for a quick conversion")
             accessibleName: i18n.tr("Base Converter quick action")
@@ -95,17 +95,16 @@ Item {
 
         Column {
             width: 300
-            spacing: Theme.spacingSmall
+            spacing: Theme.spacing.small
 
             UiText { role: "title"; text: i18n.tr("Base Converter") }
 
-            TextField {
+            UiTextField {
                 id: quickInput
                 width: parent.width
                 placeholderText: i18n.tr("255 or 0xFF")
                 Accessible.name: i18n.tr("Quick base conversion")
-                ToolTip.text: i18n.tr("Quick base conversion")
-                ToolTip.visible: hovered
+                tooltipText: i18n.tr("Quick base conversion")
                 onAccepted: root.runQuick()
             }
 
