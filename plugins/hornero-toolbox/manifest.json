@@ -1,0 +1,126 @@
+{
+  "schemaVersion": 3,
+  "id": "hornero-toolbox",
+  "name": "Hornero Toolbox",
+  "version": "1.0.0",
+  "description": "Seven everyday tools in one Signal card: calculator, unit converter (with data sizes), base converter, colour with WCAG contrast, date maths, JSON format/minify and text transforms. Local arithmetic only.",
+  "author": "HorneroOS contributors",
+  "license": "MIT",
+  "homepage": "https://github.com/HorneroOS/plugins",
+  "entrypoint": "Main.qml",
+  "placement": "dashboard",
+  "surfaces": {
+    "dashboard": {
+      "entrypoint": "Main.qml",
+      "size": "standard",
+      "category": "Utilities"
+    }
+  },
+  "translations": {
+    "sourceLocale": "en",
+    "locales": [
+      "es"
+    ],
+    "directory": "translations"
+  },
+  "marketplace": {
+    "compatibility": {
+      "minShellVersion": "1.0.0"
+    },
+    "changelog": [
+      {
+        "version": "1.0.0",
+        "notes": "Initial release: replaces Calculator, Unit Converter, Base Converter, Colour Converter, Date Calculator, JSON Tools and Text Tools with one tabbed card. Adds imperial lengths, ounces, grams, data sizes and WCAG contrast. Settings of the old extensions do not carry over (new id)."
+      }
+    ]
+  },
+  "files": [
+    "Main.qml",
+    "README.md",
+    "LICENSE",
+    "translations/es.json"
+  ],
+  "capabilities": {
+    "processCommands": [],
+    "networkHosts": [],
+    "settings": {
+      "defaultTool": {
+        "type": "enum",
+        "default": "calculator",
+        "options": [
+          "calculator",
+          "units",
+          "base",
+          "colour",
+          "dates",
+          "json",
+          "text"
+        ],
+        "description": "Tool shown when the card opens."
+      },
+      "showKeypad": {
+        "type": "boolean",
+        "default": true,
+        "description": "Show the calculator keypad under the expression."
+      },
+      "precision": {
+        "type": "integer",
+        "default": 6,
+        "minimum": 0,
+        "maximum": 10,
+        "description": "Decimal places kept in unit conversions."
+      },
+      "defaultCategory": {
+        "type": "enum",
+        "default": "length",
+        "options": [
+          "length",
+          "mass",
+          "data",
+          "temperature"
+        ],
+        "description": "Unit category shown first."
+      },
+      "uppercaseHex": {
+        "type": "boolean",
+        "default": true,
+        "description": "Show hexadecimal output in uppercase."
+      },
+      "defaultHex": {
+        "type": "string",
+        "default": "#E8A33D",
+        "minLength": 4,
+        "maxLength": 7,
+        "description": "Colour pre-filled in the Colour tool (#RGB or #RRGGBB)."
+      },
+      "showUtcNote": {
+        "type": "boolean",
+        "default": true,
+        "description": "Show the UTC arithmetic note in the Dates tool."
+      },
+      "indentSpaces": {
+        "type": "integer",
+        "default": 2,
+        "minimum": 0,
+        "maximum": 8,
+        "description": "Spaces per indent level for JSON Format."
+      },
+      "defaultTextMode": {
+        "type": "enum",
+        "default": "uppercase",
+        "options": [
+          "uppercase",
+          "lowercase",
+          "title-case",
+          "reverse"
+        ],
+        "description": "Text transform selected first."
+      },
+      "showCounts": {
+        "type": "boolean",
+        "default": true,
+        "description": "Show character, word and line counts in the Text tool."
+      }
+    }
+  }
+}

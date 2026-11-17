@@ -614,3 +614,13 @@ capabilities:
     inspiration_notes: "First-party HorneroOS plugin written for this catalogue; no upstream code is copied. Upstream ideas, where any, are credited in the researched entries above."
     hornero_equivalent: "plugins/hornero-device-battery"
     status: implemented
+  - id: hornero-toolbox
+    name: Hornero Toolbox
+    category: utilities
+    origin: {project: HorneroOS, url: "https://github.com/HorneroOS/plugins", license: MIT}
+    classification: hornero-original
+    license_status: verified
+    license_evidence: plugins/hornero-toolbox/LICENSE
+    inspiration_notes: "First-party HorneroOS plugin written for this catalogue; no upstream code is copied. Upstream ideas, where any, are credited in the researched entries above."
+    hornero_equivalent: "plugins/hornero-toolbox"
+    status: implemented

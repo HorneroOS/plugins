@@ -151,7 +151,7 @@
     },
     {
       "id": "hornero-base-converter",
-      "classification": "needs-upgrade",
+      "classification": "deprecated-with-replacement",
       "valueProposition": "Base Converter 2.0: bar quick conversion with an explicit 0x hex prefix plus compact Utilities dashboard detail, over the preserved safe-range validated conversions; declared launcher entrypoint carries the same tested logic for shell#250.",
       "nativeOverlap": "Converter family overlap with hornero-unit-converter and hornero-color-converter; distinct value is numeric-base conversion.",
       "dimensions": {
@@ -192,11 +192,11 @@
           "note": "QA VM (shell main + PluginKit 3, 3 vCPU llvmpipe, 2026-11-17): loads without a slow-load or load-churn flag; idle CPU of the shell process measured as one set, not per plugin: bare shell 9.2%, 6 desktop widgets 9.4%, 22 bar indicators 11.8%, 12 dashboard cards 11.5% of one core (VM measurement, noise about 0.5 pp; mission evidence plugin-e2e/idle-cpu.txt). Not a published estimate."
         }
       },
-      "issue": "https://github.com/HorneroOS/plugins/issues/30",
       "graphicalReview": {
         "reviewer": "Claude Code agent (offscreen fixture review and QA VM captures; not a human design review)",
         "date": "2026-11-17"
-      }
+      },
+      "replacement": "hornero-toolbox"
     },
     {
       "id": "hornero-battery",
@@ -249,7 +249,7 @@
     },
     {
       "id": "hornero-calculator",
-      "classification": "needs-upgrade",
+      "classification": "deprecated-with-replacement",
       "valueProposition": "Calculator 3.0: bar quick action and dashboard keypad on Hornero Signal: digits as secondary keys, operators quiet, one primary equals key (#49), a mono expression field and a result readout well that reads alert on an invalid expression.",
       "nativeOverlap": "No native shell calculator identified; overlaps converter tools only as another dashboard utility.",
       "dimensions": {
@@ -290,11 +290,11 @@
           "note": "QA VM (shell main + PluginKit 3, 3 vCPU llvmpipe, 2026-11-17): loads without a slow-load or load-churn flag; idle CPU of the shell process measured as one set, not per plugin: bare shell 9.2%, 6 desktop widgets 9.4%, 22 bar indicators 11.8%, 12 dashboard cards 11.5% of one core (VM measurement, noise about 0.5 pp; mission evidence plugin-e2e/idle-cpu.txt). Not a published estimate."
         }
       },
-      "issue": "https://github.com/HorneroOS/plugins/issues/30",
       "graphicalReview": {
         "reviewer": "Claude Code agent (offscreen fixture review and QA VM captures; not a human design review)",
         "date": "2026-11-17"
-      }
+      },
+      "replacement": "hornero-toolbox"
     },
     {
       "id": "hornero-calendar",
@@ -347,7 +347,7 @@
     },
     {
       "id": "hornero-color-converter",
-      "classification": "needs-upgrade",
+      "classification": "deprecated-with-replacement",
       "valueProposition": "Color Converter 2.0: bar quick hex lookup plus compact Utilities dashboard panel with preview and RGB inputs, over the preserved validated conversions; declared launcher entrypoint carries the same tested logic for shell#250.",
       "nativeOverlap": "Converter family overlap with hornero-base-converter and hornero-unit-converter; distinct value is colour-space conversion.",
       "dimensions": {
@@ -388,11 +388,11 @@
           "note": "QA VM (shell main + PluginKit 3, 3 vCPU llvmpipe, 2026-11-17): loads without a slow-load or load-churn flag; idle CPU of the shell process measured as one set, not per plugin: bare shell 9.2%, 6 desktop widgets 9.4%, 22 bar indicators 11.8%, 12 dashboard cards 11.5% of one core (VM measurement, noise about 0.5 pp; mission evidence plugin-e2e/idle-cpu.txt). Not a published estimate."
         }
       },
-      "issue": "https://github.com/HorneroOS/plugins/issues/30",
       "graphicalReview": {
         "reviewer": "Claude Code agent (offscreen fixture review and QA VM captures; not a human design review)",
         "date": "2026-11-17"
-      }
+      },
+      "replacement": "hornero-toolbox"
     },
     {
       "id": "hornero-containers",
@@ -490,7 +490,7 @@
     },
     {
       "id": "hornero-date-calculator",
-      "classification": "needs-upgrade",
+      "classification": "deprecated-with-replacement",
       "valueProposition": "Date Calculator 2.0: one-line bar date math plus compact Utilities dashboard detail, over the preserved UTC-only real-date validation; declared launcher entrypoint carries the same tested logic for shell#250.",
       "nativeOverlap": "Overlaps hornero-agenda on date arithmetic display; distinct value is days-between and add-days calculation.",
       "dimensions": {
@@ -531,11 +531,11 @@
           "note": "QA VM (shell main + PluginKit 3, 3 vCPU llvmpipe, 2026-11-17): loads without a slow-load or load-churn flag; idle CPU of the shell process measured as one set, not per plugin: bare shell 9.2%, 6 desktop widgets 9.4%, 22 bar indicators 11.8%, 12 dashboard cards 11.5% of one core (VM measurement, noise about 0.5 pp; mission evidence plugin-e2e/idle-cpu.txt). Not a published estimate."
         }
       },
-      "issue": "https://github.com/HorneroOS/plugins/issues/30",
       "graphicalReview": {
         "reviewer": "Claude Code agent (offscreen fixture review and QA VM captures; not a human design review)",
         "date": "2026-11-17"
-      }
+      },
+      "replacement": "hornero-toolbox"
     },
     {
       "id": "hornero-device-battery",
@@ -776,7 +776,7 @@
     },
     {
       "id": "hornero-json-tools",
-      "classification": "needs-upgrade",
+      "classification": "deprecated-with-replacement",
       "valueProposition": "JSON Tools 2.0: bar quick format/validate plus compact Utilities dashboard Format/Minify detail, over the preserved JSON.parse/stringify-only logic; declared launcher entrypoint carries the same tested logic for shell#250.",
       "nativeOverlap": "Developer-tool overlap with hornero-text-tools and hornero-base-converter; distinct value is JSON format/minify.",
       "dimensions": {
@@ -817,11 +817,11 @@
           "note": "QA VM (shell main + PluginKit 3, 3 vCPU llvmpipe, 2026-11-17): loads without a slow-load or load-churn flag; idle CPU of the shell process measured as one set, not per plugin: bare shell 9.2%, 6 desktop widgets 9.4%, 22 bar indicators 11.8%, 12 dashboard cards 11.5% of one core (VM measurement, noise about 0.5 pp; mission evidence plugin-e2e/idle-cpu.txt). Not a published estimate."
         }
       },
-      "issue": "https://github.com/HorneroOS/plugins/issues/30",
       "graphicalReview": {
         "reviewer": "Claude Code agent (offscreen fixture review and QA VM captures; not a human design review)",
         "date": "2026-11-17"
-      }
+      },
+      "replacement": "hornero-toolbox"
     },
     {
       "id": "hornero-metronome",
@@ -1654,7 +1654,7 @@
     },
     {
       "id": "hornero-text-tools",
-      "classification": "needs-upgrade",
+      "classification": "deprecated-with-replacement",
       "valueProposition": "Text Tools 2.0: bar quick transform (configured default mode) plus compact Utilities dashboard panel with all 1.x transforms and counts; declared launcher entrypoint carries the same tested logic for shell#250.",
       "nativeOverlap": "Developer-tool overlap with hornero-json-tools; distinct value is case/reverse transforms with counts.",
       "dimensions": {
@@ -1695,15 +1695,60 @@
           "note": "QA VM (shell main + PluginKit 3, 3 vCPU llvmpipe, 2026-11-17): loads without a slow-load or load-churn flag; idle CPU of the shell process measured as one set, not per plugin: bare shell 9.2%, 6 desktop widgets 9.4%, 22 bar indicators 11.8%, 12 dashboard cards 11.5% of one core (VM measurement, noise about 0.5 pp; mission evidence plugin-e2e/idle-cpu.txt). Not a published estimate."
         }
       },
-      "issue": "https://github.com/HorneroOS/plugins/issues/30",
       "graphicalReview": {
         "reviewer": "Claude Code agent (offscreen fixture review and QA VM captures; not a human design review)",
         "date": "2026-11-17"
-      }
+      },
+      "replacement": "hornero-toolbox"
+    },
+    {
+      "id": "hornero-toolbox",
+      "classification": "needs-upgrade",
+      "valueProposition": "Toolbox 1.0: calculator, units (with data sizes), base, colour with WCAG contrast, date maths, JSON and text tools in one tabbed Signal card; replaces seven single-purpose extensions.",
+      "nativeOverlap": "No native equivalent. Supersedes hornero-calculator, hornero-unit-converter, hornero-base-converter, hornero-color-converter, hornero-date-calculator, hornero-json-tools and hornero-text-tools.",
+      "dimensions": {
+        "tooltips": {
+          "status": "pass",
+          "note": "Interactive controls expose their purpose through Ui* accessible names and the host-owned tooltip layer (static probe)."
+        },
+        "accessibility": {
+          "status": "pass",
+          "note": "Every control carries an accessible name (static probe)."
+        },
+        "translation": {
+          "status": "pass",
+          "note": "All literals go through PluginKit Translations; es catalogue complete (static probe)."
+        },
+        "settings": {
+          "status": "pass",
+          "note": "Ten typed settings read via PluginKit Settings (static probe)."
+        },
+        "themeTokens": {
+          "status": "pass",
+          "note": "Colours come from Ui* primitives and Theme.palette tokens (static probe)."
+        },
+        "screenshots": {
+          "status": "pass",
+          "note": "docs/screenshots/hornero-toolbox.png: offscreen fixture render, Signal Night. Other tabs and day renders are in docs/evidence/catalog-audit/."
+        },
+        "orientation": {
+          "status": "na",
+          "note": "Dashboard card only: the host fixes its size."
+        },
+        "loadingErrorStates": {
+          "status": "pass",
+          "note": "Invalid input states are rendered and unit-tested; there is no loading state (local arithmetic)."
+        },
+        "performance": {
+          "status": "unverified",
+          "note": "Pure local computation on input change; no timers, processes or providers; not measured."
+        }
+      },
+      "issue": "HorneroOS/plugins#80"
     },
     {
       "id": "hornero-unit-converter",
-      "classification": "needs-upgrade",
+      "classification": "deprecated-with-replacement",
       "valueProposition": "Unit Converter 2.0: one-line bar quick conversion plus compact Utilities dashboard selectors, over the preserved base-unit formulas; declared launcher entrypoint carries the same tested logic for shell#250.",
       "nativeOverlap": "Converter family overlap with hornero-base-converter and hornero-color-converter; distinct value is physical-unit conversion.",
       "dimensions": {
@@ -1744,11 +1789,11 @@
           "note": "QA VM (shell main + PluginKit 3, 3 vCPU llvmpipe, 2026-11-17): loads without a slow-load or load-churn flag; idle CPU of the shell process measured as one set, not per plugin: bare shell 9.2%, 6 desktop widgets 9.4%, 22 bar indicators 11.8%, 12 dashboard cards 11.5% of one core (VM measurement, noise about 0.5 pp; mission evidence plugin-e2e/idle-cpu.txt). Not a published estimate."
         }
       },
-      "issue": "https://github.com/HorneroOS/plugins/issues/30",
       "graphicalReview": {
         "reviewer": "Claude Code agent (offscreen fixture review and QA VM captures; not a human design review)",
         "date": "2026-11-17"
-      }
+      },
+      "replacement": "hornero-toolbox"
     },
     {
       "id": "hornero-uptime",

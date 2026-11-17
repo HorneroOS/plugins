@@ -2,7 +2,7 @@
   "schemaVersion": 3,
   "id": "hornero-json-tools",
   "name": "Hornero JSON Tools",
-  "version": "3.0.1",
+  "version": "3.0.2",
   "description": "Utility Tools 2.0 JSON tools: bar quick format/validate action and compact dashboard detail with Format and Minify using JSON parse/stringify only. Parser errors are shown.",
   "author": "HorneroOS contributors",
   "license": "MIT",
@@ -32,6 +32,10 @@
     },
     "changelog": [
       {
+        "version": "3.0.2",
+        "notes": "Deprecated in favour of hornero-toolbox."
+      },
+      {
         "version": "3.0.1",
         "notes": "Second action button uses the same secondary style as the first."
       },
@@ -47,7 +51,11 @@
         "version": "1.0.0",
         "notes": "Dashboard JSON tools: Format with 2-space indentation and Minify; parser errors were shown."
       }
-    ]
+    ],
+    "deprecation": {
+      "message": "Retired: Toolbox covers this tool (and six siblings) in one Signal card with typed settings and live results; this extension keeps working where installed.",
+      "replacedBy": "hornero-toolbox"
+    }
   },
   "files": [
     "Main.qml",
