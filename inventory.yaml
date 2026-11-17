@@ -544,3 +544,33 @@ capabilities:
     inspiration_notes: "First-party HorneroOS plugin written for this catalogue; no upstream code is copied. Upstream ideas, where any, are credited in the researched entries above."
     hornero_equivalent: "plugins/hornero-date-calculator"
     status: implemented
+  - id: hornero-system-insight
+    name: Hornero System Insight
+    category: widgets
+    origin: {project: HorneroOS, url: "https://github.com/HorneroOS/plugins", license: MIT}
+    classification: hornero-original
+    license_status: verified
+    license_evidence: plugins/hornero-system-insight/LICENSE
+    inspiration_notes: "First-party HorneroOS plugin written for this catalogue; no upstream code is copied. Upstream ideas, where any, are credited in the researched entries above."
+    hornero_equivalent: "plugins/hornero-system-insight"
+    status: implemented
+  - id: hornero-network-scope
+    name: Hornero Network Scope
+    category: widgets
+    origin: {project: HorneroOS, url: "https://github.com/HorneroOS/plugins", license: MIT}
+    classification: hornero-original
+    license_status: verified
+    license_evidence: plugins/hornero-network-scope/LICENSE
+    inspiration_notes: "First-party HorneroOS plugin written for this catalogue; no upstream code is copied. Upstream ideas, where any, are credited in the researched entries above."
+    hornero_equivalent: "plugins/hornero-network-scope"
+    status: implemented
+  - id: hornero-audio-deck
+    name: Hornero Audio Deck
+    category: widgets
+    origin: {project: HorneroOS, url: "https://github.com/HorneroOS/plugins", license: MIT}
+    classification: hornero-original
+    license_status: verified
+    license_evidence: plugins/hornero-audio-deck/LICENSE
+    inspiration_notes: "First-party HorneroOS plugin written for this catalogue; no upstream code is copied. Upstream ideas, where any, are credited in the researched entries above."
+    hornero_equivalent: "plugins/hornero-audio-deck"
+    status: implemented

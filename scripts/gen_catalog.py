@@ -28,6 +28,9 @@ CATEGORIES = {
     "hornero-dual-clock": "utilities",
     "hornero-focus-card": "utilities",
     "hornero-quiet-notes": "productivity",
+    "hornero-system-insight": "system",
+    "hornero-network-scope": "system",
+    "hornero-audio-deck": "media",
 }
 
 

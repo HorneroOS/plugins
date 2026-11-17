@@ -1,0 +1,67 @@
+{
+  "schemaVersion": 3,
+  "id": "hornero-audio-deck",
+  "name": "Hornero Audio Deck",
+  "version": "1.0.0",
+  "description": "Audio Deck: a desktop instrument over the shared media, audio and spectrum providers: the real PipeWire spectrum as VU strips, the current track and the output volume. Real data only.",
+  "author": "HorneroOS contributors",
+  "license": "MIT",
+  "homepage": "https://github.com/HorneroOS/plugins",
+  "entrypoint": "Main.qml",
+  "placement": "desktop",
+  "surfaces": {
+    "desktop": {
+      "entrypoint": "Main.qml",
+      "width": 420,
+      "height": 300,
+      "minWidth": 320,
+      "minHeight": 220,
+      "anchor": "bottom-left"
+    }
+  },
+  "translations": {
+    "sourceLocale": "en",
+    "locales": [
+      "es"
+    ],
+    "directory": "translations"
+  },
+  "marketplace": {
+    "compatibility": {
+      "minShellVersion": "1.0.0"
+    },
+    "changelog": [
+      {
+        "version": "1.0.0",
+        "notes": "Initial release: real PipeWire spectrum as phosphor VU strips, now playing and output volume over the shared providers (PluginKit 3 desktop widget)."
+      }
+    ]
+  },
+  "files": [
+    "Main.qml",
+    "README.md",
+    "LICENSE",
+    "translations/es.json"
+  ],
+  "capabilities": {
+    "processCommands": [],
+    "networkHosts": [],
+    "providers": [
+      "media",
+      "audio",
+      "spectrum"
+    ],
+    "settings": {
+      "showSpectrum": {
+        "type": "boolean",
+        "default": true,
+        "description": "Show the spectrum. It holds the shared `spectrum` lease, which runs the PipeWire visualiser only while this is on and the widget is loaded."
+      },
+      "showArtist": {
+        "type": "boolean",
+        "default": true,
+        "description": "Show the artist and album line of the current track."
+      }
+    }
+  }
+}

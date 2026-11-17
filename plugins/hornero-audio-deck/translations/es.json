@@ -1,0 +1,14 @@
+{
+  "Audio Deck": "Audio Deck",
+  "PLAYING": "REPRODUCIENDO",
+  "PAUSED": "EN PAUSA",
+  "NO PLAYER": "SIN REPRODUCTOR",
+  "SPECTRUM": "ESPECTRO",
+  "SPECTRUM · %1 BANDS": "ESPECTRO · %1 BANDAS",
+  "No output device is available.": "No hay un dispositivo de salida disponible.",
+  "Spectrum band": "Banda del espectro",
+  "Nothing playing": "Nada en reproducción",
+  "OUT": "SALIDA",
+  "Muted": "Silenciado",
+  "Output": "Salida"
+}
