@@ -16,8 +16,14 @@ def catalog(stamp, plugins):
 class PluginKitLevelTest(unittest.TestCase):
     def test_level_is_recorded_only_above_the_baseline(self):
         built = gen_catalog.build()
-        # No official package requires level 4 yet: entries are unchanged.
-        self.assertTrue(all("pluginKit" not in e for e in built["plugins"]))
+        # A level is recorded exactly for the packages that need more than
+        # the baseline (hornero-clipboard needs 4); the rest are unchanged.
+        by_id = {e["id"]: e for e in built["plugins"]}
+        for e in built["plugins"]:
+            if "pluginKit" in e:
+                self.assertGreater(e["pluginKit"], 3, e["id"])
+        self.assertEqual(by_id["hornero-clipboard"]["pluginKit"], 4)
+        self.assertNotIn("pluginKit", by_id["hornero-battery"])
         source = SCRIPT.read_text()
         self.assertIn('manifest.get("pluginKit", 3) != 3', source)
 
