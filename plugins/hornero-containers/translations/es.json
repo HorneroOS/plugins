@@ -1,0 +1,10 @@
+{
+  "Containers": "Contenedores",
+  "%1 RUNNING": "%1 EN EJECUCIÓN",
+  "%1, %2": "%1, %2",
+  "No container runtime answered. Install Podman or Docker, or start its service, then pick it in Settings.": "Ningún motor de contenedores respondió. Instalá Podman o Docker, o iniciá su servicio, y elegilo en Ajustes.",
+  "Asking the container runtime…": "Consultando el motor de contenedores…",
+  "No containers on this machine.": "No hay contenedores en esta máquina.",
+  "Nothing is running. Stopped containers are hidden.": "Nada en ejecución. Los contenedores detenidos están ocultos.",
+  "%1 more not shown": "%1 más sin mostrar"
+}

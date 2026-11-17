@@ -1,0 +1,92 @@
+{
+  "schemaVersion": 3,
+  "id": "hornero-device-battery",
+  "name": "Hornero Device Battery",
+  "version": "1.0.0",
+  "description": "Charge of the wireless things on your desk: game controllers, mice, keyboards, headsets, pens and phones, from UPower. Honest about devices that report no percentage.",
+  "author": "HorneroOS contributors",
+  "license": "MIT",
+  "homepage": "https://github.com/HorneroOS/plugins",
+  "entrypoint": "Main.qml",
+  "placement": "dashboard",
+  "surfaces": {
+    "dashboard": {
+      "entrypoint": "Main.qml",
+      "size": "standard",
+      "category": "Gaming"
+    },
+    "desktop": {
+      "entrypoint": "Main.qml",
+      "width": 380,
+      "height": 300,
+      "minWidth": 280,
+      "minHeight": 140,
+      "anchor": "bottom-left"
+    }
+  },
+  "translations": {
+    "sourceLocale": "en",
+    "locales": [
+      "es"
+    ],
+    "directory": "translations"
+  },
+  "marketplace": {
+    "compatibility": {
+      "minShellVersion": "1.0.0"
+    },
+    "changelog": [
+      {
+        "version": "1.0.0",
+        "notes": "Initial release: wireless peripheral batteries (controllers, mice, keyboards, headsets, pens, phones) from UPower, as a dashboard card and a desktop widget."
+      }
+    ]
+  },
+  "files": [
+    "Main.qml",
+    "README.md",
+    "LICENSE",
+    "translations/es.json"
+  ],
+  "capabilities": {
+    "processCommands": [
+      "upower"
+    ],
+    "networkHosts": [],
+    "settings": {
+      "lowPercent": {
+        "type": "integer",
+        "default": 20,
+        "minimum": 5,
+        "maximum": 50,
+        "description": "At or below this charge a discharging device is marked LOW."
+      },
+      "includeInternal": {
+        "type": "boolean",
+        "default": false,
+        "description": "Also list the laptop battery and UPS units (the native battery indicator already covers the laptop)."
+      },
+      "showModel": {
+        "type": "boolean",
+        "default": true,
+        "description": "Show the device model name under its kind."
+      },
+      "sortBy": {
+        "type": "enum",
+        "default": "lowest",
+        "options": [
+          "lowest",
+          "kind"
+        ],
+        "description": "Lowest charge first, or grouped by kind of device."
+      },
+      "refreshSeconds": {
+        "type": "integer",
+        "default": 60,
+        "minimum": 15,
+        "maximum": 600,
+        "description": "Seconds between UPower reads."
+      }
+    }
+  }
+}

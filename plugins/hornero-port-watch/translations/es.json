@@ -1,0 +1,14 @@
+{
+  "Port Watch": "Vigía de puertos",
+  "%1 LISTENING": "%1 ESCUCHANDO",
+  "The socket table could not be read (is `ss` installed?).": "No se pudo leer la tabla de sockets (¿está instalado `ss`?).",
+  "Reading the socket table…": "Leyendo la tabla de sockets…",
+  "Nothing is listening with these filters.": "Nada escucha con estos filtros.",
+  "Port %1 %2, %3": "Puerto %1 %2, %3",
+  "Port %1 is free": "El puerto %1 está libre",
+  "free": "libre",
+  "EXPOSED": "EXPUESTO",
+  "LAN": "LAN",
+  "LOCAL": "LOCAL",
+  "owner not visible": "dueño no visible"
+}

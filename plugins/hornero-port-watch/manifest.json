@@ -1,0 +1,104 @@
+{
+  "schemaVersion": 3,
+  "id": "hornero-port-watch",
+  "name": "Hornero Port Watch",
+  "version": "1.0.0",
+  "description": "What is listening on this machine, and what is free: ports, protocol, how far each bind reaches and the owning process when the kernel lets you see it. Watch the ports your projects need. Read-only, local.",
+  "author": "HorneroOS contributors",
+  "license": "MIT",
+  "homepage": "https://github.com/HorneroOS/plugins",
+  "entrypoint": "Main.qml",
+  "placement": "dashboard",
+  "surfaces": {
+    "dashboard": {
+      "entrypoint": "Main.qml",
+      "size": "standard",
+      "category": "Development"
+    },
+    "desktop": {
+      "entrypoint": "Main.qml",
+      "width": 400,
+      "height": 340,
+      "minWidth": 300,
+      "minHeight": 160,
+      "anchor": "top-right"
+    }
+  },
+  "translations": {
+    "sourceLocale": "en",
+    "locales": [
+      "es"
+    ],
+    "directory": "translations"
+  },
+  "marketplace": {
+    "compatibility": {
+      "minShellVersion": "1.0.0"
+    },
+    "changelog": [
+      {
+        "version": "1.0.0",
+        "notes": "Initial release: listening TCP/UDP ports with bind reach and owning process from `ss`, optional watched ports shown as free, as a dashboard card and a desktop widget."
+      }
+    ]
+  },
+  "files": [
+    "Main.qml",
+    "README.md",
+    "LICENSE",
+    "translations/es.json"
+  ],
+  "capabilities": {
+    "processCommands": [
+      "ss"
+    ],
+    "networkHosts": [],
+    "settings": {
+      "protocols": {
+        "type": "enum",
+        "default": "tcp",
+        "options": [
+          "tcp",
+          "udp",
+          "both"
+        ],
+        "description": "Which protocols to list. UDP has no listen state, so bound UDP sockets are shown."
+      },
+      "scope": {
+        "type": "enum",
+        "default": "all",
+        "options": [
+          "all",
+          "exposed",
+          "local"
+        ],
+        "description": "All shows everything; exposed only binds on every interface; local only binds reachable from this machine."
+      },
+      "watchedPorts": {
+        "type": "string",
+        "default": "",
+        "maxLength": 120,
+        "description": "Ports to keep on the board even when free, separated by commas or spaces, for example 3000, 5173, 8080."
+      },
+      "maxRows": {
+        "type": "integer",
+        "default": 10,
+        "minimum": 3,
+        "maximum": 30,
+        "description": "Most rows to show; watched ports come first, then ascending port."
+      },
+      "refreshSeconds": {
+        "type": "integer",
+        "default": 10,
+        "minimum": 2,
+        "maximum": 120,
+        "description": "Seconds between socket table reads. Reading pauses in the Gaming experience."
+      },
+      "showProcess": {
+        "type": "boolean",
+        "default": true,
+        "description": "Show the owning process name and pid where the kernel exposes them to your user."
+      }
+    }
+  }
+}

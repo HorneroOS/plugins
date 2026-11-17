@@ -2,7 +2,7 @@
   "schemaVersion": 3,
   "id": "hornero-system-monitor",
   "name": "Hornero System Monitor",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "System Monitor 3.0 on Hornero Signal: a CPU oscilloscope from the shared Telemetry history, segmented meter rows for CPU, memory, GPU and storage with a user threshold, and peak/average readouts. Read-only.",
   "author": "HorneroOS contributors",
   "license": "MIT",
@@ -29,6 +29,10 @@
     },
     "changelog": [
       {
+        "version": "3.0.1",
+        "notes": "Deprecated: Retired: System Insight is the maintained system instrument (CPU oscilloscope, meters, temperatures, per-core strips) with typed settings and a desktop surface."
+      },
+      {
         "version": "3.0.0",
         "notes": "PluginKit 3 on Hornero Signal: oscilloscope and segmented meters over the shared Telemetry history; Material tokens and the hand-drawn sparkline are gone. The sampleSeconds setting and Clear history button are removed (history is the shared 120-sample window)."
       },
@@ -40,7 +44,11 @@
         "version": "1.0.0",
         "notes": "Dashboard card with CPU, memory, GPU and storage usage bars from the PluginKit System service."
       }
-    ]
+    ],
+    "deprecation": {
+      "message": "Retired: System Insight is the maintained system instrument (CPU oscilloscope, meters, temperatures, per-core strips) with typed settings and a desktop surface.",
+      "replacedBy": "hornero-system-insight"
+    }
   },
   "files": [
     "Main.qml",

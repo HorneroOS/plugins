@@ -2,7 +2,7 @@
   "schemaVersion": 3,
   "id": "hornero-quiet-notes",
   "name": "Hornero Quiet Notes",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "Quiet Notes 2.0: dashboard card for one short session-only intention. The line is never saved (in-memory only, as in 1.x) and the card says so. Keyboard-first capture, no processes or network.",
   "author": "HorneroOS contributors",
   "license": "MIT",
@@ -22,6 +22,10 @@
     },
     "changelog": [
       {
+        "version": "3.0.1",
+        "notes": "Deprecated: Retired: Quick Notes keeps a persistent note; a session-only intention line did not justify a separate extension."
+      },
+      {
         "version": "3.0.0",
         "notes": "PluginKit 3 on Hornero Signal: palette roles and glyph module header."
       },
@@ -37,7 +41,11 @@
         "version": "1.0.1",
         "notes": "Calm dashboard card for one short intention for this session; in-memory only, gone when the shell closes."
       }
-    ]
+    ],
+    "deprecation": {
+      "message": "Retired: Quick Notes keeps a persistent note; a session-only intention line did not justify a separate extension.",
+      "replacedBy": "hornero-quick-notes"
+    }
   },
   "files": [
     "Main.qml",
