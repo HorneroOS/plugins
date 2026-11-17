@@ -31,7 +31,7 @@ Item {
     UiButton {
         id: indicator
 
-        variant: "ghost"
+        variant: "quiet"
         text: Weather.ready && !root.hostCompact ? i18n.tr("Sun %1 / %2").arg(Weather.sunrise).arg(Weather.sunset) : i18n.tr("Sun Card")
         tooltipText: i18n.tr("Sun Card: activate for sunrise and sunset")
         accessibleName: i18n.tr("Sun Card details")
@@ -46,7 +46,7 @@ Item {
 
         Column {
             width: 260
-            spacing: Theme.spacingSmall
+            spacing: Theme.spacing.small
 
             UiText {
                 role: "title"
@@ -77,14 +77,16 @@ Item {
             Column {
                 visible: Weather.ready
                 width: parent.width
-                spacing: Theme.spacingSmall
+                spacing: Theme.spacing.small
 
                 UiMetric {
+                    size: "value"
                     label: i18n.tr("Sunrise")
                     value: Weather.sunrise
                 }
 
                 UiMetric {
+                    size: "value"
                     label: i18n.tr("Sunset")
                     value: Weather.sunset
                 }

@@ -81,7 +81,7 @@ Item {
 
         UiButton {
             id: indicator
-            variant: "ghost"
+            variant: "quiet"
             text: "31"
             tooltipText: i18n.tr("Date Calculator: activate for a quick date calculation")
             accessibleName: i18n.tr("Date Calculator quick action")
@@ -104,7 +104,7 @@ Item {
 
         Column {
             width: 300
-            spacing: Theme.spacingSmall
+            spacing: Theme.spacing.small
 
             UiText { role: "title"; text: i18n.tr("Date Calculator") }
 

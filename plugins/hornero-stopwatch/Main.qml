@@ -1,4 +1,5 @@
 import QtQuick
+import QtQuick.Layouts
 import Hornero.PluginKit
 
 // Hornero Stopwatch 2.0 - bar stopwatch. Compact indicator
@@ -102,7 +103,7 @@ Item {
     UiButton {
         id: indicator
 
-        variant: "ghost"
+        variant: "quiet"
         text: root.fmt(root.elapsedMs, root.showTenths && !root.hostCompact)
         tooltipText: i18n.tr("Stopwatch: activate for controls")
         accessibleName: i18n.tr("Stopwatch %1").arg(root.fmt(root.elapsedMs, root.showTenths))
@@ -117,7 +118,7 @@ Item {
 
         Column {
             width: 280
-            spacing: Theme.spacingSmall
+            spacing: Theme.spacing.small
 
             UiText {
                 role: "title"
@@ -125,17 +126,21 @@ Item {
             }
 
             UiStack {
+                width: parent.width
                 orientation: root.hostOrientation
                 compact: root.hostCompact
 
                 UiMetric {
+                    Layout.fillWidth: true
+                    Layout.preferredWidth: 1
+                    size: "value"
                     label: i18n.tr("Elapsed")
                     value: root.fmt(root.elapsedMs, root.showTenths)
                 }
 
                 UiChip {
                     text: root.running ? i18n.tr("Running") : i18n.tr("Paused")
-                    tone: root.running ? "primary" : "neutral"
+                    tone: root.running ? "signal" : "neutral"
                 }
             }
 
@@ -151,7 +156,7 @@ Item {
                 }
 
                 UiButton {
-                    variant: "ghost"
+                    variant: "quiet"
                     enabled: root.elapsedMs > 0 || root.running
                     text: i18n.tr("Reset")
                     tooltipText: i18n.tr("Reset the stopwatch")

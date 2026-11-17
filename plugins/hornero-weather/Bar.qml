@@ -42,7 +42,7 @@ Item {
     UiButton {
         id: indicator
 
-        variant: "ghost"
+        variant: "quiet"
         text: !Weather.locationConfigured ? i18n.tr("Weather") : Weather.ready ? (root.hostCompact ? Weather.temp : i18n.tr("Weather %1").arg(Weather.temp)) : i18n.tr("Weather")
         tooltipText: i18n.tr("Weather: activate for details")
         accessibleName: i18n.tr("Weather details")
@@ -57,7 +57,7 @@ Item {
 
         Column {
             width: 280
-            spacing: Theme.spacingSmall
+            spacing: Theme.spacing.small
 
             UiText {
                 role: "title"
@@ -88,9 +88,10 @@ Item {
             Column {
                 visible: Weather.ready
                 width: parent.width
-                spacing: Theme.spacingSmall
+                spacing: Theme.spacing.small
 
                 UiMetric {
+                    size: "value"
                     label: i18n.tr("Temperature")
                     value: Weather.temp
                 }
@@ -102,6 +103,7 @@ Item {
                 }
 
                 UiMetric {
+                    size: "value"
                     visible: root.showHumidity
                     label: i18n.tr("Humidity")
                     value: String(Weather.humidity)
@@ -109,6 +111,7 @@ Item {
                 }
 
                 UiMetric {
+                    size: "value"
                     visible: root.showWind
                     label: i18n.tr("Wind")
                     value: i18n.formatNumber(Number(Weather.windSpeed))

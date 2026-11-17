@@ -75,7 +75,7 @@ Item {
 
         Column {
             width: parent.width
-            spacing: Theme.spacingSmall
+            spacing: Theme.spacing.small
 
             UiText { role: "title"; text: i18n.tr("Date Calculator") }
 
@@ -85,7 +85,7 @@ Item {
             UiButton { text: i18n.tr("Days between"); accessibleName: i18n.tr("Calculate days between"); tooltipText: i18n.tr("Days between start and end dates (UTC)"); onClicked: root.daysBetween() }
             TextField { id: baseInput; width: parent.width; placeholderText: "Base YYYY-MM-DD"; Accessible.name: i18n.tr("Base date"); ToolTip.text: i18n.tr("Base date YYYY-MM-DD"); ToolTip.visible: hovered }
             TextField { id: daysInput; width: parent.width; placeholderText: i18n.tr("Days to add (integer)"); Accessible.name: i18n.tr("Days to add"); ToolTip.text: i18n.tr("Integer days to add, may be negative"); ToolTip.visible: hovered }
-            UiButton { variant: "ghost"; text: i18n.tr("Add days"); accessibleName: i18n.tr("Add days to base date"); tooltipText: i18n.tr("Add days to base date (UTC)"); onClicked: root.addDays() }
+            UiButton { variant: "quiet"; text: i18n.tr("Add days"); accessibleName: i18n.tr("Add days to base date"); tooltipText: i18n.tr("Add days to base date (UTC)"); onClicked: root.addDays() }
             UiState { visible: root.errorText !== ""; width: parent.width; kind: "error"; message: root.errorText }
             UiText { visible: root.resultText !== ""; width: parent.width; Accessible.name: i18n.tr("Date result"); text: root.resultText }
         }

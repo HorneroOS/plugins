@@ -1,4 +1,5 @@
 import QtQuick
+import QtQuick.Layouts
 import Hornero.PluginKit
 
 // Weather 2.0: dashboard card complementing the native Weather
@@ -94,26 +95,24 @@ Item {
     UiCard {
         id: card
 
+        title: i18n.tr("Weather")
+        channel: 15
         anchors.fill: parent
         Accessible.name: i18n.tr("Weather")
 
         Column {
             width: parent.width
-            spacing: Theme.spacingSmall
+            spacing: Theme.spacing.small
 
             UiStack {
                 orientation: root.hostOrientation
                 compact: root.hostCompact
 
-                UiText {
-                    role: "title"
-                    text: i18n.tr("Weather")
-                }
 
                 UiChip {
                     visible: root.windHigh
                     text: i18n.tr("High wind")
-                    tone: "error"
+                    tone: "alert"
                 }
             }
 
@@ -141,9 +140,10 @@ Item {
             Column {
                 visible: Weather.ready
                 width: parent.width
-                spacing: Theme.spacingSmall
+                spacing: Theme.spacing.small
 
                 UiMetric {
+                    size: "readout"
                     label: i18n.tr("Temperature")
                     value: Weather.temp
                 }
@@ -154,25 +154,47 @@ Item {
                     text: Weather.description
                 }
 
-                UiMetric {
-                    visible: !root.compactDensity && root.showHumidity
-                    label: i18n.tr("Humidity")
-                    value: String(Weather.humidity)
-                    unit: "%"
+                UiStack {
+                    visible: !root.compactDensity && (root.showHumidity || root.showWind)
+                    width: parent.width
+                    orientation: root.hostOrientation
+                    compact: root.hostCompact
+
+                    UiMetric {
+                        Layout.fillWidth: true
+                        Layout.preferredWidth: 1
+                        visible: root.showHumidity
+                        size: "value"
+                        label: i18n.tr("Humidity")
+                        value: String(Weather.humidity)
+                        unit: "%"
+                    }
+
+                    UiMetric {
+                        Layout.fillWidth: true
+                        Layout.preferredWidth: 1
+                        visible: root.showWind
+                        size: "value"
+                        label: i18n.tr("Wind")
+                        value: i18n.formatNumber(Number(Weather.windSpeed))
+                        unit: "km/h"
+                    }
                 }
 
-                UiMetric {
-                    visible: !root.compactDensity && root.showWind
-                    label: i18n.tr("Wind")
-                    value: i18n.formatNumber(Number(Weather.windSpeed))
-                    unit: "km/h"
-                }
-
-                UiText {
+                UiDetailRow {
                     visible: !root.compactDensity && root.showSunTimes
                     width: parent.width
-                    role: "caption"
-                    text: i18n.tr("Sunrise: %1  Sunset: %2").arg(Weather.sunrise).arg(Weather.sunset)
+                    glyph: "sun"
+                    label: i18n.tr("Sunrise")
+                    value: Weather.sunrise
+                }
+
+                UiDetailRow {
+                    visible: !root.compactDensity && root.showSunTimes
+                    width: parent.width
+                    glyph: "sunset"
+                    label: i18n.tr("Sunset")
+                    value: Weather.sunset
                 }
 
                 UiText {
@@ -193,8 +215,9 @@ Item {
                     }
                 }
 
-                UiMetric {
+                UiDetailRow {
                     visible: root.detailedDensity && !root.compactDensity
+                    width: parent.width
                     label: i18n.tr("Forecast range (derived)")
                     value: root.forecastRange()
                 }

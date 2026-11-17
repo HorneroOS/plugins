@@ -1,8 +1,8 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 3,
   "id": "hornero-dual-clock",
   "name": "Hornero Dual Clock",
-  "version": "2.1.2",
+  "version": "3.0.0",
   "description": "Dual Clock 2.0: local time next to a second zone (UTC by default, as in 1.x) in the bar, with a details popover. Pure-JS rule-based offsets, no processes or network.",
   "author": "HorneroOS contributors",
   "license": "MIT",
@@ -21,6 +21,10 @@
       "minShellVersion": "1.2.74"
     },
     "changelog": [
+      {
+        "version": "3.0.0",
+        "notes": "PluginKit 3 on Hornero Signal: tokens and variant names ported."
+      },
       {
         "version": "2.1.2",
         "notes": "Popover: offset shown as +3:00 (was +3.00:00), short daylight-saving note that wraps inside the popout."
@@ -82,6 +86,9 @@
         "default": true,
         "description": "Use 24-hour times (the 1.x behaviour); off shows 12-hour AM/PM."
       }
-    }
+    },
+    "providers": [
+      "time"
+    ]
   }
 }

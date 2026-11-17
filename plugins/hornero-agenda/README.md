@@ -41,52 +41,28 @@ need a real shell data source first.
   unless the user turns it off.
 - 1.x declared no settings, so no stored values migrate.
   Settings changed in Control Center apply from the next
-  plugin reload, as in the other 2.0 families.
+  plugin reload, as in the other families.
 - No processes, no network. Original HorneroOS code, MIT
   licensed. Plugin QML runs with your user privileges inside
   Quickshell; it is not sandboxed.
 
-## Desktop Widgets 2.0 (#32, package 2.1.0)
+## Desktop widget (PluginKit 3)
 
-Manifest v2 redeclares the `desktop` surface on the same
-entrypoint (no new surface is loaded). A `Placement & size`
-ghost button opens a host-owned `UiPopover` showing the current
-display (`hostScreenName`, falling back to `Screen.name`) and
-slot, read with the only PluginKit `Desktop` member,
-`Desktop.position(pluginId, screenName)`. The popover cycles
-the persisted size class, hides the content, and resets size
-and visibility.
+This is a PluginKit 3 desktop widget: the shell host draws the module (panel
+fill, 1 px rule border, eyebrow header with a channel number) and owns the
+widget's position, size, persistence and edit mode. The package declares
+default geometry hints on its `desktop` surface (`width`, `height`,
+`minWidth`, `minHeight`, `anchor`; default 320 x 340) and lays out content in the
+host's content box (`hostAvailableWidth`). To move or resize it, run
+`qs ipc call plugins editDesktop` (drag the module, use the corner grip);
+positions persist per display in the shell config. The 2.x in-widget
+`sizeClass` / `showOnDesktop` settings, the `Placement & size` popover and
+`Desktop.position` are gone; the shell now owns all of that.
 
-- **Move / monitor migration (shell-owned).** PluginKit has no
-  slot setter, no edit-mode signal and no monitor list — a
-  documented facade gap, not something this package fakes.
-  Users move the widget in Control Center › Extensions; the
-  shell persists one of nine named slots per display, keeps a
-  disconnected display's saved slot, and falls back to
-  `bottom-right` on a new/unrecognized display or malformed
-  saved state. This widget only reads and labels that slot.
-- **Resize.** `sizeClass` (enum `compact`/`standard`/`wide`,
-  default **`standard`** = the pre-#32 size) sizes the content
-  within the host desktop cap (`hostAvailableWidth`, 300
-  logical px today; the shell host also always reports
-  `hostCompact: false` on desktop, so `wide` cannot exceed
-  the cap). Compact drops secondary rows/captions in favour
-  of the core content.
-- **Hide, reset, recovery.** `showOnDesktop` (boolean, default
-  **true**) hides the content but always leaves a visible
-  `Show widget` button, and the generated Control Center
-  settings field is a second recovery path — content can
-  never be trapped off-screen or hidden without a way back.
-  `Reset size and visibility` calls `Settings.resetValue` for
-  both keys. Full host-side hide is still a shell gap: the
-  host renders its own card and plugin name around the
-  entrypoint even when the content is hidden.
-- **Persistence.** Size and visibility are typed PluginKit
-  `Settings` in shell-owned storage and survive restarts;
-  malformed stored values read as the declared defaults
-  (shell migration) and are additionally normalized by the
-  `DESKTOP-LOGIC` block in `Main.qml`, which
-  `tests/test_desktop_logic.py` runs under Node against
-  independent Python oracles. That is stub/static evidence
-  only — no live-shell rendering, popover placement, slot
-  move or multi-monitor behaviour is claimed here.
+In the `gaming` experience the host suspends desktop widgets entirely. No
+live-shell rendering, edit-mode or multi-monitor behaviour is claimed here;
+offscreen renders and static checks only.
+
+## PluginKit 3
+
+This package targets PluginKit 3 on Hornero Signal (`schemaVersion: 3`): colours, type, spacing and glyphs come from the shared Theme tokens and Hornero Glyph names, and the shared data domains it reads are declared in `capabilities.providers`. Shells older than Hornero Signal cannot load it.

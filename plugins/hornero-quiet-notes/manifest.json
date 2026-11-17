@@ -1,8 +1,8 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 3,
   "id": "hornero-quiet-notes",
   "name": "Hornero Quiet Notes",
-  "version": "2.1.0",
+  "version": "3.0.0",
   "description": "Quiet Notes 2.0: dashboard card for one short session-only intention. The line is never saved (in-memory only, as in 1.x) and the card says so. Keyboard-first capture, no processes or network.",
   "author": "HorneroOS contributors",
   "license": "MIT",
@@ -21,6 +21,10 @@
       "minShellVersion": "1.2.72"
     },
     "changelog": [
+      {
+        "version": "3.0.0",
+        "notes": "PluginKit 3 on Hornero Signal: palette roles and glyph module header."
+      },
       {
         "version": "2.1.0",
         "notes": "Native look: card header, neutral session chip, no repeated never-saved prose, empty state as a caption. Needs Hornero Shell 1.2.72 (PluginKit UiIcon/iconName/card header)."

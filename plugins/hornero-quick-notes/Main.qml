@@ -122,21 +122,19 @@ Item {
     UiCard {
         id: card
 
+        title: i18n.tr("Quick Notes")
+        channel: 17
         anchors.centerIn: parent
         width: root.hostAvailableWidth > 0 ? Math.min(root.hostAvailableWidth, 340) : 340
 
         Column {
             width: parent.width
-            spacing: Theme.spacingSmall
+            spacing: Theme.spacing.small
 
-            UiText {
-                role: "title"
-                text: i18n.tr("Quick Notes")
-            }
 
             UiChip {
                 text: i18n.tr("Persistent — saved and restored")
-                tone: "primary"
+                tone: "signal"
             }
 
             TextArea {
@@ -146,7 +144,7 @@ Item {
                 height: 110
                 placeholderText: i18n.tr("Write a note...")
                 wrapMode: TextArea.Wrap
-                color: Theme.onSurface
+                color: Theme.palette.ink
                 Accessible.name: i18n.tr("Quick note")
                 ToolTip.text: i18n.tr("Quick note (saved automatically; Ctrl+S saves now)")
                 ToolTip.visible: hovered
@@ -173,7 +171,7 @@ Item {
 
                 UiButton {
                     visible: !root.confirmingClear
-                    variant: "ghost"
+                    variant: "quiet"
                     text: i18n.tr("Clear")
                     tooltipText: i18n.tr("Clear the note (asks for confirmation first)")
                     accessibleName: i18n.tr("Clear note")
@@ -196,7 +194,7 @@ Item {
 
                 UiButton {
                     visible: root.confirmingClear
-                    variant: "ghost"
+                    variant: "quiet"
                     text: i18n.tr("Cancel")
                     tooltipText: i18n.tr("Keep the note")
                     accessibleName: i18n.tr("Cancel clear")
@@ -207,7 +205,7 @@ Item {
             UiChip {
                 visible: root.saveState !== "clean"
                 text: root.saveState === "error" ? i18n.tr("Save failed — edit or press Save now to retry") : i18n.tr("Unsaved changes")
-                tone: root.saveState === "error" ? "error" : "neutral"
+                tone: root.saveState === "alert" ? "alert" : "neutral"
             }
 
             UiText {

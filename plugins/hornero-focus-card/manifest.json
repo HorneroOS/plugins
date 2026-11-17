@@ -1,8 +1,8 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 3,
   "id": "hornero-focus-card",
   "name": "Hornero Focus Card",
-  "version": "2.1.0",
+  "version": "3.0.0",
   "description": "Focus Card 2.0: dashboard card with the locale date and a rotating original one-line focus reminder, from PluginKit Time. Keyboard Previous/Next and pause, optional own leading line, no processes or network.",
   "author": "HorneroOS contributors",
   "license": "MIT",
@@ -21,6 +21,10 @@
       "minShellVersion": "1.2.72"
     },
     "changelog": [
+      {
+        "version": "3.0.0",
+        "notes": "PluginKit 3 on Hornero Signal: Hornero Glyph names, quiet variants, instrument module header."
+      },
       {
         "version": "2.1.0",
         "notes": "Native look: card header with the date, the focus line as the hero text, tonal chevron buttons, integer line counter (was 1.00 of 5.00), no redundant chip. Needs Hornero Shell 1.2.72 (PluginKit UiIcon/iconName/card header)."
@@ -63,6 +67,9 @@
         "maxLength": 140,
         "description": "Optional own focus line, shown first in the rotation. Empty (the 1.x behaviour) rotates the built-in lines only."
       }
-    }
+    },
+    "providers": [
+      "time"
+    ]
   }
 }

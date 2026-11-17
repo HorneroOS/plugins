@@ -1,4 +1,5 @@
 import QtQuick
+import QtQuick.Layouts
 import Hornero.PluginKit
 
 // Hornero World Clock 2.0 - dashboard card over PluginKit Time.
@@ -200,25 +201,25 @@ Item {
     UiCard {
         id: card
 
+        title: i18n.tr("World Clock")
+        channel: 14
         anchors.fill: parent
         Accessible.name: i18n.tr("World Clock")
 
         Column {
             width: parent.width
-            spacing: Theme.spacingSmall
+            spacing: Theme.spacing.small
 
-            UiText {
-                role: "title"
-                text: i18n.tr("World Clock")
-            }
 
-            UiMetric {
+            UiDetailRow {
+                width: parent.width
                 visible: root.showLocal
                 label: i18n.tr("Local")
                 value: root.localTimeText(Time.date)
             }
 
-            UiMetric {
+            UiDetailRow {
+                width: parent.width
                 visible: root.showUtc
                 label: i18n.tr("UTC")
                 value: {
@@ -234,13 +235,15 @@ Item {
                     required property string modelData
 
                     width: parent.width
-                    spacing: Theme.spacingSmall
+                    spacing: Theme.spacing.small
 
                     UiStack {
+                        width: parent.width
                         orientation: root.hostOrientation
                         compact: root.hostCompact
 
-                        UiMetric {
+                        UiDetailRow {
+                            Layout.fillWidth: true
                             label: root.cityName(modelData)
                             value: {
                                 const p = root.zonedParts(Time.date, root.zoneTable()[modelData]);
@@ -251,11 +254,12 @@ Item {
                         UiChip {
                             visible: root.zonedParts(Time.date, root.zoneTable()[modelData]).dst
                             text: i18n.tr("DST")
-                            tone: "primary"
+                            tone: "signal"
                         }
                     }
 
                     UiText {
+                        width: parent.width
                         role: "caption"
                         text: {
                             const p = root.zonedParts(Time.date, root.zoneTable()[modelData]);
@@ -267,6 +271,7 @@ Item {
             }
 
             UiText {
+                width: parent.width
                 role: "caption"
                 text: i18n.tr("Offsets follow the DST rules built into this extension; there is no system timezone database for other zones.")
             }
