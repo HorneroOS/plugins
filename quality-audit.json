@@ -633,7 +633,7 @@
     },
     {
       "id": "hornero-dual-clock",
-      "classification": "needs-upgrade",
+      "classification": "deprecated-with-replacement",
       "valueProposition": "Dual Clock 2.0: compact bar indicator with local time over a second zone (UTC by default, identical 1.x label), opening a popover with locale dates, applied offsets, DST state and the signed offset difference. Non-UTC zones use the same pure-JS DST rule table as World Clock.",
       "nativeOverlap": "Overlaps hornero-world-clock (many zones on the dashboard) and the shell clock; distinct value is one glanceable second zone in the bar plus a details popover.",
       "dimensions": {
@@ -674,11 +674,11 @@
           "note": "QA VM (shell main + PluginKit 3, 3 vCPU llvmpipe, 2026-11-17): loads without a slow-load or load-churn flag; idle CPU of the shell process measured as one set, not per plugin: bare shell 9.2%, 6 desktop widgets 9.4%, 22 bar indicators 11.8%, 12 dashboard cards 11.5% of one core (VM measurement, noise about 0.5 pp; mission evidence plugin-e2e/idle-cpu.txt). Not a published estimate."
         }
       },
-      "issue": "https://github.com/HorneroOS/plugins/issues/28",
       "graphicalReview": {
         "reviewer": "Claude Code agent (offscreen fixture review and QA VM captures; not a human design review)",
         "date": "2026-11-17"
-      }
+      },
+      "replacement": "hornero-world-clock"
     },
     {
       "id": "hornero-focus-card",
@@ -1356,7 +1356,7 @@
     },
     {
       "id": "hornero-stopwatch",
-      "classification": "needs-upgrade",
+      "classification": "deprecated-with-replacement",
       "valueProposition": "Stopwatch 2.0 bar stopwatch: compact indicator plus popover (elapsed time, start/pause/resume, reset), wall-clock-anchored timing persisted across sleep/reload with no per-tick drift. Pure QML, no processes or network.",
       "nativeOverlap": "Timer family overlap with hornero-countdown and hornero-metronome; distinct value is elapsed-time measurement.",
       "dimensions": {
@@ -1397,11 +1397,11 @@
           "note": "QA VM (shell main + PluginKit 3, 3 vCPU llvmpipe, 2026-11-17): loads without a slow-load or load-churn flag; idle CPU of the shell process measured as one set, not per plugin: bare shell 9.2%, 6 desktop widgets 9.4%, 22 bar indicators 11.8%, 12 dashboard cards 11.5% of one core (VM measurement, noise about 0.5 pp; mission evidence plugin-e2e/idle-cpu.txt). Not a published estimate."
         }
       },
-      "issue": "https://github.com/HorneroOS/plugins/issues/24",
       "graphicalReview": {
         "reviewer": "Claude Code agent (offscreen fixture review and QA VM captures; not a human design review)",
         "date": "2026-11-17"
-      }
+      },
+      "replacement": "hornero-countdown"
     },
     {
       "id": "hornero-studio-audio",
@@ -1471,8 +1471,8 @@
           "note": "User-visible strings go through the PluginKit Translations facade; es locale shipped."
         },
         "settings": {
-          "status": "na",
-          "note": "No settings declared in the manifest; none are recorded as needed yet. Revisit if behaviour becomes user-configurable."
+          "status": "pass",
+          "note": "Typed refreshSeconds, maxRows, showAdapter and showFinished read via PluginKit Settings (static probe)."
         },
         "themeTokens": {
           "status": "pass",
@@ -1503,7 +1503,7 @@
     },
     {
       "id": "hornero-sun-card",
-      "classification": "needs-upgrade",
+      "classification": "deprecated-with-replacement",
       "valueProposition": "Sun Card 2.0: compact dashboard astronomy card plus contextual bar indicator with the 1.x sunrise/sunset/temperature/humidity rows plus day length, sun progress and next sun event derived from the facade sunrise/sunset strings and PluginKit Time, labelled derived.",
       "nativeOverlap": "Overlaps native Weather and hornero-weather on sunrise/sunset; distinct value is the derived astronomy detail. Solar noon, twilight, moonrise/moonset, the location name and multi-location are not exposed by the facade and are labelled unavailable; after sunset the next event reads unavailable because the facade reports today only.",
       "dimensions": {
@@ -1544,11 +1544,11 @@
           "note": "QA VM (shell main + PluginKit 3, 3 vCPU llvmpipe, 2026-11-17): loads without a slow-load or load-churn flag; idle CPU of the shell process measured as one set, not per plugin: bare shell 9.2%, 6 desktop widgets 9.4%, 22 bar indicators 11.8%, 12 dashboard cards 11.5% of one core (VM measurement, noise about 0.5 pp; mission evidence plugin-e2e/idle-cpu.txt). Not a published estimate."
         }
       },
-      "issue": "https://github.com/HorneroOS/plugins/issues/27",
       "graphicalReview": {
         "reviewer": "Claude Code agent (offscreen fixture review and QA VM captures; not a human design review)",
         "date": "2026-11-17"
-      }
+      },
+      "replacement": "hornero-weather"
     },
     {
       "id": "hornero-system-health",
@@ -1990,16 +1990,16 @@
     {
       "id": "hornero-world-clock",
       "classification": "needs-upgrade",
-      "valueProposition": "World Clock 2.0: dashboard card (Time category) with local, UTC and three selectable city rows from a pure-JS rule table (fixed, EU, US and southern-hemisphere DST rules) over the shared PluginKit Time facade; every row labelled with its applied offset, DST state and zoned date.",
+      "valueProposition": "World Clock 2.0: dashboard card (Time category) with local, UTC and three selectable city rows from a pure-JS rule table (fixed, EU, US and southern-hemisphere DST rules) over the shared PluginKit Time facade; every row labelled with its applied offset, DST state and zoned date Also a bar indicator (local over a second zone), absorbing Dual Clock.",
       "nativeOverlap": "Overlaps hornero-dual-clock (one extra zone in the bar) and hornero-calendar (local date); distinct value is several named zones with DST-aware labelled offsets in one card. PluginKit offers no timezone database, so the rule table is the documented limit.",
       "dimensions": {
         "tooltips": {
-          "status": "na",
-          "note": "No interactive controls in the entrypoint, so tooltips do not apply (static probe)."
+          "status": "pass",
+          "note": "The bar indicator exposes tooltip text through the kit controls (static probe)."
         },
         "accessibility": {
-          "status": "na",
-          "note": "No interactive controls in the entrypoint; the card carries an Accessible.name (static probe). Live AT-SPI behaviour is not verified."
+          "status": "pass",
+          "note": "The bar indicator and popover controls carry accessible names (static probe)."
         },
         "translation": {
           "status": "pass",

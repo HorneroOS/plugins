@@ -68,3 +68,9 @@ which is unambiguous.
 ## PluginKit 3
 
 This package targets PluginKit 3 on Hornero Signal (`schemaVersion: 3`): colours, type, spacing and glyphs come from the shared Theme tokens and Hornero Glyph names, and the shared data domains it reads are declared in `capabilities.providers`. Shells older than Hornero Signal cannot load it.
+
+## Dual Clock absorbed (3.2.0)
+
+A bar indicator shows local time over a second zone (`barZone`, default UTC;
+`barShowSeconds`), with a popover of dates, offsets and the offset difference.
+It uses the same built-in zone rule table as the card.

@@ -18,5 +18,13 @@
   "Weather unavailable: %1": "Clima no disponible: %1",
   "Weather: activate for details": "Clima: activá para ver los detalles",
   "Weather: set a location in the shell settings": "Clima: definí una ubicación en los ajustes del shell",
-  "Wind": "Viento"
+  "Wind": "Viento",
+  "Day length": "Duración del día",
+  "Next sun event": "Próximo evento solar",
+  "Sunrise in %1": "Salida del sol en %1",
+  "Sunset in %1": "Puesta del sol en %1",
+  "Unavailable today": "No disponible hoy",
+  "%1 h %2 min": "%1 h %2 min",
+  "Sun progress": "Progreso del sol",
+  "%1 / %2": "%1 / %2"
 }

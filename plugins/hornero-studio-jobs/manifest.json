@@ -2,7 +2,7 @@
   "schemaVersion": 3,
   "id": "hornero-studio-jobs",
   "name": "Hornero Studio Jobs",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "Render and export job monitor for HorneroOS Studio: shows queued, running, finished and interrupted jobs from the typed horneroctl studio jobs contract. Read-only; jobs are submitted and cancelled from the CLI or Control Center.",
   "author": "HorneroOS contributors",
   "license": "MIT",
@@ -19,7 +19,32 @@
       "horneroctl"
     ],
     "networkHosts": [],
-    "settings": {}
+    "settings": {
+      "refreshSeconds": {
+        "type": "integer",
+        "default": 30,
+        "minimum": 5,
+        "maximum": 300,
+        "description": "Seconds between reads of the Studio job list."
+      },
+      "maxRows": {
+        "type": "integer",
+        "default": 4,
+        "minimum": 1,
+        "maximum": 8,
+        "description": "Most jobs listed, newest first as horneroctl reports them."
+      },
+      "showAdapter": {
+        "type": "boolean",
+        "default": true,
+        "description": "Show the tool that runs each job (ffmpeg, blender) before its state."
+      },
+      "showFinished": {
+        "type": "boolean",
+        "default": true,
+        "description": "Keep succeeded, failed and cancelled jobs in the list; off shows only queued and running ones."
+      }
+    }
   },
   "placement": "dashboard",
   "marketplace": {
@@ -27,6 +52,10 @@
       "minShellVersion": "1.2.72"
     },
     "changelog": [
+      {
+        "version": "2.1.0",
+        "notes": "Typed settings: refreshSeconds, maxRows, showAdapter, showFinished (defaults keep the 2.0 behaviour: 30 s, four rows, adapter shown, finished jobs kept)."
+      },
       {
         "version": "2.0.0",
         "notes": "PluginKit 3 on Hornero Signal: instrument module with Hornero Glyph state icons in palette roles and an on-air chip for running jobs."

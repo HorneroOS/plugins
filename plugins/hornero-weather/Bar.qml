@@ -37,15 +37,16 @@ Item {
 
     readonly property bool showHumidity: pluginSettings.value("showHumidity", true) !== false
     readonly property bool showWind: pluginSettings.value("showWind", true) !== false
+    readonly property bool sunIndicator: String(pluginSettings.value("barIndicator", "temperature")) === "sun"
     readonly property bool showSunTimes: pluginSettings.value("showSunTimes", true) !== false
 
     UiButton {
         id: indicator
 
         variant: "quiet"
-        glyph: !Weather.locationConfigured || !Weather.ready ? "cloud-off" : "cloud"
+        glyph: !Weather.locationConfigured || !Weather.ready ? "cloud-off" : root.sunIndicator ? "sunset" : "cloud"
         // Glyph plus the temperature; without data the glyph and tooltip say so.
-        text: Weather.locationConfigured && Weather.ready && !root.hostCompact ? Weather.temp : ""
+        text: Weather.locationConfigured && Weather.ready && !root.hostCompact ? (root.sunIndicator ? i18n.tr("%1 / %2").arg(Weather.sunrise).arg(Weather.sunset) : Weather.temp) : ""
         tooltipText: !Weather.locationConfigured ? i18n.tr("Weather: set a location in the shell settings") : Weather.ready ? i18n.tr("Weather %1: activate for details").arg(Weather.temp) : i18n.tr("Weather: activate for details")
         accessibleName: i18n.tr("Weather details")
         onClicked: popover.toggle()

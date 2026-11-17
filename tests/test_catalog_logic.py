@@ -58,6 +58,12 @@ class Structure(unittest.TestCase):
             for verb in ['"push"', '"pull"', '"fetch"', '"rm"', '"stop"', '"kill"', '"start"', '"commit"']:
                 self.assertNotIn(verb, code, f"{plugin} must stay read-only")
 
+    def test_world_clock_bar_shares_tz_block(self):
+        main = block("hornero-world-clock", "TZ-LOGIC")
+        text = (ROOT / "plugins" / "hornero-world-clock" / "Bar.qml").read_text()
+        bar = text[text.index("\n", text.index("TZ-LOGIC-BEGIN")) : text.index("TZ-LOGIC-END")]
+        self.assertEqual(main, bar, "World Clock bar and card must share the TZ rule table verbatim")
+
     def test_git_never_runs_repo_hooks(self):
         code = (ROOT / "plugins" / "hornero-git-board" / "Main.qml").read_text()
         self.assertEqual(code.count('"git", "-c", "core.fsmonitor=false", "--no-optional-locks"'), 2)

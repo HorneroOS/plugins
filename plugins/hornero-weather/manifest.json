@@ -2,8 +2,8 @@
   "schemaVersion": 3,
   "id": "hornero-weather",
   "name": "Hornero Weather",
-  "version": "3.0.2",
-  "description": "Weather 2.0: dashboard card and contextual bar indicator complementing native Weather with configurable density, a local wind-threshold alert and forecast detail from the PluginKit Weather facade only.",
+  "version": "3.1.0",
+  "description": "Weather 2.0: dashboard card and contextual bar indicator complementing native Weather with configurable density, a local wind-threshold alert and forecast detail from the PluginKit Weather facade only",
   "author": "HorneroOS contributors",
   "license": "MIT",
   "homepage": "https://github.com/HorneroOS/plugins",
@@ -31,6 +31,10 @@
       "minShellVersion": "1.0.0"
     },
     "changelog": [
+      {
+        "version": "3.1.0",
+        "notes": "Absorbs Sun Card: day length, next sun event and daylight progress on the card (showSunProgress) and a sunrise/sunset bar indicator (barIndicator = sun)."
+      },
       {
         "version": "3.0.2",
         "notes": "Plain wording in footnotes and labels (no internal terms)."
@@ -102,9 +106,24 @@
         "minimum": 1,
         "maximum": 200,
         "description": "Local high-wind alert threshold in km/h. Not an official alert; 1.x had no threshold."
+      },
+      "showSunProgress": {
+        "type": "boolean",
+        "default": true,
+        "description": "Dashboard: show day length, the next sun event and daylight progress (derived from today's sunrise and sunset)."
+      },
+      "barIndicator": {
+        "type": "enum",
+        "default": "temperature",
+        "options": [
+          "temperature",
+          "sun"
+        ],
+        "description": "What the bar indicator shows: the temperature, or sunrise and sunset times."
       }
     },
     "providers": [
+      "time",
       "weather"
     ]
   }
