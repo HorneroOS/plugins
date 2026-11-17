@@ -65,6 +65,25 @@ widgets", "Instrumentation"); catalogue progress is tracked in
 HorneroOS/plugins#62. The v1 material below documents the retired contract
 and is kept for history only: the validator now rejects `schemaVersion` 1/2.
 
+## PluginKit 4: commands (`"pluginKit": 4`)
+
+PluginKit 4 (shell `apiLevel` 4, HorneroOS/shell#602, #624, RFC 0003) adds a
+minimum-kit declaration and command contributions. `schemaVersion` stays 3.
+
+- `"pluginKit": 4` declares the minimum kit the package needs (3 to 4, default
+  3). A shell with an older kit refuses the package instead of half-loading it.
+- `contributes.commands` (1 to 16 entries: `id` `^[a-z][a-zA-Z0-9]{0,31}$`,
+  `title` at most 48 chars, optional `description` at most 120 chars, optional
+  Hornero Glyph `glyph`, up to 8 `keywords` of at most 24 chars) and the
+  matching `surfaces.commands` entrypoint implementing
+  `function run(commandId: string, args: string): string` (empty string on
+  success, otherwise a short error). The shell lists commands from the
+  manifest, so searching them never runs extension code; the handler loads on
+  the first invocation (launcher `>do`, `qs ipc call plugincommands run`).
+- The marketplace gate (`scripts/validate_plugins.py`) mirrors this and
+  `scripts/shell_parity.py` runs the shell's own validator over every package
+  at the pinned shell revision.
+
 ## Manifest: `schemaVersion: 1` (retired)
 
 The contract is `schema/plugin-manifest.schema.json` in this repo

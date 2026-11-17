@@ -49,7 +49,15 @@ ROOT = Path(__file__).resolve().parent.parent
 ID_RE = re.compile(r"^[a-z0-9][a-z0-9-]{0,47}$")
 SEMVER_RE = re.compile(r"^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(-[0-9A-Za-z.-]+)?(\+[0-9A-Za-z.-]+)?$")
 REQUIRED = ["schemaVersion", "id", "name", "version", "description", "author", "license", "entrypoint", "files", "capabilities"]
-ALLOWED_FIELDS = set(REQUIRED) | {"homepage", "placement", "signing", "surfaces", "translations", "marketplace", "theme"}
+ALLOWED_FIELDS = set(REQUIRED) | {"homepage", "placement", "signing", "surfaces", "translations", "marketplace", "theme", "pluginKit", "contributes"}
+# PluginKit API level this gate targets; mirrors the shell validator's
+# PLUGINKIT_API_LEVEL (plugin/qml/Hornero/PluginKit/PluginKitInfo.qml).
+PLUGINKIT_API_LEVEL = 4
+# RFC 0003 section 4.2: commands an extension provides to the launcher
+# (`>do`), IPC and key bindings. Mirrors the shell validator's contract.
+COMMAND_ID_RE = re.compile(r"^[a-z][a-zA-Z0-9]{0,31}$")
+MAX_COMMANDS = 16
+COMMAND_FIELDS = {"id", "title", "description", "glyph", "keywords"}
 DASHBOARD_CARD_SIZES = ("compact", "standard", "wide")
 ACTION_RE = re.compile(r"^[a-z][a-z0-9_]{0,63}$")
 MARKETPLACE_SCREENSHOT_SUFFIXES = (".png", ".jpg", ".jpeg", ".webp")
@@ -87,8 +95,10 @@ FACADE_DOMAINS = {
 GLYPH_NAMES_FILE = ROOT / "schema" / "hornero-glyphs.names"
 # Manifest v2 surfaces (shell docs/PLUGINS.md): the first four have
 # runtime hosts today; launcher/settings are validated declarations
-# only. Mirrors the shell validator's SURFACES.
-SURFACES = ("background", "bar", "dashboard", "desktop", "launcher", "settings")
+# only. Mirrors the shell validator's SURFACES. `commands` exists from
+# PluginKit 4 and needs `"pluginKit": 4` in the manifest.
+SURFACES = ("background", "bar", "dashboard", "desktop", "launcher", "settings", "commands")
+SURFACES_V4 = ("commands",)
 LOCALE_TAG_RE = re.compile(r"^[a-z]{2,3}(_[A-Z]{2})?$")
 TR_LITERAL_RE = re.compile(r'\btr\(\s*"((?:[^"\\]|\\.)*)"')
 QSTR_RE = re.compile(r"\bqsTr(?:Id)?\s*\(")
@@ -257,6 +267,7 @@ def validate_manifest_fields(tag: str, manifest: dict) -> list:
             errors.append(f"{tag}: entrypoint must be listed in files")
     safe_files = {f for f in (files or []) if isinstance(f, str)}
     errors += validate_surfaces(tag, manifest, safe_files)
+    errors += validate_pluginkit_level(tag, manifest)
     errors += validate_translations_declaration(tag, manifest, safe_files)
     errors += validate_marketplace(tag, manifest, safe_files)
     errors += validate_theme(tag, manifest, safe_files)
@@ -464,6 +475,8 @@ def validate_surfaces(tag: str, manifest: dict, safe_files: set) -> list:
         if name not in SURFACES:
             errors.append(f"{where}: unknown surface (known surfaces: {', '.join(SURFACES)})")
             continue
+        if name in SURFACES_V4 and manifest.get("pluginKit", 3) != PLUGINKIT_API_LEVEL:
+            errors.append(f'{where} is a PluginKit 4 surface; declare "pluginKit": 4 in the manifest')
         if not isinstance(surface, dict):
             errors.append(f"{where} must be an object")
             continue
@@ -510,6 +523,64 @@ def validate_surfaces(tag: str, manifest: dict, safe_files: set) -> list:
             errors.append(f"{where}.entrypoint conflicts with the top-level entrypoint for the primary placement {placement!r}")
         if "enabled" in surface and not isinstance(surface["enabled"], bool):
             errors.append(f"{where}.enabled must be a boolean")
+    return errors
+
+
+def validate_pluginkit_level(tag: str, manifest: dict) -> list:
+    """`pluginKit` (minimum kit level) and `contributes.commands`, mirroring the shell validator."""
+    level = manifest.get("pluginKit", 3)
+    if type(level) is not int or not 3 <= level <= PLUGINKIT_API_LEVEL:
+        return [f"{tag}: pluginKit must be an integer between 3 and {PLUGINKIT_API_LEVEL} (got {level!r})"]
+    errors = []
+    surfaces = manifest.get("surfaces") if isinstance(manifest.get("surfaces"), dict) else {}
+    has_surface = "commands" in surfaces
+    if "contributes" not in manifest:
+        if has_surface:
+            errors.append(f"{tag}: surfaces.commands needs contributes.commands (declare the commands the extension provides)")
+        return errors
+    if level < 4:
+        return [f'{tag}: contributes needs PluginKit 4; declare "pluginKit": 4 in the manifest']
+    contributes = manifest["contributes"]
+    if not isinstance(contributes, dict) or not contributes:
+        return [f"{tag}: contributes must be a non-empty object"]
+    for kind in sorted(set(contributes) - {"commands"}):
+        errors.append(f"{tag}: contributes contains unknown kind {kind} (known kinds: commands)")
+    commands = contributes.get("commands", [])
+    if not isinstance(commands, list) or not commands or len(commands) > MAX_COMMANDS:
+        errors.append(f"{tag}: contributes.commands must be a list of 1 to {MAX_COMMANDS} commands")
+        return errors
+    seen = set()
+    glyphs = glyph_names()
+    for index, command in enumerate(commands):
+        where = f"{tag}: contributes.commands[{index}]"
+        if not isinstance(command, dict):
+            errors.append(f"{where} must be an object")
+            continue
+        for field in sorted(set(command) - COMMAND_FIELDS):
+            errors.append(f"{where} contains unknown field {field}")
+        if not {"id", "title"} <= set(command):
+            errors.append(f"{where} must contain id and title")
+            continue
+        command_id = command["id"]
+        if not isinstance(command_id, str) or not COMMAND_ID_RE.fullmatch(command_id):
+            errors.append(f"{where}.id must match {COMMAND_ID_RE.pattern}")
+        elif command_id in seen:
+            errors.append(f"{where}.id duplicates another command: {command_id}")
+        else:
+            seen.add(command_id)
+        for field, limit in (("title", 48), ("description", 120)):
+            if field in command and (not isinstance(command[field], str) or not command[field].strip() or len(command[field]) > limit):
+                errors.append(f"{where}.{field} must be a non-blank string of at most {limit} chars")
+        if "glyph" in command and (not isinstance(command["glyph"], str) or (glyphs and command["glyph"] not in glyphs)):
+            errors.append(f"{where}.glyph must be a Hornero Glyph name (schema/hornero-glyphs.names)")
+        keywords = command.get("keywords")
+        if "keywords" in command and (
+            not isinstance(keywords, list) or len(keywords) > 8 or len(set(map(str, keywords))) != len(keywords)
+            or any(not isinstance(k, str) or not k.strip() or len(k) > 24 for k in keywords)
+        ):
+            errors.append(f"{where}.keywords must be at most 8 unique strings of at most 24 chars")
+    if not has_surface:
+        errors.append(f"{tag}: contributes.commands needs surfaces.commands (the entrypoint implementing run(commandId, args))")
     return errors
 
 

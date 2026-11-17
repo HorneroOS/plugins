@@ -227,6 +227,46 @@ class ContractTest(unittest.TestCase):
         errors = self.errors_for(pid="hornero-example3", surfaces={"dashboard": {"entrypoint": "Main.qml", "category": "Pinned"}})
         self.assertTrue(any("category must be" in e for e in errors))
 
+    def commands_plugin(self, **overrides):
+        manifest = {
+            "pluginKit": 4,
+            "files": ["Main.qml", "README.md", "LICENSE", "translations/es.json", "Commands.qml"],
+            "contributes": {"commands": [{"id": "greet", "title": "Say hello", "glyph": "bolt", "keywords": ["hello"]}]},
+            "surfaces": {"commands": {"entrypoint": "Commands.qml"}},
+        }
+        manifest.update(overrides)
+        plugin_dir = make_plugin(self.root, **manifest)
+        (plugin_dir / "Commands.qml").write_text(GOOD_QML)
+        return vp.validate_plugin_dir(plugin_dir)[0]
+
+    def test_pluginkit4_commands_manifest_is_accepted(self):
+        self.assertEqual(self.commands_plugin(), [])
+
+    def test_commands_need_pluginkit4_and_contributes(self):
+        errors = self.commands_plugin(pluginKit=3)
+        self.assertTrue(any("PluginKit 4 surface" in e for e in errors), errors)
+        self.assertTrue(any("contributes needs PluginKit 4" in e for e in errors), errors)
+
+    def test_pluginkit_level_is_bounded(self):
+        for level in (2, 5, "4", True):
+            with self.subTest(level=level):
+                tmp = tempfile.TemporaryDirectory()
+                try:
+                    errors, _, _ = vp.validate_plugin_dir(make_plugin(Path(tmp.name), pluginKit=level))
+                finally:
+                    tmp.cleanup()
+                self.assertTrue(any("pluginKit must be an integer between 3 and 4" in e for e in errors), errors)
+
+    def test_command_declarations_are_checked(self):
+        bad = {"commands": [{"id": "Bad-Id", "title": "x"}, {"id": "ok", "title": "y", "glyph": "no-such-glyph", "extra": 1}, {"id": "ok", "title": "z"}]}
+        errors = self.commands_plugin(contributes=bad)
+        for needle in ("id must match", "Hornero Glyph name", "unknown field extra", "duplicates another command"):
+            self.assertTrue(any(needle in e for e in errors), (needle, errors))
+
+    def test_commands_surface_requires_contribution_and_back(self):
+        errors = self.commands_plugin(contributes={"commands": [{"id": "greet", "title": "t"}]}, surfaces={"bar": {"entrypoint": "Main.qml"}})
+        self.assertTrue(any("needs surfaces.commands" in e for e in errors), errors)
+
     def test_marketplace_rules(self):
         errors = self.errors_for(marketplace={})
         self.assertTrue(any("marketplace must declare at least one" in e for e in errors))

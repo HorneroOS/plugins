@@ -43,11 +43,38 @@
       },
       "description": "Optional author signature (minisign framing) over the files-only payload hash; verified by horneroctl (trust state 'signed'). Absence is fine: local hash-pinned trust applies instead."
     },
+    "pluginKit": { "type": "integer", "minimum": 3, "maximum": 4, "default": 3, "description": "Minimum PluginKit API level the package needs. 4 is required for contributes.commands and surfaces.commands (RFC 0003); a shell with an older kit refuses the package rather than half-loading it." },
+    "contributes": {
+      "type": "object",
+      "additionalProperties": false,
+      "minProperties": 1,
+      "description": "PluginKit 4 declarative contributions, listed by the Shell without running extension code. Needs \"pluginKit\": 4.",
+      "properties": {
+        "commands": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 16,
+          "description": "Commands reachable from the launcher (>do), IPC and key bindings; the implementation is the surfaces.commands entrypoint (run(commandId, args) returning \"\" or a short error).",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["id", "title"],
+            "properties": {
+              "id": { "type": "string", "pattern": "^[a-z][a-zA-Z0-9]{0,31}$" },
+              "title": { "type": "string", "minLength": 1, "maxLength": 48, "pattern": "\\S" },
+              "description": { "type": "string", "minLength": 1, "maxLength": 120, "pattern": "\\S" },
+              "glyph": { "type": "string", "description": "Hornero Glyph name; default command." },
+              "keywords": { "type": "array", "maxItems": 8, "uniqueItems": true, "items": { "type": "string", "minLength": 1, "maxLength": 24 } }
+            }
+          }
+        }
+      }
+    },
     "placement": { "type": "string", "enum": ["background", "bar", "dashboard", "desktop"], "default": "background", "description": "Where the entrypoint runs: background (headless, default), bar (rendered in the bar end group) or dashboard (rendered as a card in the dashboard Extensions tab) or desktop (rendered as a widget on the desktop background layer)." },
     "surfaces": {
       "type": "object",
       "minProperties": 1,
-      "propertyNames": { "enum": ["background", "bar", "dashboard", "desktop", "launcher", "settings"] },
+      "propertyNames": { "enum": ["background", "bar", "dashboard", "desktop", "launcher", "settings", "commands"] },
       "additionalProperties": {
         "type": "object",
         "additionalProperties": false,
