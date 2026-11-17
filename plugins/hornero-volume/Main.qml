@@ -55,8 +55,8 @@ Item {
         UiButton {
             id: indicator
 
-            variant: "ghost"
-            text: !Audio.hasSink ? "✕" : Audio.muted || Audio.volume === 0 ? "🔇" : Audio.volume < 0.5 ? "🔉" : "🔊"
+            variant: "quiet"
+            glyph: !Audio.hasSink ? "volume-off" : Audio.muted || Audio.volume === 0 ? "volume-off" : Audio.volume < 0.5 ? "volume-2" : "volume"
             tooltipText: root.statusText
             accessibleName: i18n.tr("Volume details")
             onClicked: popover.toggle()
@@ -77,7 +77,7 @@ Item {
 
         Column {
             width: 300
-            spacing: Theme.spacingSmall
+            spacing: Theme.spacing.small
 
             UiText {
                 role: "title"
@@ -94,20 +94,21 @@ Item {
             Column {
                 visible: Audio.hasSink
                 width: parent.width
-                spacing: Theme.spacingSmall
+                spacing: Theme.spacing.small
 
                 UiStack {
                     orientation: root.hostOrientation
                     compact: root.hostCompact
 
                     UiMetric {
+                        size: "value"
                         label: i18n.tr("Output")
                         value: Audio.muted ? i18n.tr("Muted") : i18n.tr("%1%").arg(root.percent)
                     }
 
                     UiChip {
                         text: Audio.muted ? i18n.tr("Muted") : i18n.tr("Sound on")
-                        tone: Audio.muted ? "error" : "primary"
+                        tone: Audio.muted ? "neutral" : "phosphor"
                     }
                 }
 
@@ -127,8 +128,8 @@ Item {
                     compact: root.hostCompact
 
                     UiButton {
-                        variant: "ghost"
-                        text: "−"
+                        variant: "quiet"
+                        glyph: "minus"
                         enabled: Audio.hasSink
                         tooltipText: i18n.tr("Decrease volume")
                         accessibleName: i18n.tr("Decrease volume")
@@ -136,7 +137,8 @@ Item {
                     }
 
                     UiButton {
-                        variant: "ghost"
+                        variant: "quiet"
+                        glyph: Audio.muted ? "volume-off" : "volume"
                         text: Audio.muted ? i18n.tr("Unmute") : i18n.tr("Mute")
                         enabled: Audio.hasSink
                         tooltipText: Audio.muted ? i18n.tr("Unmute output") : i18n.tr("Mute output")
@@ -145,8 +147,8 @@ Item {
                     }
 
                     UiButton {
-                        variant: "ghost"
-                        text: "+"
+                        variant: "quiet"
+                        glyph: "plus"
                         enabled: Audio.hasSink
                         tooltipText: i18n.tr("Increase volume")
                         accessibleName: i18n.tr("Increase volume")

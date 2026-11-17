@@ -1,4 +1,5 @@
 {
+  "%1 %": "%1 %",
   "%1%": "%1%",
   "Advanced": "Avanzado",
   "Balanced": "Equilibrado",
@@ -6,8 +7,11 @@
   "Mode": "Modo",
   "Muted": "Silenciado",
   "No output device is available.": "No hay ningún dispositivo de salida disponible.",
+  "OUT": "SALIDA",
   "Output": "Salida",
   "PERF": "PERF",
+  "Read-only. Change modes in Control Center.": "Solo lectura. Cambiá el modo en el Centro de control.",
+  "Read-only. Switching modes stays in horneroctl and Control Center.": "Solo lectura. El cambio de modo queda en horneroctl y en el Centro de Control.",
   "Refresh": "Actualizar",
   "Refresh studio mode": "Actualizar el modo Studio",
   "Reload the studio mode from horneroctl": "Volver a cargar el modo Studio desde horneroctl",
@@ -19,7 +23,5 @@
   "Studio mode unavailable: horneroctl returned no usable studio mode.": "Modo Studio no disponible: horneroctl no devolvió un modo Studio utilizable.",
   "Temporary Performance off": "Rendimiento temporal desactivado",
   "Temporary Performance on": "Rendimiento temporal activado",
-  "Unknown mode": "Modo desconocido",
-  "Read-only. Change modes in Control Center.": "Solo lectura. Cambiá el modo en el Centro de control.",
-  "Read-only. Switching modes stays in horneroctl and Control Center.": "Solo lectura. El cambio de modo queda en horneroctl y en el Centro de Control."
+  "Unknown mode": "Modo desconocido"
 }

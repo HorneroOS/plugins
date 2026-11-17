@@ -36,3 +36,7 @@ reads your project files.
 ## License
 
 MIT — see `LICENSE`.
+
+## PluginKit 3
+
+This package targets PluginKit 3 on Hornero Signal (`schemaVersion: 3`): colours, type, spacing and glyphs come from the shared Theme tokens and Hornero Glyph names, and the shared data domains it reads are declared in `capabilities.providers`. Shells older than Hornero Signal cannot load it.

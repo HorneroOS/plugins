@@ -1,6 +1,6 @@
 # Hornero Now Playing
 
-Now Playing 2.0 (manifest v2): one package, two surfaces over the
+Now Playing 3.0 (manifest v3, PluginKit 3 on Hornero Signal): one package, two surfaces over the
 shared PluginKit `Media` facade (MPRIS, event-pushed; the surfaces
 hold a `Subscription { domain: "media" }` lease and never poll).
 
@@ -78,9 +78,8 @@ until then they are tracked by the issue, not faked here.
   popover and dashboard card to keep the bar compact and avoid
   duplicating the shell's native inline controls (issue
   acceptance). Metadata display in the bar is unchanged.
-- Installing this manifest v2 package needs a shell/`horneroctl`
-  that accepts `schemaVersion` 2, the `translations` declaration
-  and the `marketplace` block.
+- Installing this package needs a shell with PluginKit 3 (Hornero Signal): it declares
+  `schemaVersion: 3` and `capabilities.providers`, and earlier shells refuse or cannot render it.
 
 No processes and no network. Original HorneroOS code, MIT
 licensed. Plugin QML runs with your user privileges inside

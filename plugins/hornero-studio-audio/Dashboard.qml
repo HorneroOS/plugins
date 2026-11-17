@@ -106,11 +106,12 @@ Item {
         anchors.fill: parent
         Accessible.name: i18n.tr("Studio Audio")
         title: i18n.tr("Studio Audio")
-        icon: "graphic_eq"
+        glyph: "wave-sine"
+        channel: 13
 
         Column {
             width: parent.width
-            spacing: Theme.spacingSmall
+            spacing: Theme.spacing.small
 
             UiState {
                 visible: !root.available
@@ -122,27 +123,32 @@ Item {
             Column {
                 visible: root.available
                 width: parent.width
-                spacing: Theme.spacingSmall
+                spacing: Theme.spacing.small
 
                 UiStack {
                     orientation: root.hostOrientation
                     compact: root.hostCompact
 
                     UiMetric {
+                        size: "value"
                         label: i18n.tr("Mode")
                         value: root.modeName(root.mode)
                     }
 
                     UiChip {
                         text: root.performance ? i18n.tr("Temporary Performance on") : i18n.tr("Temporary Performance off")
-                        tone: root.performance ? "primary" : "neutral"
+                        tone: root.performance ? "signal" : "neutral"
                     }
                 }
 
-                UiMetric {
+                UiMeterRow {
                     visible: Audio.hasSink
-                    label: i18n.tr("Output")
-                    value: Audio.muted ? i18n.tr("Muted") : i18n.tr("%1%").arg(Math.round(Audio.volume * 100))
+                    width: parent.width
+                    label: i18n.tr("OUT")
+                    value: Audio.muted ? 0 : Audio.volume
+                    valueText: Audio.muted ? i18n.tr("Muted") : i18n.tr("%1 %").arg(Math.round(Audio.volume * 100))
+                    valueWidth: 72
+                    threshold: 1.01
                 }
 
                 UiText {
@@ -160,8 +166,8 @@ Item {
             }
 
             UiButton {
-                variant: "ghost"
-                iconName: "refresh"
+                variant: "quiet"
+                glyph: "refresh"
                 text: i18n.tr("Refresh")
                 tooltipText: i18n.tr("Reload the studio mode from horneroctl")
                 accessibleName: i18n.tr("Refresh studio mode")

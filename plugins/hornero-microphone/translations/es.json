@@ -1,5 +1,7 @@
 {
+  "%1 %": "%1 %",
   "%1%": "%1%",
+  "IN": "ENTRADA",
   "Input": "Entrada",
   "Input level and device selection are not exposed by PluginKit Audio; the level above is read-only and device switching stays in the shell audio settings.": "PluginKit Audio no expone el nivel de entrada ni la selección de dispositivo; el nivel de arriba es de solo lectura y el cambio de dispositivo queda en los ajustes de sonido del shell.",
   "Mic %1%": "Micrófono %1%",

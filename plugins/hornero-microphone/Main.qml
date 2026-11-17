@@ -55,8 +55,8 @@ Item {
         UiButton {
             id: indicator
 
-            variant: "ghost"
-            text: !Audio.hasSource ? "✕" : Audio.sourceMuted ? "🚫" : "🎤"
+            variant: "quiet"
+            glyph: !Audio.hasSource ? "microphone-off" : Audio.sourceMuted ? "microphone-off" : "microphone"
             tooltipText: root.statusText
             accessibleName: i18n.tr("Microphone details")
             onClicked: popover.toggle()
@@ -77,7 +77,7 @@ Item {
 
         Column {
             width: 300
-            spacing: Theme.spacingSmall
+            spacing: Theme.spacing.small
 
             UiText {
                 role: "title"
@@ -94,30 +94,37 @@ Item {
             Column {
                 visible: Audio.hasSource
                 width: parent.width
-                spacing: Theme.spacingSmall
+                spacing: Theme.spacing.small
 
                 UiStack {
                     orientation: root.hostOrientation
                     compact: root.hostCompact
 
                     UiMetric {
+                        size: "value"
                         label: i18n.tr("Input")
                         value: Audio.sourceMuted ? i18n.tr("Muted") : i18n.tr("%1%").arg(root.percent)
                     }
 
                     UiChip {
                         text: Audio.sourceMuted ? i18n.tr("Muted") : i18n.tr("Mic on")
-                        tone: Audio.sourceMuted ? "error" : "primary"
+                        tone: Audio.sourceMuted ? "neutral" : "phosphor"
                     }
                 }
 
-                UiProgress {
+                UiMeterRow {
                     width: parent.width
-                    value: Math.max(0, Math.min(1, Audio.sourceVolume))
+                    label: i18n.tr("IN")
+                    value: Audio.sourceMuted ? 0 : Math.max(0, Math.min(1, Audio.sourceVolume))
+                    valueText: Audio.sourceMuted ? i18n.tr("Muted") : i18n.tr("%1 %").arg(root.percent)
+                    available: Audio.hasSource
+                    valueWidth: 72
+                    threshold: 1.01
                 }
 
                 UiButton {
-                    variant: "ghost"
+                    variant: "quiet"
+                    glyph: Audio.sourceMuted ? "microphone-off" : "microphone"
                     text: Audio.sourceMuted ? i18n.tr("Unmute") : i18n.tr("Mute")
                     enabled: Audio.hasSource
                     tooltipText: Audio.sourceMuted ? i18n.tr("Unmute microphone") : i18n.tr("Mute microphone")
