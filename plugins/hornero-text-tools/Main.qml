@@ -69,7 +69,7 @@ Item {
 
         UiButton {
             id: indicator
-            variant: "ghost"
+            variant: "quiet"
             text: "Aa"
             tooltipText: i18n.tr("Text Tools: activate for a quick transform")
             accessibleName: i18n.tr("Text Tools quick action")
@@ -92,17 +92,16 @@ Item {
 
         Column {
             width: 300
-            spacing: Theme.spacingSmall
+            spacing: Theme.spacing.small
 
             UiText { role: "title"; text: i18n.tr("Text Tools") }
 
-            TextField {
+            UiTextField {
                 id: quickInput
                 width: parent.width
                 placeholderText: i18n.tr("Text to transform")
                 Accessible.name: i18n.tr("Quick text to transform")
-                ToolTip.text: i18n.tr("Quick text to transform")
-                ToolTip.visible: hovered
+                tooltipText: i18n.tr("Quick text to transform")
                 onAccepted: root.runQuick()
             }
 
