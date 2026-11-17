@@ -3,10 +3,9 @@
 
 usage: shell_parity.py <path-to-shell-checkout>
 
-Official plugins and community packages with schemaVersion 3 must pass the
-shell's scripts/validate_plugin.py unchanged. Packages still on schemaVersion
-1/2 are skipped (they are refused by the shipped host and being ported,
-HorneroOS/plugins#62); the count is printed so progress is visible.
+Every official plugin and community package must be schemaVersion 3 and pass
+the shell's scripts/validate_plugin.py unchanged (the shipped host refuses
+schemaVersion 1/2, HorneroOS/plugins#62).
 """
 import json
 import subprocess
@@ -30,13 +29,15 @@ def main(argv) -> int:
         manifest = json.loads((plugin_dir / "manifest.json").read_text())
         if manifest.get("schemaVersion") != 3:
             legacy += 1
+            failed.append(plugin_dir.name)
+            print(f"FAIL {plugin_dir.name}: schemaVersion {manifest.get('schemaVersion')!r}, expected 3", file=sys.stderr)
             continue
         checked += 1
         result = subprocess.run([sys.executable, str(validator), str(plugin_dir)], capture_output=True, text=True)
         if result.returncode != 0:
             failed.append(plugin_dir.name)
             print(f"FAIL {plugin_dir.name}\n{result.stdout}{result.stderr}", file=sys.stderr)
-    print(f"shell validator: {checked} schemaVersion 3 packages checked, {len(failed)} failed, {legacy} legacy skipped")
+    print(f"shell validator: {checked} schemaVersion 3 packages checked, {len(failed)} failed, {legacy} legacy")
     return 1 if failed else 0
 
 

@@ -16,7 +16,7 @@ import Hornero.PluginKit
 
 Item {
     Translations { id: i18n; pluginId: "hornero-example" }
-    Text { color: Theme.onSurface; text: i18n.tr("Example") }
+    Text { color: Theme.palette.ink; text: i18n.tr("Example") }
     Button {
         text: i18n.tr("Go")
         Accessible.name: i18n.tr("Go")
@@ -33,7 +33,7 @@ def make_plugin(root: Path, pid="hornero-example", qml=GOOD_QML, **overrides) ->
     plugin_dir = root / "plugins" / pid
     plugin_dir.mkdir(parents=True)
     manifest = {
-        "schemaVersion": 1,
+        "schemaVersion": 3,
         "id": pid,
         "name": "Hornero Example",
         "version": "1.0.0",
@@ -191,16 +191,26 @@ class ContractTest(unittest.TestCase):
         errors = self.errors_for(qml=GOOD_QML.replace('i18n.tr("Example")', 'qsTr("Example")'))
         self.assertTrue(any("never translated for plugins" in e for e in errors))
 
-    def test_surfaces_require_schema_version_2(self):
-        errors = self.errors_for(surfaces={"bar": {"entrypoint": "Main.qml"}})
-        self.assertTrue(any("surfaces requires schemaVersion 2" in e for e in errors))
+    def test_material_era_schema_versions_are_rejected_with_a_migration_hint(self):
+        for legacy in (1, 2):
+            with self.subTest(schemaVersion=legacy):
+                tmp = tempfile.TemporaryDirectory()
+                try:
+                    plugin_dir = make_plugin(Path(tmp.name), schemaVersion=legacy)
+                    errors, _, _ = vp.validate_plugin_dir(plugin_dir)
+                finally:
+                    tmp.cleanup()
+                self.assertTrue(any("Material-era PluginKit" in e and "schemaVersion: 3" in e for e in errors), errors)
+
+    def test_surfaces_are_allowed_on_v3(self):
+        self.assertEqual(self.errors_for(surfaces={"bar": {"entrypoint": "Main.qml"}}), [])
 
     def test_v2_surface_entrypoint_must_be_listed(self):
-        errors = self.errors_for(schemaVersion=2, surfaces={"bar": {"entrypoint": "Bar.qml"}})
+        errors = self.errors_for(surfaces={"bar": {"entrypoint": "Bar.qml"}})
         self.assertTrue(any("surfaces.bar.entrypoint must be listed in files" in e for e in errors))
 
     def test_v2_primary_surface_conflict_is_rejected(self):
-        plugin_dir = make_plugin(self.root, schemaVersion=2)
+        plugin_dir = make_plugin(self.root)
         manifest = json.loads((plugin_dir / "manifest.json").read_text())
         manifest["files"].append("Other.qml")
         manifest["surfaces"] = {"dashboard": {"entrypoint": "Other.qml"}}
@@ -210,11 +220,11 @@ class ContractTest(unittest.TestCase):
         self.assertTrue(any("conflicts with the top-level entrypoint" in e for e in errors))
 
     def test_dashboard_hints_only_on_dashboard_surface(self):
-        errors = self.errors_for(schemaVersion=2, surfaces={"bar": {"entrypoint": "Main.qml", "size": "wide"}})
+        errors = self.errors_for(surfaces={"bar": {"entrypoint": "Main.qml", "size": "wide"}})
         self.assertTrue(any("only allowed on the dashboard surface" in e for e in errors))
-        errors = self.errors_for(pid="hornero-example2", schemaVersion=2, surfaces={"dashboard": {"entrypoint": "Main.qml", "size": "huge"}})
+        errors = self.errors_for(pid="hornero-example2", surfaces={"dashboard": {"entrypoint": "Main.qml", "size": "huge"}})
         self.assertTrue(any("size must be one of" in e for e in errors))
-        errors = self.errors_for(pid="hornero-example3", schemaVersion=2, surfaces={"dashboard": {"entrypoint": "Main.qml", "category": "Pinned"}})
+        errors = self.errors_for(pid="hornero-example3", surfaces={"dashboard": {"entrypoint": "Main.qml", "category": "Pinned"}})
         self.assertTrue(any("category must be" in e for e in errors))
 
     def test_marketplace_rules(self):
@@ -311,11 +321,11 @@ class QualityProbeTest(unittest.TestCase):
         self.assertEqual(probe["themeTokens"], "fail")
 
     def test_format_only_strings_need_no_translation(self):
-        qml = 'import QtQuick\nimport Hornero.PluginKit\nItem { Text { color: Theme.onSurface; text: Time.format("HH:mm") } }\n'
+        qml = 'import QtQuick\nimport Hornero.PluginKit\nItem { Text { color: Theme.palette.ink; text: Time.format("HH:mm") } }\n'
         self.assertEqual(self.probe_for(qml=qml)["translation"], "na")
 
     def test_hard_coded_chrome_colour_fails_theme_tokens(self):
-        qml = GOOD_QML.replace('color: Theme.onSurface', 'color: "#112233"')
+        qml = GOOD_QML.replace('color: Theme.palette.ink', 'color: "#112233"')
         self.assertEqual(self.probe_for(qml=qml)["themeTokens"], "fail")
 
     def test_pluginkit_controls_probe_pass_with_kit_properties(self):
@@ -329,7 +339,7 @@ Item {
         tooltipText: i18n.tr("Go")
         accessibleName: i18n.tr("Go")
     }
-    Text { color: Theme.onSurface; text: i18n.tr("Example") }
+    Text { color: Theme.palette.ink; text: i18n.tr("Example") }
 }
 """
         probe = self.probe_for(qml=qml)

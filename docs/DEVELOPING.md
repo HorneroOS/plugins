@@ -63,7 +63,7 @@ removed Material-era names with their replacement. The canonical contract is
 the shell's `docs/PLUGINS.md` ("Migrating to PluginKit 3", "Desktop
 widgets", "Instrumentation"); catalogue progress is tracked in
 HorneroOS/plugins#62. The v1 material below documents the retired contract
-and is kept only until the remaining extensions are ported.
+and is kept for history only: the validator now rejects `schemaVersion` 1/2.
 
 ## Manifest: `schemaVersion: 1` (retired)
 
