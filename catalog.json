@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedFrom": "541a9a4d8638e390e8b71dea185658f44da1fce7",
+  "generatedFrom": "26684a570a8a1695838523e76a3364b4ed97abb7",
   "plugins": [
     {
       "id": "hornero-agenda",
@@ -267,6 +267,66 @@
       "trust": "official",
       "path": "plugins/hornero-calendar",
       "sha256": "fc89b4bddcd7dbd566687db826e8291219e51d9d8966cf2db1ad09c7f5be9261"
+    },
+    {
+      "id": "hornero-clipboard",
+      "name": "Hornero Clipboard",
+      "version": "1.0.0",
+      "description": "Private clipboard history for the launcher (>clipboard): text only, kept in memory and never written to disk, skips password-manager secrets, with retention, size and excluded-word limits you control. Pause, resume and clear are commands.",
+      "author": "HorneroOS contributors",
+      "license": "MIT",
+      "homepage": "https://github.com/HorneroOS/plugins",
+      "placement": "dashboard",
+      "category": "utilities",
+      "capabilities": {
+        "processCommands": [
+          "wl-paste",
+          "echo"
+        ],
+        "networkHosts": [],
+        "settings": {
+          "recording": {
+            "type": "boolean",
+            "default": true,
+            "description": "Record copied text while the extension is enabled. Off stops the wl-paste watcher entirely."
+          },
+          "maxEntries": {
+            "type": "integer",
+            "default": 25,
+            "minimum": 5,
+            "maximum": 100,
+            "description": "How many entries are held at most; the oldest are dropped first."
+          },
+          "retentionMinutes": {
+            "type": "integer",
+            "default": 60,
+            "minimum": 0,
+            "maximum": 1440,
+            "description": "Erase entries after this many minutes; 0 keeps them until the shell restarts."
+          },
+          "maxChars": {
+            "type": "integer",
+            "default": 2000,
+            "minimum": 50,
+            "maximum": 20000,
+            "description": "Never record a copy longer than this many characters."
+          },
+          "excludeWords": {
+            "type": "string",
+            "default": "",
+            "maxLength": 200,
+            "description": "Comma-separated words; a copy containing any of them (case-insensitive) is never recorded."
+          },
+          "skipSensitive": {
+            "type": "boolean",
+            "default": true,
+            "description": "Skip copies that a password manager marks as secret (x-kde-passwordManagerHint)."
+          }
+        }
+      },
+      "trust": "official",
+      "path": "plugins/hornero-clipboard",
+      "sha256": "4512d7f5e1c5519886a2708c30dda68c0ab3c9ece5b57e9535e5e82077a1217a"
     },
     {
       "id": "hornero-color-converter",

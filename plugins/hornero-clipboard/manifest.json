@@ -1,0 +1,137 @@
+{
+  "schemaVersion": 3,
+  "pluginKit": 4,
+  "id": "hornero-clipboard",
+  "name": "Hornero Clipboard",
+  "version": "1.0.0",
+  "description": "Private clipboard history for the launcher (>clipboard): text only, kept in memory and never written to disk, skips password-manager secrets, with retention, size and excluded-word limits you control. Pause, resume and clear are commands.",
+  "author": "HorneroOS contributors",
+  "license": "MIT",
+  "homepage": "https://github.com/HorneroOS/plugins",
+  "entrypoint": "Main.qml",
+  "placement": "dashboard",
+  "surfaces": {
+    "dashboard": {
+      "entrypoint": "Main.qml",
+      "size": "compact",
+      "category": "Utilities"
+    },
+    "launcher": {
+      "entrypoint": "Launcher.qml"
+    },
+    "commands": {
+      "entrypoint": "Commands.qml"
+    }
+  },
+  "contributes": {
+    "commands": [
+      {
+        "id": "pause",
+        "title": "Pause clipboard recording",
+        "description": "Stops the clipboard watcher; held entries stay searchable",
+        "glyph": "player-pause",
+        "keywords": [
+          "clipboard",
+          "history",
+          "stop"
+        ]
+      },
+      {
+        "id": "resume",
+        "title": "Resume clipboard recording",
+        "description": "Starts recording copied text again",
+        "glyph": "player-play",
+        "keywords": [
+          "clipboard",
+          "history",
+          "start"
+        ]
+      },
+      {
+        "id": "clear",
+        "title": "Clear clipboard history",
+        "description": "Erases every held entry now",
+        "glyph": "trash",
+        "keywords": [
+          "clipboard",
+          "history",
+          "forget",
+          "privacy"
+        ]
+      }
+    ]
+  },
+  "translations": {
+    "sourceLocale": "en",
+    "locales": [
+      "es"
+    ],
+    "directory": "translations"
+  },
+  "marketplace": {
+    "compatibility": {
+      "minShellVersion": "1.3.0"
+    },
+    "changelog": [
+      {
+        "version": "1.0.0",
+        "notes": "Initial release: >clipboard launcher provider (several rows, Enter copies), in-memory text history with retention, size and excluded-word limits, password-manager secrets skipped, pause/resume/clear commands. Needs the Hornero Shell with multi-row launcher results and PluginKit 4 commands."
+      }
+    ]
+  },
+  "files": [
+    "Main.qml",
+    "Launcher.qml",
+    "Commands.qml",
+    "History.js",
+    "README.md",
+    "LICENSE",
+    "translations/es.json"
+  ],
+  "capabilities": {
+    "processCommands": [
+      "wl-paste",
+      "echo"
+    ],
+    "networkHosts": [],
+    "settings": {
+      "recording": {
+        "type": "boolean",
+        "default": true,
+        "description": "Record copied text while the extension is enabled. Off stops the wl-paste watcher entirely."
+      },
+      "maxEntries": {
+        "type": "integer",
+        "default": 25,
+        "minimum": 5,
+        "maximum": 100,
+        "description": "How many entries are held at most; the oldest are dropped first."
+      },
+      "retentionMinutes": {
+        "type": "integer",
+        "default": 60,
+        "minimum": 0,
+        "maximum": 1440,
+        "description": "Erase entries after this many minutes; 0 keeps them until the shell restarts."
+      },
+      "maxChars": {
+        "type": "integer",
+        "default": 2000,
+        "minimum": 50,
+        "maximum": 20000,
+        "description": "Never record a copy longer than this many characters."
+      },
+      "excludeWords": {
+        "type": "string",
+        "default": "",
+        "maxLength": 200,
+        "description": "Comma-separated words; a copy containing any of them (case-insensitive) is never recorded."
+      },
+      "skipSensitive": {
+        "type": "boolean",
+        "default": true,
+        "description": "Skip copies that a password manager marks as secret (x-kde-passwordManagerHint)."
+      }
+    }
+  }
+}
