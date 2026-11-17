@@ -1,5 +1,5 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 3,
   "id": "starter-plugin",
   "name": "Starter Plugin",
   "version": "0.1.0",
@@ -7,11 +7,18 @@
   "author": "Your Name",
   "license": "MIT",
   "entrypoint": "Main.qml",
-  "files": ["Main.qml", "README.md", "LICENSE"],
+  "files": [
+    "Main.qml",
+    "README.md",
+    "LICENSE"
+  ],
   "capabilities": {
     "processCommands": [],
     "networkHosts": [],
-    "settings": {}
+    "settings": {},
+    "providers": [
+      "time"
+    ]
   },
   "placement": "bar"
 }

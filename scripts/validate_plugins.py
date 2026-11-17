@@ -55,7 +55,37 @@ ACTION_RE = re.compile(r"^[a-z][a-z0-9_]{0,63}$")
 MARKETPLACE_SCREENSHOT_SUFFIXES = (".png", ".jpg", ".jpeg", ".webp")
 MARKETPLACE_MAX_SCREENSHOTS = 6
 MARKETPLACE_MAX_CHANGELOG = 20
-SCHEMA_VERSIONS = (1, 2)
+SCHEMA_VERSIONS = (1, 2, 3)
+# PluginKit 3 (Hornero Signal) is the only contract the shipped shell
+# loads. 1/2 targeted the removed Material-era kit: still validated here
+# while the catalogue is ported (HorneroOS/plugins#62), reported as
+# legacy, then dropped by the v3-only flip.
+CURRENT_SCHEMA_VERSION = 3
+LEGACY_SCHEMA_VERSIONS = (1, 2)
+DESKTOP_ANCHORS = (
+    "top-left", "top-center", "top-right",
+    "middle-left", "middle-center", "middle-right",
+    "bottom-left", "bottom-center", "bottom-right",
+)
+DESKTOP_SIZE_KEYS = ("width", "height", "minWidth", "minHeight")
+DESKTOP_KEYS = DESKTOP_SIZE_KEYS + ("resizable", "anchor")
+# Shared provider domains (RFC 0001 section 5b); mirrors the shell validator.
+PROVIDER_DOMAINS = (
+    "system", "network", "spectrum", "media", "audio", "power", "weather",
+    "time", "workspaces",
+)
+FACADE_DOMAINS = {
+    "System": ("system",),
+    "Telemetry": ("system", "network"),
+    "Network": ("network",),
+    "Media": ("media",),
+    "Audio": ("audio",),
+    "Power": ("power",),
+    "Weather": ("weather",),
+    "Time": ("time",),
+    "Workspaces": ("workspaces",),
+}
+GLYPH_NAMES_FILE = ROOT / "schema" / "hornero-glyphs.names"
 # Manifest v2 surfaces (shell docs/PLUGINS.md): the first four have
 # runtime hosts today; launcher/settings are validated declarations
 # only. Mirrors the shell validator's SURFACES.
@@ -178,7 +208,7 @@ def validate_manifest_fields(tag: str, manifest: dict) -> list:
     for field in sorted(set(manifest) - ALLOWED_FIELDS):
         errors.append(f"{tag}: unknown top-level field {field} (schema is additionalProperties: false)")
     if type(manifest.get("schemaVersion")) is not int or manifest.get("schemaVersion") not in SCHEMA_VERSIONS:
-        errors.append(f"{tag}: schemaVersion must be 1 or 2")
+        errors.append(f"{tag}: schemaVersion must be one of {list(SCHEMA_VERSIONS)} (3 is the Hornero Signal PluginKit 3 contract)")
     if not ID_RE.match(str(manifest.get("id", ""))):
         errors.append(f"{tag}: id does not match {ID_RE.pattern}")
     if not SEMVER_RE.match(str(manifest.get("version", ""))):
@@ -226,10 +256,10 @@ def validate_manifest_fields(tag: str, manifest: dict) -> list:
     errors += validate_marketplace(tag, manifest, safe_files)
     caps = manifest.get("capabilities")
     if caps is not None:
-        if not isinstance(caps, dict) or not {"processCommands", "networkHosts", "settings"} <= set(caps) <= {"processCommands", "networkHosts", "settings", "actions"}:
-            errors.append(f"{tag}: capabilities must contain processCommands, networkHosts, and settings, plus optional actions")
+        if not isinstance(caps, dict) or not {"processCommands", "networkHosts", "settings"} <= set(caps) <= {"processCommands", "networkHosts", "settings", "actions", "providers"}:
+            errors.append(f"{tag}: capabilities must contain processCommands, networkHosts, and settings, plus optional actions and providers")
         else:
-            errors += validate_capabilities(tag, caps)
+            errors += validate_capabilities(tag, caps, manifest.get("schemaVersion"))
     return errors
 
 
@@ -330,8 +360,8 @@ def validate_surfaces(tag: str, manifest: dict, safe_files: set) -> list:
     errors = []
     if "surfaces" not in manifest:
         return errors
-    if manifest.get("schemaVersion") != 2:
-        errors.append(f"{tag}: surfaces requires schemaVersion 2 (schemaVersion 1 supports only the single placement/entrypoint surface)")
+    if manifest.get("schemaVersion") not in (2, 3):
+        errors.append(f"{tag}: surfaces requires schemaVersion 2 or 3 (schemaVersion 1 supports only the single placement/entrypoint surface)")
         return errors
     surfaces = manifest["surfaces"]
     if not isinstance(surfaces, dict) or not surfaces:
@@ -347,9 +377,26 @@ def validate_surfaces(tag: str, manifest: dict, safe_files: set) -> list:
         if not isinstance(surface, dict):
             errors.append(f"{where} must be an object")
             continue
-        extra = set(surface) - {"entrypoint", "enabled", "size", "category", "section"}
+        extra = set(surface) - {"entrypoint", "enabled", "size", "category", "section", *DESKTOP_KEYS}
         if extra:
             errors.append(f"{where} contains unknown fields: {', '.join(sorted(extra))}")
+        # Desktop widget hints (PluginKit 3): default/minimum logical size,
+        # resizability and the start anchor; the person's geometry wins.
+        hints = [key for key in DESKTOP_KEYS if key in surface]
+        if hints and name != "desktop":
+            errors.append(f"{where}.{hints[0]} is a desktop widget hint and is only allowed on the desktop surface")
+        if hints and manifest.get("schemaVersion") != CURRENT_SCHEMA_VERSION:
+            errors.append(f"{where}.{hints[0]}: desktop widget hints require schemaVersion 3")
+        for key in DESKTOP_SIZE_KEYS:
+            if key in surface and (type(surface[key]) is not int or not 80 <= surface[key] <= 1600):
+                errors.append(f"{where}.{key} must be an integer between 80 and 1600 (logical pixels)")
+        for low, high in (("minWidth", "width"), ("minHeight", "height")):
+            if all(type(surface.get(k)) is int for k in (low, high)) and surface[low] > surface[high]:
+                errors.append(f"{where}.{low} must not exceed {where}.{high}")
+        if "resizable" in surface and not isinstance(surface["resizable"], bool):
+            errors.append(f"{where}.resizable must be a boolean")
+        if "anchor" in surface and surface["anchor"] not in DESKTOP_ANCHORS:
+            errors.append(f"{where}.anchor must be one of {', '.join(DESKTOP_ANCHORS)}")
         # Bar section hint (shell#439): native island the indicator joins.
         if "section" in surface and name != "bar":
             errors.append(f"{where}.section is a bar hint and is only allowed on the bar surface")
@@ -481,8 +528,21 @@ def validate_translation_catalogs(tag: str, plugin_dir: Path, manifest: dict, co
     return errors
 
 
-def validate_capabilities(tag: str, caps: dict) -> list:
+def validate_capabilities(tag: str, caps: dict, schema_version=None) -> list:
     errors = []
+    extra_keys = set(caps) - {"processCommands", "networkHosts", "settings", "actions", "providers"}
+    if extra_keys:
+        errors.append(f"{tag}: capabilities contains unknown keys: {', '.join(sorted(extra_keys))}")
+    if "providers" in caps:
+        providers = caps["providers"]
+        if schema_version != CURRENT_SCHEMA_VERSION:
+            errors.append(f"{tag}: capabilities.providers requires schemaVersion 3")
+        if (
+            not isinstance(providers, list)
+            or any(item not in PROVIDER_DOMAINS for item in providers)
+            or len(set(map(str, providers))) != len(providers)
+        ):
+            errors.append(f"{tag}: capabilities.providers must list unique provider domains from: {', '.join(PROVIDER_DOMAINS)}")
     if "actions" in caps:
         actions = caps["actions"]
         if not isinstance(actions, list) or len(actions) > 32 or any(not isinstance(a, str) or not ACTION_RE.match(a) for a in actions) or (all(isinstance(a, str) for a in actions) and len(actions) != len(set(actions))):
@@ -607,6 +667,171 @@ def validate_qml_contract(tag: str, manifest: dict, code: str) -> list:
     return errors
 
 
+# PluginKit 3 (Hornero Signal) source contract, mirrored from the shell
+# validator (scripts/validate_plugin.py, the canonical copy). Material-era
+# names fail with the replacement spelled out so a port is mechanical.
+LEGACY_THEME = {
+    "primary": "Theme.palette.signal",
+    "onPrimary": "Theme.palette.onSignal",
+    "primaryContainer": "Theme.palette.signalWell",
+    "onPrimaryContainer": "Theme.palette.onSignalWell",
+    "secondary": "Theme.palette.cue",
+    "onSecondary": "Theme.palette.onCue",
+    "secondaryContainer": "Theme.palette.cueWell",
+    "onSecondaryContainer": "Theme.palette.onCueWell",
+    "tertiary": "Theme.palette.phosphor",
+    "onTertiary": "Theme.palette.onPhosphor",
+    "tertiaryContainer": "Theme.palette.phosphorWell",
+    "onTertiaryContainer": "Theme.palette.onPhosphorWell",
+    "success": "Theme.palette.phosphor",
+    "error": "Theme.palette.alert",
+    "onError": "Theme.palette.onAlert",
+    "errorContainer": "Theme.palette.alertWell",
+    "onErrorContainer": "Theme.palette.onAlertWell",
+    "background": "Theme.palette.ground",
+    "onBackground": "Theme.palette.ink",
+    "surface": "Theme.palette.base",
+    "surfaceDim": "Theme.palette.ground",
+    "surfaceBright": "Theme.palette.lifted",
+    "surfaceVariant": "Theme.palette.raised",
+    "surfaceContainerLowest": "Theme.palette.ground",
+    "surfaceContainerLow": "Theme.palette.sunken",
+    "surfaceContainer": "Theme.palette.panel",
+    "surfaceContainerHigh": "Theme.palette.raised",
+    "surfaceContainerHighest": "Theme.palette.lifted",
+    "onSurface": "Theme.palette.ink",
+    "onSurfaceVariant": "Theme.palette.inkMuted",
+    "outline": "Theme.palette.ruleStrong",
+    "outlineVariant": "Theme.palette.rule",
+    "componentBorder": "Theme.palette.ruleStrong",
+    "focusRing": "Theme.palette.focus",
+    "fontFamily": "Theme.font.family.sans",
+    "monoFontFamily": "Theme.font.family.mono",
+    "iconFontFamily": "UiIcon",
+    "fontSize": "Theme.font.size.normal",
+    "fontSizeSmall": "Theme.font.size.small",
+    "fontSizeBody": "Theme.font.size.smaller",
+    "fontSizeTitle": "Theme.font.size.larger",
+    "fontSizeLarge": "Theme.font.size.large",
+    "fontSizeDisplay": "Theme.font.size.extraLarge",
+    "iconSize": "Theme.font.size.larger",
+    "iconSizeLarge": "Theme.font.size.large",
+    "spacingSmall": "Theme.spacing.small",
+    "spacingLarge": "Theme.spacing.large",
+    "paddingLarge": "Theme.padding.large",
+    "roundingSmall": "Theme.rounding.small",
+    "roundingLarge": "Theme.rounding.large",
+    "durationSmall": 'Theme.duration("short")',
+    "durationNormal": 'Theme.duration("medium")',
+    "durationExpressiveFastSpatial": 'Theme.duration("settleFast")',
+    "curveStandard": "Theme.anim.curves.standard",
+    "curveStandardDecel": "Theme.anim.curves.enter",
+    "curveExpressiveFastSpatial": "Theme.anim.curves.settleFast",
+    "animationScale": "Theme.duration(name)",
+    "motionDuration": "Theme.duration(name)",
+    "stateHoverOpacity": "the Signal hover fill (Theme.palette.raised)",
+    "statePressedOpacity": "the Signal pressed fill (Theme.palette.lifted)",
+}
+LEGACY_FLAT = {
+    "spacing": "Theme.spacing.<small|smaller|normal|larger|large>",
+    "padding": "Theme.padding.<small|smaller|normal|larger|large>",
+    "rounding": "Theme.rounding.<small|normal|large>",
+}
+LEGACY_THEME_RE = re.compile(r"\bTheme\.([A-Za-z]+)\b(?!\s*\.)")
+LEGACY_PROPERTIES = {"iconName": "glyph", "trailingIconName": "trailingGlyph", "iconFill": None}
+LEGACY_PROPERTY_RE = re.compile(r"\b(iconName|trailingIconName|iconFill)\s*:")
+ICON_FILL_RE = re.compile(r"(?<![.\w])fill\s*:\s*(?:[01](?:\.0)?\s*(?:$|;|\n)|[^\n;]*\?\s*1\s*:\s*0)")
+UI_ICON_BLOCK = re.compile(r"\bUiIcon\s*\{([^{}]*)\}")
+UI_ICON_LEGACY_ICON = re.compile(r"(?<![.\w])icon\s*:")
+LEGACY_ICON_PROPERTY_RE = re.compile(r"(?m)^\s*icon\s*:")
+GLYPH_ASSIGNMENT = re.compile(r"\b(?:glyph|trailingGlyph)\s*:\s*([^\n;}]+)")
+UI_ICON_NAME = re.compile(r"(?<![.\w])name\s*:\s*([^\n;]+)")
+STRING_LITERAL = re.compile(r'"([^"\\]*)"')
+SUBSCRIPTION_DOMAIN = re.compile(r"\bSubscription\s*\{[^{}]*?\bdomain\s*:\s*\"([a-z]+)\"", re.DOTALL)
+FACADE_USE = re.compile(r"(?<![.\w])(System|Telemetry|Network|Media|Audio|Power|Weather|Time|Workspaces)\.[a-zA-Z]")
+SPECTRUM_USE = re.compile(r"(?<![.\w])Audio\.spectrum\b")
+_GLYPH_NAMES = None
+
+
+def glyph_names() -> set:
+    """Hornero Glyph names (a vendored copy of the shell's hornero-glyphs.names)."""
+    global _GLYPH_NAMES
+    if _GLYPH_NAMES is None:
+        names = set()
+        if GLYPH_NAMES_FILE.is_file():
+            for line in GLYPH_NAMES_FILE.read_text(encoding="utf-8").splitlines():
+                line = line.strip()
+                if line and not line.startswith("#"):
+                    names.add(line)
+        _GLYPH_NAMES = names
+    return _GLYPH_NAMES
+
+
+def strip_all_comments(source: str) -> str:
+    source = re.sub(r"/\*.*?\*/", "", source, flags=re.DOTALL)
+    return re.sub(r"(?<!:)//[^\n]*", "", source)
+
+
+def signal_contract_errors(tag: str, code: str, declared_providers: set) -> list:
+    """Reject Material-era PluginKit API and undeclared provider reads."""
+    errors = []
+    source = strip_all_comments(code)
+    for name in sorted(set(LEGACY_THEME_RE.findall(source))):
+        if name in LEGACY_THEME:
+            errors.append(f"{tag}: uses Theme.{name}, a Material-era token removed in PluginKit 3; use {LEGACY_THEME[name]}")
+        elif name in LEGACY_FLAT:
+            errors.append(f"{tag}: uses Theme.{name} as a number; PluginKit 3 tokens are groups: {LEGACY_FLAT[name]}")
+    for name in sorted(set(LEGACY_PROPERTY_RE.findall(source))):
+        replacement = LEGACY_PROPERTIES[name]
+        if replacement is None:
+            errors.append(f"{tag}: sets {name}: Hornero Glyphs are outline-only (no fill axis); remove it")
+        else:
+            errors.append(f"{tag}: sets {name}: PluginKit 3 renamed it to {replacement} and it takes a Hornero Glyph name")
+    if LEGACY_ICON_PROPERTY_RE.search(source):
+        errors.append(f"{tag}: sets an icon property: PluginKit 3 renamed it (UiIcon.name; glyph on UiCard, UiButton, UiChip, UiDetailRow and UiActionRow)")
+    if ICON_FILL_RE.search(source):
+        errors.append(f"{tag}: sets a Material icon fill axis (fill: 0/1); Hornero Glyphs are outline-only")
+    literals = []
+    for block in UI_ICON_BLOCK.finditer(source):
+        body = block.group(1)
+        if UI_ICON_LEGACY_ICON.search(body):
+            errors.append(f"{tag}: sets UiIcon.icon: PluginKit 3 renamed it to name")
+        for value in UI_ICON_NAME.findall(body):
+            literals += STRING_LITERAL.findall(value)
+    for value in GLYPH_ASSIGNMENT.findall(source):
+        literals += STRING_LITERAL.findall(value)
+    names = glyph_names()
+    for literal in sorted(set(literals)):
+        if literal and ("_" in literal or (names and literal not in names)):
+            hint = ("looks like a Material-era ligature; Hornero Glyphs are Tabler outline names with hyphens"
+                    if "_" in literal else "is not a Hornero Glyph (schema/hornero-glyphs.names)")
+            errors.append(f"{tag}: glyph {literal!r} {hint}")
+    for domain in sorted(set(SUBSCRIPTION_DOMAIN.findall(source))):
+        if domain not in PROVIDER_DOMAINS:
+            errors.append(f"{tag}: subscribes to unknown provider domain {domain!r}")
+        elif domain not in declared_providers:
+            errors.append(f"{tag}: subscribes to provider {domain!r} but capabilities.providers does not declare it")
+    for facade in sorted(set(FACADE_USE.findall(source))):
+        needed = FACADE_DOMAINS[facade]
+        if not declared_providers.intersection(needed):
+            errors.append(f"{tag}: reads the {facade} facade but capabilities.providers declares none of: {', '.join(needed)}")
+    if SPECTRUM_USE.search(source) and "spectrum" not in declared_providers:
+        errors.append(f'{tag}: reads Audio.spectrum but capabilities.providers does not declare "spectrum"')
+    return errors
+
+
+def validate_signal_contract(tag: str, manifest: dict, plugin_dir: Path) -> list:
+    caps = manifest.get("capabilities") or {}
+    providers = caps.get("providers")
+    declared = set(providers) if isinstance(providers, list) else set()
+    errors = []
+    for name in manifest.get("files", []):
+        if isinstance(name, str) and name.endswith(".qml") and (plugin_dir / name).is_file():
+            code = (plugin_dir / name).read_text(errors="replace")
+            errors += signal_contract_errors(f"{tag}/{name}", code, declared)
+    return errors
+
+
 def validate_plugin_dir(plugin_dir: Path):
     """Return (errors, manifest_or_none, qml_code)."""
     tag = plugin_dir.name
@@ -650,6 +875,8 @@ def validate_plugin_dir(plugin_dir: Path):
             code += (plugin_dir / name).read_text(errors="replace") + "\n"
     if code:
         errors += validate_qml_contract(tag, manifest, code)
+        if manifest.get("schemaVersion") == CURRENT_SCHEMA_VERSION:
+            errors += validate_signal_contract(tag, manifest, plugin_dir)
         errors += validate_translation_catalogs(tag, plugin_dir, manifest, code)
     return errors, manifest, code
 
@@ -1034,6 +1261,9 @@ def main(argv=None, root: Path = ROOT) -> int:
         print("\n".join(errors), file=sys.stderr)
         return 1
     print("plugins valid:", ", ".join(p.name for p in official_dirs))
+    legacy = sorted(n for n, m in manifests.items() if m.get("schemaVersion") in LEGACY_SCHEMA_VERSIONS)
+    print(f"pluginkit 3: {len(manifests) - len(legacy)}/{len(manifests)} official plugins on schemaVersion 3"
+          + (f"; legacy (refused by the shipped host): {', '.join(legacy)}" if legacy else ""))
     if community_root.is_dir():
         print("community valid (unreviewed, not catalogued):", ", ".join(p.name for p in community_dirs) or "none")
     counts = {}

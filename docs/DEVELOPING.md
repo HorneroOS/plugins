@@ -50,7 +50,22 @@ directory name must equal the manifest `id`. A package contains:
 - Exactly the files listed in manifest `files` (plus `manifest.json`
   itself). `files` must include `README.md` and `LICENSE`.
 
-## Manifest: `schemaVersion: 1`
+## PluginKit 3 (Hornero Signal): `schemaVersion: 3`
+
+The shipped shell loads **only `schemaVersion: 3`** packages and refuses
+1/2 with a migration hint. New extensions start at 3: colours come from
+`Theme.palette.<role>`, type and spacing from `Theme.font` / `Theme.spacing`,
+icons are Hornero Glyph names (`UiIcon { name }`, `glyph` on buttons/rows/
+chips, kebab-case Tabler outline names listed in `schema/hornero-glyphs.names`),
+and every shared data domain read through a facade or `Subscription` is
+declared in `capabilities.providers`. `scripts/validate_plugins.py` rejects
+removed Material-era names with their replacement. The canonical contract is
+the shell's `docs/PLUGINS.md` ("Migrating to PluginKit 3", "Desktop
+widgets", "Instrumentation"); catalogue progress is tracked in
+HorneroOS/plugins#62. The v1 material below documents the retired contract
+and is kept only until the remaining extensions are ported.
+
+## Manifest: `schemaVersion: 1` (retired)
 
 The contract is `schema/plugin-manifest.schema.json` in this repo
 (kept in sync with HorneroOS/shell; the shell copy is canonical).
@@ -509,8 +524,8 @@ Notes:
 
 This repo ships `templates/starter-plugin/` (`Main.qml`,
 `manifest.json`, `README.md`, MIT `LICENSE`): a `bar`-placement
-label showing `HH:mm`, updated every 30 seconds, using only
-`import QtQuick`.
+label showing `HH:mm` (PluginKit 3: `UiText`, the `time` provider,
+`schemaVersion: 3`).
 
 ```sh
 cp -r templates/starter-plugin plugins/<your-id>
@@ -520,7 +535,7 @@ python3 scripts/validate_plugins.py
 python3 scripts/gen_catalog.py   # see the two-commit flow below
 ```
 
-The entrypoint root is a plain `QtQuick` `Item`; give it
+The entrypoint root is a `QtQuick` `Item`; give it
 `implicitWidth`/`implicitHeight` for visible placements (the
 starter and the pomodoro in `plugins/hornero-pomodoro/` both do).
 Alternatively scaffold outside this repo with

@@ -1,21 +1,19 @@
 import QtQuick
+import Hornero.PluginKit
 
-// Starter plugin: shows HH:mm, updates every 30 seconds.
+// Starter plugin (PluginKit 3, Hornero Signal): shows HH:mm in the bar.
+// Colours, type and spacing come from Theme tokens, never literals.
 Item {
-    implicitWidth: label.implicitWidth + 16
-    implicitHeight: label.implicitHeight + 8
+    implicitWidth: label.implicitWidth + Theme.spacing.small * 2
+    implicitHeight: label.implicitHeight
 
-    Text {
+    Subscription { domain: "time" }
+
+    UiText {
         id: label
 
         anchors.centerIn: parent
-        text: Qt.formatDateTime(new Date(), "HH:mm")
-
-        Timer {
-            interval: 30000
-            repeat: true
-            running: true
-            onTriggered: label.text = Qt.formatDateTime(new Date(), "HH:mm")
-        }
+        role: "value"
+        text: Time.format("HH:mm")
     }
 }
