@@ -681,6 +681,51 @@
       }
     },
     {
+      "id": "hornero-emoji",
+      "classification": "needs-upgrade",
+      "valueProposition": "Emoji search for the launcher (>emoji) and a dashboard picker over the bundled Unicode 16.0 names, with skin tone and result count as settings. Local only, no history.",
+      "nativeOverlap": "Native launcher has no emoji provider; this adds one through the plugin launcher contract.",
+      "dimensions": {
+        "tooltips": {
+          "status": "pass",
+          "note": "Interactive controls expose their purpose through Ui* accessible names and the host-owned tooltip layer (static probe)."
+        },
+        "accessibility": {
+          "status": "pass",
+          "note": "Every control carries an accessible name (static probe)."
+        },
+        "translation": {
+          "status": "pass",
+          "note": "All literals go through PluginKit Translations; es catalogue complete (static probe)."
+        },
+        "settings": {
+          "status": "pass",
+          "note": "Ten typed settings read via PluginKit Settings (static probe)."
+        },
+        "themeTokens": {
+          "status": "pass",
+          "note": "Colours come from Ui* primitives and Theme.palette tokens (static probe)."
+        },
+        "screenshots": {
+          "status": "fail",
+          "note": "No marketplace screenshot yet; a QA VM capture is recorded in the PR."
+        },
+        "orientation": {
+          "status": "na",
+          "note": "Dashboard card and launcher rows only: the host fixes their size."
+        },
+        "loadingErrorStates": {
+          "status": "pass",
+          "note": "No loading state (a bundled table); an empty search shows UiState empty."
+        },
+        "performance": {
+          "status": "unverified",
+          "note": "Not measured yet."
+        }
+      },
+      "issue": "HorneroOS/plugins#62"
+    },
+    {
       "id": "hornero-focus-card",
       "classification": "deprecated-with-replacement",
       "valueProposition": "Focus Card 2.0: dashboard card with the locale date from PluginKit Time and a rotating original one-line focus reminder (optional own leading line via the customLine setting). Stores no note; Previous/Next and a pause toggle replace the 1.x mouse-only click. Pure QML, no processes or network.",

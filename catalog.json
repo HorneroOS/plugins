@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedFrom": "e5a084d0d79b7a5c57c96f7a2530fa1e6c2dd9fc",
+  "generatedFrom": "32402cdaae9c6989cdec0d737e8ad921849044cb",
   "plugins": [
     {
       "id": "hornero-agenda",
@@ -570,6 +570,53 @@
       "trust": "official",
       "path": "plugins/hornero-dual-clock",
       "sha256": "4334903873f7bdcfd838f51064346465bb89887a43019b2f7794fb051d7e41ba"
+    },
+    {
+      "id": "hornero-emoji",
+      "name": "Hornero Emoji",
+      "version": "1.0.0",
+      "description": "Emoji search in the launcher (>emoji) and an emoji picker card over the bundled Unicode 16.0 table. Local only: no history, no network, your skin tone and result count are settings.",
+      "author": "HorneroOS contributors",
+      "license": "MIT",
+      "homepage": "https://github.com/HorneroOS/plugins",
+      "placement": "dashboard",
+      "category": "utilities",
+      "capabilities": {
+        "processCommands": [
+          "wl-copy"
+        ],
+        "networkHosts": [],
+        "settings": {
+          "skinTone": {
+            "type": "enum",
+            "default": "default",
+            "options": [
+              "default",
+              "light",
+              "medium-light",
+              "medium",
+              "medium-dark",
+              "dark"
+            ],
+            "description": "Skin tone applied to emoji that have tone variants (people, hands)."
+          },
+          "maxResults": {
+            "type": "integer",
+            "default": 12,
+            "minimum": 6,
+            "maximum": 24,
+            "description": "How many emoji the launcher and the card list at most."
+          },
+          "showGroup": {
+            "type": "boolean",
+            "default": true,
+            "description": "Show the emoji group (for example Animals & nature) next to the name."
+          }
+        }
+      },
+      "trust": "official",
+      "path": "plugins/hornero-emoji",
+      "sha256": "8535b65636809f51c2c38408b454720af378fadb16f0e23a965ddd5151b5cf11"
     },
     {
       "id": "hornero-focus-card",
