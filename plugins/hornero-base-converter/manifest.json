@@ -2,7 +2,7 @@
   "schemaVersion": 3,
   "id": "hornero-base-converter",
   "name": "Hornero Base Converter",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "Utility Tools 2.0 base converter: bar quick action (decimal or 0x hex) and compact dashboard detail converting decimal integers to binary/octal/hex and hex back. Invalid digits show errors.",
   "author": "HorneroOS contributors",
   "license": "MIT",
@@ -31,6 +31,10 @@
       "minShellVersion": "1.0.0"
     },
     "changelog": [
+      {
+        "version": "3.0.1",
+        "notes": "Second action button uses the same secondary style as the first."
+      },
       {
         "version": "3.0.0",
         "notes": "PluginKit 3 on Hornero Signal: Signal text controls (UiTextField), instrument module header, palette roles."

@@ -136,7 +136,7 @@ Item {
                 UiText {
                     width: parent.width
                     role: "caption"
-                    text: i18n.tr("Output device selection is not exposed by PluginKit Audio; use the shell audio settings to switch devices.")
+                    text: i18n.tr("Switch output devices in the shell audio settings.")
                 }
             }
         }

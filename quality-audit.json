@@ -29,12 +29,12 @@
           "note": "Visible colours come from PluginKit Ui primitives/Theme tokens with no hard-coded chrome colours (static probe)."
         },
         "screenshots": {
-          "status": "fail",
-          "note": "No screenshot under docs/screenshots/<id>.png yet; graphical capture is outstanding."
+          "status": "pass",
+          "note": "docs/screenshots/hornero-agenda.png: offscreen fixture render of its night surfaces (offscreen-reviewed 2026-11-17 against the Signal Bezel; fixture data, not product telemetry). Day renders and every surface are in docs/evidence/offscreen/."
         },
         "orientation": {
-          "status": "unverified",
-          "note": "Not graphically reviewed per extension. Observed only as a group in the QA VM on all four bar edges (popover anchoring pass); vertical rails still elide text-only indicators until HorneroOS/shell PluginKit rail glyph change and per-extension glyphs land."
+          "status": "na",
+          "note": "No bar surface: the host fixes the size of a dashboard card or desktop widget, so rail orientation does not apply."
         },
         "loadingErrorStates": {
           "status": "unverified",
@@ -45,7 +45,11 @@
           "note": "QA VM (shell main + PluginKit 3, 3 vCPU llvmpipe, 2026-11-17): loads without a slow-load or load-churn flag; idle CPU of the shell process measured as one set, not per plugin: bare shell 9.2%, 6 desktop widgets 9.4%, 22 bar indicators 11.8%, 12 dashboard cards 11.5% of one core (VM measurement, noise about 0.5 pp; mission evidence plugin-e2e/idle-cpu.txt). Not a published estimate."
         }
       },
-      "issue": "https://github.com/HorneroOS/plugins/issues/32"
+      "issue": "https://github.com/HorneroOS/plugins/issues/32",
+      "graphicalReview": {
+        "reviewer": "Claude Code agent (offscreen fixture review and QA VM captures; not a human design review)",
+        "date": "2026-11-17"
+      }
     },
     {
       "id": "hornero-ai-usage",
@@ -74,12 +78,12 @@
           "note": "Visible colours come from PluginKit Ui primitives/Theme tokens with no hard-coded chrome colours (static probe)."
         },
         "screenshots": {
-          "status": "fail",
-          "note": "No screenshot under docs/screenshots/<id>.png yet; graphical capture is outstanding."
+          "status": "pass",
+          "note": "docs/screenshots/hornero-ai-usage.png: offscreen fixture render of its night surfaces (offscreen-reviewed 2026-11-17 against the Signal Bezel; fixture data, not product telemetry). Day renders and every surface are in docs/evidence/offscreen/."
         },
         "orientation": {
           "status": "unverified",
-          "note": "Not graphically reviewed per extension. Observed only as a group in the QA VM on all four bar edges (popover anchoring pass); vertical rails still elide text-only indicators until HorneroOS/shell PluginKit rail glyph change and per-extension glyphs land."
+          "note": "Bar indicator seen only on the top bar (real-shell-captured) or offscreen; not yet captured on a vertical rail."
         },
         "loadingErrorStates": {
           "status": "unverified",
@@ -90,7 +94,11 @@
           "note": "QA VM (shell main + PluginKit 3, 3 vCPU llvmpipe, 2026-11-17): loads without a slow-load or load-churn flag; idle CPU of the shell process measured as one set, not per plugin: bare shell 9.2%, 6 desktop widgets 9.4%, 22 bar indicators 11.8%, 12 dashboard cards 11.5% of one core (VM measurement, noise about 0.5 pp; mission evidence plugin-e2e/idle-cpu.txt). Not a published estimate."
         }
       },
-      "issue": "https://github.com/HorneroOS/plugins/issues/22"
+      "issue": "https://github.com/HorneroOS/plugins/issues/22",
+      "graphicalReview": {
+        "reviewer": "Claude Code agent (offscreen fixture review and QA VM captures; not a human design review)",
+        "date": "2026-11-17"
+      }
     },
     {
       "id": "hornero-base-converter",
@@ -119,12 +127,12 @@
           "note": "Visible chrome colours come from PluginKit Ui primitives/Theme tokens; the color-converter preview fill is a computed user-color binding, not chrome (static probe)."
         },
         "screenshots": {
-          "status": "fail",
-          "note": "No screenshot under docs/screenshots/<id>.png yet; graphical capture is outstanding."
+          "status": "pass",
+          "note": "docs/screenshots/hornero-base-converter.png: offscreen fixture render of its night surfaces (offscreen-reviewed 2026-11-17 against the Signal Bezel; fixture data, not product telemetry). Day renders and every surface are in docs/evidence/offscreen/."
         },
         "orientation": {
           "status": "unverified",
-          "note": "Not graphically reviewed per extension. Observed only as a group in the QA VM on all four bar edges (popover anchoring pass); vertical rails still elide text-only indicators until HorneroOS/shell PluginKit rail glyph change and per-extension glyphs land."
+          "note": "Bar indicator seen only on the top bar (real-shell-captured) or offscreen; not yet captured on a vertical rail."
         },
         "loadingErrorStates": {
           "status": "unverified",
@@ -135,7 +143,11 @@
           "note": "QA VM (shell main + PluginKit 3, 3 vCPU llvmpipe, 2026-11-17): loads without a slow-load or load-churn flag; idle CPU of the shell process measured as one set, not per plugin: bare shell 9.2%, 6 desktop widgets 9.4%, 22 bar indicators 11.8%, 12 dashboard cards 11.5% of one core (VM measurement, noise about 0.5 pp; mission evidence plugin-e2e/idle-cpu.txt). Not a published estimate."
         }
       },
-      "issue": "https://github.com/HorneroOS/plugins/issues/30"
+      "issue": "https://github.com/HorneroOS/plugins/issues/30",
+      "graphicalReview": {
+        "reviewer": "Claude Code agent (offscreen fixture review and QA VM captures; not a human design review)",
+        "date": "2026-11-17"
+      }
     },
     {
       "id": "hornero-battery",
@@ -164,12 +176,12 @@
           "note": "Visible colours come from PluginKit Ui primitives/Theme tokens with no hard-coded chrome colours (static probe)."
         },
         "screenshots": {
-          "status": "fail",
-          "note": "No screenshot under docs/screenshots/<id>.png yet; graphical capture is outstanding."
+          "status": "pass",
+          "note": "docs/screenshots/hornero-battery.png: offscreen fixture render of its night surfaces (offscreen-reviewed 2026-11-17 against the Signal Bezel; fixture data, not product telemetry). Day renders and every surface are in docs/evidence/offscreen/."
         },
         "orientation": {
           "status": "unverified",
-          "note": "Not graphically reviewed per extension. Observed only as a group in the QA VM on all four bar edges (popover anchoring pass); vertical rails still elide text-only indicators until HorneroOS/shell PluginKit rail glyph change and per-extension glyphs land."
+          "note": "Bar indicator seen only on the top bar (real-shell-captured) or offscreen; not yet captured on a vertical rail."
         },
         "loadingErrorStates": {
           "status": "unverified",
@@ -180,7 +192,11 @@
           "note": "QA VM (shell main + PluginKit 3, 3 vCPU llvmpipe, 2026-11-17): loads without a slow-load or load-churn flag; idle CPU of the shell process measured as one set, not per plugin: bare shell 9.2%, 6 desktop widgets 9.4%, 22 bar indicators 11.8%, 12 dashboard cards 11.5% of one core (VM measurement, noise about 0.5 pp; mission evidence plugin-e2e/idle-cpu.txt). Not a published estimate."
         }
       },
-      "issue": "https://github.com/HorneroOS/plugins/issues/31"
+      "issue": "https://github.com/HorneroOS/plugins/issues/31",
+      "graphicalReview": {
+        "reviewer": "Claude Code agent (offscreen fixture review and QA VM captures; not a human design review)",
+        "date": "2026-11-17"
+      }
     },
     {
       "id": "hornero-calculator",
@@ -209,12 +225,12 @@
           "note": "Visible chrome colours come from PluginKit Ui primitives/Theme tokens; the color-converter preview fill is a computed user-color binding, not chrome (static probe)."
         },
         "screenshots": {
-          "status": "fail",
-          "note": "No screenshot under docs/screenshots/<id>.png yet; graphical capture is outstanding."
+          "status": "pass",
+          "note": "docs/screenshots/hornero-calculator.png: offscreen fixture render of its night surfaces (offscreen-reviewed 2026-11-17 against the Signal Bezel; fixture data, not product telemetry). Day renders and every surface are in docs/evidence/offscreen/. Real-shell captured (QA VM) on: classic-top, see docs/evidence/qa-vm/."
         },
         "orientation": {
           "status": "unverified",
-          "note": "Not graphically reviewed per extension. Observed only as a group in the QA VM on all four bar edges (popover anchoring pass); vertical rails still elide text-only indicators until HorneroOS/shell PluginKit rail glyph change and per-extension glyphs land."
+          "note": "Bar indicator seen only on the top bar (real-shell-captured) or offscreen; not yet captured on a vertical rail."
         },
         "loadingErrorStates": {
           "status": "unverified",
@@ -225,7 +241,11 @@
           "note": "QA VM (shell main + PluginKit 3, 3 vCPU llvmpipe, 2026-11-17): loads without a slow-load or load-churn flag; idle CPU of the shell process measured as one set, not per plugin: bare shell 9.2%, 6 desktop widgets 9.4%, 22 bar indicators 11.8%, 12 dashboard cards 11.5% of one core (VM measurement, noise about 0.5 pp; mission evidence plugin-e2e/idle-cpu.txt). Not a published estimate."
         }
       },
-      "issue": "https://github.com/HorneroOS/plugins/issues/30"
+      "issue": "https://github.com/HorneroOS/plugins/issues/30",
+      "graphicalReview": {
+        "reviewer": "Claude Code agent (offscreen fixture review and QA VM captures; not a human design review)",
+        "date": "2026-11-17"
+      }
     },
     {
       "id": "hornero-calendar",
@@ -254,12 +274,12 @@
           "note": "Visible colours come from PluginKit Ui primitives/Theme tokens with no hard-coded chrome colours (static probe)."
         },
         "screenshots": {
-          "status": "fail",
-          "note": "No screenshot under docs/screenshots/<id>.png yet; graphical capture is outstanding."
+          "status": "pass",
+          "note": "docs/screenshots/hornero-calendar.png: offscreen fixture render of its night surfaces (offscreen-reviewed 2026-11-17 against the Signal Bezel; fixture data, not product telemetry). Day renders and every surface are in docs/evidence/offscreen/."
         },
         "orientation": {
-          "status": "unverified",
-          "note": "Not graphically reviewed per extension. Observed only as a group in the QA VM on all four bar edges (popover anchoring pass); vertical rails still elide text-only indicators until HorneroOS/shell PluginKit rail glyph change and per-extension glyphs land."
+          "status": "na",
+          "note": "No bar surface: the host fixes the size of a dashboard card or desktop widget, so rail orientation does not apply."
         },
         "loadingErrorStates": {
           "status": "unverified",
@@ -270,7 +290,11 @@
           "note": "QA VM (shell main + PluginKit 3, 3 vCPU llvmpipe, 2026-11-17): loads without a slow-load or load-churn flag; idle CPU of the shell process measured as one set, not per plugin: bare shell 9.2%, 6 desktop widgets 9.4%, 22 bar indicators 11.8%, 12 dashboard cards 11.5% of one core (VM measurement, noise about 0.5 pp; mission evidence plugin-e2e/idle-cpu.txt). Not a published estimate."
         }
       },
-      "issue": "https://github.com/HorneroOS/plugins/issues/32"
+      "issue": "https://github.com/HorneroOS/plugins/issues/32",
+      "graphicalReview": {
+        "reviewer": "Claude Code agent (offscreen fixture review and QA VM captures; not a human design review)",
+        "date": "2026-11-17"
+      }
     },
     {
       "id": "hornero-color-converter",
@@ -299,12 +323,12 @@
           "note": "Visible chrome colours come from PluginKit Ui primitives/Theme tokens; the color-converter preview fill is a computed user-color binding, not chrome (static probe)."
         },
         "screenshots": {
-          "status": "fail",
-          "note": "No screenshot under docs/screenshots/<id>.png yet; graphical capture is outstanding."
+          "status": "pass",
+          "note": "docs/screenshots/hornero-color-converter.png: offscreen fixture render of its night surfaces (offscreen-reviewed 2026-11-17 against the Signal Bezel; fixture data, not product telemetry). Day renders and every surface are in docs/evidence/offscreen/."
         },
         "orientation": {
           "status": "unverified",
-          "note": "Not graphically reviewed per extension. Observed only as a group in the QA VM on all four bar edges (popover anchoring pass); vertical rails still elide text-only indicators until HorneroOS/shell PluginKit rail glyph change and per-extension glyphs land."
+          "note": "Bar indicator seen only on the top bar (real-shell-captured) or offscreen; not yet captured on a vertical rail."
         },
         "loadingErrorStates": {
           "status": "unverified",
@@ -315,7 +339,11 @@
           "note": "QA VM (shell main + PluginKit 3, 3 vCPU llvmpipe, 2026-11-17): loads without a slow-load or load-churn flag; idle CPU of the shell process measured as one set, not per plugin: bare shell 9.2%, 6 desktop widgets 9.4%, 22 bar indicators 11.8%, 12 dashboard cards 11.5% of one core (VM measurement, noise about 0.5 pp; mission evidence plugin-e2e/idle-cpu.txt). Not a published estimate."
         }
       },
-      "issue": "https://github.com/HorneroOS/plugins/issues/30"
+      "issue": "https://github.com/HorneroOS/plugins/issues/30",
+      "graphicalReview": {
+        "reviewer": "Claude Code agent (offscreen fixture review and QA VM captures; not a human design review)",
+        "date": "2026-11-17"
+      }
     },
     {
       "id": "hornero-countdown",
@@ -344,12 +372,12 @@
           "note": "Visible colours come from PluginKit Ui primitives/Theme tokens with no hard-coded chrome colours (static probe)."
         },
         "screenshots": {
-          "status": "fail",
-          "note": "No screenshot under docs/screenshots/<id>.png yet; graphical capture is outstanding."
+          "status": "pass",
+          "note": "docs/screenshots/hornero-countdown.png: offscreen fixture render of its night surfaces (offscreen-reviewed 2026-11-17 against the Signal Bezel; fixture data, not product telemetry). Day renders and every surface are in docs/evidence/offscreen/."
         },
         "orientation": {
           "status": "unverified",
-          "note": "Not graphically reviewed per extension. Observed only as a group in the QA VM on all four bar edges (popover anchoring pass); vertical rails still elide text-only indicators until HorneroOS/shell PluginKit rail glyph change and per-extension glyphs land."
+          "note": "Bar indicator seen only on the top bar (real-shell-captured) or offscreen; not yet captured on a vertical rail."
         },
         "loadingErrorStates": {
           "status": "unverified",
@@ -360,7 +388,11 @@
           "note": "QA VM (shell main + PluginKit 3, 3 vCPU llvmpipe, 2026-11-17): loads without a slow-load or load-churn flag; idle CPU of the shell process measured as one set, not per plugin: bare shell 9.2%, 6 desktop widgets 9.4%, 22 bar indicators 11.8%, 12 dashboard cards 11.5% of one core (VM measurement, noise about 0.5 pp; mission evidence plugin-e2e/idle-cpu.txt). Not a published estimate."
         }
       },
-      "issue": "https://github.com/HorneroOS/plugins/issues/24"
+      "issue": "https://github.com/HorneroOS/plugins/issues/24",
+      "graphicalReview": {
+        "reviewer": "Claude Code agent (offscreen fixture review and QA VM captures; not a human design review)",
+        "date": "2026-11-17"
+      }
     },
     {
       "id": "hornero-date-calculator",
@@ -389,12 +421,12 @@
           "note": "Visible chrome colours come from PluginKit Ui primitives/Theme tokens; the color-converter preview fill is a computed user-color binding, not chrome (static probe)."
         },
         "screenshots": {
-          "status": "fail",
-          "note": "No screenshot under docs/screenshots/<id>.png yet; graphical capture is outstanding."
+          "status": "pass",
+          "note": "docs/screenshots/hornero-date-calculator.png: offscreen fixture render of its night surfaces (offscreen-reviewed 2026-11-17 against the Signal Bezel; fixture data, not product telemetry). Day renders and every surface are in docs/evidence/offscreen/."
         },
         "orientation": {
           "status": "unverified",
-          "note": "Not graphically reviewed per extension. Observed only as a group in the QA VM on all four bar edges (popover anchoring pass); vertical rails still elide text-only indicators until HorneroOS/shell PluginKit rail glyph change and per-extension glyphs land."
+          "note": "Bar indicator seen only on the top bar (real-shell-captured) or offscreen; not yet captured on a vertical rail."
         },
         "loadingErrorStates": {
           "status": "unverified",
@@ -405,7 +437,11 @@
           "note": "QA VM (shell main + PluginKit 3, 3 vCPU llvmpipe, 2026-11-17): loads without a slow-load or load-churn flag; idle CPU of the shell process measured as one set, not per plugin: bare shell 9.2%, 6 desktop widgets 9.4%, 22 bar indicators 11.8%, 12 dashboard cards 11.5% of one core (VM measurement, noise about 0.5 pp; mission evidence plugin-e2e/idle-cpu.txt). Not a published estimate."
         }
       },
-      "issue": "https://github.com/HorneroOS/plugins/issues/30"
+      "issue": "https://github.com/HorneroOS/plugins/issues/30",
+      "graphicalReview": {
+        "reviewer": "Claude Code agent (offscreen fixture review and QA VM captures; not a human design review)",
+        "date": "2026-11-17"
+      }
     },
     {
       "id": "hornero-disk-usage",
@@ -434,12 +470,12 @@
           "note": "Visible colours come from PluginKit Ui primitives/Theme tokens with no hard-coded chrome colours (static probe)."
         },
         "screenshots": {
-          "status": "fail",
-          "note": "No screenshot under docs/screenshots/<id>.png yet; graphical capture is outstanding."
+          "status": "pass",
+          "note": "docs/screenshots/hornero-disk-usage.png: offscreen fixture render of its night surfaces (offscreen-reviewed 2026-11-17 against the Signal Bezel; fixture data, not product telemetry). Day renders and every surface are in docs/evidence/offscreen/."
         },
         "orientation": {
-          "status": "unverified",
-          "note": "Not graphically reviewed per extension. Observed only as a group in the QA VM on all four bar edges (popover anchoring pass); vertical rails still elide text-only indicators until HorneroOS/shell PluginKit rail glyph change and per-extension glyphs land."
+          "status": "na",
+          "note": "No bar surface: the host fixes the size of a dashboard card or desktop widget, so rail orientation does not apply."
         },
         "loadingErrorStates": {
           "status": "unverified",
@@ -450,7 +486,11 @@
           "note": "QA VM (shell main + PluginKit 3, 3 vCPU llvmpipe, 2026-11-17): loads without a slow-load or load-churn flag; idle CPU of the shell process measured as one set, not per plugin: bare shell 9.2%, 6 desktop widgets 9.4%, 22 bar indicators 11.8%, 12 dashboard cards 11.5% of one core (VM measurement, noise about 0.5 pp; mission evidence plugin-e2e/idle-cpu.txt). Not a published estimate."
         }
       },
-      "issue": "https://github.com/HorneroOS/plugins/issues/26"
+      "issue": "https://github.com/HorneroOS/plugins/issues/26",
+      "graphicalReview": {
+        "reviewer": "Claude Code agent (offscreen fixture review and QA VM captures; not a human design review)",
+        "date": "2026-11-17"
+      }
     },
     {
       "id": "hornero-dual-clock",
@@ -479,12 +519,12 @@
           "note": "Visible colours come from PluginKit Ui primitives/Theme tokens with no hard-coded chrome colours; the 1.x palette.windowText is gone (static probe)."
         },
         "screenshots": {
-          "status": "fail",
-          "note": "No screenshot under docs/screenshots/<id>.png yet; graphical capture is outstanding."
+          "status": "pass",
+          "note": "docs/screenshots/hornero-dual-clock.png: offscreen fixture render of its night surfaces (offscreen-reviewed 2026-11-17 against the Signal Bezel; fixture data, not product telemetry). Day renders and every surface are in docs/evidence/offscreen/. Real-shell captured (QA VM) on: classic-top, hornero-left, see docs/evidence/qa-vm/."
         },
         "orientation": {
-          "status": "unverified",
-          "note": "Not graphically reviewed per extension. Observed only as a group in the QA VM on all four bar edges (popover anchoring pass); vertical rails still elide text-only indicators until HorneroOS/shell PluginKit rail glyph change and per-extension glyphs land."
+          "status": "pass",
+          "note": "Real-shell captured in the QA VM on classic-top, hornero-left: glyph or stacked short text fits the 36 px rail, popover anchors on each edge (real-shell-captured 2026-11-17)."
         },
         "loadingErrorStates": {
           "status": "unverified",
@@ -495,7 +535,11 @@
           "note": "QA VM (shell main + PluginKit 3, 3 vCPU llvmpipe, 2026-11-17): loads without a slow-load or load-churn flag; idle CPU of the shell process measured as one set, not per plugin: bare shell 9.2%, 6 desktop widgets 9.4%, 22 bar indicators 11.8%, 12 dashboard cards 11.5% of one core (VM measurement, noise about 0.5 pp; mission evidence plugin-e2e/idle-cpu.txt). Not a published estimate."
         }
       },
-      "issue": "https://github.com/HorneroOS/plugins/issues/28"
+      "issue": "https://github.com/HorneroOS/plugins/issues/28",
+      "graphicalReview": {
+        "reviewer": "Claude Code agent (offscreen fixture review and QA VM captures; not a human design review)",
+        "date": "2026-11-17"
+      }
     },
     {
       "id": "hornero-focus-card",
@@ -524,12 +568,12 @@
           "note": "Visible colours come from PluginKit Ui primitives/Theme tokens with no hard-coded chrome colours; palette.windowText is gone (static probe)."
         },
         "screenshots": {
-          "status": "fail",
-          "note": "No screenshot under docs/screenshots/<id>.png yet; graphical capture is outstanding."
+          "status": "pass",
+          "note": "docs/screenshots/hornero-focus-card.png: offscreen fixture render of its night surfaces (offscreen-reviewed 2026-11-17 against the Signal Bezel; fixture data, not product telemetry). Day renders and every surface are in docs/evidence/offscreen/."
         },
         "orientation": {
-          "status": "unverified",
-          "note": "Not graphically reviewed per extension. Observed only as a group in the QA VM on all four bar edges (popover anchoring pass); vertical rails still elide text-only indicators until HorneroOS/shell PluginKit rail glyph change and per-extension glyphs land."
+          "status": "na",
+          "note": "No bar surface: the host fixes the size of a dashboard card or desktop widget, so rail orientation does not apply."
         },
         "loadingErrorStates": {
           "status": "unverified",
@@ -540,7 +584,11 @@
           "note": "QA VM (shell main + PluginKit 3, 3 vCPU llvmpipe, 2026-11-17): loads without a slow-load or load-churn flag; idle CPU of the shell process measured as one set, not per plugin: bare shell 9.2%, 6 desktop widgets 9.4%, 22 bar indicators 11.8%, 12 dashboard cards 11.5% of one core (VM measurement, noise about 0.5 pp; mission evidence plugin-e2e/idle-cpu.txt). Not a published estimate."
         }
       },
-      "issue": "https://github.com/HorneroOS/plugins/issues/29"
+      "issue": "https://github.com/HorneroOS/plugins/issues/29",
+      "graphicalReview": {
+        "reviewer": "Claude Code agent (offscreen fixture review and QA VM captures; not a human design review)",
+        "date": "2026-11-17"
+      }
     },
     {
       "id": "hornero-json-tools",
@@ -569,12 +617,12 @@
           "note": "Visible chrome colours come from PluginKit Ui primitives/Theme tokens; the color-converter preview fill is a computed user-color binding, not chrome (static probe)."
         },
         "screenshots": {
-          "status": "fail",
-          "note": "No screenshot under docs/screenshots/<id>.png yet; graphical capture is outstanding."
+          "status": "pass",
+          "note": "docs/screenshots/hornero-json-tools.png: offscreen fixture render of its night surfaces (offscreen-reviewed 2026-11-17 against the Signal Bezel; fixture data, not product telemetry). Day renders and every surface are in docs/evidence/offscreen/."
         },
         "orientation": {
           "status": "unverified",
-          "note": "Not graphically reviewed per extension. Observed only as a group in the QA VM on all four bar edges (popover anchoring pass); vertical rails still elide text-only indicators until HorneroOS/shell PluginKit rail glyph change and per-extension glyphs land."
+          "note": "Bar indicator seen only on the top bar (real-shell-captured) or offscreen; not yet captured on a vertical rail."
         },
         "loadingErrorStates": {
           "status": "unverified",
@@ -585,7 +633,11 @@
           "note": "QA VM (shell main + PluginKit 3, 3 vCPU llvmpipe, 2026-11-17): loads without a slow-load or load-churn flag; idle CPU of the shell process measured as one set, not per plugin: bare shell 9.2%, 6 desktop widgets 9.4%, 22 bar indicators 11.8%, 12 dashboard cards 11.5% of one core (VM measurement, noise about 0.5 pp; mission evidence plugin-e2e/idle-cpu.txt). Not a published estimate."
         }
       },
-      "issue": "https://github.com/HorneroOS/plugins/issues/30"
+      "issue": "https://github.com/HorneroOS/plugins/issues/30",
+      "graphicalReview": {
+        "reviewer": "Claude Code agent (offscreen fixture review and QA VM captures; not a human design review)",
+        "date": "2026-11-17"
+      }
     },
     {
       "id": "hornero-metronome",
@@ -614,12 +666,12 @@
           "note": "Visible colours come from PluginKit Ui primitives/Theme tokens with no hard-coded chrome colours (static probe)."
         },
         "screenshots": {
-          "status": "fail",
-          "note": "No screenshot under docs/screenshots/<id>.png yet; graphical capture is outstanding."
+          "status": "pass",
+          "note": "docs/screenshots/hornero-metronome.png: offscreen fixture render of its night surfaces (offscreen-reviewed 2026-11-17 against the Signal Bezel; fixture data, not product telemetry). Day renders and every surface are in docs/evidence/offscreen/."
         },
         "orientation": {
           "status": "unverified",
-          "note": "Not graphically reviewed per extension. Observed only as a group in the QA VM on all four bar edges (popover anchoring pass); vertical rails still elide text-only indicators until HorneroOS/shell PluginKit rail glyph change and per-extension glyphs land."
+          "note": "Bar indicator seen only on the top bar (real-shell-captured) or offscreen; not yet captured on a vertical rail."
         },
         "loadingErrorStates": {
           "status": "unverified",
@@ -630,7 +682,11 @@
           "note": "QA VM (shell main + PluginKit 3, 3 vCPU llvmpipe, 2026-11-17): loads without a slow-load or load-churn flag; idle CPU of the shell process measured as one set, not per plugin: bare shell 9.2%, 6 desktop widgets 9.4%, 22 bar indicators 11.8%, 12 dashboard cards 11.5% of one core (VM measurement, noise about 0.5 pp; mission evidence plugin-e2e/idle-cpu.txt). Not a published estimate."
         }
       },
-      "issue": "https://github.com/HorneroOS/plugins/issues/24"
+      "issue": "https://github.com/HorneroOS/plugins/issues/24",
+      "graphicalReview": {
+        "reviewer": "Claude Code agent (offscreen fixture review and QA VM captures; not a human design review)",
+        "date": "2026-11-17"
+      }
     },
     {
       "id": "hornero-microphone",
@@ -659,12 +715,12 @@
           "note": "Visible colours come from PluginKit Ui primitives/Theme tokens with no hard-coded chrome colours (static probe)."
         },
         "screenshots": {
-          "status": "fail",
-          "note": "No screenshot under docs/screenshots/<id>.png yet; graphical capture is outstanding."
+          "status": "pass",
+          "note": "docs/screenshots/hornero-microphone.png: offscreen fixture render of its night surfaces (offscreen-reviewed 2026-11-17 against the Signal Bezel; fixture data, not product telemetry). Day renders and every surface are in docs/evidence/offscreen/."
         },
         "orientation": {
           "status": "unverified",
-          "note": "Not graphically reviewed per extension. Observed only as a group in the QA VM on all four bar edges (popover anchoring pass); vertical rails still elide text-only indicators until HorneroOS/shell PluginKit rail glyph change and per-extension glyphs land."
+          "note": "Bar indicator seen only on the top bar (real-shell-captured) or offscreen; not yet captured on a vertical rail."
         },
         "loadingErrorStates": {
           "status": "pass",
@@ -675,7 +731,11 @@
           "note": "QA VM (shell main + PluginKit 3, 3 vCPU llvmpipe, 2026-11-17): loads without a slow-load or load-churn flag; idle CPU of the shell process measured as one set, not per plugin: bare shell 9.2%, 6 desktop widgets 9.4%, 22 bar indicators 11.8%, 12 dashboard cards 11.5% of one core (VM measurement, noise about 0.5 pp; mission evidence plugin-e2e/idle-cpu.txt). Not a published estimate."
         }
       },
-      "issue": "https://github.com/HorneroOS/plugins/issues/25"
+      "issue": "https://github.com/HorneroOS/plugins/issues/25",
+      "graphicalReview": {
+        "reviewer": "Claude Code agent (offscreen fixture review and QA VM captures; not a human design review)",
+        "date": "2026-11-17"
+      }
     },
     {
       "id": "hornero-moon-phase",
@@ -704,12 +764,12 @@
           "note": "Visible colours come from PluginKit Ui primitives/Theme tokens with no hard-coded chrome colours (static probe)."
         },
         "screenshots": {
-          "status": "fail",
-          "note": "No screenshot under docs/screenshots/<id>.png yet; graphical capture is outstanding."
+          "status": "pass",
+          "note": "docs/screenshots/hornero-moon-phase.png: offscreen fixture render of its night surfaces (offscreen-reviewed 2026-11-17 against the Signal Bezel; fixture data, not product telemetry). Day renders and every surface are in docs/evidence/offscreen/."
         },
         "orientation": {
           "status": "unverified",
-          "note": "Not graphically reviewed per extension. Observed only as a group in the QA VM on all four bar edges (popover anchoring pass); vertical rails still elide text-only indicators until HorneroOS/shell PluginKit rail glyph change and per-extension glyphs land."
+          "note": "Bar indicator seen only on the top bar (real-shell-captured) or offscreen; not yet captured on a vertical rail."
         },
         "loadingErrorStates": {
           "status": "unverified",
@@ -720,7 +780,11 @@
           "note": "QA VM (shell main + PluginKit 3, 3 vCPU llvmpipe, 2026-11-17): loads without a slow-load or load-churn flag; idle CPU of the shell process measured as one set, not per plugin: bare shell 9.2%, 6 desktop widgets 9.4%, 22 bar indicators 11.8%, 12 dashboard cards 11.5% of one core (VM measurement, noise about 0.5 pp; mission evidence plugin-e2e/idle-cpu.txt). Not a published estimate."
         }
       },
-      "issue": "https://github.com/HorneroOS/plugins/issues/32"
+      "issue": "https://github.com/HorneroOS/plugins/issues/32",
+      "graphicalReview": {
+        "reviewer": "Claude Code agent (offscreen fixture review and QA VM captures; not a human design review)",
+        "date": "2026-11-17"
+      }
     },
     {
       "id": "hornero-network-monitor",
@@ -749,12 +813,12 @@
           "note": "Visible colours come from PluginKit Ui primitives/Theme tokens with no hard-coded chrome colours (static probe)."
         },
         "screenshots": {
-          "status": "fail",
-          "note": "No screenshot under docs/screenshots/<id>.png yet; graphical capture is outstanding."
+          "status": "pass",
+          "note": "docs/screenshots/hornero-network-monitor.png: offscreen fixture render of its night surfaces (offscreen-reviewed 2026-11-17 against the Signal Bezel; fixture data, not product telemetry). Day renders and every surface are in docs/evidence/offscreen/."
         },
         "orientation": {
-          "status": "unverified",
-          "note": "Not graphically reviewed per extension. Observed only as a group in the QA VM on all four bar edges (popover anchoring pass); vertical rails still elide text-only indicators until HorneroOS/shell PluginKit rail glyph change and per-extension glyphs land."
+          "status": "na",
+          "note": "No bar surface: the host fixes the size of a dashboard card or desktop widget, so rail orientation does not apply."
         },
         "loadingErrorStates": {
           "status": "unverified",
@@ -765,7 +829,11 @@
           "note": "QA VM (shell main + PluginKit 3, 3 vCPU llvmpipe, 2026-11-17): loads without a slow-load or load-churn flag; idle CPU of the shell process measured as one set, not per plugin: bare shell 9.2%, 6 desktop widgets 9.4%, 22 bar indicators 11.8%, 12 dashboard cards 11.5% of one core (VM measurement, noise about 0.5 pp; mission evidence plugin-e2e/idle-cpu.txt). Not a published estimate."
         }
       },
-      "issue": "https://github.com/HorneroOS/plugins/issues/26"
+      "issue": "https://github.com/HorneroOS/plugins/issues/26",
+      "graphicalReview": {
+        "reviewer": "Claude Code agent (offscreen fixture review and QA VM captures; not a human design review)",
+        "date": "2026-11-17"
+      }
     },
     {
       "id": "hornero-now-playing",
@@ -794,12 +862,12 @@
           "note": "Visible colours come from PluginKit Ui primitives/Theme tokens with no hard-coded chrome colours (static probe)."
         },
         "screenshots": {
-          "status": "fail",
-          "note": "No screenshot under docs/screenshots/<id>.png yet; graphical capture is outstanding."
+          "status": "pass",
+          "note": "docs/screenshots/hornero-now-playing.png: offscreen fixture render of its night surfaces (offscreen-reviewed 2026-11-17 against the Signal Bezel; fixture data, not product telemetry). Day renders and every surface are in docs/evidence/offscreen/. Real-shell captured (QA VM) on: classic-top, see docs/evidence/qa-vm/."
         },
         "orientation": {
           "status": "unverified",
-          "note": "Not graphically reviewed per extension. Observed only as a group in the QA VM on all four bar edges (popover anchoring pass); vertical rails still elide text-only indicators until HorneroOS/shell PluginKit rail glyph change and per-extension glyphs land."
+          "note": "Bar indicator seen only on the top bar (real-shell-captured) or offscreen; not yet captured on a vertical rail."
         },
         "loadingErrorStates": {
           "status": "pass",
@@ -810,7 +878,11 @@
           "note": "QA VM (shell main + PluginKit 3, 3 vCPU llvmpipe, 2026-11-17): loads without a slow-load or load-churn flag; idle CPU of the shell process measured as one set, not per plugin: bare shell 9.2%, 6 desktop widgets 9.4%, 22 bar indicators 11.8%, 12 dashboard cards 11.5% of one core (VM measurement, noise about 0.5 pp; mission evidence plugin-e2e/idle-cpu.txt). Not a published estimate."
         }
       },
-      "issue": "https://github.com/HorneroOS/plugins/issues/23"
+      "issue": "https://github.com/HorneroOS/plugins/issues/23",
+      "graphicalReview": {
+        "reviewer": "Claude Code agent (offscreen fixture review and QA VM captures; not a human design review)",
+        "date": "2026-11-17"
+      }
     },
     {
       "id": "hornero-pomodoro",
@@ -839,12 +911,12 @@
           "note": "Visible colours come from PluginKit Ui primitives/Theme tokens with no hard-coded chrome colours (static probe)."
         },
         "screenshots": {
-          "status": "fail",
-          "note": "No screenshot under docs/screenshots/<id>.png yet; graphical capture is outstanding."
+          "status": "pass",
+          "note": "docs/screenshots/hornero-pomodoro.png: offscreen fixture render of its night surfaces (offscreen-reviewed 2026-11-17 against the Signal Bezel; fixture data, not product telemetry). Day renders and every surface are in docs/evidence/offscreen/. Real-shell captured (QA VM) on: classic-top, classic-bottom, hornero-left, hornero-right, see docs/evidence/qa-vm/."
         },
         "orientation": {
-          "status": "unverified",
-          "note": "Not graphically reviewed per extension. Observed only as a group in the QA VM on all four bar edges (popover anchoring pass); vertical rails still elide text-only indicators until HorneroOS/shell PluginKit rail glyph change and per-extension glyphs land."
+          "status": "pass",
+          "note": "Real-shell captured in the QA VM on classic-top, classic-bottom, hornero-left, hornero-right: glyph or stacked short text fits the 36 px rail, popover anchors on each edge (real-shell-captured 2026-11-17)."
         },
         "loadingErrorStates": {
           "status": "unverified",
@@ -855,7 +927,11 @@
           "note": "QA VM (shell main + PluginKit 3, 3 vCPU llvmpipe, 2026-11-17): loads without a slow-load or load-churn flag; idle CPU of the shell process measured as one set, not per plugin: bare shell 9.2%, 6 desktop widgets 9.4%, 22 bar indicators 11.8%, 12 dashboard cards 11.5% of one core (VM measurement, noise about 0.5 pp; mission evidence plugin-e2e/idle-cpu.txt). Not a published estimate."
         }
       },
-      "issue": "https://github.com/HorneroOS/plugins/issues/24"
+      "issue": "https://github.com/HorneroOS/plugins/issues/24",
+      "graphicalReview": {
+        "reviewer": "Claude Code agent (offscreen fixture review and QA VM captures; not a human design review)",
+        "date": "2026-11-17"
+      }
     },
     {
       "id": "hornero-quick-notes",
@@ -884,12 +960,12 @@
           "note": "Visible colours come from PluginKit Ui primitives/Theme tokens with no hard-coded chrome colours (static probe)."
         },
         "screenshots": {
-          "status": "fail",
-          "note": "No screenshot under docs/screenshots/<id>.png yet; graphical capture is outstanding."
+          "status": "pass",
+          "note": "docs/screenshots/hornero-quick-notes.png: offscreen fixture render of its night surfaces (offscreen-reviewed 2026-11-17 against the Signal Bezel; fixture data, not product telemetry). Day renders and every surface are in docs/evidence/offscreen/."
         },
         "orientation": {
-          "status": "unverified",
-          "note": "Not graphically reviewed per extension. Observed only as a group in the QA VM on all four bar edges (popover anchoring pass); vertical rails still elide text-only indicators until HorneroOS/shell PluginKit rail glyph change and per-extension glyphs land."
+          "status": "na",
+          "note": "No bar surface: the host fixes the size of a dashboard card or desktop widget, so rail orientation does not apply."
         },
         "loadingErrorStates": {
           "status": "unverified",
@@ -900,7 +976,11 @@
           "note": "QA VM (shell main + PluginKit 3, 3 vCPU llvmpipe, 2026-11-17): loads without a slow-load or load-churn flag; idle CPU of the shell process measured as one set, not per plugin: bare shell 9.2%, 6 desktop widgets 9.4%, 22 bar indicators 11.8%, 12 dashboard cards 11.5% of one core (VM measurement, noise about 0.5 pp; mission evidence plugin-e2e/idle-cpu.txt). Not a published estimate."
         }
       },
-      "issue": "https://github.com/HorneroOS/plugins/issues/29"
+      "issue": "https://github.com/HorneroOS/plugins/issues/29",
+      "graphicalReview": {
+        "reviewer": "Claude Code agent (offscreen fixture review and QA VM captures; not a human design review)",
+        "date": "2026-11-17"
+      }
     },
     {
       "id": "hornero-quiet-notes",
@@ -929,12 +1009,12 @@
           "note": "Visible colours come from PluginKit Ui primitives/Theme tokens; the 1.x hard-coded editor colours are gone (static probe)."
         },
         "screenshots": {
-          "status": "fail",
-          "note": "No screenshot under docs/screenshots/<id>.png yet; graphical capture is outstanding."
+          "status": "pass",
+          "note": "docs/screenshots/hornero-quiet-notes.png: offscreen fixture render of its night surfaces (offscreen-reviewed 2026-11-17 against the Signal Bezel; fixture data, not product telemetry). Day renders and every surface are in docs/evidence/offscreen/."
         },
         "orientation": {
-          "status": "unverified",
-          "note": "Not graphically reviewed per extension. Observed only as a group in the QA VM on all four bar edges (popover anchoring pass); vertical rails still elide text-only indicators until HorneroOS/shell PluginKit rail glyph change and per-extension glyphs land."
+          "status": "na",
+          "note": "No bar surface: the host fixes the size of a dashboard card or desktop widget, so rail orientation does not apply."
         },
         "loadingErrorStates": {
           "status": "unverified",
@@ -945,7 +1025,11 @@
           "note": "QA VM (shell main + PluginKit 3, 3 vCPU llvmpipe, 2026-11-17): loads without a slow-load or load-churn flag; idle CPU of the shell process measured as one set, not per plugin: bare shell 9.2%, 6 desktop widgets 9.4%, 22 bar indicators 11.8%, 12 dashboard cards 11.5% of one core (VM measurement, noise about 0.5 pp; mission evidence plugin-e2e/idle-cpu.txt). Not a published estimate."
         }
       },
-      "issue": "https://github.com/HorneroOS/plugins/issues/29"
+      "issue": "https://github.com/HorneroOS/plugins/issues/29",
+      "graphicalReview": {
+        "reviewer": "Claude Code agent (offscreen fixture review and QA VM captures; not a human design review)",
+        "date": "2026-11-17"
+      }
     },
     {
       "id": "hornero-stopwatch",
@@ -974,12 +1058,12 @@
           "note": "Visible colours come from PluginKit Ui primitives/Theme tokens with no hard-coded chrome colours (static probe)."
         },
         "screenshots": {
-          "status": "fail",
-          "note": "No screenshot under docs/screenshots/<id>.png yet; graphical capture is outstanding."
+          "status": "pass",
+          "note": "docs/screenshots/hornero-stopwatch.png: offscreen fixture render of its night surfaces (offscreen-reviewed 2026-11-17 against the Signal Bezel; fixture data, not product telemetry). Day renders and every surface are in docs/evidence/offscreen/."
         },
         "orientation": {
           "status": "unverified",
-          "note": "Not graphically reviewed per extension. Observed only as a group in the QA VM on all four bar edges (popover anchoring pass); vertical rails still elide text-only indicators until HorneroOS/shell PluginKit rail glyph change and per-extension glyphs land."
+          "note": "Bar indicator seen only on the top bar (real-shell-captured) or offscreen; not yet captured on a vertical rail."
         },
         "loadingErrorStates": {
           "status": "unverified",
@@ -990,7 +1074,11 @@
           "note": "QA VM (shell main + PluginKit 3, 3 vCPU llvmpipe, 2026-11-17): loads without a slow-load or load-churn flag; idle CPU of the shell process measured as one set, not per plugin: bare shell 9.2%, 6 desktop widgets 9.4%, 22 bar indicators 11.8%, 12 dashboard cards 11.5% of one core (VM measurement, noise about 0.5 pp; mission evidence plugin-e2e/idle-cpu.txt). Not a published estimate."
         }
       },
-      "issue": "https://github.com/HorneroOS/plugins/issues/24"
+      "issue": "https://github.com/HorneroOS/plugins/issues/24",
+      "graphicalReview": {
+        "reviewer": "Claude Code agent (offscreen fixture review and QA VM captures; not a human design review)",
+        "date": "2026-11-17"
+      }
     },
     {
       "id": "hornero-studio-audio",
@@ -1019,12 +1107,12 @@
           "note": "Visible colours come from PluginKit Ui primitives/Theme tokens with no hard-coded chrome colours; the 1.x raw palette text is gone (static probe)."
         },
         "screenshots": {
-          "status": "fail",
-          "note": "No screenshot under docs/screenshots/<id>.png yet; graphical capture is outstanding."
+          "status": "pass",
+          "note": "docs/screenshots/hornero-studio-audio.png: offscreen fixture render of its night surfaces (offscreen-reviewed 2026-11-17 against the Signal Bezel; fixture data, not product telemetry). Day renders and every surface are in docs/evidence/offscreen/."
         },
         "orientation": {
           "status": "unverified",
-          "note": "Not graphically reviewed per extension. Observed only as a group in the QA VM on all four bar edges (popover anchoring pass); vertical rails still elide text-only indicators until HorneroOS/shell PluginKit rail glyph change and per-extension glyphs land."
+          "note": "Bar indicator seen only on the top bar (real-shell-captured) or offscreen; not yet captured on a vertical rail."
         },
         "loadingErrorStates": {
           "status": "pass",
@@ -1035,7 +1123,11 @@
           "note": "QA VM (shell main + PluginKit 3, 3 vCPU llvmpipe, 2026-11-17): loads without a slow-load or load-churn flag; idle CPU of the shell process measured as one set, not per plugin: bare shell 9.2%, 6 desktop widgets 9.4%, 22 bar indicators 11.8%, 12 dashboard cards 11.5% of one core (VM measurement, noise about 0.5 pp; mission evidence plugin-e2e/idle-cpu.txt). Not a published estimate."
         }
       },
-      "issue": "https://github.com/HorneroOS/plugins/issues/25"
+      "issue": "https://github.com/HorneroOS/plugins/issues/25",
+      "graphicalReview": {
+        "reviewer": "Claude Code agent (offscreen fixture review and QA VM captures; not a human design review)",
+        "date": "2026-11-17"
+      }
     },
     {
       "id": "hornero-studio-jobs",
@@ -1064,12 +1156,12 @@
           "note": "Rebuilt on PluginKit: UiCard/UiText/UiIcon/UiState with Theme tokens only, no hard-coded chrome colours."
         },
         "screenshots": {
-          "status": "fail",
-          "note": "No screenshot under docs/screenshots/<id>.png yet; graphical capture is outstanding."
+          "status": "pass",
+          "note": "docs/screenshots/hornero-studio-jobs.png: offscreen fixture render of its night surfaces (offscreen-reviewed 2026-11-17 against the Signal Bezel; fixture data, not product telemetry). Day renders and every surface are in docs/evidence/offscreen/."
         },
         "orientation": {
-          "status": "unverified",
-          "note": "Not graphically reviewed per extension. Observed only as a group in the QA VM on all four bar edges (popover anchoring pass); vertical rails still elide text-only indicators until HorneroOS/shell PluginKit rail glyph change and per-extension glyphs land."
+          "status": "na",
+          "note": "No bar surface: the host fixes the size of a dashboard card or desktop widget, so rail orientation does not apply."
         },
         "loadingErrorStates": {
           "status": "unverified",
@@ -1080,7 +1172,11 @@
           "note": "QA VM (shell main + PluginKit 3, 3 vCPU llvmpipe, 2026-11-17): loads without a slow-load or load-churn flag; idle CPU of the shell process measured as one set, not per plugin: bare shell 9.2%, 6 desktop widgets 9.4%, 22 bar indicators 11.8%, 12 dashboard cards 11.5% of one core (VM measurement, noise about 0.5 pp; mission evidence plugin-e2e/idle-cpu.txt). Not a published estimate."
         }
       },
-      "issue": "https://github.com/HorneroOS/plugins/issues/21"
+      "issue": "https://github.com/HorneroOS/plugins/issues/21",
+      "graphicalReview": {
+        "reviewer": "Claude Code agent (offscreen fixture review and QA VM captures; not a human design review)",
+        "date": "2026-11-17"
+      }
     },
     {
       "id": "hornero-sun-card",
@@ -1109,12 +1205,12 @@
           "note": "Visible colours come from PluginKit Ui primitives/Theme tokens with no hard-coded chrome colours (static probe)."
         },
         "screenshots": {
-          "status": "fail",
-          "note": "No screenshot under docs/screenshots/<id>.png yet; graphical capture is outstanding."
+          "status": "pass",
+          "note": "docs/screenshots/hornero-sun-card.png: offscreen fixture render of its night surfaces (offscreen-reviewed 2026-11-17 against the Signal Bezel; fixture data, not product telemetry). Day renders and every surface are in docs/evidence/offscreen/. Real-shell captured (QA VM) on: classic-top, hornero-left, see docs/evidence/qa-vm/."
         },
         "orientation": {
-          "status": "unverified",
-          "note": "Not graphically reviewed per extension. Observed only as a group in the QA VM on all four bar edges (popover anchoring pass); vertical rails still elide text-only indicators until HorneroOS/shell PluginKit rail glyph change and per-extension glyphs land."
+          "status": "pass",
+          "note": "Real-shell captured in the QA VM on classic-top, hornero-left: glyph or stacked short text fits the 36 px rail, popover anchors on each edge (real-shell-captured 2026-11-17)."
         },
         "loadingErrorStates": {
           "status": "pass",
@@ -1125,7 +1221,11 @@
           "note": "QA VM (shell main + PluginKit 3, 3 vCPU llvmpipe, 2026-11-17): loads without a slow-load or load-churn flag; idle CPU of the shell process measured as one set, not per plugin: bare shell 9.2%, 6 desktop widgets 9.4%, 22 bar indicators 11.8%, 12 dashboard cards 11.5% of one core (VM measurement, noise about 0.5 pp; mission evidence plugin-e2e/idle-cpu.txt). Not a published estimate."
         }
       },
-      "issue": "https://github.com/HorneroOS/plugins/issues/27"
+      "issue": "https://github.com/HorneroOS/plugins/issues/27",
+      "graphicalReview": {
+        "reviewer": "Claude Code agent (offscreen fixture review and QA VM captures; not a human design review)",
+        "date": "2026-11-17"
+      }
     },
     {
       "id": "hornero-system-health",
@@ -1154,12 +1254,12 @@
           "note": "Visible colours come from PluginKit Ui primitives/Theme tokens with no hard-coded chrome colours (static probe)."
         },
         "screenshots": {
-          "status": "fail",
-          "note": "No screenshot under docs/screenshots/<id>.png yet; graphical capture is outstanding."
+          "status": "pass",
+          "note": "docs/screenshots/hornero-system-health.png: offscreen fixture render of its night surfaces (offscreen-reviewed 2026-11-17 against the Signal Bezel; fixture data, not product telemetry). Day renders and every surface are in docs/evidence/offscreen/."
         },
         "orientation": {
-          "status": "unverified",
-          "note": "Not graphically reviewed per extension. Observed only as a group in the QA VM on all four bar edges (popover anchoring pass); vertical rails still elide text-only indicators until HorneroOS/shell PluginKit rail glyph change and per-extension glyphs land."
+          "status": "na",
+          "note": "No bar surface: the host fixes the size of a dashboard card or desktop widget, so rail orientation does not apply."
         },
         "loadingErrorStates": {
           "status": "unverified",
@@ -1170,7 +1270,11 @@
           "note": "QA VM (shell main + PluginKit 3, 3 vCPU llvmpipe, 2026-11-17): loads without a slow-load or load-churn flag; idle CPU of the shell process measured as one set, not per plugin: bare shell 9.2%, 6 desktop widgets 9.4%, 22 bar indicators 11.8%, 12 dashboard cards 11.5% of one core (VM measurement, noise about 0.5 pp; mission evidence plugin-e2e/idle-cpu.txt). Not a published estimate."
         }
       },
-      "issue": "https://github.com/HorneroOS/plugins/issues/26"
+      "issue": "https://github.com/HorneroOS/plugins/issues/26",
+      "graphicalReview": {
+        "reviewer": "Claude Code agent (offscreen fixture review and QA VM captures; not a human design review)",
+        "date": "2026-11-17"
+      }
     },
     {
       "id": "hornero-system-monitor",
@@ -1199,12 +1303,12 @@
           "note": "Visible colours come from PluginKit Ui primitives/Theme tokens with no hard-coded chrome colours (static probe)."
         },
         "screenshots": {
-          "status": "fail",
-          "note": "No screenshot under docs/screenshots/<id>.png yet; graphical capture is outstanding."
+          "status": "pass",
+          "note": "docs/screenshots/hornero-system-monitor.png: offscreen fixture render of its night surfaces (offscreen-reviewed 2026-11-17 against the Signal Bezel; fixture data, not product telemetry). Day renders and every surface are in docs/evidence/offscreen/."
         },
         "orientation": {
-          "status": "unverified",
-          "note": "Not graphically reviewed per extension. Observed only as a group in the QA VM on all four bar edges (popover anchoring pass); vertical rails still elide text-only indicators until HorneroOS/shell PluginKit rail glyph change and per-extension glyphs land."
+          "status": "na",
+          "note": "No bar surface: the host fixes the size of a dashboard card or desktop widget, so rail orientation does not apply."
         },
         "loadingErrorStates": {
           "status": "unverified",
@@ -1215,7 +1319,11 @@
           "note": "QA VM (shell main + PluginKit 3, 3 vCPU llvmpipe, 2026-11-17): loads without a slow-load or load-churn flag; idle CPU of the shell process measured as one set, not per plugin: bare shell 9.2%, 6 desktop widgets 9.4%, 22 bar indicators 11.8%, 12 dashboard cards 11.5% of one core (VM measurement, noise about 0.5 pp; mission evidence plugin-e2e/idle-cpu.txt). Not a published estimate."
         }
       },
-      "issue": "https://github.com/HorneroOS/plugins/issues/26"
+      "issue": "https://github.com/HorneroOS/plugins/issues/26",
+      "graphicalReview": {
+        "reviewer": "Claude Code agent (offscreen fixture review and QA VM captures; not a human design review)",
+        "date": "2026-11-17"
+      }
     },
     {
       "id": "hornero-text-tools",
@@ -1244,12 +1352,12 @@
           "note": "Visible chrome colours come from PluginKit Ui primitives/Theme tokens; the color-converter preview fill is a computed user-color binding, not chrome (static probe)."
         },
         "screenshots": {
-          "status": "fail",
-          "note": "No screenshot under docs/screenshots/<id>.png yet; graphical capture is outstanding."
+          "status": "pass",
+          "note": "docs/screenshots/hornero-text-tools.png: offscreen fixture render of its night surfaces (offscreen-reviewed 2026-11-17 against the Signal Bezel; fixture data, not product telemetry). Day renders and every surface are in docs/evidence/offscreen/."
         },
         "orientation": {
           "status": "unverified",
-          "note": "Not graphically reviewed per extension. Observed only as a group in the QA VM on all four bar edges (popover anchoring pass); vertical rails still elide text-only indicators until HorneroOS/shell PluginKit rail glyph change and per-extension glyphs land."
+          "note": "Bar indicator seen only on the top bar (real-shell-captured) or offscreen; not yet captured on a vertical rail."
         },
         "loadingErrorStates": {
           "status": "unverified",
@@ -1260,7 +1368,11 @@
           "note": "QA VM (shell main + PluginKit 3, 3 vCPU llvmpipe, 2026-11-17): loads without a slow-load or load-churn flag; idle CPU of the shell process measured as one set, not per plugin: bare shell 9.2%, 6 desktop widgets 9.4%, 22 bar indicators 11.8%, 12 dashboard cards 11.5% of one core (VM measurement, noise about 0.5 pp; mission evidence plugin-e2e/idle-cpu.txt). Not a published estimate."
         }
       },
-      "issue": "https://github.com/HorneroOS/plugins/issues/30"
+      "issue": "https://github.com/HorneroOS/plugins/issues/30",
+      "graphicalReview": {
+        "reviewer": "Claude Code agent (offscreen fixture review and QA VM captures; not a human design review)",
+        "date": "2026-11-17"
+      }
     },
     {
       "id": "hornero-unit-converter",
@@ -1289,12 +1401,12 @@
           "note": "Visible chrome colours come from PluginKit Ui primitives/Theme tokens; the color-converter preview fill is a computed user-color binding, not chrome (static probe)."
         },
         "screenshots": {
-          "status": "fail",
-          "note": "No screenshot under docs/screenshots/<id>.png yet; graphical capture is outstanding."
+          "status": "pass",
+          "note": "docs/screenshots/hornero-unit-converter.png: offscreen fixture render of its night surfaces (offscreen-reviewed 2026-11-17 against the Signal Bezel; fixture data, not product telemetry). Day renders and every surface are in docs/evidence/offscreen/."
         },
         "orientation": {
           "status": "unverified",
-          "note": "Not graphically reviewed per extension. Observed only as a group in the QA VM on all four bar edges (popover anchoring pass); vertical rails still elide text-only indicators until HorneroOS/shell PluginKit rail glyph change and per-extension glyphs land."
+          "note": "Bar indicator seen only on the top bar (real-shell-captured) or offscreen; not yet captured on a vertical rail."
         },
         "loadingErrorStates": {
           "status": "unverified",
@@ -1305,7 +1417,11 @@
           "note": "QA VM (shell main + PluginKit 3, 3 vCPU llvmpipe, 2026-11-17): loads without a slow-load or load-churn flag; idle CPU of the shell process measured as one set, not per plugin: bare shell 9.2%, 6 desktop widgets 9.4%, 22 bar indicators 11.8%, 12 dashboard cards 11.5% of one core (VM measurement, noise about 0.5 pp; mission evidence plugin-e2e/idle-cpu.txt). Not a published estimate."
         }
       },
-      "issue": "https://github.com/HorneroOS/plugins/issues/30"
+      "issue": "https://github.com/HorneroOS/plugins/issues/30",
+      "graphicalReview": {
+        "reviewer": "Claude Code agent (offscreen fixture review and QA VM captures; not a human design review)",
+        "date": "2026-11-17"
+      }
     },
     {
       "id": "hornero-uptime",
@@ -1334,12 +1450,12 @@
           "note": "Visible colours come from PluginKit Ui primitives/Theme tokens with no hard-coded chrome colours (static probe)."
         },
         "screenshots": {
-          "status": "fail",
-          "note": "No screenshot under docs/screenshots/<id>.png yet; graphical capture is outstanding."
+          "status": "pass",
+          "note": "docs/screenshots/hornero-uptime.png: offscreen fixture render of its night surfaces (offscreen-reviewed 2026-11-17 against the Signal Bezel; fixture data, not product telemetry). Day renders and every surface are in docs/evidence/offscreen/. Real-shell captured (QA VM) on: classic-top, see docs/evidence/qa-vm/."
         },
         "orientation": {
           "status": "unverified",
-          "note": "Not graphically reviewed per extension. Observed only as a group in the QA VM on all four bar edges (popover anchoring pass); vertical rails still elide text-only indicators until HorneroOS/shell PluginKit rail glyph change and per-extension glyphs land."
+          "note": "Bar indicator seen only on the top bar (real-shell-captured) or offscreen; not yet captured on a vertical rail."
         },
         "loadingErrorStates": {
           "status": "unverified",
@@ -1350,7 +1466,11 @@
           "note": "QA VM (shell main + PluginKit 3, 3 vCPU llvmpipe, 2026-11-17): loads without a slow-load or load-churn flag; idle CPU of the shell process measured as one set, not per plugin: bare shell 9.2%, 6 desktop widgets 9.4%, 22 bar indicators 11.8%, 12 dashboard cards 11.5% of one core (VM measurement, noise about 0.5 pp; mission evidence plugin-e2e/idle-cpu.txt). Not a published estimate."
         }
       },
-      "issue": "https://github.com/HorneroOS/plugins/issues/31"
+      "issue": "https://github.com/HorneroOS/plugins/issues/31",
+      "graphicalReview": {
+        "reviewer": "Claude Code agent (offscreen fixture review and QA VM captures; not a human design review)",
+        "date": "2026-11-17"
+      }
     },
     {
       "id": "hornero-volume",
@@ -1379,12 +1499,12 @@
           "note": "Visible colours come from PluginKit Ui primitives/Theme tokens with no hard-coded chrome colours (static probe)."
         },
         "screenshots": {
-          "status": "fail",
-          "note": "No screenshot under docs/screenshots/<id>.png yet; graphical capture is outstanding."
+          "status": "pass",
+          "note": "docs/screenshots/hornero-volume.png: offscreen fixture render of its night surfaces (offscreen-reviewed 2026-11-17 against the Signal Bezel; fixture data, not product telemetry). Day renders and every surface are in docs/evidence/offscreen/. Real-shell captured (QA VM) on: classic-top, see docs/evidence/qa-vm/."
         },
         "orientation": {
           "status": "unverified",
-          "note": "Not graphically reviewed per extension. Observed only as a group in the QA VM on all four bar edges (popover anchoring pass); vertical rails still elide text-only indicators until HorneroOS/shell PluginKit rail glyph change and per-extension glyphs land."
+          "note": "Bar indicator seen only on the top bar (real-shell-captured) or offscreen; not yet captured on a vertical rail."
         },
         "loadingErrorStates": {
           "status": "pass",
@@ -1395,7 +1515,11 @@
           "note": "QA VM (shell main + PluginKit 3, 3 vCPU llvmpipe, 2026-11-17): loads without a slow-load or load-churn flag; idle CPU of the shell process measured as one set, not per plugin: bare shell 9.2%, 6 desktop widgets 9.4%, 22 bar indicators 11.8%, 12 dashboard cards 11.5% of one core (VM measurement, noise about 0.5 pp; mission evidence plugin-e2e/idle-cpu.txt). Not a published estimate."
         }
       },
-      "issue": "https://github.com/HorneroOS/plugins/issues/25"
+      "issue": "https://github.com/HorneroOS/plugins/issues/25",
+      "graphicalReview": {
+        "reviewer": "Claude Code agent (offscreen fixture review and QA VM captures; not a human design review)",
+        "date": "2026-11-17"
+      }
     },
     {
       "id": "hornero-weather",
@@ -1424,12 +1548,12 @@
           "note": "Visible colours come from PluginKit Ui primitives/Theme tokens with no hard-coded chrome colours (static probe)."
         },
         "screenshots": {
-          "status": "fail",
-          "note": "No screenshot under docs/screenshots/<id>.png yet; graphical capture is outstanding."
+          "status": "pass",
+          "note": "docs/screenshots/hornero-weather.png: offscreen fixture render of its night surfaces (offscreen-reviewed 2026-11-17 against the Signal Bezel; fixture data, not product telemetry). Day renders and every surface are in docs/evidence/offscreen/. Real-shell captured (QA VM) on: classic-top, hornero-left, see docs/evidence/qa-vm/."
         },
         "orientation": {
-          "status": "unverified",
-          "note": "Not graphically reviewed per extension. Observed only as a group in the QA VM on all four bar edges (popover anchoring pass); vertical rails still elide text-only indicators until HorneroOS/shell PluginKit rail glyph change and per-extension glyphs land."
+          "status": "pass",
+          "note": "Real-shell captured in the QA VM on classic-top, hornero-left: glyph or stacked short text fits the 36 px rail, popover anchors on each edge (real-shell-captured 2026-11-17)."
         },
         "loadingErrorStates": {
           "status": "pass",
@@ -1440,7 +1564,11 @@
           "note": "QA VM (shell main + PluginKit 3, 3 vCPU llvmpipe, 2026-11-17): loads without a slow-load or load-churn flag; idle CPU of the shell process measured as one set, not per plugin: bare shell 9.2%, 6 desktop widgets 9.4%, 22 bar indicators 11.8%, 12 dashboard cards 11.5% of one core (VM measurement, noise about 0.5 pp; mission evidence plugin-e2e/idle-cpu.txt). Not a published estimate."
         }
       },
-      "issue": "https://github.com/HorneroOS/plugins/issues/27"
+      "issue": "https://github.com/HorneroOS/plugins/issues/27",
+      "graphicalReview": {
+        "reviewer": "Claude Code agent (offscreen fixture review and QA VM captures; not a human design review)",
+        "date": "2026-11-17"
+      }
     },
     {
       "id": "hornero-world-clock",
@@ -1469,12 +1597,12 @@
           "note": "Visible colours come from PluginKit Ui primitives/Theme tokens with no hard-coded chrome colours (static probe)."
         },
         "screenshots": {
-          "status": "fail",
-          "note": "No screenshot under docs/screenshots/<id>.png yet; graphical capture is outstanding."
+          "status": "pass",
+          "note": "docs/screenshots/hornero-world-clock.png: offscreen fixture render of its night surfaces (offscreen-reviewed 2026-11-17 against the Signal Bezel; fixture data, not product telemetry). Day renders and every surface are in docs/evidence/offscreen/."
         },
         "orientation": {
-          "status": "unverified",
-          "note": "Not graphically reviewed per extension. Observed only as a group in the QA VM on all four bar edges (popover anchoring pass); vertical rails still elide text-only indicators until HorneroOS/shell PluginKit rail glyph change and per-extension glyphs land."
+          "status": "na",
+          "note": "No bar surface: the host fixes the size of a dashboard card or desktop widget, so rail orientation does not apply."
         },
         "loadingErrorStates": {
           "status": "unverified",
@@ -1485,7 +1613,11 @@
           "note": "QA VM (shell main + PluginKit 3, 3 vCPU llvmpipe, 2026-11-17): loads without a slow-load or load-churn flag; idle CPU of the shell process measured as one set, not per plugin: bare shell 9.2%, 6 desktop widgets 9.4%, 22 bar indicators 11.8%, 12 dashboard cards 11.5% of one core (VM measurement, noise about 0.5 pp; mission evidence plugin-e2e/idle-cpu.txt). Not a published estimate."
         }
       },
-      "issue": "https://github.com/HorneroOS/plugins/issues/28"
+      "issue": "https://github.com/HorneroOS/plugins/issues/28",
+      "graphicalReview": {
+        "reviewer": "Claude Code agent (offscreen fixture review and QA VM captures; not a human design review)",
+        "date": "2026-11-17"
+      }
     },
     {
       "id": "hornero-system-insight",
@@ -1514,12 +1646,12 @@
           "note": "Visible colours come from PluginKit Ui primitives/Theme tokens with no hard-coded chrome colours (static probe)."
         },
         "screenshots": {
-          "status": "fail",
-          "note": "No screenshot under docs/screenshots/<id>.png yet; graphical capture is outstanding."
+          "status": "pass",
+          "note": "docs/screenshots/hornero-system-insight.png: offscreen fixture render of its night surfaces (offscreen-reviewed 2026-11-17 against the Signal Bezel; fixture data, not product telemetry). Day renders and every surface are in docs/evidence/offscreen/."
         },
         "orientation": {
-          "status": "unverified",
-          "note": "Not graphically reviewed per extension. Observed only as a group in the QA VM on all four bar edges (popover anchoring pass); vertical rails still elide text-only indicators until HorneroOS/shell PluginKit rail glyph change and per-extension glyphs land."
+          "status": "na",
+          "note": "No bar surface: the host fixes the size of a dashboard card or desktop widget, so rail orientation does not apply."
         },
         "loadingErrorStates": {
           "status": "unverified",
@@ -1530,7 +1662,11 @@
           "note": "QA VM (shell main + PluginKit 3, 3 vCPU llvmpipe, 2026-11-17): loads without a slow-load or load-churn flag; idle CPU of the shell process measured as one set, not per plugin: bare shell 9.2%, 6 desktop widgets 9.4%, 22 bar indicators 11.8%, 12 dashboard cards 11.5% of one core (VM measurement, noise about 0.5 pp; mission evidence plugin-e2e/idle-cpu.txt). Not a published estimate."
         }
       },
-      "issue": "HorneroOS/plugins#21"
+      "issue": "HorneroOS/plugins#21",
+      "graphicalReview": {
+        "reviewer": "Claude Code agent (offscreen fixture review and QA VM captures; not a human design review)",
+        "date": "2026-11-17"
+      }
     },
     {
       "id": "hornero-network-scope",
@@ -1559,12 +1695,12 @@
           "note": "Visible colours come from PluginKit Ui primitives/Theme tokens with no hard-coded chrome colours (static probe)."
         },
         "screenshots": {
-          "status": "fail",
-          "note": "No screenshot under docs/screenshots/<id>.png yet; graphical capture is outstanding."
+          "status": "pass",
+          "note": "docs/screenshots/hornero-network-scope.png: offscreen fixture render of its night surfaces (offscreen-reviewed 2026-11-17 against the Signal Bezel; fixture data, not product telemetry). Day renders and every surface are in docs/evidence/offscreen/."
         },
         "orientation": {
-          "status": "unverified",
-          "note": "Not graphically reviewed per extension. Observed only as a group in the QA VM on all four bar edges (popover anchoring pass); vertical rails still elide text-only indicators until HorneroOS/shell PluginKit rail glyph change and per-extension glyphs land."
+          "status": "na",
+          "note": "No bar surface: the host fixes the size of a dashboard card or desktop widget, so rail orientation does not apply."
         },
         "loadingErrorStates": {
           "status": "pass",
@@ -1575,7 +1711,11 @@
           "note": "QA VM (shell main + PluginKit 3, 3 vCPU llvmpipe, 2026-11-17): loads without a slow-load or load-churn flag; idle CPU of the shell process measured as one set, not per plugin: bare shell 9.2%, 6 desktop widgets 9.4%, 22 bar indicators 11.8%, 12 dashboard cards 11.5% of one core (VM measurement, noise about 0.5 pp; mission evidence plugin-e2e/idle-cpu.txt). Not a published estimate."
         }
       },
-      "issue": "HorneroOS/plugins#21"
+      "issue": "HorneroOS/plugins#21",
+      "graphicalReview": {
+        "reviewer": "Claude Code agent (offscreen fixture review and QA VM captures; not a human design review)",
+        "date": "2026-11-17"
+      }
     },
     {
       "id": "hornero-audio-deck",
@@ -1604,12 +1744,12 @@
           "note": "Visible colours come from PluginKit Ui primitives/Theme tokens with no hard-coded chrome colours (static probe)."
         },
         "screenshots": {
-          "status": "fail",
-          "note": "No screenshot under docs/screenshots/<id>.png yet; graphical capture is outstanding."
+          "status": "pass",
+          "note": "docs/screenshots/hornero-audio-deck.png: offscreen fixture render of its night surfaces (offscreen-reviewed 2026-11-17 against the Signal Bezel; fixture data, not product telemetry). Day renders and every surface are in docs/evidence/offscreen/."
         },
         "orientation": {
-          "status": "unverified",
-          "note": "Not graphically reviewed per extension. Observed only as a group in the QA VM on all four bar edges (popover anchoring pass); vertical rails still elide text-only indicators until HorneroOS/shell PluginKit rail glyph change and per-extension glyphs land."
+          "status": "na",
+          "note": "No bar surface: the host fixes the size of a dashboard card or desktop widget, so rail orientation does not apply."
         },
         "loadingErrorStates": {
           "status": "pass",
@@ -1620,7 +1760,11 @@
           "note": "QA VM (shell main + PluginKit 3, 3 vCPU llvmpipe, 2026-11-17): loads without a slow-load or load-churn flag; idle CPU of the shell process measured as one set, not per plugin: bare shell 9.2%, 6 desktop widgets 9.4%, 22 bar indicators 11.8%, 12 dashboard cards 11.5% of one core (VM measurement, noise about 0.5 pp; mission evidence plugin-e2e/idle-cpu.txt). Not a published estimate."
         }
       },
-      "issue": "HorneroOS/plugins#21"
+      "issue": "HorneroOS/plugins#21",
+      "graphicalReview": {
+        "reviewer": "Claude Code agent (offscreen fixture review and QA VM captures; not a human design review)",
+        "date": "2026-11-17"
+      }
     }
   ]
 }

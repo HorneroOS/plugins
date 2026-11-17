@@ -165,7 +165,10 @@ Item {
 
                 UiText {
                     visible: root.showIllumination && !root.compactDensity
+                    width: parent.width
                     role: "caption"
+                    elide: Text.ElideRight
+                    wrapMode: Text.NoWrap
                     text: i18n.tr("Illumination (approximate)")
                 }
             }
@@ -196,7 +199,7 @@ Item {
             visible: root.detailedDensity
             width: parent.width
             role: "caption"
-            text: i18n.tr("Synodic approximation from the 2000-01-06 new moon; it ignores orbital perturbation. No PluginKit facade exposes lunar data, moonrise/moonset or an ephemeris, so those are unavailable here.")
+            text: i18n.tr("Approximate: a simple model of the lunar cycle, not an ephemeris.")
         }
     }
 }

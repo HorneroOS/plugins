@@ -273,7 +273,7 @@ Item {
             UiText {
                 width: parent.width
                 role: "caption"
-                text: i18n.tr("Offsets follow the DST rules built into this extension; there is no system timezone database for other zones.")
+                text: i18n.tr("Offsets use built-in daylight-saving rules.")
             }
         }
     }

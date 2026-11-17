@@ -137,7 +137,7 @@ Item {
                 UiText {
                     width: parent.width
                     role: "caption"
-                    text: i18n.tr("Input level and device selection are not exposed by PluginKit Audio; the level above is read-only and device switching stays in the shell audio settings.")
+                    text: i18n.tr("Switch input devices in the shell audio settings.")
                 }
 
                 UiText {

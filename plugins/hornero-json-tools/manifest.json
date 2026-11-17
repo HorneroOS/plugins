@@ -2,7 +2,7 @@
   "schemaVersion": 3,
   "id": "hornero-json-tools",
   "name": "Hornero JSON Tools",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "Utility Tools 2.0 JSON tools: bar quick format/validate action and compact dashboard detail with Format and Minify using JSON parse/stringify only. Parser errors are shown.",
   "author": "HorneroOS contributors",
   "license": "MIT",
@@ -31,6 +31,10 @@
       "minShellVersion": "1.0.0"
     },
     "changelog": [
+      {
+        "version": "3.0.1",
+        "notes": "Second action button uses the same secondary style as the first."
+      },
       {
         "version": "3.0.0",
         "notes": "PluginKit 3 on Hornero Signal: Signal text controls, instrument module header."

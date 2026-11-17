@@ -77,7 +77,7 @@ Item {
             UiState { visible: root.decError !== ""; width: parent.width; kind: "error"; message: root.decError }
             UiText { visible: root.decResult !== ""; width: parent.width; Accessible.name: i18n.tr("Decimal conversion result"); text: root.decResult }
             UiTextField { id: hexInput; width: parent.width; placeholderText: "Hex, e.g. FF"; Accessible.name: i18n.tr("Hexadecimal input"); tooltipText: i18n.tr("Hexadecimal digits to convert to decimal"); onAccepted: root.convertHex() }
-            UiButton { variant: "quiet"; text: i18n.tr("Convert hex"); accessibleName: i18n.tr("Convert hexadecimal"); tooltipText: i18n.tr("Convert hex to decimal"); onClicked: root.convertHex() }
+            UiButton { variant: "secondary"; text: i18n.tr("Convert hex"); accessibleName: i18n.tr("Convert hexadecimal"); tooltipText: i18n.tr("Convert hex to decimal"); onClicked: root.convertHex() }
             UiState { visible: root.hexError !== ""; width: parent.width; kind: "error"; message: root.hexError }
             UiText { visible: root.hexResult !== ""; width: parent.width; Accessible.name: i18n.tr("Hex conversion result"); text: root.hexResult }
         }

@@ -2,7 +2,7 @@
   "schemaVersion": 3,
   "id": "hornero-uptime",
   "name": "Hornero Uptime",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "Uptime 2.0: bar indicator plus popover/dashboard session detail (uptime, boot time, idle time) from /proc/uptime with the declared cat command. No PluginKit uptime facade exists; error state instead of a fabricated zero.",
   "author": "HorneroOS contributors",
   "license": "MIT",
@@ -28,6 +28,10 @@
       "minShellVersion": "1.2.79"
     },
     "changelog": [
+      {
+        "version": "3.0.1",
+        "notes": "Plain wording in footnotes and labels (no internal terms)."
+      },
       {
         "version": "3.0.0",
         "notes": "PluginKit 3 on Hornero Signal: instrument module header and equal-width readouts; unreadable idle time shows an em dash."

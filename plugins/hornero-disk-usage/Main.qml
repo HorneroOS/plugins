@@ -227,7 +227,7 @@ Item {
                 visible: root.disks().length > 0
                 width: parent.width
                 role: "caption"
-                text: i18n.tr("Drive health (SMART) is not exposed to extensions and is not shown.")
+                text: i18n.tr("Drive health is not shown.")
             }
         }
     }

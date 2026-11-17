@@ -2,7 +2,7 @@
   "schemaVersion": 3,
   "id": "hornero-microphone",
   "name": "Hornero Microphone",
-  "version": "3.0.1",
+  "version": "3.0.2",
   "description": "Audio Extensions 2.0: compact bar indicator, details popover and dashboard card for microphone state over the shared PluginKit Audio facade, with honest muted and no-input-device states. Never records audio.",
   "author": "HorneroOS contributors",
   "license": "MIT",
@@ -28,6 +28,10 @@
       "minShellVersion": "1.0.0"
     },
     "changelog": [
+      {
+        "version": "3.0.2",
+        "notes": "Plain wording in footnotes and labels (no internal terms)."
+      },
       {
         "version": "3.0.1",
         "notes": "Bar indicator shows only the glyph when there is no input device."

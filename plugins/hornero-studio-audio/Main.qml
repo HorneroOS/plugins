@@ -133,20 +133,12 @@ Item {
             onClicked: popover.toggle()
         }
 
-        Column {
+        // One short line: the tag, or PERF while Temporary Performance is on
+        // (two stacked lines were clipped in a 25 px bar).
+        UiText {
             visible: !root.hostCompact && root.hostOrientation !== "vertical"
-            spacing: 0
-
-            UiText {
-                role: "caption"
-                text: i18n.tr("ST")
-            }
-
-            UiText {
-                visible: root.performance
-                role: "caption"
-                text: i18n.tr("PERF")
-            }
+            role: "caption"
+            text: root.performance ? i18n.tr("PERF") : i18n.tr("ST")
         }
     }
 
