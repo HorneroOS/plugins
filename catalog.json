@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedFrom": "24c53aa917d0246c18eb59e29223873a75ed6430",
+  "generatedFrom": "c7c7de16254cf38447e03db191a2761f87a994a0",
   "plugins": [
     {
       "id": "hornero-agenda",
@@ -355,7 +355,7 @@
       },
       "trust": "official",
       "path": "plugins/hornero-containers",
-      "sha256": "5457d8ab616739d31e820886eb174b8b09cbd20e1ada9e8a209f90c7e129d873"
+      "sha256": "08df1fb9f1e714b5ef78a4bfb0f8c063a0debc29e9a45a4926aa5deacba4f5dd"
     },
     {
       "id": "hornero-countdown",
@@ -482,7 +482,7 @@
       },
       "trust": "official",
       "path": "plugins/hornero-device-battery",
-      "sha256": "6cfa5bfb8ec3efb3def227bcdfd37aa9a87a4c7eba397df0cc4b5cc308b3a7c4"
+      "sha256": "0553fc6ad207ace3464e73b8625b32fabc3d99fb0c1219b730cf96963685ce66"
     },
     {
       "id": "hornero-disk-usage",
@@ -671,7 +671,7 @@
       },
       "trust": "official",
       "path": "plugins/hornero-git-board",
-      "sha256": "f2f333b4fc16593dbc8d96367e4b320ffcac02154ff631068c1ab4ed584ab358"
+      "sha256": "03ff19d4a97aa14108d6ebba94e155972c5c764946d9683fa5545dfac4c5ede8"
     },
     {
       "id": "hornero-json-tools",
@@ -1044,7 +1044,7 @@
       },
       "trust": "official",
       "path": "plugins/hornero-pomodoro",
-      "sha256": "542678df7083b075f05d0fc5e06f64735abffdd3ebc9dc79c735aa2c6463dbf7"
+      "sha256": "2eb5803a81875f72f4c8cb5b385dafd7878195f4f21c5a80f38be6dd803aeaaa"
     },
     {
       "id": "hornero-port-watch",
@@ -1111,7 +1111,7 @@
       },
       "trust": "official",
       "path": "plugins/hornero-port-watch",
-      "sha256": "e46a6ebe471dbd31775011997fa23d0110a40f19428ac08600444c09d136b467"
+      "sha256": "ecd4d2ea549c1ac6b22becc69532f03cbf1a6cc13f2b38dd8dbc110b2252f75b"
     },
     {
       "id": "hornero-quick-notes",

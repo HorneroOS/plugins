@@ -21,7 +21,7 @@ Item {
     property string hostScreenName: ""
 
     readonly property string widgetTitle: i18n.tr("Port Watch")
-    readonly property string widgetContext: rows.length > 0 ? i18n.tr("%1 LISTENING").arg(listeningCount) : ""
+    readonly property string widgetContext: loaded && !failed ? i18n.tr("%1 LISTENING").arg(allMatching.length) : ""
     readonly property int contentWidth: hostAvailableWidth > 0 ? hostAvailableWidth : 380
 
     implicitWidth: contentWidth
@@ -46,11 +46,9 @@ Item {
     readonly property string watchSetting: String(pluginSettings.value("watchedPorts", ""))
     readonly property bool showProcess: pluginSettings.value("showProcess", true) !== false
 
-    property var rows: []
     property bool failed: false
     property bool loaded: false
     property string buffer: ""
-    readonly property int listeningCount: rows.filter(r => r.listening).length
 
     // PORTS-LOGIC-BEGIN
     function splitAddr(text) {
@@ -172,12 +170,32 @@ Item {
 
     property var sockets: []
     readonly property var watched: parseWatch(watchSetting)
-    readonly property var shownRows: compose(sockets, watched, protocolMode, scopeMode, maxRows)
+    // Rows that fit a fixed-height desktop frame (about 56 px each); the
+    // dashboard card is uncapped (hostAvailableHeight 0).
+    readonly property int fitRows: hostAvailableHeight > 0 ? Math.max(1, Math.floor((hostAvailableHeight + 4) / 60)) : maxRows
+    readonly property var allMatching: compose(sockets, [], protocolMode, scopeMode, 9999)
+    readonly property var shownRows: compose(sockets, watched, protocolMode, scopeMode, Math.min(maxRows, fitRows))
+
+    property bool pendingRun: false
 
     function refresh(): void {
         if (!proc.running) {
             buffer = "";
+            pendingRun = true;
             proc.running = true;
+        }
+    }
+
+    Timer {
+        id: lostExit
+
+        interval: 400
+        onTriggered: {
+            if (root.pendingRun) {
+                root.pendingRun = false;
+                root.loaded = true;
+                root.failed = true;
+            }
         }
     }
 
@@ -186,12 +204,18 @@ Item {
 
         command: ["ss", "-H", "-tulnp"]
 
+        // A missing executable never reports an exit: if the process stops
+        // without one, say so instead of staying on "reading" forever.
+        onRunningChanged: if (!running && root.pendingRun)
+            lostExit.restart()
+
         stdout: SplitParser {
             onRead: data => {
                 root.buffer += data + "\n";
             }
         }
         onExited: (code, status) => {
+            root.pendingRun = false;
             root.loaded = true;
             if (code === 0) {
                 root.sockets = root.parseSockets(root.buffer);
@@ -199,7 +223,6 @@ Item {
             } else {
                 root.failed = true;
             }
-            root.rows = root.shownRows;
         }
     }
 
@@ -313,6 +336,15 @@ Item {
                     }
                 }
             }
+        }
+
+        UiText {
+            visible: !root.failed && root.allMatching.length > root.shownRows.length
+            width: parent.width
+            role: "caption"
+            horizontalAlignment: Text.AlignHCenter
+            text: i18n.tr("%1 more not shown").arg(root.allMatching.length - root.shownRows.length)
+            color: Theme.palette.inkFaint
         }
     }
 }

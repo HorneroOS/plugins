@@ -152,7 +152,10 @@ Item {
     }
     // GIT-LOGIC-END
 
-    readonly property var shownRows: sortRows(rows, sortMode)
+    // A fixed-height desktop frame holds about 90 px per repository row.
+    readonly property int fitRows: hostAvailableHeight > 0 ? Math.max(1, Math.floor(hostAvailableHeight / 90)) : 99
+    readonly property var shownRows: sortRows(rows, sortMode).slice(0, fitRows)
+    readonly property int hiddenCount: rows.length - shownRows.length
 
     readonly property string summary: {
         if (rows.length === 0)
@@ -212,11 +215,13 @@ Item {
         onExited: (code, status) => {
             const path = root.current.path;
             if (code !== 0) {
-                root.finish({
-                    path: path,
-                    name: root.baseName(path),
-                    error: true
-                });
+                const failedEntry = root.parseStatus("");
+                failedEntry.path = path;
+                failedEntry.name = root.baseName(path);
+                failedEntry.error = true;
+                failedEntry.commit = "";
+                failedEntry.when = "";
+                root.finish(failedEntry);
                 return;
             }
             const entry = root.parseStatus(root.buffer);
@@ -457,6 +462,15 @@ Item {
             role: "caption"
             horizontalAlignment: Text.AlignHCenter
             text: i18n.tr("Everything is committed and in step. Cosy.")
+            color: Theme.palette.inkFaint
+        }
+
+        UiText {
+            visible: root.hiddenCount > 0
+            width: parent.width
+            role: "caption"
+            horizontalAlignment: Text.AlignHCenter
+            text: i18n.tr("%1 more not shown").arg(root.hiddenCount)
             color: Theme.palette.inkFaint
         }
     }

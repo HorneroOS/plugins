@@ -10,5 +10,6 @@
   "EXPOSED": "EXPUESTO",
   "LAN": "LAN",
   "LOCAL": "LOCAL",
-  "owner not visible": "dueño no visible"
+  "owner not visible": "dueño no visible",
+  "%1 more not shown": "%1 más sin mostrar"
 }

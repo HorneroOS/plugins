@@ -147,13 +147,30 @@ Item {
     }
     // DEVICES-LOGIC-END
 
-    readonly property var shownRows: arrange(pick(all, includeInternal), sortMode)
+    readonly property int fitRows: hostAvailableHeight > 0 ? Math.max(1, Math.floor((hostAvailableHeight + 4) / 92)) : 99
+    readonly property var shownRows: arrange(pick(all, includeInternal), sortMode).slice(0, fitRows)
     readonly property int lowCount: shownRows.filter(d => d.percent >= 0 && d.percent <= lowPercent && d.state !== "charging").length
+
+    property bool pendingRun: false
 
     function refresh(): void {
         if (!proc.running) {
             buffer = "";
+            pendingRun = true;
             proc.running = true;
+        }
+    }
+
+    Timer {
+        id: lostExit
+
+        interval: 400
+        onTriggered: {
+            if (root.pendingRun) {
+                root.pendingRun = false;
+                root.loaded = true;
+                root.failed = true;
+            }
         }
     }
 
@@ -162,12 +179,18 @@ Item {
 
         command: ["upower", "-d"]
 
+        // A missing executable never reports an exit: if the process stops
+        // without one, say so instead of staying on "asking" forever.
+        onRunningChanged: if (!running && root.pendingRun)
+            lostExit.restart()
+
         stdout: SplitParser {
             onRead: data => {
                 root.buffer += data + "\n";
             }
         }
         onExited: (code, status) => {
+            root.pendingRun = false;
             root.loaded = true;
             if (code === 0) {
                 root.all = root.parseDevices(root.buffer);

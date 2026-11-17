@@ -20,5 +20,6 @@
   "Reading repositories…": "Leyendo repositorios…",
   "No usable path: use absolute paths such as /home/you/code/project.": "Ninguna ruta válida: usá rutas absolutas como /home/vos/code/proyecto.",
   "git could not read %1 (missing, not a repository, or not trusted by git).": "git no pudo leer %1 (no existe, no es un repositorio o git no confía en él).",
-  "Everything is committed and in step. Cosy.": "Todo confirmado y sincronizado. Acogedor."
+  "Everything is committed and in step. Cosy.": "Todo confirmado y sincronizado. Acogedor.",
+  "%1 more not shown": "%1 más sin mostrar"
 }

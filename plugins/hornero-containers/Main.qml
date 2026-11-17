@@ -118,7 +118,8 @@ Item {
     // CONTAINERS-LOGIC-END
 
     readonly property int runningCount: all.filter(c => c.state === "running").length
-    readonly property var shownRows: arrange(all, showStopped, maxRows)
+    readonly property int fitRows: hostAvailableHeight > 0 ? Math.max(1, Math.floor((hostAvailableHeight + 4) / 84)) : maxRows
+    readonly property var shownRows: arrange(all, showStopped, Math.min(maxRows, fitRows))
     readonly property bool hidden: all.length > shownRows.length
 
     property var collected: []
@@ -138,12 +139,14 @@ Item {
     function runStage(): void {
         if (stage === 0 && runtimeMode !== "docker") {
             buffer = "";
+            pendingRuntime = "podman";
             podmanProc.running = true;
             return;
         }
         if (stage <= 1 && (runtimeMode === "docker" || runtimeMode === "both" || (runtimeMode === "auto" && !podmanOk))) {
             stage = 1;
             buffer = "";
+            pendingRuntime = "docker";
             dockerProc.running = true;
             return;
         }
@@ -153,7 +156,20 @@ Item {
         loaded = true;
     }
 
+    property string pendingRuntime: ""
+
+    Timer {
+        id: lostExit
+
+        interval: 400
+        onTriggered: {
+            if (root.pendingRuntime.length > 0)
+                root.consume(root.pendingRuntime, -1);
+        }
+    }
+
     function consume(runtime, code): void {
+        pendingRuntime = "";
         if (code === 0) {
             try {
                 collected = collected.concat(parseList(buffer, runtime));
@@ -173,6 +189,11 @@ Item {
 
         command: ["podman", "ps", "--all", "--format", "json"]
 
+        // A missing executable never reports an exit: treat a stop without
+        // one as a failed run so the next runtime (or the error) is reached.
+        onRunningChanged: if (!running && root.pendingRuntime === "podman")
+            lostExit.restart()
+
         stdout: SplitParser {
             onRead: data => {
                 root.buffer += data + "\n";
@@ -185,6 +206,9 @@ Item {
         id: dockerProc
 
         command: ["docker", "ps", "--all", "--format", "{{json .}}"]
+
+        onRunningChanged: if (!running && root.pendingRuntime === "docker")
+            lostExit.restart()
 
         stdout: SplitParser {
             onRead: data => {

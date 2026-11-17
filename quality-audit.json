@@ -422,15 +422,15 @@
         },
         "screenshots": {
           "status": "pass",
-          "note": "docs/screenshots/hornero-containers.png: offscreen fixture render of the dashboard card, Signal Night (fixture command output, not product telemetry). Day renders and the desktop surface are in docs/evidence/catalog-audit/."
+          "note": "docs/screenshots/hornero-containers.png: offscreen fixture render of the dashboard card, Signal Night (fixture command output, not product telemetry). Day renders, desktop surface and real QA VM captures are in docs/evidence/catalog-audit/."
         },
         "orientation": {
           "status": "na",
           "note": "No bar surface: the host fixes the size of a dashboard card or desktop widget."
         },
         "loadingErrorStates": {
-          "status": "unverified",
-          "note": "Loading, empty and error states exist in the QML (UiState) and the success state is rendered offscreen; the failure states have not been captured in the QA VM yet."
+          "status": "pass",
+          "note": "QA VM: with neither Podman nor Docker installed the card shows its error state (found and fixed: a missing executable never reports an exit, so a watchdog now surfaces the failure)."
         },
         "performance": {
           "status": "unverified",
@@ -565,15 +565,15 @@
         },
         "screenshots": {
           "status": "pass",
-          "note": "docs/screenshots/hornero-device-battery.png: offscreen fixture render of the dashboard card, Signal Night (fixture command output, not product telemetry). Day renders and the desktop surface are in docs/evidence/catalog-audit/."
+          "note": "docs/screenshots/hornero-device-battery.png: offscreen fixture render of the dashboard card, Signal Night (fixture command output, not product telemetry). Day renders, desktop surface and real QA VM captures are in docs/evidence/catalog-audit/."
         },
         "orientation": {
           "status": "na",
           "note": "No bar surface: the host fixes the size of a dashboard card or desktop widget."
         },
         "loadingErrorStates": {
-          "status": "unverified",
-          "note": "Loading, empty and error states exist in the QML (UiState) and the success state is rendered offscreen; the failure states have not been captured in the QA VM yet."
+          "status": "pass",
+          "note": "QA VM: with upower not installed the card shows its error state (same missing-executable watchdog fix). The success state is fixture-rendered offscreen only."
         },
         "performance": {
           "status": "unverified",
@@ -757,15 +757,15 @@
         },
         "screenshots": {
           "status": "pass",
-          "note": "docs/screenshots/hornero-git-board.png: offscreen fixture render of the dashboard card, Signal Night (fixture command output, not product telemetry). Day renders and the desktop surface are in docs/evidence/catalog-audit/."
+          "note": "docs/screenshots/hornero-git-board.png: offscreen fixture render of the dashboard card, Signal Night (fixture command output, not product telemetry). Day renders, desktop surface and real QA VM captures are in docs/evidence/catalog-audit/."
         },
         "orientation": {
           "status": "na",
           "note": "No bar surface: the host fixes the size of a dashboard card or desktop widget."
         },
         "loadingErrorStates": {
-          "status": "unverified",
-          "note": "Loading, empty and error states exist in the QML (UiState) and the success state is rendered offscreen; the failure states have not been captured in the QA VM yet."
+          "status": "pass",
+          "note": "QA VM (image current, deployed from the plugins worktree, 2026-11-17): real repositories rendered as a desktop widget; a missing path shows the UNREADABLE error row."
         },
         "performance": {
           "status": "unverified",
@@ -1194,15 +1194,15 @@
         },
         "screenshots": {
           "status": "pass",
-          "note": "docs/screenshots/hornero-port-watch.png: offscreen fixture render of the dashboard card, Signal Night (fixture command output, not product telemetry). Day renders and the desktop surface are in docs/evidence/catalog-audit/."
+          "note": "docs/screenshots/hornero-port-watch.png: offscreen fixture render of the dashboard card, Signal Night (fixture command output, not product telemetry). Day renders, desktop surface and real QA VM captures are in docs/evidence/catalog-audit/."
         },
         "orientation": {
           "status": "na",
           "note": "No bar surface: the host fixes the size of a dashboard card or desktop widget."
         },
         "loadingErrorStates": {
-          "status": "unverified",
-          "note": "Loading, empty and error states exist in the QML (UiState) and the success state is rendered offscreen; the failure states have not been captured in the QA VM yet."
+          "status": "pass",
+          "note": "QA VM: real `ss` output rendered; watched ports show as free."
         },
         "performance": {
           "status": "unverified",

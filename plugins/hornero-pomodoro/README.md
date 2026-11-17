@@ -48,3 +48,21 @@ QML plugins run with your user privileges — Hornero Shell does not sandbox the
 ## PluginKit 3
 
 This package targets PluginKit 3 on Hornero Signal (`schemaVersion: 3`): colours, type, spacing and glyphs come from the shared Theme tokens and Hornero Glyph names, and the shared data domains it reads are declared in `capabilities.providers`. Shells older than Hornero Signal cannot load it.
+
+## Pomodoro 4 (catalogue audit)
+
+Adds a break cycle (`shortBreakMinutes`, `longBreakMinutes`,
+`cyclesBeforeLongBreak`, `autoStartNext`), Skip, a display readout and a set
+meter. Stored state is unchanged (`deadlineEpochMs`, `remainingSeconds`) plus
+`phase` and `setCount`, so an upgrade resumes a running 3.x session.
+
+**Experience hook** (`experienceHook: focus`, default off): while a focus phase
+runs, the shell is switched to the Focus experience with
+`horneroctl experience set focus` and your previous mode is restored when the
+phase ends, pauses or resets, but only if the mode is still Focus (a mode you
+chose yourself is never overridden). Needs a `horneroctl` that has the
+`experience` command; on older builds the call fails harmlessly and nothing
+changes. The remembered mode lives in memory, so after a shell reload it falls
+back to Everyday. The pure cycle logic is unit-tested; the hook itself was
+checked against the code path only (the QA VM image predates the CLI verb).
+Declared capability: `processCommands: ["horneroctl"]`.
