@@ -2,7 +2,7 @@
   "schemaVersion": 3,
   "id": "hornero-color-converter",
   "name": "Hornero Color Converter",
-  "version": "3.1.0",
+  "version": "3.1.1",
   "description": "Utility Tools 2.0 color converter: bar quick hex action and compact dashboard detail converting validated #RGB/#RRGGBB to RGB and HSL and RGB back to hex. Invalid hex shows an error. Shows the current Hornero Chromatic seeds and renders a palette template.",
   "author": "HorneroOS contributors",
   "license": "MIT",
@@ -32,6 +32,10 @@
     },
     "changelog": [
       {
+        "version": "3.1.1",
+        "notes": "Deprecated in favour of hornero-toolbox."
+      },
+      {
         "version": "3.1.0",
         "notes": "Reference extension for Hornero Chromatic (RFC 0002): the dashboard panel shows the dynamic palette's seed colours (Theme.chromatic), re-reads them on every settled palette change (Theme.revision), picks sample ink with Theme.ensureContrast, and declares one theme template rendered by horneroctl into the extension's cache folder."
       },
@@ -47,7 +51,11 @@
         "version": "1.0.0",
         "notes": "Dashboard color converter: validated hex to RGB/HSL and RGB inputs back to hex."
       }
-    ]
+    ],
+    "deprecation": {
+      "message": "Retired: Toolbox covers this tool (and six siblings) in one Signal card with typed settings and live results; this extension keeps working where installed.",
+      "replacedBy": "hornero-toolbox"
+    }
   },
   "files": [
     "Main.qml",

@@ -38,6 +38,8 @@ class Structure(unittest.TestCase):
             ("hornero-containers", "CONTAINERS-LOGIC"),
             ("hornero-device-battery", "DEVICES-LOGIC"),
             ("hornero-pomodoro", "POMODORO-LOGIC"),
+            ("hornero-toolbox", "TOOLBOX-LOGIC"),
+            ("hornero-forge-board", "FORGE-LOGIC"),
         ]:
             self.assertIn("function", block(plugin, marker), plugin)
 
@@ -244,6 +246,127 @@ class Pomodoro(unittest.TestCase):
         self.assertEqual(js(self.P, self.M, "clampInt(99, 1, 9, 5)"), 9)
         self.assertEqual(js(self.P, self.M, "fmt(65)"), "01:05")
         self.assertEqual(js(self.P, self.M, "[validMode('focus'), validMode('rm -rf')]"), [True, False])
+
+
+@unittest.skipUnless(NODE, "node not available")
+class Toolbox(unittest.TestCase):
+    P, M = "hornero-toolbox", "TOOLBOX-LOGIC"
+
+    def test_no_process_no_network_no_eval(self):
+        m = json.loads((ROOT / "plugins" / self.P / "manifest.json").read_text())
+        self.assertEqual(m["capabilities"]["processCommands"], [])
+        self.assertEqual(m["capabilities"]["networkHosts"], [])
+        code = (ROOT / "plugins" / self.P / "Main.qml").read_text()
+        self.assertNotIn("eval(", code)
+        self.assertNotIn("Function(", code)
+
+    def test_calculator(self):
+        cases = {"(2 + 3) * 4": "20", "10 / 4": "2.5", "-3 + 5": "2", "7 % 4": "3", "0.1 + 0.2": "0.3"}
+        for expr, want in cases.items():
+            r = js(self.P, self.M, f"calcText({json.dumps(expr)})")
+            self.assertEqual((r["ok"], r["text"]), (True, want), expr)
+        for bad in ["", "1 / 0", "2 +", "(1", "1..2", "alert(1)", "2 ** 3"]:
+            self.assertFalse(js(self.P, self.M, f"calcText({json.dumps(bad)})")["ok"], bad)
+
+    def test_units(self):
+        def conv(v, cat, a, b):
+            return js(self.P, self.M, f"convertUnit({v}, {json.dumps(cat)}, {json.dumps(a)}, {json.dumps(b)})")
+        self.assertAlmostEqual(conv(1, "length", "mi", "km"), 1.609344)
+        self.assertAlmostEqual(conv(12, "length", "in", "ft"), 1.0)
+        self.assertAlmostEqual(conv(1, "mass", "lb", "kg"), 0.45359237)
+        self.assertAlmostEqual(conv(1, "data", "GiB", "MiB"), 1024)
+        self.assertAlmostEqual(conv(1, "data", "GB", "MB"), 1000)
+        self.assertAlmostEqual(conv(212, "temperature", "F", "C"), 100)
+        self.assertAlmostEqual(conv(0, "temperature", "C", "K"), 273.15)
+        self.assertIsNone(conv(1, "length", "m", "kg"))  # NaN serialises to null
+        r = js(self.P, self.M, "unitText('abc', 'length', 'm', 'km', 6)")
+        self.assertFalse(r["ok"])
+
+    def test_base(self):
+        r = js(self.P, self.M, "convertDecText('255', true)")
+        self.assertEqual((r["bin"], r["oct"], r["hex"]), (bin(255)[2:], oct(255)[2:], "FF"))
+        r = js(self.P, self.M, "convertDecText('-10', false)")
+        self.assertEqual((r["bin"], r["hex"]), ("-1010", "-a"))
+        self.assertEqual(js(self.P, self.M, "convertDecText('1.5', true)")["error"], "dec")
+        self.assertEqual(js(self.P, self.M, "convertDecText('99999999999999999999', true)")["error"], "range")
+        self.assertEqual(js(self.P, self.M, "convertHexText('0xFF')")["dec"], "255")
+        self.assertEqual(js(self.P, self.M, "convertHexText('-ff')")["dec"], "-255")
+        self.assertEqual(js(self.P, self.M, "convertHexText('xyz')")["error"], "hex")
+
+    def test_colour(self):
+        import colorsys
+        c = js(self.P, self.M, "parseHex('#E8A33D')")
+        self.assertEqual((c["r"], c["g"], c["b"]), (232, 163, 61))
+        h, l, s = colorsys.rgb_to_hls(232 / 255, 163 / 255, 61 / 255)
+        hsl = js(self.P, self.M, "toHsl(232, 163, 61)")
+        self.assertEqual((hsl["h"], hsl["s"], hsl["l"]), (round(h * 360), round(s * 100), round(l * 100)))
+        self.assertIsNone(js(self.P, self.M, "parseHex('#12')"))
+        self.assertEqual(js(self.P, self.M, "parseHex('#fff')"), {"r": 255, "g": 255, "b": 255})
+        # WCAG reference: black on white is 21:1.
+        self.assertAlmostEqual(js(self.P, self.M, "contrast(1, luminance(0, 0, 0))"), 21.0)
+        self.assertEqual(js(self.P, self.M, "toHex(0, 15, 255)"), "#000FFF")
+
+    def test_dates(self):
+        from datetime import date
+        r = js(self.P, self.M, "daysBetweenText('2026-01-01', '2026-03-01')")
+        self.assertEqual(r["days"], (date(2026, 3, 1) - date(2026, 1, 1)).days)
+        self.assertFalse(js(self.P, self.M, "daysBetweenText('2026-02-30', '2026-03-01')")["ok"])
+        self.assertEqual(js(self.P, self.M, "addDaysText('2026-02-27', '3')")["text"], "2026-03-02")
+        self.assertEqual(js(self.P, self.M, "addDaysText('2026-03-02', '-3')")["text"], "2026-02-27")
+        self.assertFalse(js(self.P, self.M, "addDaysText('2026-02-27', '1.5')")["ok"])
+
+    def test_json_and_text(self):
+        r = js(self.P, self.M, "formatJsonText('{\"a\":[1,2]}', 2)")
+        self.assertEqual(r["text"], json.dumps({"a": [1, 2]}, indent=2))
+        self.assertEqual(js(self.P, self.M, "minifyJsonText('{ \"a\" : 1 }')")["text"], '{"a":1}')
+        self.assertFalse(js(self.P, self.M, "formatJsonText('{oops', 2)")["ok"])
+        self.assertEqual(js(self.P, self.M, "transformText('hello wORLD', 'title-case')"), "Hello World")
+        self.assertEqual(js(self.P, self.M, "transformText('abc', 'reverse')"), "cba")
+        self.assertEqual(js(self.P, self.M, "[countWordsText('  a b  c '), countLinesText('a\\nb')]"), [3, 2])
+
+
+@unittest.skipUnless(NODE, "node not available")
+class ForgeBoard(unittest.TestCase):
+    P, M = "hornero-forge-board", "FORGE-LOGIC"
+
+    def test_manifest_has_no_token_surface(self):
+        m = json.loads((ROOT / "plugins" / self.P / "manifest.json").read_text())
+        self.assertEqual(m["capabilities"]["processCommands"], ["gh"])
+        self.assertEqual(m["capabilities"]["networkHosts"], ["api.github.com"])
+        for key in m["capabilities"]["settings"]:
+            self.assertNotIn("token", key.lower())
+        code = (ROOT / "plugins" / self.P / "Main.qml").read_text()
+        for verb in ['"merge"', '"comment"', '"rerun"', '"create"', '"edit"', '"close"', '"auth"', "GH_TOKEN"]:
+            self.assertNotIn(verb, code)
+
+    def test_repo_names_are_validated(self):
+        text = "HorneroOS/plugins, --repo=x/y; a/b c/d;evil/../x -R/x HorneroOS/plugins ok/ok.git"
+        r = js(self.P, self.M, f"splitRepos({json.dumps(text)}, 6)")
+        self.assertEqual(r, ["HorneroOS/plugins", "a/b", "c/d", "ok/ok.git"])
+
+    def test_run_and_checks(self):
+        run = json.dumps([{"status": "completed", "conclusion": "failure", "displayTitle": "ci", "headBranch": "main"}])
+        r = js(self.P, self.M, f"parseRun({json.dumps(run)})")
+        self.assertEqual((r["state"], r["branch"]), ("fail", "main"))
+        self.assertEqual(js(self.P, self.M, "parseRun('[]')")["state"], "none")
+        self.assertEqual(js(self.P, self.M, "parseRun('not json')")["state"], "unknown")
+        run = json.dumps([{"status": "in_progress", "conclusion": ""}])
+        self.assertEqual(js(self.P, self.M, f"parseRun({json.dumps(run)})")["state"], "running")
+        roll = json.dumps([{"status": "COMPLETED", "conclusion": "SUCCESS"}, {"status": "IN_PROGRESS", "conclusion": ""}])
+        self.assertEqual(js(self.P, self.M, f"checkState({roll})"), "running")
+        roll = json.dumps([{"status": "COMPLETED", "conclusion": "SUCCESS"}, {"status": "COMPLETED", "conclusion": "FAILURE"}])
+        self.assertEqual(js(self.P, self.M, f"checkState({roll})"), "fail")
+        self.assertEqual(js(self.P, self.M, "checkState([])"), "none")
+        self.assertEqual(js(self.P, self.M, "worst(['pass', 'running', 'fail'])"), "fail")
+
+    def test_prs(self):
+        prs = json.dumps([{"number": 81, "title": "x", "isDraft": True, "reviewDecision": "", "statusCheckRollup": []},
+                          {"number": 82, "title": "y", "isDraft": False, "reviewDecision": "APPROVED", "statusCheckRollup": [{"status": "COMPLETED", "conclusion": "SUCCESS"}]}])
+        r = js(self.P, self.M, f"parsePrs({json.dumps(prs)}, 1)")
+        self.assertEqual(len(r), 1)
+        self.assertTrue(r[0]["draft"])
+        r = js(self.P, self.M, f"parsePrs({json.dumps(prs)}, 5)")
+        self.assertEqual((r[1]["review"], r[1]["checks"]), ("APPROVED", "pass"))
 
 
 if __name__ == "__main__":

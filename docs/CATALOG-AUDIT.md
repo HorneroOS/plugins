@@ -23,17 +23,17 @@ Scores are 1 to 5, maintainer judgment from static metadata (settings, permissio
 | hornero-agenda | 2 | 4 | 3 | 5 | 5 | 3 | 22 | KEEP (improve) | Date facts only, no events; in the Signal deck so it cannot be retired. Fold into Calendar when a calendar provider exists. |
 | hornero-ai-usage | 3 | 3 | 2 | 4 | 2 | 4 | 18 | IMPROVE | 585 lines for one Process; bar text `AI 168,000` is cryptic; quota honesty is good. One setting only. |
 | hornero-audio-deck | 4 | 4 | 3 | 5 | 5 | 4 | 25 | KEEP | Real PipeWire spectrum, deck member. |
-| hornero-base-converter | 1 | 2 | 2 | 5 | 5 | 2 | 17 | MERGE (planned) | Bare form; fold into Calculator as a programmer mode, then deprecate. |
+| hornero-base-converter | 1 | 2 | 2 | 5 | 5 | 2 | 17 | RETIRED (deprecated) | Bare form; fold into Calculator as a programmer mode, then deprecate. |
 | hornero-battery | 3 | 3 | 3 | 5 | 3 | 2 | 19 | IMPROVE | Laptop level duplicates native; unique value is health, rate, profile. Re-scope to those. |
-| hornero-calculator | 3 | 3 | 2 | 5 | 3 | 3 | 19 | IMPROVE | Launcher surface has no host yet (shell#250); dashboard keypad is the only live surface. |
+| hornero-calculator | 3 | 3 | 2 | 5 | 3 | 3 | 19 | RETIRED (deprecated) | Launcher surface has no host yet (shell#250); dashboard keypad is the only live surface. |
 | hornero-calendar | 4 | 4 | 4 | 5 | 5 | 3 | 25 | KEEP | Deck member; add events when a provider exists. |
-| hornero-color-converter | 3 | 3 | 2 | 5 | 4 | 3 | 20 | IMPROVE | Creative candidate: palette and screen pick (needs a picker API). |
+| hornero-color-converter | 3 | 3 | 2 | 5 | 4 | 3 | 20 | RETIRED (deprecated) | Creative candidate: palette and screen pick (needs a picker API). |
 | hornero-countdown | 3 | 2 | 4 | 5 | 5 | 4 | 23 | IMPROVE | Merge target for Stopwatch (one Timers extension). |
-| hornero-date-calculator | 2 | 2 | 2 | 5 | 5 | 3 | 19 | MERGE (planned) | Bare form; fold into Calendar. |
+| hornero-date-calculator | 2 | 2 | 2 | 5 | 5 | 3 | 19 | RETIRED (deprecated) | Bare form; fold into Calendar. |
 | hornero-disk-usage | 3 | 3 | 3 | 5 | 4 | 3 | 21 | IMPROVE | Per-mount list is unique; polish card. |
 | hornero-dual-clock | 3 | 3 | 3 | 5 | 5 | 2 | 21 | MERGE (planned) | Same job as World Clock; fold in as a bar surface. |
 | hornero-focus-card | 1 | 2 | 3 | 5 | 5 | 2 | 18 | RETIRED (deprecated) | Rotating phrase card; replaced by Pomodoro. |
-| hornero-json-tools | 3 | 2 | 3 | 5 | 5 | 4 | 22 | IMPROVE | Dev utility worth keeping; the card needs real styling and validation errors. |
+| hornero-json-tools | 3 | 2 | 3 | 5 | 5 | 4 | 22 | RETIRED (deprecated) | Dev utility worth keeping; the card needs real styling and validation errors. |
 | hornero-metronome | 3 | 2 | 4 | 5 | 5 | 5 | 24 | KEEP | Creative, unique; polish. |
 | hornero-microphone | 2 | 3 | 2 | 5 | 5 | 1 | 18 | MERGE (planned) | Duplicates native mic state; fold into Audio Deck bar surface. |
 | hornero-moon-phase | 3 | 4 | 5 | 5 | 5 | 5 | 27 | KEEP | Charming, approximate and labelled so. |
@@ -50,8 +50,8 @@ Scores are 1 to 5, maintainer judgment from static metadata (settings, permissio
 | hornero-system-health | 2 | 3 | 3 | 5 | 3 | 1 | 17 | RETIRED (deprecated) | Replaced by System Insight (meters with a warning threshold). |
 | hornero-system-insight | 5 | 4 | 5 | 5 | 5 | 5 | 29 | KEEP | Flagship instrument; six typed settings. |
 | hornero-system-monitor | 2 | 3 | 2 | 5 | 5 | 1 | 18 | RETIRED (deprecated) | Replaced by System Insight. |
-| hornero-text-tools | 2 | 2 | 2 | 5 | 5 | 3 | 19 | MERGE (planned) | Bare form; fold into JSON Tools as a text/dev tools card. |
-| hornero-unit-converter | 3 | 3 | 2 | 5 | 3 | 3 | 19 | IMPROVE | Everyday utility; launcher-native later. |
+| hornero-text-tools | 2 | 2 | 2 | 5 | 5 | 3 | 19 | RETIRED (deprecated) | Bare form; fold into JSON Tools as a text/dev tools card. |
+| hornero-unit-converter | 3 | 3 | 2 | 5 | 3 | 3 | 19 | RETIRED (deprecated) | Everyday utility; launcher-native later. |
 | hornero-uptime | 2 | 3 | 3 | 4 | 3 | 3 | 18 | IMPROVE | Spawns `cat`; no facade exists, so uptime is derived. Move to a provider. |
 | hornero-volume | 2 | 3 | 3 | 5 | 4 | 1 | 18 | MERGE (planned) | Duplicates native volume OSD and quick settings; fold into Audio Deck bar surface. |
 | hornero-weather | 4 | 3 | 5 | 5 | 4 | 2 | 23 | KEEP (improve) | Six settings; absorbs Sun Card. |
@@ -76,7 +76,8 @@ The five retired extensions keep working for everyone who has them installed. Ea
 | Container status | **Shipped** (hornero-containers, Podman and Docker, read-only) |
 | Controller / peripheral battery | **Shipped** (hornero-device-battery) |
 | Pomodoro / focus timer with Experience hook | **Shipped** (hornero-pomodoro 4.0.0) |
-| PR / CI board | Next: `gh` process plus `api.github.com`; needs a decision on token handling |
+| Unified utilities | **Shipped** (hornero-toolbox 1.0.0) replacing seven extensions, now deprecated |
+| PR / CI board | **Shipped** (hornero-forge-board 1.0.0): uses the user's own `gh auth` session, no token field, no token storage, repo names validated, read-only |
 | Agenda with events | Blocked: no calendar provider (API wish) |
 | Clipboard history | Blocked: privacy; needs a consent-gated clipboard provider |
 | Scratchpad / snippets | Quick Notes covers scratch; snippets need an action surface |
@@ -113,3 +114,10 @@ Improving the keepers visually and functionally beyond Pomodoro; the planned mer
 8. **Desktop widget content contract**: minimum content height and scrolling so lists do not clip.
 9. **Real-shell screenshots in `marketplace.screenshots`** produced by the QA tooling instead of fixtures.
 10. **Cosy affordances**: a shared mascot/empty-state illustration primitive so extensions can carry the warm tone without bespoke art.
+
+## Follow-up pass (2026-11-17, PR "catalog merges")
+
+- **hornero-toolbox 1.0.0**: Calculator, Units (adds imperial lengths, grams/ounces, data sizes), Base, Colour (adds WCAG contrast), Dates, JSON and Text in one tabbed Signal card. Replaces calculator, unit-converter, base-converter, color-converter, date-calculator, json-tools and text-tools, which are now deprecated with `replacedBy: hornero-toolbox` (they keep working where installed; their stored settings do not carry over because the id is new). Logic is unit-tested against Python oracles (WCAG reference, colorsys, datetime, JSON round trips).
+- **hornero-forge-board 1.0.0**: token handling decision: no token field, no storage; it runs `gh run list` and `gh pr list --author @me` through the CLI session the user created with `gh auth login`. Declared `processCommands: ["gh"]`, `networkHosts: ["api.github.com"]`. Repository names must match `owner/name` before reaching argv. Missing or signed-out gh shows an explicit state. A QA VM capture caught the header claiming CI GREEN with gh missing; fixed in 1.0.1.
+- **Still planned, not done**: Dual Clock into World Clock, Sun Card into Weather, Stopwatch into Countdown, Volume/Microphone into Audio Deck, the visual pass on the instruments (System Insight, Network Scope, Audio Deck, Calendar, Moon Phase, Weather) and Studio Jobs settings. Those need replacement coverage built first, so no deprecation is published for them.
+- **QA VM**: success states of Containers and Device Battery were captured with **labelled fixture shims** for `podman` and `upower` (fake executables in the guest, see `docs/evidence/catalog-audit/vm-shims/`); the Git Board and Port Watch captures use real tools. Control Center settings pages could not be captured: pointer clicks in the VM only hover (no activation), and the shell has no IPC to open a plugin's settings. Desktop widgets that do not fit are reported by the shell ("Hidden, no room on the desktop"), seen with seven widgets at 1280x800.

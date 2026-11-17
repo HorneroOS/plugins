@@ -1,0 +1,97 @@
+{
+  "schemaVersion": 3,
+  "id": "hornero-forge-board",
+  "name": "Hornero Forge Board",
+  "version": "1.0.1",
+  "description": "CI and pull-request status for the GitHub repositories you name, through the gh CLI session you already signed in. Read-only; stores and sees no token.",
+  "author": "HorneroOS contributors",
+  "license": "MIT",
+  "homepage": "https://github.com/HorneroOS/plugins",
+  "entrypoint": "Main.qml",
+  "placement": "dashboard",
+  "surfaces": {
+    "dashboard": {
+      "entrypoint": "Main.qml",
+      "size": "standard",
+      "category": "Development"
+    },
+    "desktop": {
+      "entrypoint": "Main.qml",
+      "width": 400,
+      "height": 340,
+      "minWidth": 300,
+      "minHeight": 160,
+      "anchor": "top-right"
+    }
+  },
+  "translations": {
+    "sourceLocale": "en",
+    "locales": [
+      "es"
+    ],
+    "directory": "translations"
+  },
+  "marketplace": {
+    "compatibility": {
+      "minShellVersion": "1.0.0"
+    },
+    "changelog": [
+      {
+        "version": "1.0.1",
+        "notes": "Header no longer claims CI GREEN when gh is missing or signed out."
+      },
+      {
+        "version": "1.0.0",
+        "notes": "Initial release: latest workflow run per repository and your open pull requests with check state, via the gh CLI session. No token handling."
+      }
+    ]
+  },
+  "files": [
+    "Main.qml",
+    "README.md",
+    "LICENSE",
+    "translations/es.json"
+  ],
+  "capabilities": {
+    "processCommands": [
+      "gh"
+    ],
+    "networkHosts": [
+      "api.github.com"
+    ],
+    "settings": {
+      "repositories": {
+        "type": "string",
+        "default": "",
+        "maxLength": 400,
+        "description": "GitHub repositories as owner/name separated by spaces, commas or semicolons. Empty requests nothing."
+      },
+      "maxRepositories": {
+        "type": "integer",
+        "default": 4,
+        "minimum": 1,
+        "maximum": 6,
+        "description": "How many listed repositories to query (two gh calls each per refresh)."
+      },
+      "refreshMinutes": {
+        "type": "integer",
+        "default": 5,
+        "minimum": 2,
+        "maximum": 60,
+        "description": "Minutes between refreshes. Requests pause in the Gaming experience."
+      },
+      "showPullRequests": {
+        "type": "boolean",
+        "default": true,
+        "description": "Also list your open pull requests (author: you) with review and check state."
+      },
+      "maxPullRequests": {
+        "type": "integer",
+        "default": 3,
+        "minimum": 1,
+        "maximum": 5,
+        "description": "Most pull requests shown per repository."
+      }
+    }
+  }
+}

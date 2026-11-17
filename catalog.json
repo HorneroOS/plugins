@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedFrom": "fb7eb5dbe59eccd2490ea89953c2b365a759e5da",
+  "generatedFrom": "e5a084d0d79b7a5c57c96f7a2530fa1e6c2dd9fc",
   "plugins": [
     {
       "id": "hornero-agenda",
@@ -114,7 +114,7 @@
     {
       "id": "hornero-base-converter",
       "name": "Hornero Base Converter",
-      "version": "3.0.1",
+      "version": "3.0.2",
       "description": "Utility Tools 2.0 base converter: bar quick action (decimal or 0x hex) and compact dashboard detail converting decimal integers to binary/octal/hex and hex back. Invalid digits show errors.",
       "author": "HorneroOS contributors",
       "license": "MIT",
@@ -134,7 +134,7 @@
       },
       "trust": "official",
       "path": "plugins/hornero-base-converter",
-      "sha256": "484c3be0fbc26aa2007b2bef0b00192e77efe8a945dfccf3e7aa902fca97baf5"
+      "sha256": "91a3af9818c950630754c92ab968e303f8e24eaebc87333b66d2d903da5ec022"
     },
     {
       "id": "hornero-battery",
@@ -184,7 +184,7 @@
     {
       "id": "hornero-calculator",
       "name": "Hornero Calculator",
-      "version": "3.0.0",
+      "version": "3.0.1",
       "description": "Utility Tools 2.0 calculator: bar quick action and compact dashboard detail over a safe tokenizer/recursive-descent parser (+ - * / %, parentheses, decimals, unary minus). Division by zero shows Error.",
       "author": "HorneroOS contributors",
       "license": "MIT",
@@ -209,7 +209,7 @@
       },
       "trust": "official",
       "path": "plugins/hornero-calculator",
-      "sha256": "6318fb859d904f2e3b72228975f678b4d471db8aa61a2c39a9f8c600bdd73da7"
+      "sha256": "2236bb3469dd7ae331ef757c3c13d1859305754150e212452934e49b1a711d59"
     },
     {
       "id": "hornero-calendar",
@@ -271,7 +271,7 @@
     {
       "id": "hornero-color-converter",
       "name": "Hornero Color Converter",
-      "version": "3.1.0",
+      "version": "3.1.1",
       "description": "Utility Tools 2.0 color converter: bar quick hex action and compact dashboard detail converting validated #RGB/#RRGGBB to RGB and HSL and RGB back to hex. Invalid hex shows an error. Shows the current Hornero Chromatic seeds and renders a palette template.",
       "author": "HorneroOS contributors",
       "license": "MIT",
@@ -297,7 +297,7 @@
       },
       "trust": "official",
       "path": "plugins/hornero-color-converter",
-      "sha256": "ac38d016806370ad5bfcbd6e1ffe82bb8d861807f1702e5fa2850de730e9a27c"
+      "sha256": "d081da53c8d95af2112c52c95d331e74e8e3bbf7a896b8d2909fee856a528620"
     },
     {
       "id": "hornero-containers",
@@ -407,7 +407,7 @@
     {
       "id": "hornero-date-calculator",
       "name": "Hornero Date Calculator",
-      "version": "3.0.1",
+      "version": "3.0.2",
       "description": "Utility Tools 2.0 date calculator: bar quick action and compact dashboard detail for days-between and add-days on validated YYYY-MM-DD dates, using UTC math to avoid DST drift.",
       "author": "HorneroOS contributors",
       "license": "MIT",
@@ -427,7 +427,7 @@
       },
       "trust": "official",
       "path": "plugins/hornero-date-calculator",
-      "sha256": "0b0696c65c554e3eef9e0832319d09dedaeffef1c893616eea05573506e28c85"
+      "sha256": "69c8595961ff3d7e5cdfb65a4a59efa7d2e5e2b2157ce627cd5c7180c3fc1086"
     },
     {
       "id": "hornero-device-battery",
@@ -613,6 +613,62 @@
       "sha256": "73a72346857fce411c223e7098c471abca4db8026b0589231abb5ee1e052755b"
     },
     {
+      "id": "hornero-forge-board",
+      "name": "Hornero Forge Board",
+      "version": "1.0.1",
+      "description": "CI and pull-request status for the GitHub repositories you name, through the gh CLI session you already signed in. Read-only; stores and sees no token.",
+      "author": "HorneroOS contributors",
+      "license": "MIT",
+      "homepage": "https://github.com/HorneroOS/plugins",
+      "placement": "dashboard",
+      "category": "utilities",
+      "capabilities": {
+        "processCommands": [
+          "gh"
+        ],
+        "networkHosts": [
+          "api.github.com"
+        ],
+        "settings": {
+          "repositories": {
+            "type": "string",
+            "default": "",
+            "maxLength": 400,
+            "description": "GitHub repositories as owner/name separated by spaces, commas or semicolons. Empty requests nothing."
+          },
+          "maxRepositories": {
+            "type": "integer",
+            "default": 4,
+            "minimum": 1,
+            "maximum": 6,
+            "description": "How many listed repositories to query (two gh calls each per refresh)."
+          },
+          "refreshMinutes": {
+            "type": "integer",
+            "default": 5,
+            "minimum": 2,
+            "maximum": 60,
+            "description": "Minutes between refreshes. Requests pause in the Gaming experience."
+          },
+          "showPullRequests": {
+            "type": "boolean",
+            "default": true,
+            "description": "Also list your open pull requests (author: you) with review and check state."
+          },
+          "maxPullRequests": {
+            "type": "integer",
+            "default": 3,
+            "minimum": 1,
+            "maximum": 5,
+            "description": "Most pull requests shown per repository."
+          }
+        }
+      },
+      "trust": "official",
+      "path": "plugins/hornero-forge-board",
+      "sha256": "f333a4d7c70f3f60ce7e2aafcbce9c4a8f4704cdbec186e31aa1012f954ad033"
+    },
+    {
       "id": "hornero-git-board",
       "name": "Hornero Git Board",
       "version": "1.0.0",
@@ -676,7 +732,7 @@
     {
       "id": "hornero-json-tools",
       "name": "Hornero JSON Tools",
-      "version": "3.0.1",
+      "version": "3.0.2",
       "description": "Utility Tools 2.0 JSON tools: bar quick format/validate action and compact dashboard detail with Format and Minify using JSON parse/stringify only. Parser errors are shown.",
       "author": "HorneroOS contributors",
       "license": "MIT",
@@ -707,7 +763,7 @@
       },
       "trust": "official",
       "path": "plugins/hornero-json-tools",
-      "sha256": "c9c0502bc37ab918a7f0f4a8fea7023843e0ac4bd8d60cb98be18e0fbfdb713b"
+      "sha256": "adb46b5e11d61c9532a5e003847094495d11c09bedbcc7dded65e35c0c3cce26"
     },
     {
       "id": "hornero-metronome",
@@ -1478,7 +1534,7 @@
     {
       "id": "hornero-text-tools",
       "name": "Hornero Text Tools",
-      "version": "3.0.0",
+      "version": "3.0.1",
       "description": "Utility Tools 2.0 text tools: bar quick transform and compact dashboard detail with Uppercase, Lowercase, Title Case and Reverse plus character, word and line counts. Pure QML.",
       "author": "HorneroOS contributors",
       "license": "MIT",
@@ -1509,12 +1565,109 @@
       },
       "trust": "official",
       "path": "plugins/hornero-text-tools",
-      "sha256": "6b4044f32261db0379c6f40c88e789ebe4953b964b42d70e84a4e908aac59e4a"
+      "sha256": "fa46d9625b0b395b33b734bcb5f7389db052dad7500c10d252c71450a68fcad7"
+    },
+    {
+      "id": "hornero-toolbox",
+      "name": "Hornero Toolbox",
+      "version": "1.0.0",
+      "description": "Seven everyday tools in one Signal card: calculator, unit converter (with data sizes), base converter, colour with WCAG contrast, date maths, JSON format/minify and text transforms. Local arithmetic only.",
+      "author": "HorneroOS contributors",
+      "license": "MIT",
+      "homepage": "https://github.com/HorneroOS/plugins",
+      "placement": "dashboard",
+      "category": "utilities",
+      "capabilities": {
+        "processCommands": [],
+        "networkHosts": [],
+        "settings": {
+          "defaultTool": {
+            "type": "enum",
+            "default": "calculator",
+            "options": [
+              "calculator",
+              "units",
+              "base",
+              "colour",
+              "dates",
+              "json",
+              "text"
+            ],
+            "description": "Tool shown when the card opens."
+          },
+          "showKeypad": {
+            "type": "boolean",
+            "default": true,
+            "description": "Show the calculator keypad under the expression."
+          },
+          "precision": {
+            "type": "integer",
+            "default": 6,
+            "minimum": 0,
+            "maximum": 10,
+            "description": "Decimal places kept in unit conversions."
+          },
+          "defaultCategory": {
+            "type": "enum",
+            "default": "length",
+            "options": [
+              "length",
+              "mass",
+              "data",
+              "temperature"
+            ],
+            "description": "Unit category shown first."
+          },
+          "uppercaseHex": {
+            "type": "boolean",
+            "default": true,
+            "description": "Show hexadecimal output in uppercase."
+          },
+          "defaultHex": {
+            "type": "string",
+            "default": "#E8A33D",
+            "minLength": 4,
+            "maxLength": 7,
+            "description": "Colour pre-filled in the Colour tool (#RGB or #RRGGBB)."
+          },
+          "showUtcNote": {
+            "type": "boolean",
+            "default": true,
+            "description": "Show the UTC arithmetic note in the Dates tool."
+          },
+          "indentSpaces": {
+            "type": "integer",
+            "default": 2,
+            "minimum": 0,
+            "maximum": 8,
+            "description": "Spaces per indent level for JSON Format."
+          },
+          "defaultTextMode": {
+            "type": "enum",
+            "default": "uppercase",
+            "options": [
+              "uppercase",
+              "lowercase",
+              "title-case",
+              "reverse"
+            ],
+            "description": "Text transform selected first."
+          },
+          "showCounts": {
+            "type": "boolean",
+            "default": true,
+            "description": "Show character, word and line counts in the Text tool."
+          }
+        }
+      },
+      "trust": "official",
+      "path": "plugins/hornero-toolbox",
+      "sha256": "5b0378f74c97f575a4a2bd97d1294648b68091db35752c1b46896dbfe1ddf5af"
     },
     {
       "id": "hornero-unit-converter",
       "name": "Hornero Unit Converter",
-      "version": "3.0.0",
+      "version": "3.0.1",
       "description": "Utility Tools 2.0 unit converter: bar quick action (10 km to mi) and compact dashboard detail for length (m, km, mi, ft), mass (kg, lb) and temperature (C, F, K). Pure JS, no processes or network.",
       "author": "HorneroOS contributors",
       "license": "MIT",
@@ -1546,7 +1699,7 @@
       },
       "trust": "official",
       "path": "plugins/hornero-unit-converter",
-      "sha256": "e0116d6153475c298568d840ae276488886a2cf6a648e465ccf5097be3f81f0a"
+      "sha256": "771c7eb0d413336edbe54f7ebf23551fdaf11bf0c33e9eb727d6bbaa5a24c347"
     },
     {
       "id": "hornero-uptime",

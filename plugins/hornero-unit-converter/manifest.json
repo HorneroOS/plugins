@@ -2,7 +2,7 @@
   "schemaVersion": 3,
   "id": "hornero-unit-converter",
   "name": "Hornero Unit Converter",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "Utility Tools 2.0 unit converter: bar quick action (10 km to mi) and compact dashboard detail for length (m, km, mi, ft), mass (kg, lb) and temperature (C, F, K). Pure JS, no processes or network.",
   "author": "HorneroOS contributors",
   "license": "MIT",
@@ -32,6 +32,10 @@
     },
     "changelog": [
       {
+        "version": "3.0.1",
+        "notes": "Deprecated in favour of hornero-toolbox."
+      },
+      {
         "version": "3.0.0",
         "notes": "PluginKit 3 on Hornero Signal: Signal text, combo and spin controls, instrument module header."
       },
@@ -43,7 +47,11 @@
         "version": "1.0.0",
         "notes": "Dashboard unit converter for length, mass and temperature, computed live from a text field and selectors."
       }
-    ]
+    ],
+    "deprecation": {
+      "message": "Retired: Toolbox covers this tool (and six siblings) in one Signal card with typed settings and live results; this extension keeps working where installed.",
+      "replacedBy": "hornero-toolbox"
+    }
   },
   "files": [
     "Main.qml",
