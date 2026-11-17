@@ -49,7 +49,7 @@ ROOT = Path(__file__).resolve().parent.parent
 ID_RE = re.compile(r"^[a-z0-9][a-z0-9-]{0,47}$")
 SEMVER_RE = re.compile(r"^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(-[0-9A-Za-z.-]+)?(\+[0-9A-Za-z.-]+)?$")
 REQUIRED = ["schemaVersion", "id", "name", "version", "description", "author", "license", "entrypoint", "files", "capabilities"]
-ALLOWED_FIELDS = set(REQUIRED) | {"homepage", "placement", "signing", "surfaces", "translations", "marketplace", "theme", "pluginKit"}
+ALLOWED_FIELDS = set(REQUIRED) | {"homepage", "placement", "signing", "surfaces", "translations", "marketplace", "theme", "pluginKit", "contributes"}
 DASHBOARD_CARD_SIZES = ("compact", "standard", "wide")
 ACTION_RE = re.compile(r"^[a-z][a-z0-9_]{0,63}$")
 MARKETPLACE_SCREENSHOT_SUFFIXES = (".png", ".jpg", ".jpeg", ".webp")
@@ -91,7 +91,16 @@ GLYPH_NAMES_FILE = ROOT / "schema" / "hornero-glyphs.names"
 # Manifest v2 surfaces (shell docs/PLUGINS.md): the first four have
 # runtime hosts today; launcher/settings are validated declarations
 # only. Mirrors the shell validator's SURFACES.
-SURFACES = ("background", "bar", "dashboard", "desktop", "launcher", "settings")
+SURFACES = ("background", "bar", "dashboard", "desktop", "launcher", "settings", "commands", "quickSetting", "panel")
+SURFACES_V4 = ("commands", "quickSetting", "panel")
+CONTRIBUTION_SURFACES = {"commands": "commands", "quickSettings": "quickSetting", "panels": "panel"}
+CONTRIBUTION_LIMITS = {"commands": 16, "quickSettings": 4, "panels": 4}
+CONTRIBUTION_FIELDS = {
+    "commands": {"id", "title", "description", "glyph", "keywords"},
+    "quickSettings": {"id", "title", "glyph", "kind"},
+    "panels": {"id", "title", "glyph"},
+}
+CONTRIBUTION_ID_RE = re.compile(r"^[a-z][a-zA-Z0-9]{0,31}$")
 LOCALE_TAG_RE = re.compile(r"^[a-z]{2,3}(_[A-Z]{2})?$")
 TR_LITERAL_RE = re.compile(r'\btr\(\s*"((?:[^"\\]|\\.)*)"')
 QSTR_RE = re.compile(r"\bqsTr(?:Id)?\s*\(")
@@ -108,14 +117,14 @@ COMMAND_RE = re.compile(r"^[A-Za-z0-9_.+-]+$")
 HOST_RE = re.compile(r"^(?:[A-Za-z0-9](?:[A-Za-z0-9-]{0,61}[A-Za-z0-9])?\.)*[A-Za-z0-9](?:[A-Za-z0-9-]{0,61}[A-Za-z0-9])?$")
 SETTING_KEY_RE = re.compile(r"^[a-z][a-zA-Z0-9]{0,47}$")
 SETTING_TYPES_V3 = {"boolean", "integer", "number", "string", "enum"}
-SETTING_TYPES_V4 = {"colour", "list", "text", "path"}
+SETTING_TYPES_V4 = {"colour", "list", "text", "path", "strings"}
 SETTING_TYPES = SETTING_TYPES_V3 | SETTING_TYPES_V4
 SETTING_FIELDS = {
     "type", "default", "description", "minimum", "maximum", "minLength", "maxLength", "options",
-    "step", "unit", "title", "group", "visibleWhen", "alpha", "minItems", "maxItems", "rows", "kind", "mustExist",
+    "step", "unit", "title", "group", "visibleWhen", "hidden", "alpha", "minItems", "maxItems", "rows", "kind", "mustExist",
 }
-SETTING_DISPLAY_ALL = frozenset({"title", "group", "visibleWhen"})
-SETTING_V4_FIELDS = frozenset({"title", "group", "visibleWhen", "step", "unit"})
+SETTING_DISPLAY_ALL = frozenset({"title", "group", "visibleWhen", "hidden"})
+SETTING_V4_FIELDS = frozenset({"title", "group", "visibleWhen", "hidden", "step", "unit"})
 SETTING_CONSTRAINTS = {
     "boolean": frozenset(),
     "integer": frozenset({"minimum", "maximum", "step", "unit"}),
@@ -126,6 +135,7 @@ SETTING_CONSTRAINTS = {
     "list": frozenset({"options", "minItems", "maxItems"}),
     "text": frozenset({"minLength", "maxLength", "rows"}),
     "path": frozenset({"kind", "mustExist"}),
+    "strings": frozenset({"minItems", "maxItems", "maxLength"}),
 }
 SETTING_STRING_MAX = 4096
 SETTING_PATH_MAX = 1024
@@ -189,7 +199,7 @@ def default_matches(declared, value) -> bool:
         return isinstance(value, (int, float)) and not isinstance(value, bool) and math.isfinite(value)
     if declared in ("string", "enum", "colour", "text", "path"):
         return isinstance(value, str)
-    if declared == "list":
+    if declared in ("list", "strings"):
         return isinstance(value, list)
     return False
 
@@ -215,6 +225,10 @@ def setting_value_valid(spec: dict, value) -> bool:
         if any(not isinstance(i, str) or i not in options for i in value) or len(value) != len(set(value)):
             return False
         return spec.get("minItems", 0) <= len(value) <= spec.get("maxItems", len(options))
+    elif kind == "strings":
+        if len(value) > spec.get("maxItems", 32) or len(value) < spec.get("minItems", 0):
+            return False
+        return all(isinstance(i, str) and 0 < len(i) <= spec.get("maxLength", 128) for i in value)
     elif kind == "path":
         return len(value) <= SETTING_PATH_MAX and not any(ord(c) < 32 or ord(c) == 127 for c in value)
     elif kind in ("integer", "number"):
@@ -293,6 +307,7 @@ def validate_manifest_fields(tag: str, manifest: dict) -> list:
             errors.append(f"{tag}: entrypoint must be listed in files")
     safe_files = {f for f in (files or []) if isinstance(f, str)}
     errors += validate_surfaces(tag, manifest, safe_files)
+    errors += validate_contributes(tag, manifest)
     errors += validate_translations_declaration(tag, manifest, safe_files)
     errors += validate_marketplace(tag, manifest, safe_files)
     errors += validate_theme(tag, manifest, safe_files)
@@ -484,6 +499,50 @@ def validate_marketplace(tag: str, manifest: dict, safe_files: set) -> list:
     return errors
 
 
+def validate_contributes(tag: str, manifest: dict) -> list:
+    """`contributes` (RFC 0003 section 4.1), mirroring the shell validator."""
+    errors = []
+    surfaces = manifest.get("surfaces") if isinstance(manifest.get("surfaces"), dict) else {}
+    if "contributes" not in manifest:
+        for kind, surface in CONTRIBUTION_SURFACES.items():
+            if surface in surfaces:
+                errors.append(f"{tag}: surfaces.{surface} needs contributes.{kind}")
+        return errors
+    contributes = manifest["contributes"]
+    if manifest.get("pluginKit", 3) != 4:
+        errors.append(f'{tag}: contributes needs PluginKit 4; declare "pluginKit": 4')
+    if not isinstance(contributes, dict) or not contributes:
+        return errors + [f"{tag}: contributes must be a non-empty object"]
+    for kind in sorted(set(contributes) - set(CONTRIBUTION_SURFACES)):
+        errors.append(f"{tag}: contributes contains unknown kind {kind}")
+    for kind, items in contributes.items():
+        if kind not in CONTRIBUTION_SURFACES:
+            continue
+        limit = CONTRIBUTION_LIMITS[kind]
+        if not isinstance(items, list) or not items or len(items) > limit:
+            errors.append(f"{tag}: contributes.{kind} must be a list of 1 to {limit} entries")
+            continue
+        seen = set()
+        for index, entry in enumerate(items):
+            where = f"{tag}: contributes.{kind}[{index}]"
+            if not isinstance(entry, dict) or set(entry) - CONTRIBUTION_FIELDS[kind] or not {"id", "title"} <= set(entry):
+                errors.append(f"{where} must be an object with id, title and only {', '.join(sorted(CONTRIBUTION_FIELDS[kind]))}")
+                continue
+            if not isinstance(entry["id"], str) or not CONTRIBUTION_ID_RE.match(entry["id"]) or entry["id"] in seen:
+                errors.append(f"{where}.id must be unique and match {CONTRIBUTION_ID_RE.pattern}")
+            seen.add(entry["id"])
+            if not isinstance(entry["title"], str) or not entry["title"].strip() or len(entry["title"]) > 48:
+                errors.append(f"{where}.title must be a non-blank string of at most 48 chars")
+            if "kind" in entry and entry["kind"] not in ("toggle", "button"):
+                errors.append(f"{where}.kind must be toggle or button")
+        if CONTRIBUTION_SURFACES[kind] not in surfaces:
+            errors.append(f"{tag}: contributes.{kind} needs surfaces.{CONTRIBUTION_SURFACES[kind]}")
+    for kind, surface in CONTRIBUTION_SURFACES.items():
+        if surface in surfaces and not (isinstance(contributes, dict) and kind in contributes):
+            errors.append(f"{tag}: surfaces.{surface} needs contributes.{kind}")
+    return errors
+
+
 def validate_surfaces(tag: str, manifest: dict, safe_files: set) -> list:
     """Manifest v2 surfaces, mirroring the shell validator (#373)."""
     errors = []
@@ -503,6 +562,8 @@ def validate_surfaces(tag: str, manifest: dict, safe_files: set) -> list:
         if not isinstance(surface, dict):
             errors.append(f"{where} must be an object")
             continue
+        if name in SURFACES_V4 and manifest.get("pluginKit", 3) != 4:
+            errors.append(f'{where} is a PluginKit 4 surface; declare "pluginKit": 4')
         extra = set(surface) - {"entrypoint", "enabled", "size", "category", "section", *DESKTOP_KEYS}
         if extra:
             errors.append(f"{where} contains unknown fields: {', '.join(sorted(extra))}")
@@ -767,6 +828,17 @@ def validate_capabilities(tag: str, caps: dict, schema_version=None, plugin_kit=
                 if not bad and "minItems" in spec and "maxItems" in spec and spec["minItems"] > spec["maxItems"]:
                     errors.append(f"{tag}: settings.{key} minItems must not exceed maxItems")
                     bad = True
+            if kind == "strings":
+                for b, ceiling in (("minItems", 32), ("maxItems", 32), ("maxLength", 128)):
+                    if b in spec and not (default_matches("integer", spec[b]) and 0 <= spec[b] <= ceiling):
+                        errors.append(f"{tag}: settings.{key}.{b} must be an integer between 0 and {ceiling}")
+                        bad = True
+                if not bad and "minItems" in spec and "maxItems" in spec and spec["minItems"] > spec["maxItems"]:
+                    errors.append(f"{tag}: settings.{key} minItems must not exceed maxItems")
+                    bad = True
+            if "hidden" in spec and (not isinstance(spec["hidden"], bool) or "visibleWhen" in spec):
+                errors.append(f"{tag}: settings.{key}.hidden must be a boolean and cannot combine with visibleWhen")
+                bad = True
             if kind == "colour" and "alpha" in spec and not isinstance(spec["alpha"], bool):
                 errors.append(f"{tag}: settings.{key}.alpha must be a boolean")
                 bad = True

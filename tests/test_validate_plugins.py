@@ -318,6 +318,24 @@ class ContractTest(unittest.TestCase):
             "desktop": {"entrypoint": "Main.qml", "instances": True}})
         self.assertFalse(any("instances" in e for e in errors), errors)
 
+    def test_contributions_hidden_and_strings(self):
+        caps = {"processCommands": [], "networkHosts": [], "settings": {
+            "quiet": {"type": "boolean", "default": False, "hidden": True},
+            "tags": {"type": "strings", "default": ["a"], "maxItems": 3, "maxLength": 8}}}
+        errors = self.errors_for(pid="hornero-ctr", capabilities=caps, pluginKit=4)
+        self.assertEqual([e for e in errors if "never used in QML" not in e and "Settings pluginId" not in e], [], errors)
+        errors = self.errors_for(pid="hornero-ctr2", pluginKit=4,
+                                 contributes={"quickSettings": [{"id": "q", "title": "Q"}]},
+                                 surfaces={"commands": {"entrypoint": "Main.qml"}})
+        self.assertTrue(any("needs surfaces.quickSetting" in e for e in errors), errors)
+        self.assertTrue(any("surfaces.commands needs contributes.commands" in e for e in errors), errors)
+        errors = self.errors_for(pid="hornero-ctr3", contributes={"commands": [{"id": "c", "title": "C"}]},
+                                 surfaces={"commands": {"entrypoint": "Main.qml"}})
+        self.assertTrue(any('declare "pluginKit": 4' in e for e in errors), errors)
+        errors = self.errors_for(pid="hornero-ctr4", pluginKit=4, capabilities={"processCommands": [], "networkHosts": [], "settings": {
+            "t": {"type": "strings", "default": ["x"], "maxLength": 0}}})
+        self.assertTrue(any("settings" in e for e in errors), errors)
+
     def test_undeclared_and_unused_settings_keys(self):
         qml = GOOD_QML + '\nSettings { pluginId: "hornero-example" }\nText { text: String(pluginSettings.value("ghost", 1)) }\n'
         errors = self.errors_for(qml=qml, capabilities={
