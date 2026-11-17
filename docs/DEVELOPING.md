@@ -349,6 +349,15 @@ gate but are never catalogued). It checks:
   executable is declared, literal URL hosts declared in
   `networkHosts`, `Settings` keys declared and used).
 
+### Version bumps
+
+A payload change that keeps its version strands every installed copy:
+`horneroctl plugin catalog update` refuses a package whose payload
+differs from the catalogue at the same version. CI runs
+`scripts/check_version_bumps.py` on pull requests. Use
+`python3 scripts/bump_version.py <id> "<note>"` (patch bump plus a
+changelog entry), then `python3 scripts/gen_catalog.py`.
+
 ### Quality gate and audit: `quality-audit.json` (#21)
 
 The same `scripts/validate_plugins.py` run also enforces the
