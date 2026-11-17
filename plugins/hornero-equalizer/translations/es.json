@@ -1,0 +1,15 @@
+{
+  "%1 bands": "%1 bandas",
+  "Equalizer details": "Detalle del ecualizador",
+  "Live PipeWire spectrum of %1.": "Espectro en vivo de PipeWire de %1.",
+  "Live PipeWire spectrum of %1. Ticks are the peak of recent samples.": "Espectro en vivo de PipeWire de %1. Las marcas son el pico de las muestras recientes.",
+  "No output device": "Sin dispositivo de salida",
+  "No output device is available, so there is nothing to analyse.": "No hay dispositivo de salida, así que no hay nada que analizar.",
+  "Not analysing: nothing is playing": "Sin analizar: no se está reproduciendo nada",
+  "Nothing is playing. Start a player, or set the extension to analyse always.": "No se está reproduciendo nada. Iniciá un reproductor o configurá la extensión para analizar siempre.",
+  "Silent": "Silencio",
+  "Spectrum": "Espectro",
+  "Spectrum band": "Banda del espectro",
+  "Spectrum of the output": "Espectro de la salida",
+  "This is an analyser: the shell offers extensions no way to retune sound, so there are no equalizer sliders.": "Esto es un analizador: el shell no ofrece a las extensiones forma de modificar el sonido, así que no hay deslizadores de ecualizador."
+}

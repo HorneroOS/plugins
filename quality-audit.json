@@ -771,6 +771,51 @@
       "issue": "HorneroOS/plugins#62"
     },
     {
+      "id": "hornero-equalizer",
+      "classification": "needs-upgrade",
+      "valueProposition": "Live spectrum analyser in the bar and its popover over the real PipeWire spectrum; honest about being an analyser, not a sound filter.",
+      "nativeOverlap": "Native audio popouts show volume only; the spectrum is shown by Audio Deck on the desktop. This adds a bar-resident analyser.",
+      "dimensions": {
+        "tooltips": {
+          "status": "pass",
+          "note": "Interactive controls expose their purpose through Ui* accessible names and the host-owned tooltip layer (static probe)."
+        },
+        "accessibility": {
+          "status": "pass",
+          "note": "Every control carries an accessible name (static probe)."
+        },
+        "translation": {
+          "status": "pass",
+          "note": "All literals go through PluginKit Translations; es catalogue complete (static probe)."
+        },
+        "settings": {
+          "status": "pass",
+          "note": "Ten typed settings read via PluginKit Settings (static probe)."
+        },
+        "themeTokens": {
+          "status": "pass",
+          "note": "Colours come from Ui* primitives and Theme.palette tokens (static probe)."
+        },
+        "screenshots": {
+          "status": "fail",
+          "note": "No marketplace screenshot yet; a QA VM capture is recorded in the PR."
+        },
+        "orientation": {
+          "status": "unverified",
+          "note": "Vertical and compact bars hide the mini bars; a graphical review is recorded in the PR."
+        },
+        "loadingErrorStates": {
+          "status": "pass",
+          "note": "No output device and nothing playing render UiState empty messages; no fabricated levels."
+        },
+        "performance": {
+          "status": "unverified",
+          "note": "Not measured yet."
+        }
+      },
+      "issue": "HorneroOS/plugins#62"
+    },
+    {
       "id": "hornero-focus-card",
       "classification": "deprecated-with-replacement",
       "valueProposition": "Focus Card 2.0: dashboard card with the locale date from PluginKit Time and a rotating original one-line focus reminder (optional own leading line via the customLine setting). Stores no note; Previous/Next and a pause toggle replace the 1.x mouse-only click. Pure QML, no processes or network.",
