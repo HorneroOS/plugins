@@ -26,7 +26,7 @@ Item {
 
     readonly property int contentWidth: hostAvailableWidth > 0 ? hostAvailableWidth : 520
     readonly property int contentHeight: hostAvailableHeight > 0 ? hostAvailableHeight : 330
-    readonly property bool tall: contentHeight >= 300
+    readonly property bool tall: contentHeight >= 330
     readonly property int scopeHeight: Math.max(72, Math.min(150, Math.round(contentHeight * (tall ? 0.34 : 0.42))))
 
     implicitWidth: contentWidth

@@ -2,7 +2,7 @@
   "schemaVersion": 3,
   "id": "hornero-system-insight",
   "name": "Hornero System Insight",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "System Insight: a desktop instrument over the shared system provider: a CPU oscilloscope from the shared Telemetry history, segmented meters, per-core load strips and temperatures. Real telemetry only.",
   "author": "HorneroOS contributors",
   "license": "MIT",
@@ -13,7 +13,7 @@
     "desktop": {
       "entrypoint": "Main.qml",
       "width": 520,
-      "height": 360,
+      "height": 408,
       "minWidth": 380,
       "minHeight": 240,
       "anchor": "top-right"
@@ -31,6 +31,10 @@
       "minShellVersion": "1.0.0"
     },
     "changelog": [
+      {
+        "version": "1.0.1",
+        "notes": "Taller default frame so the per-core strip is drawn instead of a header with nothing under it."
+      },
       {
         "version": "1.0.0",
         "notes": "Initial release: CPU oscilloscope, segmented meters, per-core strips and temperatures over the shared system provider (PluginKit 3 desktop widget)."

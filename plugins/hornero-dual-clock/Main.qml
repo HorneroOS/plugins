@@ -194,9 +194,13 @@ Item {
         variant: "quiet"
         text: {
             const p = root.secondParts(Time.date);
+            // A narrow rail has room for one short line: the local time as
+            // HH:mm; the second zone is in the tooltip and the popover.
+            if (root.hostCompact)
+                return root.pad2(Time.date.getHours()) + ":" + root.pad2(Time.date.getMinutes());
             return root.localTimeText(Time.date) + "\n" + root.fmtHms(p.hours, p.minutes, p.seconds) + " " + root.secondSuffix(p);
         }
-        tooltipText: popover.opened ? "" : i18n.tr("Dual clock: activate for time zone details")
+        tooltipText: popover.opened ? "" : (root.hostCompact ? i18n.tr("%1 local, %2 %3").arg(root.localTimeText(Time.date)).arg(root.cityName(root.secondZone)).arg(root.fmtHms(root.secondParts(Time.date).hours, root.secondParts(Time.date).minutes, root.secondParts(Time.date).seconds)) : i18n.tr("Dual clock: activate for time zone details"))
         accessibleName: {
             const p = root.secondParts(Time.date);
             return i18n.tr("Local time %1, %2 time %3").arg(root.localTimeText(Time.date)).arg(root.cityName(root.secondZone)).arg(root.fmtHms(p.hours, p.minutes, p.seconds));
