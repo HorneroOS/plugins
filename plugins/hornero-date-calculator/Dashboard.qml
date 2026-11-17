@@ -86,7 +86,7 @@ Item {
             UiButton { text: i18n.tr("Days between"); accessibleName: i18n.tr("Calculate days between"); tooltipText: i18n.tr("Days between start and end dates (UTC)"); onClicked: root.daysBetween() }
             UiTextField { id: baseInput; width: parent.width; placeholderText: "Base YYYY-MM-DD"; Accessible.name: i18n.tr("Base date"); tooltipText: i18n.tr("Base date YYYY-MM-DD") }
             UiTextField { id: daysInput; width: parent.width; placeholderText: i18n.tr("Days to add (integer)"); Accessible.name: i18n.tr("Days to add"); tooltipText: i18n.tr("Integer days to add, may be negative") }
-            UiButton { variant: "quiet"; text: i18n.tr("Add days"); accessibleName: i18n.tr("Add days to base date"); tooltipText: i18n.tr("Add days to base date (UTC)"); onClicked: root.addDays() }
+            UiButton { variant: "secondary"; text: i18n.tr("Add days"); accessibleName: i18n.tr("Add days to base date"); tooltipText: i18n.tr("Add days to base date (UTC)"); onClicked: root.addDays() }
             UiState { visible: root.errorText !== ""; width: parent.width; kind: "error"; message: root.errorText }
             UiText { visible: root.resultText !== ""; width: parent.width; Accessible.name: i18n.tr("Date result"); text: root.resultText }
         }

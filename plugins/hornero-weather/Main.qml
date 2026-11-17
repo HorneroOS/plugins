@@ -218,7 +218,7 @@ Item {
                 UiDetailRow {
                     visible: root.detailedDensity && !root.compactDensity
                     width: parent.width
-                    label: i18n.tr("Forecast range (derived)")
+                    label: i18n.tr("Forecast range")
                     value: root.forecastRange()
                 }
 
@@ -226,7 +226,7 @@ Item {
                     visible: root.detailedDensity
                     width: parent.width
                     role: "caption"
-                    text: i18n.tr("Unavailable from the Weather facade: official alerts, multiple locations, feels-like, UV and precipitation. The single configured location only is shown; its name is not exposed to extensions.")
+                    text: i18n.tr("Shows the single configured location.")
                 }
             }
         }

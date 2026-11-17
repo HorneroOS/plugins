@@ -11,7 +11,7 @@
   "Madrid": "Madrid",
   "New Delhi": "Nueva Delhi",
   "New York": "Nueva York",
-  "Offsets follow the DST rules built into this extension; there is no system timezone database for other zones.": "Los desplazamientos siguen las reglas de horario de verano incluidas en esta extensión; no hay una base de datos de zonas horarias del sistema para otras zonas.",
+  "Offsets use built-in daylight-saving rules.": "Los desfases usan reglas de horario de verano integradas.",
   "PM": "p. m.",
   "Sydney": "Sídney",
   "Tokyo": "Tokio",

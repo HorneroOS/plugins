@@ -2,7 +2,7 @@
   "schemaVersion": 3,
   "id": "hornero-moon-phase",
   "name": "Hornero Moon Phase",
-  "version": "3.0.0",
+  "version": "3.0.2",
   "description": "Moon Phase: desktop widget and bar indicator for the approximate moon phase and illumination from the 1.x synodic approximation, plus Desktop Widgets 2.0 size classes, per-display slot display and hide-with-restore. Always labelled approximate.",
   "author": "HorneroOS contributors",
   "license": "MIT",
@@ -34,6 +34,14 @@
       "minShellVersion": "1.2.79"
     },
     "changelog": [
+      {
+        "version": "3.0.2",
+        "notes": "Illumination caption can no longer overflow the widget."
+      },
+      {
+        "version": "3.0.1",
+        "notes": "Plain wording in footnotes and labels (no internal terms)."
+      },
       {
         "version": "3.0.0",
         "notes": "PluginKit 3 desktop widget on Hornero Signal: host-owned frame, position and size (sizeClass and showOnDesktop settings removed); the moon disc is drawn from the same approximate illumination, one scanline per row. Bar indicator unchanged in meaning."

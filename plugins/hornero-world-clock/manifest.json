@@ -2,7 +2,7 @@
   "schemaVersion": 3,
   "id": "hornero-world-clock",
   "name": "Hornero World Clock",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "World Clock 2.0: dashboard card with local, UTC and three selectable cities. Pure-JS rule-based offsets (fixed, EU, US and southern DST rules) labelled per row; no processes or network.",
   "author": "HorneroOS contributors",
   "license": "MIT",
@@ -28,6 +28,10 @@
       "minShellVersion": "1.0.0"
     },
     "changelog": [
+      {
+        "version": "3.0.1",
+        "notes": "Plain wording in footnotes and labels (no internal terms)."
+      },
       {
         "version": "3.0.0",
         "notes": "PluginKit 3 on Hornero Signal: tokens and variant names ported."

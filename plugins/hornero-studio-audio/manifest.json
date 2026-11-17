@@ -2,7 +2,7 @@
   "schemaVersion": 3,
   "id": "hornero-studio-audio",
   "name": "Hornero Studio Audio",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "Audio Extensions 2.0: bar indicator, popover and dashboard card for the Studio audio mode and Temporary Performance state from the typed horneroctl contract. Read-only; mode changes stay in the CLI and Control Center.",
   "author": "HorneroOS contributors",
   "license": "MIT",
@@ -32,6 +32,10 @@
       "minShellVersion": "1.2.79"
     },
     "changelog": [
+      {
+        "version": "3.0.1",
+        "notes": "Bar indicator is a single short line."
+      },
       {
         "version": "3.0.0",
         "notes": "PluginKit 3 on Hornero Signal: Hornero Glyph mode icons, segmented output meter and instrument module header."

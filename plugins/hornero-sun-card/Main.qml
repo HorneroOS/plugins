@@ -102,7 +102,7 @@ Item {
             return i18n.tr("Sunrise in %1").arg(durationText(sunriseMinutes - nowMinutes));
         if (nowMinutes < sunsetMinutes)
             return i18n.tr("Sunset in %1").arg(durationText(sunsetMinutes - nowMinutes));
-        return i18n.tr("Unavailable (the facade reports today only)");
+        return i18n.tr("Unavailable today");
     }
 
     UiCard {
@@ -124,7 +124,7 @@ Item {
 
                 UiChip {
                     visible: Weather.ready && root.sunTimesValid
-                    text: root.sunUp ? i18n.tr("Daytime (derived)") : i18n.tr("Night (derived)")
+                    text: root.sunUp ? i18n.tr("Daytime") : i18n.tr("Night")
                     tone: root.sunUp ? "signal" : "neutral"
                 }
             }
@@ -205,14 +205,14 @@ Item {
                     UiDetailRow {
                         width: parent.width
                         glyph: "sun"
-                        label: i18n.tr("Day length (derived)")
+                        label: i18n.tr("Day length")
                         value: root.durationText(root.dayLengthMinutes)
                     }
 
                     UiText {
                         width: parent.width
                         role: "caption"
-                        text: i18n.tr("Next sun event (derived)") + ": " + root.nextEventText()
+                        text: i18n.tr("Next sun event") + ": " + root.nextEventText()
                     }
 
                     // Daylight elapsed between today's sunrise and sunset
@@ -221,8 +221,8 @@ Item {
                         width: parent.width
                         total: 1
                         used: root.sunProgress
-                        usedLabel: i18n.tr("Sun progress (derived)")
-                        Accessible.name: i18n.tr("Sun progress (derived)")
+                        usedLabel: i18n.tr("Sun progress")
+                        Accessible.name: i18n.tr("Sun progress")
                     }
                 }
 
@@ -230,7 +230,7 @@ Item {
                     visible: root.detailedDensity
                     width: parent.width
                     role: "caption"
-                    text: i18n.tr("Unavailable from the Weather facade: solar noon, twilight, moonrise/moonset, the location name and multiple locations. Derived rows come only from today's sunrise/sunset strings and the current time.")
+                    text: i18n.tr("Times are for today only.")
                 }
             }
         }

@@ -231,7 +231,7 @@ Item {
             UiText {
                 role: "caption"
                 width: parent.width
-                text: i18n.tr("Saved automatically via Settings; restored when this extension loads again. Disabling flushes any pending edit and keeps the stored note.")
+                text: i18n.tr("Saved automatically.")
             }
         }
     }

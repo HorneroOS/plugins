@@ -2,7 +2,7 @@
   "schemaVersion": 3,
   "id": "hornero-weather",
   "name": "Hornero Weather",
-  "version": "3.0.1",
+  "version": "3.0.2",
   "description": "Weather 2.0: dashboard card and contextual bar indicator complementing native Weather with configurable density, a local wind-threshold alert and forecast detail from the PluginKit Weather facade only.",
   "author": "HorneroOS contributors",
   "license": "MIT",
@@ -31,6 +31,10 @@
       "minShellVersion": "1.0.0"
     },
     "changelog": [
+      {
+        "version": "3.0.2",
+        "notes": "Plain wording in footnotes and labels (no internal terms)."
+      },
       {
         "version": "3.0.1",
         "notes": "Bar indicator: cloud glyph plus temperature; glyph only without data."

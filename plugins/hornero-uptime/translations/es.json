@@ -1,7 +1,7 @@
 {
-  "Booted at (derived)": "Arranque (derivado)",
+  "Booted at": "Arrancó a las",
   "Idle time": "Tiempo inactivo",
-  "Idle time is summed across CPUs in /proc/uptime and can exceed wall-clock time. Boot time is derived as now minus uptime; PluginKit exposes no uptime or boot-time facade.": "El tiempo inactivo se suma entre todas las CPU en /proc/uptime y puede superar el tiempo real transcurrido. El momento de arranque se deriva como ahora menos el tiempo encendido; PluginKit no expone ninguna fachada de tiempo encendido ni de arranque.",
+  "Idle time adds up all CPUs, so it can exceed wall-clock time.": "El tiempo ocioso suma todas las CPU, por eso puede superar el tiempo real.",
   "Read /proc/uptime again": "Volver a leer /proc/uptime",
   "Reading /proc/uptime...": "Leyendo /proc/uptime...",
   "Refresh": "Actualizar",

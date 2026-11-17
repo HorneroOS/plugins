@@ -67,7 +67,7 @@ Item {
             UiStack {
                 orientation: root.hostOrientation; compact: root.hostCompact
                 UiButton { text: i18n.tr("Format"); accessibleName: i18n.tr("Format JSON"); tooltipText: i18n.tr("Format JSON"); onClicked: root.formatJson() }
-                UiButton { variant: "quiet"; text: i18n.tr("Minify"); accessibleName: i18n.tr("Minify JSON"); tooltipText: i18n.tr("Minify JSON"); onClicked: root.minifyJson() }
+                UiButton { variant: "secondary"; text: i18n.tr("Minify"); accessibleName: i18n.tr("Minify JSON"); tooltipText: i18n.tr("Minify JSON"); onClicked: root.minifyJson() }
             }
             UiState { visible: root.errorText !== ""; width: parent.width; kind: "error"; message: root.errorText }
             UiTextArea {

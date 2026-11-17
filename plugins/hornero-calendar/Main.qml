@@ -49,7 +49,7 @@ Item {
     }
 
     readonly property bool twentyFourHour: pluginSettings.value("twentyFourHour", true) !== false
-    readonly property bool showShellTime: pluginSettings.value("showShellTime", true) !== false
+    readonly property bool showShellTime: pluginSettings.value("showShellTime", false) === true
     readonly property bool showMonthGrid: pluginSettings.value("showMonthGrid", true) !== false
     readonly property string weekStart: {
         const value = pluginSettings.value("weekStart", "monday");

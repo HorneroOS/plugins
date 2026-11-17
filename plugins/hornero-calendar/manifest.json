@@ -2,7 +2,7 @@
   "schemaVersion": 3,
   "id": "hornero-calendar",
   "name": "Hornero Calendar",
-  "version": "3.0.1",
+  "version": "3.0.2",
   "description": "Calendar 3.0 on Hornero Signal: a desktop widget with a display clock, the full date and a square-celled month grid over the shared time provider. Dates only; no events source.",
   "author": "HorneroOS contributors",
   "license": "MIT",
@@ -31,6 +31,10 @@
       "minShellVersion": "1.2.79"
     },
     "changelog": [
+      {
+        "version": "3.0.2",
+        "notes": "The duplicate shell time line is off by default (it printed 06:48AM under the clock)."
+      },
       {
         "version": "3.0.1",
         "notes": "Shorter footnote so it is not clipped at the bottom of the widget."
@@ -74,7 +78,7 @@
       },
       "showShellTime": {
         "type": "boolean",
-        "default": true,
+        "default": false,
         "description": "Show the shell-formatted time line under the date (the 1.x third line)."
       },
       "showMonthGrid": {

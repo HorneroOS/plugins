@@ -245,7 +245,7 @@ Item {
             UiText {
                 width: parent.width
                 role: "caption"
-                text: i18n.tr("Health states use only the values and thresholds above. Disk SMART, battery health and per-process data are not exposed to extensions and are not shown.")
+                text: i18n.tr("Health is judged from the values above only.")
             }
         }
     }

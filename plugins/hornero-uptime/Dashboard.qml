@@ -174,14 +174,14 @@ Item {
 
                 UiMetric {
                     size: "value"
-                    label: i18n.tr("Booted at (derived)")
+                    label: i18n.tr("Booted at")
                     value: root.bootText()
                 }
 
                 UiText {
                     width: parent.width
                     role: "caption"
-                    text: i18n.tr("Idle time is summed across CPUs in /proc/uptime and can exceed wall-clock time. Boot time is derived as now minus uptime; PluginKit exposes no uptime or boot-time facade.")
+                    text: i18n.tr("Idle time adds up all CPUs, so it can exceed wall-clock time.")
                 }
             }
 

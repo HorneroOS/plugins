@@ -5,7 +5,7 @@
   "CPU": "CPU",
   "DISK": "DISCO",
   "Download": "Descarga",
-  "Health states use only the values and thresholds above. Disk SMART, battery health and per-process data are not exposed to extensions and are not shown.": "Los estados de salud usan solo los valores y umbrales de arriba. SMART de disco, salud de la batería y datos por proceso no están disponibles para las extensiones y no se muestran.",
+  "Health is judged from the values above only.": "El estado se juzga solo con los valores de arriba.",
   "Healthy": "En buen estado",
   "High memory use can push the system into swap; closing unused apps frees memory.": "Un uso alto de memoria puede hacer que el sistema use swap; cerrar apps que no uses libera memoria.",
   "MEM": "MEM",
