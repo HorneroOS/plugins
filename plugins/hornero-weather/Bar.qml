@@ -43,8 +43,10 @@ Item {
         id: indicator
 
         variant: "quiet"
-        text: !Weather.locationConfigured ? i18n.tr("Weather") : Weather.ready ? (root.hostCompact ? Weather.temp : i18n.tr("Weather %1").arg(Weather.temp)) : i18n.tr("Weather")
-        tooltipText: i18n.tr("Weather: activate for details")
+        glyph: !Weather.locationConfigured || !Weather.ready ? "cloud-off" : "cloud"
+        // Glyph plus the temperature; without data the glyph and tooltip say so.
+        text: Weather.locationConfigured && Weather.ready && !root.hostCompact ? Weather.temp : ""
+        tooltipText: !Weather.locationConfigured ? i18n.tr("Weather: set a location in the shell settings") : Weather.ready ? i18n.tr("Weather %1: activate for details").arg(Weather.temp) : i18n.tr("Weather: activate for details")
         accessibleName: i18n.tr("Weather details")
         onClicked: popover.toggle()
     }

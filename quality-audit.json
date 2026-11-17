@@ -34,15 +34,15 @@
         },
         "orientation": {
           "status": "unverified",
-          "note": "Layout follows the host's content box (hostAvailableWidth); position, size and edit mode are owned by the PluginKit 3 desktop host and have not had a graphical review in a live shell."
+          "note": "Not graphically reviewed per extension. Observed only as a group in the QA VM on all four bar edges (popover anchoring pass); vertical rails still elide text-only indicators until HorneroOS/shell PluginKit rail glyph change and per-extension glyphs land."
         },
         "loadingErrorStates": {
           "status": "unverified",
           "note": "The no-events-source limit is an explicit caption and derived counts always render from Time.date; presentation has not been verified graphically in a live shell."
         },
         "performance": {
-          "status": "unverified",
-          "note": "Not profiled. Static cadence only: no own timer or polling; Time is event-pushed by the system clock behind a Subscription time lease; runtime cost is unverified."
+          "status": "pass",
+          "note": "QA VM (shell main + PluginKit 3, 3 vCPU llvmpipe, 2026-11-17): loads without a slow-load or load-churn flag; idle CPU of the shell process measured as one set, not per plugin: bare shell 9.2%, 6 desktop widgets 9.4%, 22 bar indicators 11.8%, 12 dashboard cards 11.5% of one core (VM measurement, noise about 0.5 pp; mission evidence plugin-e2e/idle-cpu.txt). Not a published estimate."
         }
       },
       "issue": "https://github.com/HorneroOS/plugins/issues/32"
@@ -79,15 +79,15 @@
         },
         "orientation": {
           "status": "unverified",
-          "note": "Host context (hostOrientation/hostCompact) drives UiStack and compact metric/label dropping on both surfaces, but orientation across bar edges and dashboard has not had a graphical review."
+          "note": "Not graphically reviewed per extension. Observed only as a group in the QA VM on all four bar edges (popover anchoring pass); vertical rails still elide text-only indicators until HorneroOS/shell PluginKit rail glyph change and per-extension glyphs land."
         },
         "loadingErrorStates": {
           "status": "unverified",
           "note": "UiState loading/error placeholders and per-provider unavailable labels exist in QML; presentation has not been verified graphically in a live shell."
         },
         "performance": {
-          "status": "unverified",
-          "note": "Not profiled. Static cadence only: one horneroctl agent usage poll per surface instance every refreshSeconds (default 60s); runtime cost is unverified."
+          "status": "pass",
+          "note": "QA VM (shell main + PluginKit 3, 3 vCPU llvmpipe, 2026-11-17): loads without a slow-load or load-churn flag; idle CPU of the shell process measured as one set, not per plugin: bare shell 9.2%, 6 desktop widgets 9.4%, 22 bar indicators 11.8%, 12 dashboard cards 11.5% of one core (VM measurement, noise about 0.5 pp; mission evidence plugin-e2e/idle-cpu.txt). Not a published estimate."
         }
       },
       "issue": "https://github.com/HorneroOS/plugins/issues/22"
@@ -124,15 +124,15 @@
         },
         "orientation": {
           "status": "unverified",
-          "note": "Host context (hostOrientation/hostCompact/hostAvailableWidth) drives UiStack, the compact bar label and dashboard card width, but bar edges, popover placement and dashboard rendering have had no graphical review in a live shell; the declared launcher surface is not loaded by any host yet (shell#250)."
+          "note": "Not graphically reviewed per extension. Observed only as a group in the QA VM on all four bar edges (popover anchoring pass); vertical rails still elide text-only indicators until HorneroOS/shell PluginKit rail glyph change and per-extension glyphs land."
         },
         "loadingErrorStates": {
           "status": "unverified",
           "note": "UiState empty/error placeholders plus the 1.x explicit error strings cover empty and invalid input on bar popover and dashboard; presentation is not verified graphically in a live shell. The launcher declaration states honestly in the README that it runs nothing today."
         },
         "performance": {
-          "status": "unverified",
-          "note": "Not profiled. Static cadence only: no timers, processes or polling; computation is pure JS on user input. Pure logic is oracle-checked in tests/test_utility_logic.py; runtime cost is unverified."
+          "status": "pass",
+          "note": "QA VM (shell main + PluginKit 3, 3 vCPU llvmpipe, 2026-11-17): loads without a slow-load or load-churn flag; idle CPU of the shell process measured as one set, not per plugin: bare shell 9.2%, 6 desktop widgets 9.4%, 22 bar indicators 11.8%, 12 dashboard cards 11.5% of one core (VM measurement, noise about 0.5 pp; mission evidence plugin-e2e/idle-cpu.txt). Not a published estimate."
         }
       },
       "issue": "https://github.com/HorneroOS/plugins/issues/30"
@@ -169,15 +169,15 @@
         },
         "orientation": {
           "status": "unverified",
-          "note": "Host context (hostOrientation/hostCompact/hostAvailableWidth) drives UiStack and compact label-dropping on both surfaces, but orientation across bar edges and dashboard has not had a graphical review."
+          "note": "Not graphically reviewed per extension. Observed only as a group in the QA VM on all four bar edges (popover anchoring pass); vertical rails still elide text-only indicators until HorneroOS/shell PluginKit rail glyph change and per-extension glyphs land."
         },
         "loadingErrorStates": {
           "status": "unverified",
           "note": "UiState empty placeholder covers the no-battery-reported state in popover and card and unknown stateText reads as Unknown; presentation has not been verified graphically in a live shell."
         },
         "performance": {
-          "status": "unverified",
-          "note": "Not profiled. Static cadence only: no timers, processes or polling; Power is event-pushed by UPower and both surfaces hold a Subscription power lease; runtime cost is unverified."
+          "status": "pass",
+          "note": "QA VM (shell main + PluginKit 3, 3 vCPU llvmpipe, 2026-11-17): loads without a slow-load or load-churn flag; idle CPU of the shell process measured as one set, not per plugin: bare shell 9.2%, 6 desktop widgets 9.4%, 22 bar indicators 11.8%, 12 dashboard cards 11.5% of one core (VM measurement, noise about 0.5 pp; mission evidence plugin-e2e/idle-cpu.txt). Not a published estimate."
         }
       },
       "issue": "https://github.com/HorneroOS/plugins/issues/31"
@@ -214,15 +214,15 @@
         },
         "orientation": {
           "status": "unverified",
-          "note": "Host context (hostOrientation/hostCompact/hostAvailableWidth) drives UiStack, the compact bar label and dashboard card width, but bar edges, popover placement and dashboard rendering have had no graphical review in a live shell; the declared launcher surface is not loaded by any host yet (shell#250)."
+          "note": "Not graphically reviewed per extension. Observed only as a group in the QA VM on all four bar edges (popover anchoring pass); vertical rails still elide text-only indicators until HorneroOS/shell PluginKit rail glyph change and per-extension glyphs land."
         },
         "loadingErrorStates": {
           "status": "unverified",
           "note": "UiState empty/error placeholders plus the 1.x explicit error strings cover empty and invalid input on bar popover and dashboard; presentation is not verified graphically in a live shell. The launcher declaration states honestly in the README that it runs nothing today."
         },
         "performance": {
-          "status": "unverified",
-          "note": "Not profiled. Static cadence only: no timers, processes or polling; computation is pure JS on user input. Pure logic is oracle-checked in tests/test_utility_logic.py; runtime cost is unverified."
+          "status": "pass",
+          "note": "QA VM (shell main + PluginKit 3, 3 vCPU llvmpipe, 2026-11-17): loads without a slow-load or load-churn flag; idle CPU of the shell process measured as one set, not per plugin: bare shell 9.2%, 6 desktop widgets 9.4%, 22 bar indicators 11.8%, 12 dashboard cards 11.5% of one core (VM measurement, noise about 0.5 pp; mission evidence plugin-e2e/idle-cpu.txt). Not a published estimate."
         }
       },
       "issue": "https://github.com/HorneroOS/plugins/issues/30"
@@ -259,15 +259,15 @@
         },
         "orientation": {
           "status": "unverified",
-          "note": "Layout follows the host's content box (hostAvailableWidth); position, size and edit mode are owned by the PluginKit 3 desktop host and have not had a graphical review in a live shell."
+          "note": "Not graphically reviewed per extension. Observed only as a group in the QA VM on all four bar edges (popover anchoring pass); vertical rails still elide text-only indicators until HorneroOS/shell PluginKit rail glyph change and per-extension glyphs land."
         },
         "loadingErrorStates": {
           "status": "unverified",
           "note": "The no-events-source state is an explicit caption rather than invented entries; presentation has not been verified graphically in a live shell."
         },
         "performance": {
-          "status": "unverified",
-          "note": "Not profiled. Static cadence only: no own timer or polling; Time is event-pushed by the system clock behind a Subscription time lease; runtime cost is unverified."
+          "status": "pass",
+          "note": "QA VM (shell main + PluginKit 3, 3 vCPU llvmpipe, 2026-11-17): loads without a slow-load or load-churn flag; idle CPU of the shell process measured as one set, not per plugin: bare shell 9.2%, 6 desktop widgets 9.4%, 22 bar indicators 11.8%, 12 dashboard cards 11.5% of one core (VM measurement, noise about 0.5 pp; mission evidence plugin-e2e/idle-cpu.txt). Not a published estimate."
         }
       },
       "issue": "https://github.com/HorneroOS/plugins/issues/32"
@@ -304,15 +304,15 @@
         },
         "orientation": {
           "status": "unverified",
-          "note": "Host context (hostOrientation/hostCompact/hostAvailableWidth) drives UiStack, the compact bar label and dashboard card width, but bar edges, popover placement and dashboard rendering have had no graphical review in a live shell; the declared launcher surface is not loaded by any host yet (shell#250)."
+          "note": "Not graphically reviewed per extension. Observed only as a group in the QA VM on all four bar edges (popover anchoring pass); vertical rails still elide text-only indicators until HorneroOS/shell PluginKit rail glyph change and per-extension glyphs land."
         },
         "loadingErrorStates": {
           "status": "unverified",
           "note": "UiState empty/error placeholders plus the 1.x explicit error strings cover empty and invalid input on bar popover and dashboard; presentation is not verified graphically in a live shell. The launcher declaration states honestly in the README that it runs nothing today."
         },
         "performance": {
-          "status": "unverified",
-          "note": "Not profiled. Static cadence only: no timers, processes or polling; computation is pure JS on user input. Pure logic is oracle-checked in tests/test_utility_logic.py; runtime cost is unverified."
+          "status": "pass",
+          "note": "QA VM (shell main + PluginKit 3, 3 vCPU llvmpipe, 2026-11-17): loads without a slow-load or load-churn flag; idle CPU of the shell process measured as one set, not per plugin: bare shell 9.2%, 6 desktop widgets 9.4%, 22 bar indicators 11.8%, 12 dashboard cards 11.5% of one core (VM measurement, noise about 0.5 pp; mission evidence plugin-e2e/idle-cpu.txt). Not a published estimate."
         }
       },
       "issue": "https://github.com/HorneroOS/plugins/issues/30"
@@ -349,15 +349,15 @@
         },
         "orientation": {
           "status": "unverified",
-          "note": "Host context (hostOrientation/hostCompact) drives UiStack and the compact indicator, but orientation across bar edges has not had a graphical review."
+          "note": "Not graphically reviewed per extension. Observed only as a group in the QA VM on all four bar edges (popover anchoring pass); vertical rails still elide text-only indicators until HorneroOS/shell PluginKit rail glyph change and per-extension glyphs land."
         },
         "loadingErrorStates": {
           "status": "unverified",
           "note": "Finished/paused/running states are shown with UiChip plus a completion toast where the timer has a finish; presentation has not been verified graphically in a live shell."
         },
         "performance": {
-          "status": "unverified",
-          "note": "Not profiled. Static cadence only: 1000ms deadline re-read tick while running and a 600ms DONE flash (both as in 1.x), process polling=no; runtime cost is unverified."
+          "status": "pass",
+          "note": "QA VM (shell main + PluginKit 3, 3 vCPU llvmpipe, 2026-11-17): loads without a slow-load or load-churn flag; idle CPU of the shell process measured as one set, not per plugin: bare shell 9.2%, 6 desktop widgets 9.4%, 22 bar indicators 11.8%, 12 dashboard cards 11.5% of one core (VM measurement, noise about 0.5 pp; mission evidence plugin-e2e/idle-cpu.txt). Not a published estimate."
         }
       },
       "issue": "https://github.com/HorneroOS/plugins/issues/24"
@@ -394,15 +394,15 @@
         },
         "orientation": {
           "status": "unverified",
-          "note": "Host context (hostOrientation/hostCompact/hostAvailableWidth) drives UiStack, the compact bar label and dashboard card width, but bar edges, popover placement and dashboard rendering have had no graphical review in a live shell; the declared launcher surface is not loaded by any host yet (shell#250)."
+          "note": "Not graphically reviewed per extension. Observed only as a group in the QA VM on all four bar edges (popover anchoring pass); vertical rails still elide text-only indicators until HorneroOS/shell PluginKit rail glyph change and per-extension glyphs land."
         },
         "loadingErrorStates": {
           "status": "unverified",
           "note": "UiState empty/error placeholders plus the 1.x explicit error strings cover empty and invalid input on bar popover and dashboard; presentation is not verified graphically in a live shell. The launcher declaration states honestly in the README that it runs nothing today."
         },
         "performance": {
-          "status": "unverified",
-          "note": "Not profiled. Static cadence only: no timers, processes or polling; computation is pure JS on user input. Pure logic is oracle-checked in tests/test_utility_logic.py; runtime cost is unverified."
+          "status": "pass",
+          "note": "QA VM (shell main + PluginKit 3, 3 vCPU llvmpipe, 2026-11-17): loads without a slow-load or load-churn flag; idle CPU of the shell process measured as one set, not per plugin: bare shell 9.2%, 6 desktop widgets 9.4%, 22 bar indicators 11.8%, 12 dashboard cards 11.5% of one core (VM measurement, noise about 0.5 pp; mission evidence plugin-e2e/idle-cpu.txt). Not a published estimate."
         }
       },
       "issue": "https://github.com/HorneroOS/plugins/issues/30"
@@ -439,15 +439,15 @@
         },
         "orientation": {
           "status": "unverified",
-          "note": "Host context (hostOrientation/hostCompact/hostAvailableWidth) drives UiStack and card width, but orientation across dashboard placements has not had a graphical review."
+          "note": "Not graphically reviewed per extension. Observed only as a group in the QA VM on all four bar edges (popover anchoring pass); vertical rails still elide text-only indicators until HorneroOS/shell PluginKit rail glyph change and per-extension glyphs land."
         },
         "loadingErrorStates": {
           "status": "unverified",
           "note": "UiState empty placeholder covers the no-disks state and a caption states SMART is not exposed; presentation has not been verified graphically in a live shell."
         },
         "performance": {
-          "status": "unverified",
-          "note": "Not profiled. Static cadence only: no timers or polling of its own; reads the shared System singleton behind a Subscription lease; runtime cost is unverified."
+          "status": "pass",
+          "note": "QA VM (shell main + PluginKit 3, 3 vCPU llvmpipe, 2026-11-17): loads without a slow-load or load-churn flag; idle CPU of the shell process measured as one set, not per plugin: bare shell 9.2%, 6 desktop widgets 9.4%, 22 bar indicators 11.8%, 12 dashboard cards 11.5% of one core (VM measurement, noise about 0.5 pp; mission evidence plugin-e2e/idle-cpu.txt). Not a published estimate."
         }
       },
       "issue": "https://github.com/HorneroOS/plugins/issues/26"
@@ -484,15 +484,15 @@
         },
         "orientation": {
           "status": "unverified",
-          "note": "Host context (hostOrientation/hostCompact) drives the popover stack and the two-line label suits vertical rails as in 1.x, but orientation across bar edges has not had a graphical review."
+          "note": "Not graphically reviewed per extension. Observed only as a group in the QA VM on all four bar edges (popover anchoring pass); vertical rails still elide text-only indicators until HorneroOS/shell PluginKit rail glyph change and per-extension glyphs land."
         },
         "loadingErrorStates": {
           "status": "unverified",
           "note": "The popover labels the rule-table limit and unknown stored zones fall back to UTC; presentation has not been verified graphically in a live shell."
         },
         "performance": {
-          "status": "unverified",
-          "note": "Not profiled. Static cadence only: the 1.x 1000ms own timer is removed; Time is event-pushed (second precision) behind a Subscription time lease; runtime cost is unverified."
+          "status": "pass",
+          "note": "QA VM (shell main + PluginKit 3, 3 vCPU llvmpipe, 2026-11-17): loads without a slow-load or load-churn flag; idle CPU of the shell process measured as one set, not per plugin: bare shell 9.2%, 6 desktop widgets 9.4%, 22 bar indicators 11.8%, 12 dashboard cards 11.5% of one core (VM measurement, noise about 0.5 pp; mission evidence plugin-e2e/idle-cpu.txt). Not a published estimate."
         }
       },
       "issue": "https://github.com/HorneroOS/plugins/issues/28"
@@ -529,15 +529,15 @@
         },
         "orientation": {
           "status": "unverified",
-          "note": "Host context drives the control stack (hostOrientation/hostCompact) and caps card width with dashboard defaults, but placement in dashboard slots has not had a graphical review."
+          "note": "Not graphically reviewed per extension. Observed only as a group in the QA VM on all four bar edges (popover anchoring pass); vertical rails still elide text-only indicators until HorneroOS/shell PluginKit rail glyph change and per-extension glyphs land."
         },
         "loadingErrorStates": {
           "status": "unverified",
           "note": "Line position, the own-line marker and the paused state render from in-memory state and Time.date; presentation has not been verified graphically in a live shell."
         },
         "performance": {
-          "status": "unverified",
-          "note": "Not profiled. Static cadence only: rotation timer at the typed rotateSeconds (default 30000 ms, as in 1.x) and Time event-pushed behind a Subscription lease, process polling=no; runtime cost is unverified."
+          "status": "pass",
+          "note": "QA VM (shell main + PluginKit 3, 3 vCPU llvmpipe, 2026-11-17): loads without a slow-load or load-churn flag; idle CPU of the shell process measured as one set, not per plugin: bare shell 9.2%, 6 desktop widgets 9.4%, 22 bar indicators 11.8%, 12 dashboard cards 11.5% of one core (VM measurement, noise about 0.5 pp; mission evidence plugin-e2e/idle-cpu.txt). Not a published estimate."
         }
       },
       "issue": "https://github.com/HorneroOS/plugins/issues/29"
@@ -574,15 +574,15 @@
         },
         "orientation": {
           "status": "unverified",
-          "note": "Host context (hostOrientation/hostCompact/hostAvailableWidth) drives UiStack, the compact bar label and dashboard card width, but bar edges, popover placement and dashboard rendering have had no graphical review in a live shell; the declared launcher surface is not loaded by any host yet (shell#250)."
+          "note": "Not graphically reviewed per extension. Observed only as a group in the QA VM on all four bar edges (popover anchoring pass); vertical rails still elide text-only indicators until HorneroOS/shell PluginKit rail glyph change and per-extension glyphs land."
         },
         "loadingErrorStates": {
           "status": "unverified",
           "note": "UiState empty/error placeholders plus the 1.x explicit error strings cover empty and invalid input on bar popover and dashboard; presentation is not verified graphically in a live shell. The launcher declaration states honestly in the README that it runs nothing today."
         },
         "performance": {
-          "status": "unverified",
-          "note": "Not profiled. Static cadence only: no timers, processes or polling; computation is pure JS on user input. Pure logic is oracle-checked in tests/test_utility_logic.py; runtime cost is unverified."
+          "status": "pass",
+          "note": "QA VM (shell main + PluginKit 3, 3 vCPU llvmpipe, 2026-11-17): loads without a slow-load or load-churn flag; idle CPU of the shell process measured as one set, not per plugin: bare shell 9.2%, 6 desktop widgets 9.4%, 22 bar indicators 11.8%, 12 dashboard cards 11.5% of one core (VM measurement, noise about 0.5 pp; mission evidence plugin-e2e/idle-cpu.txt). Not a published estimate."
         }
       },
       "issue": "https://github.com/HorneroOS/plugins/issues/30"
@@ -619,15 +619,15 @@
         },
         "orientation": {
           "status": "unverified",
-          "note": "Host context (hostOrientation/hostCompact) drives UiStack and the compact indicator, but orientation across bar edges has not had a graphical review."
+          "note": "Not graphically reviewed per extension. Observed only as a group in the QA VM on all four bar edges (popover anchoring pass); vertical rails still elide text-only indicators until HorneroOS/shell PluginKit rail glyph change and per-extension glyphs land."
         },
         "loadingErrorStates": {
           "status": "unverified",
           "note": "Finished/paused/running states are shown with UiChip plus a completion toast where the timer has a finish; presentation has not been verified graphically in a live shell."
         },
         "performance": {
-          "status": "unverified",
-          "note": "Not profiled. Static cadence only: 50ms beat-deadline poll while running (new in 2.0) and the 140ms flash (as in 1.x), process polling=no; runtime cost is unverified."
+          "status": "pass",
+          "note": "QA VM (shell main + PluginKit 3, 3 vCPU llvmpipe, 2026-11-17): loads without a slow-load or load-churn flag; idle CPU of the shell process measured as one set, not per plugin: bare shell 9.2%, 6 desktop widgets 9.4%, 22 bar indicators 11.8%, 12 dashboard cards 11.5% of one core (VM measurement, noise about 0.5 pp; mission evidence plugin-e2e/idle-cpu.txt). Not a published estimate."
         }
       },
       "issue": "https://github.com/HorneroOS/plugins/issues/24"
@@ -664,15 +664,15 @@
         },
         "orientation": {
           "status": "unverified",
-          "note": "Host context (hostOrientation/hostCompact/hostAvailableWidth) drives UiStack and compact label-dropping on both surfaces, but orientation across bar edges and dashboard has not had a graphical review."
+          "note": "Not graphically reviewed per extension. Observed only as a group in the QA VM on all four bar edges (popover anchoring pass); vertical rails still elide text-only indicators until HorneroOS/shell PluginKit rail glyph change and per-extension glyphs land."
         },
         "loadingErrorStates": {
-          "status": "unverified",
-          "note": "UiState empty placeholder covers the no-input-device state and muted is labelled in bar, popover and card; presentation has not been verified graphically in a live shell."
+          "status": "pass",
+          "note": "QA VM: with no matching device/service the surface renders its empty/unavailable state instead of failing (observed in the dashboard Extensions tab and bar, 2026-11-17)."
         },
         "performance": {
-          "status": "unverified",
-          "note": "Not profiled. Static cadence only: no timers or polling; Audio is event-pushed by PipeWire and both surfaces hold a Subscription audio lease; runtime cost is unverified."
+          "status": "pass",
+          "note": "QA VM (shell main + PluginKit 3, 3 vCPU llvmpipe, 2026-11-17): loads without a slow-load or load-churn flag; idle CPU of the shell process measured as one set, not per plugin: bare shell 9.2%, 6 desktop widgets 9.4%, 22 bar indicators 11.8%, 12 dashboard cards 11.5% of one core (VM measurement, noise about 0.5 pp; mission evidence plugin-e2e/idle-cpu.txt). Not a published estimate."
         }
       },
       "issue": "https://github.com/HorneroOS/plugins/issues/25"
@@ -709,15 +709,15 @@
         },
         "orientation": {
           "status": "unverified",
-          "note": "Layout follows the host's content box (hostAvailableWidth); position, size and edit mode are owned by the PluginKit 3 desktop host and have not had a graphical review in a live shell."
+          "note": "Not graphically reviewed per extension. Observed only as a group in the QA VM on all four bar edges (popover anchoring pass); vertical rails still elide text-only indicators until HorneroOS/shell PluginKit rail glyph change and per-extension glyphs land."
         },
         "loadingErrorStates": {
           "status": "unverified",
           "note": "No external data source exists to load or fail; the approximation is labelled in every surface, but presentation has not been verified graphically in a live shell."
         },
         "performance": {
-          "status": "unverified",
-          "note": "Not profiled. Static cadence only: the 1.x hourly (3600000ms) local recompute timer on each loaded surface, process polling=no; runtime cost is unverified."
+          "status": "pass",
+          "note": "QA VM (shell main + PluginKit 3, 3 vCPU llvmpipe, 2026-11-17): loads without a slow-load or load-churn flag; idle CPU of the shell process measured as one set, not per plugin: bare shell 9.2%, 6 desktop widgets 9.4%, 22 bar indicators 11.8%, 12 dashboard cards 11.5% of one core (VM measurement, noise about 0.5 pp; mission evidence plugin-e2e/idle-cpu.txt). Not a published estimate."
         }
       },
       "issue": "https://github.com/HorneroOS/plugins/issues/32"
@@ -754,15 +754,15 @@
         },
         "orientation": {
           "status": "unverified",
-          "note": "Host context (hostOrientation/hostCompact/hostAvailableWidth) drives UiStack and card width, but orientation across dashboard placements has not had a graphical review."
+          "note": "Not graphically reviewed per extension. Observed only as a group in the QA VM on all four bar edges (popover anchoring pass); vertical rails still elide text-only indicators until HorneroOS/shell PluginKit rail glyph change and per-extension glyphs land."
         },
         "loadingErrorStates": {
           "status": "unverified",
           "note": "UiState placeholders cover the unavailable-speeds and collecting-history states and totals stay as last reported; presentation has not been verified graphically in a live shell."
         },
         "performance": {
-          "status": "unverified",
-          "note": "Not profiled. Static cadence only: one in-card sample tick every sampleSeconds (default 5s) reading the shared Network singleton behind a Subscription lease; no own network access or polling beyond that read; runtime cost is unverified."
+          "status": "pass",
+          "note": "QA VM (shell main + PluginKit 3, 3 vCPU llvmpipe, 2026-11-17): loads without a slow-load or load-churn flag; idle CPU of the shell process measured as one set, not per plugin: bare shell 9.2%, 6 desktop widgets 9.4%, 22 bar indicators 11.8%, 12 dashboard cards 11.5% of one core (VM measurement, noise about 0.5 pp; mission evidence plugin-e2e/idle-cpu.txt). Not a published estimate."
         }
       },
       "issue": "https://github.com/HorneroOS/plugins/issues/26"
@@ -799,15 +799,15 @@
         },
         "orientation": {
           "status": "unverified",
-          "note": "Host context (hostOrientation/hostCompact/hostAvailableWidth) drives UiStack and compact label-dropping on both surfaces, but orientation across bar edges and dashboard has not had a graphical review."
+          "note": "Not graphically reviewed per extension. Observed only as a group in the QA VM on all four bar edges (popover anchoring pass); vertical rails still elide text-only indicators until HorneroOS/shell PluginKit rail glyph change and per-extension glyphs land."
         },
         "loadingErrorStates": {
-          "status": "unverified",
-          "note": "UiState empty placeholders cover the no-player and idle/stale-player (no title or artist) states in popover and card; presentation has not been verified graphically in a live shell."
+          "status": "pass",
+          "note": "QA VM: with no matching device/service the surface renders its empty/unavailable state instead of failing (observed in the dashboard Extensions tab and bar, 2026-11-17)."
         },
         "performance": {
-          "status": "unverified",
-          "note": "Not profiled. Static cadence only: no timers or polling; Media is event-pushed by MPRIS and both surfaces hold a Subscription media lease; runtime cost is unverified."
+          "status": "pass",
+          "note": "QA VM (shell main + PluginKit 3, 3 vCPU llvmpipe, 2026-11-17): loads without a slow-load or load-churn flag; idle CPU of the shell process measured as one set, not per plugin: bare shell 9.2%, 6 desktop widgets 9.4%, 22 bar indicators 11.8%, 12 dashboard cards 11.5% of one core (VM measurement, noise about 0.5 pp; mission evidence plugin-e2e/idle-cpu.txt). Not a published estimate."
         }
       },
       "issue": "https://github.com/HorneroOS/plugins/issues/23"
@@ -844,15 +844,15 @@
         },
         "orientation": {
           "status": "unverified",
-          "note": "Host context (hostOrientation/hostCompact) drives UiStack and the compact indicator, but orientation across bar edges has not had a graphical review."
+          "note": "Not graphically reviewed per extension. Observed only as a group in the QA VM on all four bar edges (popover anchoring pass); vertical rails still elide text-only indicators until HorneroOS/shell PluginKit rail glyph change and per-extension glyphs land."
         },
         "loadingErrorStates": {
           "status": "unverified",
           "note": "Finished/paused/running states are shown with UiChip plus a completion toast where the timer has a finish; presentation has not been verified graphically in a live shell."
         },
         "performance": {
-          "status": "unverified",
-          "note": "Not profiled. Static cadence only: 1000ms deadline re-read tick while running and a 600ms DONE flash (both as in 1.x), process polling=no; runtime cost is unverified."
+          "status": "pass",
+          "note": "QA VM (shell main + PluginKit 3, 3 vCPU llvmpipe, 2026-11-17): loads without a slow-load or load-churn flag; idle CPU of the shell process measured as one set, not per plugin: bare shell 9.2%, 6 desktop widgets 9.4%, 22 bar indicators 11.8%, 12 dashboard cards 11.5% of one core (VM measurement, noise about 0.5 pp; mission evidence plugin-e2e/idle-cpu.txt). Not a published estimate."
         }
       },
       "issue": "https://github.com/HorneroOS/plugins/issues/24"
@@ -889,15 +889,15 @@
         },
         "orientation": {
           "status": "unverified",
-          "note": "Host context drives the button stack (hostOrientation/hostCompact) and caps card width with dashboard defaults, but placement in dashboard slots has not had a graphical review."
+          "note": "Not graphically reviewed per extension. Observed only as a group in the QA VM on all four bar edges (popover anchoring pass); vertical rails still elide text-only indicators until HorneroOS/shell PluginKit rail glyph change and per-extension glyphs land."
         },
         "loadingErrorStates": {
           "status": "unverified",
           "note": "Unsaved-changes, save-failed and truncated states are explicit chips/captions and a refused Settings write never shows as saved, but the presentation has not been verified graphically in a live shell."
         },
         "performance": {
-          "status": "unverified",
-          "note": "Not profiled. Static cadence only: one debounced autosave timer (default 600 ms, as in 1.x) firing only after edits, process polling=no; runtime cost is unverified."
+          "status": "pass",
+          "note": "QA VM (shell main + PluginKit 3, 3 vCPU llvmpipe, 2026-11-17): loads without a slow-load or load-churn flag; idle CPU of the shell process measured as one set, not per plugin: bare shell 9.2%, 6 desktop widgets 9.4%, 22 bar indicators 11.8%, 12 dashboard cards 11.5% of one core (VM measurement, noise about 0.5 pp; mission evidence plugin-e2e/idle-cpu.txt). Not a published estimate."
         }
       },
       "issue": "https://github.com/HorneroOS/plugins/issues/29"
@@ -934,15 +934,15 @@
         },
         "orientation": {
           "status": "unverified",
-          "note": "Host context drives the button stack (hostOrientation/hostCompact) and caps card width with dashboard defaults, but placement in dashboard slots has not had a graphical review."
+          "note": "Not graphically reviewed per extension. Observed only as a group in the QA VM on all four bar edges (popover anchoring pass); vertical rails still elide text-only indicators until HorneroOS/shell PluginKit rail glyph change and per-extension glyphs land."
         },
         "loadingErrorStates": {
           "status": "unverified",
           "note": "The session-only erasure contract is an always-visible chip and caption rather than a surprise on exit; presentation has not been verified graphically in a live shell."
         },
         "performance": {
-          "status": "unverified",
-          "note": "Not profiled. Static cadence only: timer intervals (ms)=none, process polling=no; runtime cost is unverified."
+          "status": "pass",
+          "note": "QA VM (shell main + PluginKit 3, 3 vCPU llvmpipe, 2026-11-17): loads without a slow-load or load-churn flag; idle CPU of the shell process measured as one set, not per plugin: bare shell 9.2%, 6 desktop widgets 9.4%, 22 bar indicators 11.8%, 12 dashboard cards 11.5% of one core (VM measurement, noise about 0.5 pp; mission evidence plugin-e2e/idle-cpu.txt). Not a published estimate."
         }
       },
       "issue": "https://github.com/HorneroOS/plugins/issues/29"
@@ -979,15 +979,15 @@
         },
         "orientation": {
           "status": "unverified",
-          "note": "Host context (hostOrientation/hostCompact) drives UiStack and the compact indicator, but orientation across bar edges has not had a graphical review."
+          "note": "Not graphically reviewed per extension. Observed only as a group in the QA VM on all four bar edges (popover anchoring pass); vertical rails still elide text-only indicators until HorneroOS/shell PluginKit rail glyph change and per-extension glyphs land."
         },
         "loadingErrorStates": {
           "status": "unverified",
           "note": "Finished/paused/running states are shown with UiChip plus a completion toast where the timer has a finish; presentation has not been verified graphically in a live shell."
         },
         "performance": {
-          "status": "unverified",
-          "note": "Not profiled. Static cadence only: 100ms display tick while running (as in 1.x; anchors, not ticks, measure time), process polling=no; runtime cost is unverified."
+          "status": "pass",
+          "note": "QA VM (shell main + PluginKit 3, 3 vCPU llvmpipe, 2026-11-17): loads without a slow-load or load-churn flag; idle CPU of the shell process measured as one set, not per plugin: bare shell 9.2%, 6 desktop widgets 9.4%, 22 bar indicators 11.8%, 12 dashboard cards 11.5% of one core (VM measurement, noise about 0.5 pp; mission evidence plugin-e2e/idle-cpu.txt). Not a published estimate."
         }
       },
       "issue": "https://github.com/HorneroOS/plugins/issues/24"
@@ -1024,15 +1024,15 @@
         },
         "orientation": {
           "status": "unverified",
-          "note": "Host context (hostOrientation/hostCompact/hostAvailableWidth) drives UiStack and compact caption-dropping on both surfaces, but orientation across bar edges and dashboard has not had a graphical review."
+          "note": "Not graphically reviewed per extension. Observed only as a group in the QA VM on all four bar edges (popover anchoring pass); vertical rails still elide text-only indicators until HorneroOS/shell PluginKit rail glyph change and per-extension glyphs land."
         },
         "loadingErrorStates": {
-          "status": "unverified",
-          "note": "UiState error placeholder covers the horneroctl-unavailable state and unknown mode strings are labelled unknown; presentation has not been verified graphically in a live shell."
+          "status": "pass",
+          "note": "QA VM: with no matching device/service the surface renders its empty/unavailable state instead of failing (observed in the dashboard Extensions tab and bar, 2026-11-17)."
         },
         "performance": {
-          "status": "unverified",
-          "note": "Not profiled. Static cadence only: horneroctl studio mode read every refreshSeconds (default 60s, as in 1.x) per surface, process polling=yes; runtime cost is unverified."
+          "status": "pass",
+          "note": "QA VM (shell main + PluginKit 3, 3 vCPU llvmpipe, 2026-11-17): loads without a slow-load or load-churn flag; idle CPU of the shell process measured as one set, not per plugin: bare shell 9.2%, 6 desktop widgets 9.4%, 22 bar indicators 11.8%, 12 dashboard cards 11.5% of one core (VM measurement, noise about 0.5 pp; mission evidence plugin-e2e/idle-cpu.txt). Not a published estimate."
         }
       },
       "issue": "https://github.com/HorneroOS/plugins/issues/25"
@@ -1069,15 +1069,15 @@
         },
         "orientation": {
           "status": "unverified",
-          "note": "Orientation/responsiveness across bar, dashboard and desktop placements has not had a graphical review; static checks cannot verify it."
+          "note": "Not graphically reviewed per extension. Observed only as a group in the QA VM on all four bar edges (popover anchoring pass); vertical rails still elide text-only indicators until HorneroOS/shell PluginKit rail glyph change and per-extension glyphs land."
         },
         "loadingErrorStates": {
           "status": "unverified",
           "note": "Static probe finds error/empty-state text in the QML, but loading and error presentation have not been verified graphically."
         },
         "performance": {
-          "status": "unverified",
-          "note": "Not profiled. Static cadence only: timer intervals (ms)=['30000'], process polling=yes; runtime cost is unverified."
+          "status": "pass",
+          "note": "QA VM (shell main + PluginKit 3, 3 vCPU llvmpipe, 2026-11-17): loads without a slow-load or load-churn flag; idle CPU of the shell process measured as one set, not per plugin: bare shell 9.2%, 6 desktop widgets 9.4%, 22 bar indicators 11.8%, 12 dashboard cards 11.5% of one core (VM measurement, noise about 0.5 pp; mission evidence plugin-e2e/idle-cpu.txt). Not a published estimate."
         }
       },
       "issue": "https://github.com/HorneroOS/plugins/issues/21"
@@ -1114,15 +1114,15 @@
         },
         "orientation": {
           "status": "unverified",
-          "note": "Host context (hostOrientation/hostCompact/hostAvailableWidth) drives UiStack and the compact bar indicator, but orientation across dashboard and bar placements has not had a graphical review."
+          "note": "Not graphically reviewed per extension. Observed only as a group in the QA VM on all four bar edges (popover anchoring pass); vertical rails still elide text-only indicators until HorneroOS/shell PluginKit rail glyph change and per-extension glyphs land."
         },
         "loadingErrorStates": {
-          "status": "unverified",
-          "note": "UiState placeholders cover not-configured, loading and facade-error states and derived rows read Unavailable for unparseable sun times; presentation has not been verified graphically in a live shell."
+          "status": "pass",
+          "note": "QA VM: with no matching device/service the surface renders its empty/unavailable state instead of failing (observed in the dashboard Extensions tab and bar, 2026-11-17)."
         },
         "performance": {
-          "status": "unverified",
-          "note": "Not profiled. Static cadence only: no own timer, process or network; reads the shared cached Weather and event Time singletons behind Subscription leases; runtime cost is unverified."
+          "status": "pass",
+          "note": "QA VM (shell main + PluginKit 3, 3 vCPU llvmpipe, 2026-11-17): loads without a slow-load or load-churn flag; idle CPU of the shell process measured as one set, not per plugin: bare shell 9.2%, 6 desktop widgets 9.4%, 22 bar indicators 11.8%, 12 dashboard cards 11.5% of one core (VM measurement, noise about 0.5 pp; mission evidence plugin-e2e/idle-cpu.txt). Not a published estimate."
         }
       },
       "issue": "https://github.com/HorneroOS/plugins/issues/27"
@@ -1159,15 +1159,15 @@
         },
         "orientation": {
           "status": "unverified",
-          "note": "Host context (hostOrientation/hostCompact/hostAvailableWidth) drives UiStack and card width, but orientation across dashboard placements has not had a graphical review."
+          "note": "Not graphically reviewed per extension. Observed only as a group in the QA VM on all four bar edges (popover anchoring pass); vertical rails still elide text-only indicators until HorneroOS/shell PluginKit rail glyph change and per-extension glyphs land."
         },
         "loadingErrorStates": {
           "status": "unverified",
           "note": "Honest per-row Unavailable states, a Partial data verdict and a UiState empty placeholder exist in QML; presentation has not been verified graphically in a live shell."
         },
         "performance": {
-          "status": "unverified",
-          "note": "Not profiled. Static cadence only: no timers or polling of its own; System/Network are shared refCount-gated polling domains and Power is event-pushed, all held via Subscription leases; runtime cost is unverified."
+          "status": "pass",
+          "note": "QA VM (shell main + PluginKit 3, 3 vCPU llvmpipe, 2026-11-17): loads without a slow-load or load-churn flag; idle CPU of the shell process measured as one set, not per plugin: bare shell 9.2%, 6 desktop widgets 9.4%, 22 bar indicators 11.8%, 12 dashboard cards 11.5% of one core (VM measurement, noise about 0.5 pp; mission evidence plugin-e2e/idle-cpu.txt). Not a published estimate."
         }
       },
       "issue": "https://github.com/HorneroOS/plugins/issues/26"
@@ -1204,15 +1204,15 @@
         },
         "orientation": {
           "status": "unverified",
-          "note": "Host context (hostOrientation/hostCompact/hostAvailableWidth) drives UiStack and card width, but orientation across dashboard placements has not had a graphical review."
+          "note": "Not graphically reviewed per extension. Observed only as a group in the QA VM on all four bar edges (popover anchoring pass); vertical rails still elide text-only indicators until HorneroOS/shell PluginKit rail glyph change and per-extension glyphs land."
         },
         "loadingErrorStates": {
           "status": "unverified",
           "note": "UiState loading placeholder covers the scope's collecting-samples state and unavailable facade values read as Unavailable; presentation has not been verified graphically in a live shell."
         },
         "performance": {
-          "status": "unverified",
-          "note": "Not profiled. Static cadence only: one in-card sample tick every sampleSeconds (default 5s) reading the shared System singleton behind a Subscription lease; no own process, file poll or polling timer beyond that read; runtime cost is unverified."
+          "status": "pass",
+          "note": "QA VM (shell main + PluginKit 3, 3 vCPU llvmpipe, 2026-11-17): loads without a slow-load or load-churn flag; idle CPU of the shell process measured as one set, not per plugin: bare shell 9.2%, 6 desktop widgets 9.4%, 22 bar indicators 11.8%, 12 dashboard cards 11.5% of one core (VM measurement, noise about 0.5 pp; mission evidence plugin-e2e/idle-cpu.txt). Not a published estimate."
         }
       },
       "issue": "https://github.com/HorneroOS/plugins/issues/26"
@@ -1249,15 +1249,15 @@
         },
         "orientation": {
           "status": "unverified",
-          "note": "Host context (hostOrientation/hostCompact/hostAvailableWidth) drives UiStack, the compact bar label and dashboard card width, but bar edges, popover placement and dashboard rendering have had no graphical review in a live shell; the declared launcher surface is not loaded by any host yet (shell#250)."
+          "note": "Not graphically reviewed per extension. Observed only as a group in the QA VM on all four bar edges (popover anchoring pass); vertical rails still elide text-only indicators until HorneroOS/shell PluginKit rail glyph change and per-extension glyphs land."
         },
         "loadingErrorStates": {
           "status": "unverified",
           "note": "UiState empty/error placeholders plus the 1.x explicit error strings cover empty and invalid input on bar popover and dashboard; presentation is not verified graphically in a live shell. The launcher declaration states honestly in the README that it runs nothing today."
         },
         "performance": {
-          "status": "unverified",
-          "note": "Not profiled. Static cadence only: no timers, processes or polling; computation is pure JS on user input. Pure logic is oracle-checked in tests/test_utility_logic.py; runtime cost is unverified."
+          "status": "pass",
+          "note": "QA VM (shell main + PluginKit 3, 3 vCPU llvmpipe, 2026-11-17): loads without a slow-load or load-churn flag; idle CPU of the shell process measured as one set, not per plugin: bare shell 9.2%, 6 desktop widgets 9.4%, 22 bar indicators 11.8%, 12 dashboard cards 11.5% of one core (VM measurement, noise about 0.5 pp; mission evidence plugin-e2e/idle-cpu.txt). Not a published estimate."
         }
       },
       "issue": "https://github.com/HorneroOS/plugins/issues/30"
@@ -1294,15 +1294,15 @@
         },
         "orientation": {
           "status": "unverified",
-          "note": "Host context (hostOrientation/hostCompact/hostAvailableWidth) drives UiStack, the compact bar label and dashboard card width, but bar edges, popover placement and dashboard rendering have had no graphical review in a live shell; the declared launcher surface is not loaded by any host yet (shell#250)."
+          "note": "Not graphically reviewed per extension. Observed only as a group in the QA VM on all four bar edges (popover anchoring pass); vertical rails still elide text-only indicators until HorneroOS/shell PluginKit rail glyph change and per-extension glyphs land."
         },
         "loadingErrorStates": {
           "status": "unverified",
           "note": "UiState empty/error placeholders plus the 1.x explicit error strings cover empty and invalid input on bar popover and dashboard; presentation is not verified graphically in a live shell. The launcher declaration states honestly in the README that it runs nothing today."
         },
         "performance": {
-          "status": "unverified",
-          "note": "Not profiled. Static cadence only: no timers, processes or polling; computation is pure JS on user input. Pure logic is oracle-checked in tests/test_utility_logic.py; runtime cost is unverified."
+          "status": "pass",
+          "note": "QA VM (shell main + PluginKit 3, 3 vCPU llvmpipe, 2026-11-17): loads without a slow-load or load-churn flag; idle CPU of the shell process measured as one set, not per plugin: bare shell 9.2%, 6 desktop widgets 9.4%, 22 bar indicators 11.8%, 12 dashboard cards 11.5% of one core (VM measurement, noise about 0.5 pp; mission evidence plugin-e2e/idle-cpu.txt). Not a published estimate."
         }
       },
       "issue": "https://github.com/HorneroOS/plugins/issues/30"
@@ -1339,15 +1339,15 @@
         },
         "orientation": {
           "status": "unverified",
-          "note": "Host context (hostOrientation/hostCompact/hostAvailableWidth) drives UiStack and compact label-dropping on both surfaces, but orientation across bar edges and dashboard has not had a graphical review."
+          "note": "Not graphically reviewed per extension. Observed only as a group in the QA VM on all four bar edges (popover anchoring pass); vertical rails still elide text-only indicators until HorneroOS/shell PluginKit rail glyph change and per-extension glyphs land."
         },
         "loadingErrorStates": {
           "status": "unverified",
           "note": "UiState loading covers the pre-first-read state and UiState error covers unreadable/unparsable /proc/uptime in popover and card; presentation has not been verified graphically in a live shell."
         },
         "performance": {
-          "status": "unverified",
-          "note": "Not profiled. Static cadence only: one declared cat /proc/uptime process per surface on load, every refreshSeconds (default 60s) and on user activation/Refresh; bar and dashboard Loaders read separately; runtime cost is unverified."
+          "status": "pass",
+          "note": "QA VM (shell main + PluginKit 3, 3 vCPU llvmpipe, 2026-11-17): loads without a slow-load or load-churn flag; idle CPU of the shell process measured as one set, not per plugin: bare shell 9.2%, 6 desktop widgets 9.4%, 22 bar indicators 11.8%, 12 dashboard cards 11.5% of one core (VM measurement, noise about 0.5 pp; mission evidence plugin-e2e/idle-cpu.txt). Not a published estimate."
         }
       },
       "issue": "https://github.com/HorneroOS/plugins/issues/31"
@@ -1384,15 +1384,15 @@
         },
         "orientation": {
           "status": "unverified",
-          "note": "Host context (hostOrientation/hostCompact/hostAvailableWidth) drives UiStack and compact label-dropping on both surfaces, but orientation across bar edges and dashboard has not had a graphical review."
+          "note": "Not graphically reviewed per extension. Observed only as a group in the QA VM on all four bar edges (popover anchoring pass); vertical rails still elide text-only indicators until HorneroOS/shell PluginKit rail glyph change and per-extension glyphs land."
         },
         "loadingErrorStates": {
-          "status": "unverified",
-          "note": "UiState empty placeholder covers the no-output-device state and muted is labelled in bar, popover and card; presentation has not been verified graphically in a live shell."
+          "status": "pass",
+          "note": "QA VM: with no matching device/service the surface renders its empty/unavailable state instead of failing (observed in the dashboard Extensions tab and bar, 2026-11-17)."
         },
         "performance": {
-          "status": "unverified",
-          "note": "Not profiled. Static cadence only: no timers or polling; Audio is event-pushed by PipeWire and both surfaces hold a Subscription audio lease; runtime cost is unverified."
+          "status": "pass",
+          "note": "QA VM (shell main + PluginKit 3, 3 vCPU llvmpipe, 2026-11-17): loads without a slow-load or load-churn flag; idle CPU of the shell process measured as one set, not per plugin: bare shell 9.2%, 6 desktop widgets 9.4%, 22 bar indicators 11.8%, 12 dashboard cards 11.5% of one core (VM measurement, noise about 0.5 pp; mission evidence plugin-e2e/idle-cpu.txt). Not a published estimate."
         }
       },
       "issue": "https://github.com/HorneroOS/plugins/issues/25"
@@ -1429,15 +1429,15 @@
         },
         "orientation": {
           "status": "unverified",
-          "note": "Host context (hostOrientation/hostCompact/hostAvailableWidth) drives UiStack and the compact bar indicator, but orientation across dashboard and bar placements has not had a graphical review."
+          "note": "Not graphically reviewed per extension. Observed only as a group in the QA VM on all four bar edges (popover anchoring pass); vertical rails still elide text-only indicators until HorneroOS/shell PluginKit rail glyph change and per-extension glyphs land."
         },
         "loadingErrorStates": {
-          "status": "unverified",
-          "note": "UiState placeholders cover not-configured, loading and facade-error states on both surfaces; presentation has not been verified graphically in a live shell."
+          "status": "pass",
+          "note": "QA VM: with no matching device/service the surface renders its empty/unavailable state instead of failing (observed in the dashboard Extensions tab and bar, 2026-11-17)."
         },
         "performance": {
-          "status": "unverified",
-          "note": "Not profiled. Static cadence only: no own timer, process or network; reads the shared cached Weather singleton behind a Subscription lease; runtime cost is unverified."
+          "status": "pass",
+          "note": "QA VM (shell main + PluginKit 3, 3 vCPU llvmpipe, 2026-11-17): loads without a slow-load or load-churn flag; idle CPU of the shell process measured as one set, not per plugin: bare shell 9.2%, 6 desktop widgets 9.4%, 22 bar indicators 11.8%, 12 dashboard cards 11.5% of one core (VM measurement, noise about 0.5 pp; mission evidence plugin-e2e/idle-cpu.txt). Not a published estimate."
         }
       },
       "issue": "https://github.com/HorneroOS/plugins/issues/27"
@@ -1474,15 +1474,15 @@
         },
         "orientation": {
           "status": "unverified",
-          "note": "Host context (hostOrientation/hostCompact/hostAvailableWidth) drives UiStack and card width, but orientation across dashboard placements has not had a graphical review."
+          "note": "Not graphically reviewed per extension. Observed only as a group in the QA VM on all four bar edges (popover anchoring pass); vertical rails still elide text-only indicators until HorneroOS/shell PluginKit rail glyph change and per-extension glyphs land."
         },
         "loadingErrorStates": {
           "status": "unverified",
           "note": "Offsets are labelled per row with DST chips and a rule-table caption instead of a fake database state; presentation has not been verified graphically in a live shell."
         },
         "performance": {
-          "status": "unverified",
-          "note": "Not profiled. Static cadence only: the 1.x 1000ms own timer is removed; Time is event-pushed (second precision) behind a Subscription time lease; runtime cost is unverified. Offset rules are checked against zoneinfo in tests/test_time_logic.py."
+          "status": "pass",
+          "note": "QA VM (shell main + PluginKit 3, 3 vCPU llvmpipe, 2026-11-17): loads without a slow-load or load-churn flag; idle CPU of the shell process measured as one set, not per plugin: bare shell 9.2%, 6 desktop widgets 9.4%, 22 bar indicators 11.8%, 12 dashboard cards 11.5% of one core (VM measurement, noise about 0.5 pp; mission evidence plugin-e2e/idle-cpu.txt). Not a published estimate."
         }
       },
       "issue": "https://github.com/HorneroOS/plugins/issues/28"
@@ -1519,15 +1519,15 @@
         },
         "orientation": {
           "status": "unverified",
-          "note": "Layout follows the host's content box (hostAvailableWidth/Height); position, size and edit mode are owned by the PluginKit 3 desktop host and have not had a graphical review in a live shell."
+          "note": "Not graphically reviewed per extension. Observed only as a group in the QA VM on all four bar edges (popover anchoring pass); vertical rails still elide text-only indicators until HorneroOS/shell PluginKit rail glyph change and per-extension glyphs land."
         },
         "loadingErrorStates": {
           "status": "unverified",
           "note": "Unavailable sensors/sources render an em dash or a labelled unavailable state instead of a value; presentation has not been verified graphically in a live shell."
         },
         "performance": {
-          "status": "unverified",
-          "note": "Not profiled on a host. Static cadence only: no own timer, process or file poll; shared provider leases only (docs/PLUGINS.md, Instrumentation cost); runtime cost is unverified."
+          "status": "pass",
+          "note": "QA VM (shell main + PluginKit 3, 3 vCPU llvmpipe, 2026-11-17): loads without a slow-load or load-churn flag; idle CPU of the shell process measured as one set, not per plugin: bare shell 9.2%, 6 desktop widgets 9.4%, 22 bar indicators 11.8%, 12 dashboard cards 11.5% of one core (VM measurement, noise about 0.5 pp; mission evidence plugin-e2e/idle-cpu.txt). Not a published estimate."
         }
       },
       "issue": "HorneroOS/plugins#21"
@@ -1564,15 +1564,15 @@
         },
         "orientation": {
           "status": "unverified",
-          "note": "Layout follows the host's content box (hostAvailableWidth/Height); position, size and edit mode are owned by the PluginKit 3 desktop host and have not had a graphical review in a live shell."
+          "note": "Not graphically reviewed per extension. Observed only as a group in the QA VM on all four bar edges (popover anchoring pass); vertical rails still elide text-only indicators until HorneroOS/shell PluginKit rail glyph change and per-extension glyphs land."
         },
         "loadingErrorStates": {
-          "status": "unverified",
-          "note": "Unavailable sensors/sources render an em dash or a labelled unavailable state instead of a value; presentation has not been verified graphically in a live shell."
+          "status": "pass",
+          "note": "QA VM: with no matching device/service the surface renders its empty/unavailable state instead of failing (observed in the dashboard Extensions tab and bar, 2026-11-17)."
         },
         "performance": {
-          "status": "unverified",
-          "note": "Not profiled on a host. Static cadence only: no own timer, process or file poll; shared provider leases only (docs/PLUGINS.md, Instrumentation cost); runtime cost is unverified."
+          "status": "pass",
+          "note": "QA VM (shell main + PluginKit 3, 3 vCPU llvmpipe, 2026-11-17): loads without a slow-load or load-churn flag; idle CPU of the shell process measured as one set, not per plugin: bare shell 9.2%, 6 desktop widgets 9.4%, 22 bar indicators 11.8%, 12 dashboard cards 11.5% of one core (VM measurement, noise about 0.5 pp; mission evidence plugin-e2e/idle-cpu.txt). Not a published estimate."
         }
       },
       "issue": "HorneroOS/plugins#21"
@@ -1609,15 +1609,15 @@
         },
         "orientation": {
           "status": "unverified",
-          "note": "Layout follows the host's content box (hostAvailableWidth/Height); position, size and edit mode are owned by the PluginKit 3 desktop host and have not had a graphical review in a live shell."
+          "note": "Not graphically reviewed per extension. Observed only as a group in the QA VM on all four bar edges (popover anchoring pass); vertical rails still elide text-only indicators until HorneroOS/shell PluginKit rail glyph change and per-extension glyphs land."
         },
         "loadingErrorStates": {
-          "status": "unverified",
-          "note": "Unavailable sensors/sources render an em dash or a labelled unavailable state instead of a value; presentation has not been verified graphically in a live shell."
+          "status": "pass",
+          "note": "QA VM: with no matching device/service the surface renders its empty/unavailable state instead of failing (observed in the dashboard Extensions tab and bar, 2026-11-17)."
         },
         "performance": {
-          "status": "unverified",
-          "note": "Not profiled on a host. Static cadence only: no own timer, process or file poll; shared provider leases only (docs/PLUGINS.md, Instrumentation cost); runtime cost is unverified."
+          "status": "pass",
+          "note": "QA VM (shell main + PluginKit 3, 3 vCPU llvmpipe, 2026-11-17): loads without a slow-load or load-churn flag; idle CPU of the shell process measured as one set, not per plugin: bare shell 9.2%, 6 desktop widgets 9.4%, 22 bar indicators 11.8%, 12 dashboard cards 11.5% of one core (VM measurement, noise about 0.5 pp; mission evidence plugin-e2e/idle-cpu.txt). Not a published estimate."
         }
       },
       "issue": "HorneroOS/plugins#21"

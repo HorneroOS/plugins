@@ -16,5 +16,7 @@
   "Weather location not configured. Set a location in the shell settings to see conditions here.": "Ubicación del clima no configurada. Configurá una ubicación en los ajustes del shell para ver las condiciones acá.",
   "Weather unavailable: %1": "Clima no disponible: %1",
   "Weather: activate for details": "Clima: activá para ver los detalles",
-  "Wind": "Viento"
+  "Wind": "Viento",
+  "Weather: set a location in the shell settings": "Clima: definí una ubicación en los ajustes del shell",
+  "Weather %1: activate for details": "Clima %1: activá para ver los detalles"
 }

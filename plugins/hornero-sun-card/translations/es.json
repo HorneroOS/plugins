@@ -20,5 +20,6 @@
   "Unavailable (the facade reports today only)": "No disponible (la fachada solo informa hoy)",
   "Unavailable from the Weather facade: solar noon, twilight, moonrise/moonset, the location name and multiple locations. Derived rows come only from today's sunrise/sunset strings and the current time.": "No disponibles en la fachada Weather: mediodía solar, crepúsculo, salida/puesta de la luna, el nombre de la ubicación y varias ubicaciones. Las filas derivadas vienen solo de los textos de salida/puesta del sol de hoy y la hora actual.",
   "Weather location not configured. Set a location in the shell settings to see sunrise and sunset here.": "Ubicación del clima no configurada. Configurá una ubicación en los ajustes del shell para ver la salida y la puesta del sol acá.",
-  "Weather unavailable: %1": "Clima no disponible: %1"
+  "Weather unavailable: %1": "Clima no disponible: %1",
+  "%1 / %2": "%1 / %2"
 }

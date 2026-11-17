@@ -25,6 +25,11 @@ jobs:
         run: python3 scripts/validate_plugins.py
       - name: Catalog is fresh
         run: python3 scripts/gen_catalog.py --check
+      - name: Changed payloads bump their version
+        if: github.event_name == 'pull_request'
+        run: |
+          git fetch --no-tags origin "${{ github.base_ref }}"
+          python3 scripts/check_version_bumps.py --base "origin/${{ github.base_ref }}"
       # The shell validator is the canonical PluginKit contract. Every
       # package must be schemaVersion 3 and pass it unchanged. The shell revision
       # is pinned and bumped together with the catalogue.

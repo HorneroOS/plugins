@@ -32,7 +32,9 @@ Item {
         id: indicator
 
         variant: "quiet"
-        text: Weather.ready && !root.hostCompact ? i18n.tr("Sun %1 / %2").arg(Weather.sunrise).arg(Weather.sunset) : i18n.tr("Sun Card")
+        glyph: "sunset"
+        // Times only when there is data and room; the glyph carries the rest.
+        text: Weather.ready && !root.hostCompact ? i18n.tr("%1 / %2").arg(Weather.sunrise).arg(Weather.sunset) : ""
         tooltipText: i18n.tr("Sun Card: activate for sunrise and sunset")
         accessibleName: i18n.tr("Sun Card details")
         onClicked: popover.toggle()
