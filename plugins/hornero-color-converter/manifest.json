@@ -2,8 +2,8 @@
   "schemaVersion": 3,
   "id": "hornero-color-converter",
   "name": "Hornero Color Converter",
-  "version": "3.0.0",
-  "description": "Utility Tools 2.0 color converter: bar quick hex action and compact dashboard detail converting validated #RGB/#RRGGBB to RGB and HSL and RGB back to hex. Invalid hex shows an error.",
+  "version": "3.1.0",
+  "description": "Utility Tools 2.0 color converter: bar quick hex action and compact dashboard detail converting validated #RGB/#RRGGBB to RGB and HSL and RGB back to hex. Invalid hex shows an error. Shows the current Hornero Chromatic seeds and renders a palette template.",
   "author": "HorneroOS contributors",
   "license": "MIT",
   "homepage": "https://github.com/HorneroOS/plugins",
@@ -28,9 +28,13 @@
   },
   "marketplace": {
     "compatibility": {
-      "minShellVersion": "1.0.0"
+      "minShellVersion": "1.3.0"
     },
     "changelog": [
+      {
+        "version": "3.1.0",
+        "notes": "Reference extension for Hornero Chromatic (RFC 0002): the dashboard panel shows the dynamic palette's seed colours (Theme.chromatic), re-reads them on every settled palette change (Theme.revision), picks sample ink with Theme.ensureContrast, and declares one theme template rendered by horneroctl into the extension's cache folder."
+      },
       {
         "version": "3.0.0",
         "notes": "PluginKit 3 on Hornero Signal: Signal text and spin controls, instrument module header, palette roles."
@@ -49,6 +53,7 @@
     "Main.qml",
     "Dashboard.qml",
     "Launcher.qml",
+    "palette.json.tmpl",
     "README.md",
     "LICENSE",
     "translations/es.json"
@@ -69,5 +74,13 @@
         "description": "Show the color preview swatch in the dashboard (the 1.x behaviour)."
       }
     }
+  },
+  "theme": {
+    "templates": [
+      {
+        "template": "palette.json.tmpl",
+        "output": "palette.json"
+      }
+    ]
   }
 }
