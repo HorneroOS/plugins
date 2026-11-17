@@ -2,7 +2,7 @@
   "schemaVersion": 3,
   "id": "hornero-dual-clock",
   "name": "Hornero Dual Clock",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "Dual Clock 2.0: local time next to a second zone (UTC by default, as in 1.x) in the bar, with a details popover. Pure-JS rule-based offsets, no processes or network.",
   "author": "HorneroOS contributors",
   "license": "MIT",
@@ -21,6 +21,10 @@
       "minShellVersion": "1.2.74"
     },
     "changelog": [
+      {
+        "version": "3.0.1",
+        "notes": "Vertical bar rail shows a single HH:mm line instead of two clipped lines."
+      },
       {
         "version": "3.0.0",
         "notes": "PluginKit 3 on Hornero Signal: tokens and variant names ported."

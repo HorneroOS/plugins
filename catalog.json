@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedFrom": "e9ad9954537a300a881ed7f98fc34f6ade6e5eda",
+  "generatedFrom": "74c8eafd23f56e9a55cd57237c74184a6a6a39f1",
   "plugins": [
     {
       "id": "hornero-agenda",
@@ -392,7 +392,7 @@
     {
       "id": "hornero-dual-clock",
       "name": "Hornero Dual Clock",
-      "version": "3.0.0",
+      "version": "3.0.1",
       "description": "Dual Clock 2.0: local time next to a second zone (UTC by default, as in 1.x) in the bar, with a details popover. Pure-JS rule-based offsets, no processes or network.",
       "author": "HorneroOS contributors",
       "license": "MIT",
@@ -439,7 +439,7 @@
       },
       "trust": "official",
       "path": "plugins/hornero-dual-clock",
-      "sha256": "531a0d9dd0b83b839d571eefe173bd794cf3f5bed2246b640f05c2a3b4a6f764"
+      "sha256": "a7616ce1e043adce9ca213063b51851d8b0c8e8cd3fc33882d4ba4ab14d2d620"
     },
     {
       "id": "hornero-focus-card",
@@ -1047,7 +1047,7 @@
     {
       "id": "hornero-system-insight",
       "name": "Hornero System Insight",
-      "version": "1.0.0",
+      "version": "1.0.1",
       "description": "System Insight: a desktop instrument over the shared system provider: a CPU oscilloscope from the shared Telemetry history, segmented meters, per-core load strips and temperatures. Real telemetry only.",
       "author": "HorneroOS contributors",
       "license": "MIT",
@@ -1082,7 +1082,7 @@
       },
       "trust": "official",
       "path": "plugins/hornero-system-insight",
-      "sha256": "c929f3b63d6ab304b1a6176effbc007d288b9855064eb084578051656f2bbd98"
+      "sha256": "967ec465f5973240b7966ac1aef9833d7012aaea52540f22c5a78d51f769e44e"
     },
     {
       "id": "hornero-system-monitor",
