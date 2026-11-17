@@ -132,7 +132,7 @@ PROBED_DIMENSIONS = ["tooltips", "accessibility", "translation", "settings", "th
 DIMENSION_STATUSES = {"pass", "fail", "na", "unverified"}
 ISSUE_RE = re.compile(r"^(https://github\.com/HorneroOS/plugins/issues/\d+|HorneroOS/plugins#\d+)$")
 DATE_RE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
-INTERACTIVE_RE = re.compile(r"\b(Button|TextField|TextInput|TextArea|Slider|MouseArea|TapHandler|Switch|CheckBox|ComboBox|SpinBox|UiButton|UiToggle|UiSlider)\b")
+INTERACTIVE_RE = re.compile(r"\b(Button|TextField|TextInput|TextArea|Slider|MouseArea|TapHandler|Switch|CheckBox|ComboBox|SpinBox|UiButton|UiToggle|UiSlider|UiTextField|UiTextArea|UiComboBox|UiSpinBox|UiActionRow)\b")
 HARD_COLOR_RE = re.compile(r'color:\s*"(#[0-9A-Fa-f]{3,8}|red|white|black|gray|grey|blue|green|yellow|orange|purple|pink)"')
 
 INVENTORY_FILE = "inventory.yaml"

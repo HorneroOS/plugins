@@ -42,10 +42,8 @@ exists. Until then, searching for this tool in the shell launcher
 will not run it -- the bar quick action above is the hosted
 quick path, and claiming otherwise would be false.
 
-PluginKit also has **no text-input, combo-box or spin-box
-primitive** (same `qmldir`); those controls stay
-`QtQuick.Controls` with `Accessible.name` and `ToolTip.text`, as
-in 1.x, while buttons/text/cards/states/stacks use `Ui*`.
+PluginKit 3 ships the Signal text controls (`UiTextField`, `UiTextArea`, `UiComboBox`, `UiSpinBox`); text input here uses them with an
+`accessibleName` and `tooltipText`, like every other control.
 
 ## Logic preserved from 1.x
 

@@ -137,7 +137,7 @@ Item {
                 tone: "signal"
             }
 
-            TextArea {
+            UiTextArea {
                 id: noteArea
 
                 width: parent.width
@@ -146,8 +146,7 @@ Item {
                 wrapMode: TextArea.Wrap
                 color: Theme.palette.ink
                 Accessible.name: i18n.tr("Quick note")
-                ToolTip.text: i18n.tr("Quick note (saved automatically; Ctrl+S saves now)")
-                ToolTip.visible: hovered
+                tooltipText: i18n.tr("Quick note (saved automatically; Ctrl+S saves now)")
                 onTextChanged: root.markDirty()
                 Keys.onPressed: (event) => {
                     if ((event.modifiers & Qt.ControlModifier) && event.key === Qt.Key_S) {

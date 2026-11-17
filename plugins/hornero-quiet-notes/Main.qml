@@ -113,7 +113,7 @@ Item {
                 text: root.note.length > 0 ? root.note : i18n.tr("No intention set yet.")
             }
 
-            TextField {
+            UiTextField {
                 id: input
 
                 visible: root.editing
@@ -122,8 +122,7 @@ Item {
                 placeholderText: i18n.tr("One line for this session...")
                 color: Theme.palette.ink
                 Accessible.name: i18n.tr("Session intention editor")
-                ToolTip.text: i18n.tr("Session intention (Enter accepts, Esc cancels; never saved)")
-                ToolTip.visible: hovered
+                tooltipText: i18n.tr("Session intention (Enter accepts, Esc cancels; never saved)")
                 onAccepted: root.closeEditor(true)
                 Keys.onEscapePressed: root.closeEditor(false)
             }

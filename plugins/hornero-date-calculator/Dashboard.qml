@@ -80,11 +80,11 @@ Item {
             UiText { role: "title"; text: i18n.tr("Date Calculator") }
 
             UiText { visible: root.showUtcNote; width: parent.width; role: "caption"; text: i18n.tr("All math uses UTC to avoid DST drift.") }
-            TextField { id: startInput; width: parent.width; placeholderText: "Start YYYY-MM-DD"; Accessible.name: i18n.tr("Start date"); ToolTip.text: i18n.tr("Start date YYYY-MM-DD"); ToolTip.visible: hovered }
-            TextField { id: endInput; width: parent.width; placeholderText: "End YYYY-MM-DD"; Accessible.name: i18n.tr("End date"); ToolTip.text: i18n.tr("End date YYYY-MM-DD"); ToolTip.visible: hovered }
+            UiTextField { id: startInput; width: parent.width; placeholderText: "Start YYYY-MM-DD"; Accessible.name: i18n.tr("Start date"); tooltipText: i18n.tr("Start date YYYY-MM-DD") }
+            UiTextField { id: endInput; width: parent.width; placeholderText: "End YYYY-MM-DD"; Accessible.name: i18n.tr("End date"); tooltipText: i18n.tr("End date YYYY-MM-DD") }
             UiButton { text: i18n.tr("Days between"); accessibleName: i18n.tr("Calculate days between"); tooltipText: i18n.tr("Days between start and end dates (UTC)"); onClicked: root.daysBetween() }
-            TextField { id: baseInput; width: parent.width; placeholderText: "Base YYYY-MM-DD"; Accessible.name: i18n.tr("Base date"); ToolTip.text: i18n.tr("Base date YYYY-MM-DD"); ToolTip.visible: hovered }
-            TextField { id: daysInput; width: parent.width; placeholderText: i18n.tr("Days to add (integer)"); Accessible.name: i18n.tr("Days to add"); ToolTip.text: i18n.tr("Integer days to add, may be negative"); ToolTip.visible: hovered }
+            UiTextField { id: baseInput; width: parent.width; placeholderText: "Base YYYY-MM-DD"; Accessible.name: i18n.tr("Base date"); tooltipText: i18n.tr("Base date YYYY-MM-DD") }
+            UiTextField { id: daysInput; width: parent.width; placeholderText: i18n.tr("Days to add (integer)"); Accessible.name: i18n.tr("Days to add"); tooltipText: i18n.tr("Integer days to add, may be negative") }
             UiButton { variant: "quiet"; text: i18n.tr("Add days"); accessibleName: i18n.tr("Add days to base date"); tooltipText: i18n.tr("Add days to base date (UTC)"); onClicked: root.addDays() }
             UiState { visible: root.errorText !== ""; width: parent.width; kind: "error"; message: root.errorText }
             UiText { visible: root.resultText !== ""; width: parent.width; Accessible.name: i18n.tr("Date result"); text: root.resultText }

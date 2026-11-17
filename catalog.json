@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedFrom": "304f7ddaf046505b162dfc2574817e32f8c0116d",
+  "generatedFrom": "07a80c5514a9f3660e0eaa4902c82dca08c0d216",
   "plugins": [
     {
       "id": "hornero-agenda",
@@ -317,7 +317,7 @@
       },
       "trust": "official",
       "path": "plugins/hornero-date-calculator",
-      "sha256": "0d0872eb29f0ffcb03b60e23fe127a86d4e50455ab678accd1b91c403be57a74"
+      "sha256": "a745a31a30136bb846f28a7af89ede0c1dad56bbe3cfad9f1783a7c783acb735"
     },
     {
       "id": "hornero-disk-usage",
@@ -749,7 +749,7 @@
       },
       "trust": "official",
       "path": "plugins/hornero-quick-notes",
-      "sha256": "3daa3c9c7a37308ec1b1d7b22f382fdf528cc32a10239d04697f4078ec2df306"
+      "sha256": "d1053391b2a4a7c5d0fcc316df4c43b46986399c9fd28bfecc470ecf16f27144"
     },
     {
       "id": "hornero-quiet-notes",
@@ -781,7 +781,7 @@
       },
       "trust": "official",
       "path": "plugins/hornero-quiet-notes",
-      "sha256": "02c2fe486c9644f5b3313fed7571228cb1b3c5872e9412dab976821a1fa47b8a"
+      "sha256": "6059eb2eed5f8d35dced15cd1337a729702382cd352a4fe55981e952537e8004"
     },
     {
       "id": "hornero-stopwatch",

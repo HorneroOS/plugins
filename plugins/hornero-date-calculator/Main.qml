@@ -108,13 +108,12 @@ Item {
 
             UiText { role: "title"; text: i18n.tr("Date Calculator") }
 
-            TextField {
+            UiTextField {
                 id: quickInput
                 width: parent.width
                 placeholderText: i18n.tr("2026-01-01 2026-02-01")
                 Accessible.name: i18n.tr("Quick date calculation")
-                ToolTip.text: i18n.tr("Quick date calculation")
-                ToolTip.visible: hovered
+                tooltipText: i18n.tr("Quick date calculation")
                 onAccepted: root.runQuick()
             }
 
