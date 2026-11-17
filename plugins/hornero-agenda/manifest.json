@@ -2,7 +2,7 @@
   "schemaVersion": 3,
   "id": "hornero-agenda",
   "name": "Hornero Agenda",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "Agenda 3.0 on Hornero Signal: a desktop widget of date facts (day, ISO week, quarter, day of year, days remaining) with a year partition bar, from the shared time provider. Dates only; no events source.",
   "author": "HorneroOS contributors",
   "license": "MIT",
@@ -31,6 +31,10 @@
       "minShellVersion": "1.2.79"
     },
     "changelog": [
+      {
+        "version": "3.0.1",
+        "notes": "Shorter footnote so it is not clipped at the bottom of the widget."
+      },
       {
         "version": "3.0.0",
         "notes": "PluginKit 3 desktop widget on Hornero Signal: host-owned frame, position and size (sizeClass and showOnDesktop settings removed); day readout, ISO week/quarter/day-of-year readouts and a year partition bar with a dimension line."

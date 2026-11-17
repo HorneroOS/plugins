@@ -2,7 +2,7 @@
   "schemaVersion": 3,
   "id": "hornero-calendar",
   "name": "Hornero Calendar",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "Calendar 3.0 on Hornero Signal: a desktop widget with a display clock, the full date and a square-celled month grid over the shared time provider. Dates only; no events source.",
   "author": "HorneroOS contributors",
   "license": "MIT",
@@ -31,6 +31,10 @@
       "minShellVersion": "1.2.79"
     },
     "changelog": [
+      {
+        "version": "3.0.1",
+        "notes": "Shorter footnote so it is not clipped at the bottom of the widget."
+      },
       {
         "version": "3.0.0",
         "notes": "PluginKit 3 desktop widget on Hornero Signal: the host now owns the frame, position, size and edit mode, so the in-widget size class, hide/show and placement popover (settings sizeClass, showOnDesktop) are removed; display clock, square-celled month grid with today in signal."

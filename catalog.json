@@ -1,11 +1,11 @@
 {
   "schemaVersion": 1,
-  "generatedFrom": "7f92d9ad98f586ca3e04fa0557c2591b66b5a7b3",
+  "generatedFrom": "e9ad9954537a300a881ed7f98fc34f6ade6e5eda",
   "plugins": [
     {
       "id": "hornero-agenda",
       "name": "Hornero Agenda",
-      "version": "3.0.0",
+      "version": "3.0.1",
       "description": "Agenda 3.0 on Hornero Signal: a desktop widget of date facts (day, ISO week, quarter, day of year, days remaining) with a year partition bar, from the shared time provider. Dates only; no events source.",
       "author": "HorneroOS contributors",
       "license": "MIT",
@@ -38,7 +38,7 @@
       },
       "trust": "official",
       "path": "plugins/hornero-agenda",
-      "sha256": "16e9a13b8af86c8093c5ab2fc333bfa896c4168e6147da40fe43649ac48c0703"
+      "sha256": "6ce1012d9131bef7cec5fcc265eadd9d17dbdb7158e629ab277d1613182cf587"
     },
     {
       "id": "hornero-ai-usage",
@@ -207,7 +207,7 @@
     {
       "id": "hornero-calendar",
       "name": "Hornero Calendar",
-      "version": "3.0.0",
+      "version": "3.0.1",
       "description": "Calendar 3.0 on Hornero Signal: a desktop widget with a display clock, the full date and a square-celled month grid over the shared time provider. Dates only; no events source.",
       "author": "HorneroOS contributors",
       "license": "MIT",
@@ -249,7 +249,7 @@
       },
       "trust": "official",
       "path": "plugins/hornero-calendar",
-      "sha256": "2e9d299aea990dcf43ae5a8bfa2185a710cb439dee7b1fe5435562e4478d41b3"
+      "sha256": "d146d6e114bd90152cd64b0ee6e8a44032928c8ae63ba25c1b96932b97a48a36"
     },
     {
       "id": "hornero-color-converter",

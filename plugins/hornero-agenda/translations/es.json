@@ -2,7 +2,6 @@
   "%1% of the year elapsed": "%1% del año transcurrido",
   "Agenda": "Agenda",
   "Agenda: %1": "Agenda: %1",
-  "Date facts from the system clock; extensions have no calendar events source yet.": "Datos de fecha del reloj del sistema; las extensiones todavía no tienen una fuente de eventos de calendario.",
   "Day": "Día",
   "Days remaining in month": "Días restantes en el mes",
   "Days remaining in year": "Días restantes en el año",
@@ -12,5 +11,6 @@
   "Quarter": "Trimestre",
   "Week": "Semana",
   "Year day": "Día del año",
-  "Year progress": "Progreso del año"
+  "Year progress": "Progreso del año",
+  "System clock dates only; no events source yet.": "Solo fechas del reloj del sistema; todavía no hay fuente de eventos."
 }
