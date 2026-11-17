@@ -270,6 +270,54 @@ class ContractTest(unittest.TestCase):
         })
         self.assertTrue(any("cannot declare minimum" in e for e in errors))
 
+    def test_level_4_settings_need_the_pluginkit_declaration_and_validate(self):
+        settings = {
+            "tint": {"type": "colour", "default": "#33ccff", "title": "Accent", "group": "Look"},
+            "metrics": {"type": "list", "default": ["cpu"], "options": ["cpu", "mem"], "minItems": 1},
+            "note": {"type": "text", "default": "", "rows": 3},
+            "folder": {"type": "path", "default": "notes"},
+            "size": {"type": "integer", "default": 12, "minimum": 8, "maximum": 32, "step": 2, "unit": "px"},
+            "show": {"type": "boolean", "default": True, "visibleWhen": {"key": "size", "equals": 12}},
+        }
+        caps = {"processCommands": [], "networkHosts": [], "settings": settings}
+        errors = self.errors_for(capabilities=caps)
+        self.assertTrue(any('declare "pluginKit": 4' in e for e in errors), errors)
+        errors = self.errors_for(pid="hornero-example2", capabilities=caps, pluginKit=4)
+        self.assertEqual([e for e in errors if "never used in QML" not in e and "Settings pluginId" not in e], [], errors)
+
+    def test_invalid_level_4_declarations(self):
+        bad = [
+            {"c": {"type": "colour", "default": "red"}},
+            {"c": {"type": "colour", "default": "#33ccff80"}},
+            {"l": {"type": "list", "default": ["x"], "options": ["a"]}},
+            {"l": {"type": "list", "default": [], "options": ["a"], "minItems": 1}},
+            {"t": {"type": "text", "default": "x", "rows": 13}},
+            {"p": {"type": "path", "default": "/etc/passwd"}},
+            {"p": {"type": "path", "default": "../x"}},
+            {"n": {"type": "integer", "default": 1, "step": 0}},
+            {"s": {"type": "string", "default": "x", "unit": "px"}},
+            {"a": {"type": "boolean", "default": True, "visibleWhen": {"key": "a", "equals": True}}},
+            {"a": {"type": "boolean", "default": True, "visibleWhen": {"key": "zz", "equals": True}}},
+        ]
+        for index, settings in enumerate(bad):
+            errors = self.errors_for(pid=f"hornero-bad{index}", pluginKit=4, capabilities={
+                "processCommands": [], "networkHosts": [], "settings": settings})
+            self.assertTrue(any(f"hornero-bad{index}" in e or "settings" in e for e in errors), (settings, errors))
+
+    def test_pluginkit_field_is_bounded_and_instances_need_level_4(self):
+        for value in (2, 5, True, "4"):
+            errors = self.errors_for(pid="hornero-level", pluginKit=value)
+            self.assertTrue(any("pluginKit must be an integer" in e for e in errors), (value, errors))
+            for stale in self.root.glob("plugins/hornero-level"):
+                import shutil
+                shutil.rmtree(stale)
+        errors = self.errors_for(pid="hornero-inst", placement="desktop", surfaces={
+            "desktop": {"entrypoint": "Main.qml", "instances": True}})
+        self.assertTrue(any("instances needs PluginKit 4" in e for e in errors), errors)
+        errors = self.errors_for(pid="hornero-inst2", placement="desktop", pluginKit=4, surfaces={
+            "desktop": {"entrypoint": "Main.qml", "instances": True}})
+        self.assertFalse(any("instances" in e for e in errors), errors)
+
     def test_undeclared_and_unused_settings_keys(self):
         qml = GOOD_QML + '\nSettings { pluginId: "hornero-example" }\nText { text: String(pluginSettings.value("ghost", 1)) }\n'
         errors = self.errors_for(qml=qml, capabilities={

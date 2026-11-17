@@ -50,7 +50,7 @@ def build() -> dict:
     entries = []
     for plugin_dir in sorted(p for p in PLUGINS.iterdir() if p.is_dir()):
         manifest = json.loads((plugin_dir / "manifest.json").read_text())
-        entries.append(
+        entry = (
             {
                 "id": manifest["id"],
                 "name": manifest["name"],
@@ -67,6 +67,12 @@ def build() -> dict:
                 "sha256": payload_sha256(plugin_dir, manifest),
             }
         )
+        # RFC 0003: record the minimum PluginKit level only when it is
+        # above the baseline, so existing entries stay byte-identical and
+        # a registry can hide what a given Shell cannot run.
+        if manifest.get("pluginKit", 3) != 3:
+            entry["pluginKit"] = manifest["pluginKit"]
+        entries.append(entry)
     # Revision of the last commit that touched plugins/ at generation
     # time. It is provenance for the snapshot, not freshness: a squash
     # merge rewrites that commit, so --check must not compare it (see

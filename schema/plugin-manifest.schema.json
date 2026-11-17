@@ -18,56 +18,189 @@
     "capabilities"
   ],
   "properties": {
-    "schemaVersion": { "const": 3, "description": "PluginKit 3 (Hornero Signal), the only version the shipped shell loads. 1 and 2 were the Material-era kit and are rejected with a migration hint." },
+    "schemaVersion": {
+      "const": 3,
+      "description": "PluginKit 3 (Hornero Signal), the only version the shipped shell loads. 1 and 2 were the Material-era kit and are rejected with a migration hint."
+    },
     "id": {
       "type": "string",
       "pattern": "^[a-z0-9][a-z0-9-]{0,47}$"
     },
-    "name": { "type": "string", "minLength": 1, "maxLength": 64, "pattern": "\\S" },
+    "name": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 64,
+      "pattern": "\\S"
+    },
     "version": {
       "maxLength": 80,
       "type": "string",
       "pattern": "^(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)(-[0-9A-Za-z.-]+)?(\\+[0-9A-Za-z.-]+)?$"
     },
-    "description": { "type": "string", "minLength": 1, "maxLength": 280, "pattern": "\\S" },
-    "author": { "type": "string", "minLength": 1, "maxLength": 120, "pattern": "\\S" },
-    "license": { "type": "string", "minLength": 1, "maxLength": 80, "pattern": "\\S" },
-    "homepage": { "type": "string", "maxLength": 500, "format": "uri", "pattern": "^https://[^\\s/]+(?:/.*)?$" },
+    "description": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 280,
+      "pattern": "\\S"
+    },
+    "author": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 120,
+      "pattern": "\\S"
+    },
+    "license": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 80,
+      "pattern": "\\S"
+    },
+    "homepage": {
+      "type": "string",
+      "maxLength": 500,
+      "format": "uri",
+      "pattern": "^https://[^\\s/]+(?:/.*)?$"
+    },
     "signing": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["publicKey", "signature"],
+      "required": [
+        "publicKey",
+        "signature"
+      ],
       "properties": {
-        "publicKey": { "type": "string", "minLength": 40, "maxLength": 80, "pattern": "^[A-Za-z0-9+/]+={0,2}$" },
-        "signature": { "type": "string", "minLength": 80, "maxLength": 120, "pattern": "^[A-Za-z0-9+/]+={0,2}$" }
+        "publicKey": {
+          "type": "string",
+          "minLength": 40,
+          "maxLength": 80,
+          "pattern": "^[A-Za-z0-9+/]+={0,2}$"
+        },
+        "signature": {
+          "type": "string",
+          "minLength": 80,
+          "maxLength": 120,
+          "pattern": "^[A-Za-z0-9+/]+={0,2}$"
+        }
       },
       "description": "Optional author signature (minisign framing) over the files-only payload hash; verified by horneroctl (trust state 'signed'). Absence is fine: local hash-pinned trust applies instead."
     },
-    "placement": { "type": "string", "enum": ["background", "bar", "dashboard", "desktop"], "default": "background", "description": "Where the entrypoint runs: background (headless, default), bar (rendered in the bar end group) or dashboard (rendered as a card in the dashboard Extensions tab) or desktop (rendered as a widget on the desktop background layer)." },
+    "placement": {
+      "type": "string",
+      "enum": [
+        "background",
+        "bar",
+        "dashboard",
+        "desktop"
+      ],
+      "default": "background",
+      "description": "Where the entrypoint runs: background (headless, default), bar (rendered in the bar end group) or dashboard (rendered as a card in the dashboard Extensions tab) or desktop (rendered as a widget on the desktop background layer)."
+    },
     "surfaces": {
       "type": "object",
       "minProperties": 1,
-      "propertyNames": { "enum": ["background", "bar", "dashboard", "desktop", "launcher", "settings"] },
+      "propertyNames": {
+        "enum": [
+          "background",
+          "bar",
+          "dashboard",
+          "desktop",
+          "launcher",
+          "settings"
+        ]
+      },
       "additionalProperties": {
         "type": "object",
         "additionalProperties": false,
-        "required": ["entrypoint"],
+        "required": [
+          "entrypoint"
+        ],
         "properties": {
           "entrypoint": {
             "type": "string",
             "maxLength": 240,
             "pattern": "^(?!/)(?!\\.{1,2}(?:/|$))(?!.*\\/\\.{1,2}(?:/|$))(?!.*//)[A-Za-z0-9._/-]+\\.qml$"
           },
-          "enabled": { "type": "boolean", "default": true },
-          "size": { "type": "string", "enum": ["compact", "standard", "wide"], "default": "standard", "description": "Dashboard surface only (shell#378): preferred card size class. A hint the user's persisted layout overrides; declaring it on another surface is rejected by the validators, not by this structural schema." },
-          "category": { "type": "string", "minLength": 1, "maxLength": 40, "pattern": "\\S", "description": "Dashboard surface only (shell#378): grouping label (\"Pinned\" is reserved). Same enforcement split as size." },
-          "section": { "type": "string", "enum": ["status", "actions", "clock", "end"], "default": "end", "description": "Bar surface only (shell#439): native bar island the indicator joins (status, actions, clock) or end (the Extensions island). Same enforcement split as size." },
-          "width": { "type": "integer", "minimum": 80, "maximum": 1600, "description": "Desktop surface only (PluginKit 3): default widget width in logical pixels; the person's saved geometry wins." },
-          "height": { "type": "integer", "minimum": 80, "maximum": 1600, "description": "Desktop surface only (PluginKit 3): default widget height in logical pixels." },
-          "minWidth": { "type": "integer", "minimum": 80, "maximum": 1600, "description": "Desktop surface only (PluginKit 3): minimum widget width." },
-          "minHeight": { "type": "integer", "minimum": 80, "maximum": 1600, "description": "Desktop surface only (PluginKit 3): minimum widget height." },
-          "resizable": { "type": "boolean", "default": true, "description": "Desktop surface only: whether the person may resize the widget in edit mode." },
-          "anchor": { "type": "string", "enum": ["top-left", "top-center", "top-right", "middle-left", "middle-center", "middle-right", "bottom-left", "bottom-center", "bottom-right"], "default": "bottom-right", "description": "Desktop surface only: where the widget starts before the person moves it." }
+          "enabled": {
+            "type": "boolean",
+            "default": true
+          },
+          "size": {
+            "type": "string",
+            "enum": [
+              "compact",
+              "standard",
+              "wide"
+            ],
+            "default": "standard",
+            "description": "Dashboard surface only (shell#378): preferred card size class. A hint the user's persisted layout overrides; declaring it on another surface is rejected by the validators, not by this structural schema."
+          },
+          "category": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 40,
+            "pattern": "\\S",
+            "description": "Dashboard surface only (shell#378): grouping label (\"Pinned\" is reserved). Same enforcement split as size."
+          },
+          "section": {
+            "type": "string",
+            "enum": [
+              "status",
+              "actions",
+              "clock",
+              "end"
+            ],
+            "default": "end",
+            "description": "Bar surface only (shell#439): native bar island the indicator joins (status, actions, clock) or end (the Extensions island). Same enforcement split as size."
+          },
+          "width": {
+            "type": "integer",
+            "minimum": 80,
+            "maximum": 1600,
+            "description": "Desktop surface only (PluginKit 3): default widget width in logical pixels; the person's saved geometry wins."
+          },
+          "height": {
+            "type": "integer",
+            "minimum": 80,
+            "maximum": 1600,
+            "description": "Desktop surface only (PluginKit 3): default widget height in logical pixels."
+          },
+          "minWidth": {
+            "type": "integer",
+            "minimum": 80,
+            "maximum": 1600,
+            "description": "Desktop surface only (PluginKit 3): minimum widget width."
+          },
+          "minHeight": {
+            "type": "integer",
+            "minimum": 80,
+            "maximum": 1600,
+            "description": "Desktop surface only (PluginKit 3): minimum widget height."
+          },
+          "resizable": {
+            "type": "boolean",
+            "default": true,
+            "description": "Desktop surface only: whether the person may resize the widget in edit mode."
+          },
+          "anchor": {
+            "type": "string",
+            "enum": [
+              "top-left",
+              "top-center",
+              "top-right",
+              "middle-left",
+              "middle-center",
+              "middle-right",
+              "bottom-left",
+              "bottom-center",
+              "bottom-right"
+            ],
+            "default": "bottom-right",
+            "description": "Desktop surface only: where the widget starts before the person moves it."
+          },
+          "instances": {
+            "type": "boolean",
+            "description": "Desktop surface only (PluginKit 4): the extension reads its settings per instance, so Control Center may add extra instances. Requires pluginKit 4."
+          }
         }
       },
       "description": "Additional per-surface entry points. The top-level entrypoint/placement pair stays the primary surface; redeclaring it here requires the same entrypoint. launcher/settings are validated declarations whose hosts do not load them yet."
@@ -75,16 +208,29 @@
     "translations": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["sourceLocale", "locales"],
+      "required": [
+        "sourceLocale",
+        "locales"
+      ],
       "properties": {
-        "sourceLocale": { "type": "string", "pattern": "^[a-z]{2,3}(_[A-Z]{2})?$" },
+        "sourceLocale": {
+          "type": "string",
+          "pattern": "^[a-z]{2,3}(_[A-Z]{2})?$"
+        },
         "locales": {
           "type": "array",
           "minItems": 1,
           "uniqueItems": true,
-          "items": { "type": "string", "pattern": "^[a-z]{2,3}(_[A-Z]{2})?$" }
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z]{2,3}(_[A-Z]{2})?$"
+          }
         },
-        "directory": { "type": "string", "maxLength": 240, "default": "translations" }
+        "directory": {
+          "type": "string",
+          "maxLength": 240,
+          "default": "translations"
+        }
       },
       "description": "Optional PluginKit Translations declaration: one flat JSON catalog per locale at <directory>/<locale>.json, each listed in files. Plugin QML reads strings through Translations.tr(); qsTr() is rejected because the shell installs no QTranslator for plugins."
     },
@@ -95,37 +241,87 @@
       "description": "Optional marketplace metadata (shell#379, any schemaVersion) rendered without executing plugin code. Cross-field rules (screenshot listed in files, minShellVersion <= maxShellVersion, replacedBy != own id) are enforced by the validators.",
       "properties": {
         "screenshots": {
-          "type": "array", "minItems": 1, "maxItems": 6,
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 6,
           "items": {
-            "type": "object", "additionalProperties": false, "required": ["path"],
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "path"
+            ],
             "properties": {
-              "path": { "type": "string", "maxLength": 240, "pattern": "^(?!/)(?!\\.{1,2}(?:/|$))(?!.*\\/\\.{1,2}(?:/|$))(?!.*//)[A-Za-z0-9._/-]+\\.(?:png|jpg|jpeg|webp)$" },
-              "alt": { "type": "string", "minLength": 1, "maxLength": 160, "pattern": "\\S" }
+              "path": {
+                "type": "string",
+                "maxLength": 240,
+                "pattern": "^(?!/)(?!\\.{1,2}(?:/|$))(?!.*\\/\\.{1,2}(?:/|$))(?!.*//)[A-Za-z0-9._/-]+\\.(?:png|jpg|jpeg|webp)$"
+              },
+              "alt": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 160,
+                "pattern": "\\S"
+              }
             }
           }
         },
         "compatibility": {
-          "type": "object", "additionalProperties": false, "minProperties": 1,
+          "type": "object",
+          "additionalProperties": false,
+          "minProperties": 1,
           "properties": {
-            "minShellVersion": { "type": "string", "maxLength": 80, "pattern": "^(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)(-[0-9A-Za-z.-]+)?(\\+[0-9A-Za-z.-]+)?$" },
-            "maxShellVersion": { "type": "string", "maxLength": 80, "pattern": "^(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)(-[0-9A-Za-z.-]+)?(\\+[0-9A-Za-z.-]+)?$" }
+            "minShellVersion": {
+              "type": "string",
+              "maxLength": 80,
+              "pattern": "^(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)(-[0-9A-Za-z.-]+)?(\\+[0-9A-Za-z.-]+)?$"
+            },
+            "maxShellVersion": {
+              "type": "string",
+              "maxLength": 80,
+              "pattern": "^(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)(-[0-9A-Za-z.-]+)?(\\+[0-9A-Za-z.-]+)?$"
+            }
           }
         },
         "changelog": {
-          "type": "array", "minItems": 1, "maxItems": 20,
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 20,
           "items": {
-            "type": "object", "additionalProperties": false, "required": ["version", "notes"],
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "version",
+              "notes"
+            ],
             "properties": {
-              "version": { "type": "string", "maxLength": 80, "pattern": "^(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)(-[0-9A-Za-z.-]+)?(\\+[0-9A-Za-z.-]+)?$" },
-              "notes": { "type": "string", "minLength": 1, "maxLength": 1000, "pattern": "\\S" }
+              "version": {
+                "type": "string",
+                "maxLength": 80,
+                "pattern": "^(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)(-[0-9A-Za-z.-]+)?(\\+[0-9A-Za-z.-]+)?$"
+              },
+              "notes": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 1000,
+                "pattern": "\\S"
+              }
             }
           }
         },
         "deprecation": {
-          "type": "object", "additionalProperties": false,
+          "type": "object",
+          "additionalProperties": false,
           "properties": {
-            "message": { "type": "string", "minLength": 1, "maxLength": 280, "pattern": "\\S" },
-            "replacedBy": { "type": "string", "pattern": "^[a-z0-9][a-z0-9-]{0,47}$" }
+            "message": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 280,
+              "pattern": "\\S"
+            },
+            "replacedBy": {
+              "type": "string",
+              "pattern": "^[a-z0-9][a-z0-9-]{0,47}$"
+            }
           }
         }
       }
@@ -140,20 +336,34 @@
       "minItems": 3,
       "uniqueItems": true,
       "allOf": [
-        { "contains": { "const": "README.md" } },
-        { "contains": { "const": "LICENSE" } }
+        {
+          "contains": {
+            "const": "README.md"
+          }
+        },
+        {
+          "contains": {
+            "const": "LICENSE"
+          }
+        }
       ],
       "items": {
         "type": "string",
         "maxLength": 240,
         "pattern": "^(?!/)(?!\\.{1,2}(?:/|$))(?!.*\\/\\.{1,2}(?:/|$))(?!.*//)[A-Za-z0-9._/-]+$",
-        "not": { "const": "manifest.json" }
+        "not": {
+          "const": "manifest.json"
+        }
       }
     },
     "capabilities": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["processCommands", "networkHosts", "settings"],
+      "required": [
+        "processCommands",
+        "networkHosts",
+        "settings"
+      ],
       "properties": {
         "processCommands": {
           "description": "Exact executable basenames the extension may invoke. Declarations are review metadata, not enforcement.",
@@ -168,55 +378,293 @@
           "description": "Network hostnames the extension intends to contact. Declarations are review metadata, not enforcement.",
           "type": "array",
           "uniqueItems": true,
-          "items": { "type": "string", "pattern": "^(?:[A-Za-z0-9](?:[A-Za-z0-9-]{0,61}[A-Za-z0-9])?\\.)*[A-Za-z0-9](?:[A-Za-z0-9-]{0,61}[A-Za-z0-9])?$" }
+          "items": {
+            "type": "string",
+            "pattern": "^(?:[A-Za-z0-9](?:[A-Za-z0-9-]{0,61}[A-Za-z0-9])?\\.)*[A-Za-z0-9](?:[A-Za-z0-9-]{0,61}[A-Za-z0-9])?$"
+          }
         },
         "actions": {
           "description": "Optional horneroctl plugin-broker action names (HorneroOS/hornero#408), snake_case. Declarations are review metadata; the broker enforces trust, declaration, typed argv and ABAC at call time.",
           "type": "array",
           "maxItems": 32,
           "uniqueItems": true,
-          "items": { "type": "string", "pattern": "^[a-z][a-z0-9_]{0,63}$" }
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9_]{0,63}$"
+          }
         },
         "providers": {
           "type": "array",
           "uniqueItems": true,
-          "items": { "enum": ["system", "network", "spectrum", "media", "audio", "power", "weather", "time", "workspaces"] },
+          "items": {
+            "enum": [
+              "system",
+              "network",
+              "spectrum",
+              "media",
+              "audio",
+              "power",
+              "weather",
+              "time",
+              "workspaces"
+            ]
+          },
           "description": "Shared PluginKit data-provider domains (RFC 0001 section 5b) the extension reads. Every facade or Subscription domain used in QML must be declared; scripts/validate_plugins.py cross-checks it. Review metadata, not enforcement."
         },
         "settings": {
           "type": "object",
-          "propertyNames": { "pattern": "^[a-z][a-zA-Z0-9]{0,47}$" },
+          "propertyNames": {
+            "pattern": "^[a-z][a-zA-Z0-9]{0,47}$"
+          },
           "additionalProperties": {
             "type": "object",
             "additionalProperties": false,
-            "required": ["type", "default"],
+            "required": [
+              "type",
+              "default"
+            ],
             "properties": {
-              "type": { "enum": ["boolean", "integer", "number", "string", "enum"] },
-              "default": { "type": ["boolean", "integer", "number", "string"] },
-              "description": { "type": "string", "maxLength": 160, "pattern": "\\S" },
-              "minimum": { "type": "number" },
-              "maximum": { "type": "number" },
-              "minLength": { "type": "integer", "minimum": 0, "maximum": 4096 },
-              "maxLength": { "type": "integer", "minimum": 0, "maximum": 4096 },
+              "type": {
+                "enum": [
+                  "boolean",
+                  "integer",
+                  "number",
+                  "string",
+                  "enum",
+                  "colour",
+                  "list",
+                  "text",
+                  "path"
+                ]
+              },
+              "default": {
+                "type": [
+                  "boolean",
+                  "integer",
+                  "number",
+                  "string",
+                  "array"
+                ]
+              },
+              "description": {
+                "type": "string",
+                "maxLength": 160,
+                "pattern": "\\S"
+              },
+              "minimum": {
+                "type": "number"
+              },
+              "maximum": {
+                "type": "number"
+              },
+              "minLength": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 4096
+              },
+              "maxLength": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 4096
+              },
               "options": {
                 "type": "array",
                 "minItems": 1,
                 "maxItems": 32,
                 "uniqueItems": true,
-                "items": { "type": "string", "minLength": 1, "maxLength": 64 }
+                "items": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 64
+                }
+              },
+              "step": {
+                "type": "number",
+                "exclusiveMinimum": 0
+              },
+              "unit": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 8,
+                "pattern": "\\S"
+              },
+              "title": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 48,
+                "pattern": "\\S"
+              },
+              "group": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 32,
+                "pattern": "\\S"
+              },
+              "visibleWhen": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "key",
+                  "equals"
+                ],
+                "properties": {
+                  "key": {
+                    "type": "string",
+                    "pattern": "^[a-z][a-zA-Z0-9]{0,47}$"
+                  },
+                  "equals": {
+                    "type": [
+                      "boolean",
+                      "integer",
+                      "number",
+                      "string",
+                      "array"
+                    ]
+                  }
+                }
+              },
+              "alpha": {
+                "type": "boolean"
+              },
+              "minItems": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 32
+              },
+              "maxItems": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 32
+              },
+              "rows": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 12
+              },
+              "kind": {
+                "enum": [
+                  "file",
+                  "directory"
+                ]
+              },
+              "mustExist": {
+                "type": "boolean"
               }
             },
             "description": "Typed setting (shell #374): constraints belong to their type only (minimum/maximum for integer/number, minLength/maxLength for string, options required for enum) and the default must satisfy them; the validator enforces the cross-field rules.",
             "oneOf": [
-              { "properties": { "type": { "const": "boolean" }, "default": { "type": "boolean" } } },
-              { "properties": { "type": { "const": "integer" }, "default": { "type": "integer" } } },
-              { "properties": { "type": { "const": "number" }, "default": { "type": "number" } } },
-              { "properties": { "type": { "const": "string" }, "default": { "type": "string" } } },
-              { "properties": { "type": { "const": "enum" }, "default": { "type": "string" } } }
+              {
+                "properties": {
+                  "type": {
+                    "const": "boolean"
+                  },
+                  "default": {
+                    "type": "boolean"
+                  }
+                }
+              },
+              {
+                "properties": {
+                  "type": {
+                    "const": "integer"
+                  },
+                  "default": {
+                    "type": "integer"
+                  }
+                }
+              },
+              {
+                "properties": {
+                  "type": {
+                    "const": "number"
+                  },
+                  "default": {
+                    "type": "number"
+                  }
+                }
+              },
+              {
+                "properties": {
+                  "type": {
+                    "const": "string"
+                  },
+                  "default": {
+                    "type": "string"
+                  }
+                }
+              },
+              {
+                "properties": {
+                  "type": {
+                    "const": "enum"
+                  },
+                  "default": {
+                    "type": "string"
+                  }
+                }
+              },
+              {
+                "properties": {
+                  "type": {
+                    "const": "colour"
+                  },
+                  "default": {
+                    "type": "string",
+                    "pattern": "^#[0-9a-fA-F]{6}(?:[0-9a-fA-F]{2})?$"
+                  }
+                }
+              },
+              {
+                "properties": {
+                  "type": {
+                    "const": "list"
+                  },
+                  "default": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "uniqueItems": true,
+                    "maxItems": 32
+                  }
+                },
+                "required": [
+                  "options"
+                ]
+              },
+              {
+                "properties": {
+                  "type": {
+                    "const": "text"
+                  },
+                  "default": {
+                    "type": "string",
+                    "maxLength": 4096
+                  }
+                }
+              },
+              {
+                "properties": {
+                  "type": {
+                    "const": "path"
+                  },
+                  "default": {
+                    "type": "string",
+                    "maxLength": 1024
+                  }
+                }
+              }
             ]
           }
         }
       }
+    },
+    "pluginKit": {
+      "type": "integer",
+      "minimum": 3,
+      "maximum": 4,
+      "default": 3,
+      "description": "Minimum PluginKit apiLevel the package needs (shell RFC 0003). Level 4 features (colour/list/text/path settings, title/group/unit/step/visibleWhen, surfaces.desktop.instances) must declare 4; the validators enforce that a package cannot under-declare."
     }
   }
 }

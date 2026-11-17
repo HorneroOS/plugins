@@ -49,7 +49,7 @@ ROOT = Path(__file__).resolve().parent.parent
 ID_RE = re.compile(r"^[a-z0-9][a-z0-9-]{0,47}$")
 SEMVER_RE = re.compile(r"^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(-[0-9A-Za-z.-]+)?(\+[0-9A-Za-z.-]+)?$")
 REQUIRED = ["schemaVersion", "id", "name", "version", "description", "author", "license", "entrypoint", "files", "capabilities"]
-ALLOWED_FIELDS = set(REQUIRED) | {"homepage", "placement", "signing", "surfaces", "translations", "marketplace", "theme"}
+ALLOWED_FIELDS = set(REQUIRED) | {"homepage", "placement", "signing", "surfaces", "translations", "marketplace", "theme", "pluginKit"}
 DASHBOARD_CARD_SIZES = ("compact", "standard", "wide")
 ACTION_RE = re.compile(r"^[a-z][a-z0-9_]{0,63}$")
 MARKETPLACE_SCREENSHOT_SUFFIXES = (".png", ".jpg", ".jpeg", ".webp")
@@ -67,7 +67,10 @@ DESKTOP_ANCHORS = (
     "bottom-left", "bottom-center", "bottom-right",
 )
 DESKTOP_SIZE_KEYS = ("width", "height", "minWidth", "minHeight")
-DESKTOP_KEYS = DESKTOP_SIZE_KEYS + ("resizable", "anchor")
+DESKTOP_KEYS = DESKTOP_SIZE_KEYS + ("resizable", "anchor", "instances")
+# PluginKit capability level this validator mirrors (shell scripts/validate_plugin.py
+# PLUGINKIT_API_LEVEL, RFC 0003). Level 4 adds settings schema v2 and instances.
+PLUGINKIT_API_LEVEL = 4
 # Shared provider domains (RFC 0001 section 5b); mirrors the shell validator.
 PROVIDER_DOMAINS = (
     "system", "network", "spectrum", "media", "audio", "power", "weather",
@@ -104,17 +107,31 @@ FORBIDDEN_COMMANDS = {"sh", "bash", "dash", "zsh", "fish", "sudo", "doas", "su"}
 COMMAND_RE = re.compile(r"^[A-Za-z0-9_.+-]+$")
 HOST_RE = re.compile(r"^(?:[A-Za-z0-9](?:[A-Za-z0-9-]{0,61}[A-Za-z0-9])?\.)*[A-Za-z0-9](?:[A-Za-z0-9-]{0,61}[A-Za-z0-9])?$")
 SETTING_KEY_RE = re.compile(r"^[a-z][a-zA-Z0-9]{0,47}$")
-SETTING_TYPES = {"boolean", "integer", "number", "string", "enum"}
-SETTING_FIELDS = {"type", "default", "description", "minimum", "maximum", "minLength", "maxLength", "options"}
+SETTING_TYPES_V3 = {"boolean", "integer", "number", "string", "enum"}
+SETTING_TYPES_V4 = {"colour", "list", "text", "path"}
+SETTING_TYPES = SETTING_TYPES_V3 | SETTING_TYPES_V4
+SETTING_FIELDS = {
+    "type", "default", "description", "minimum", "maximum", "minLength", "maxLength", "options",
+    "step", "unit", "title", "group", "visibleWhen", "alpha", "minItems", "maxItems", "rows", "kind", "mustExist",
+}
+SETTING_DISPLAY_ALL = frozenset({"title", "group", "visibleWhen"})
+SETTING_V4_FIELDS = frozenset({"title", "group", "visibleWhen", "step", "unit"})
 SETTING_CONSTRAINTS = {
     "boolean": frozenset(),
-    "integer": frozenset({"minimum", "maximum"}),
-    "number": frozenset({"minimum", "maximum"}),
+    "integer": frozenset({"minimum", "maximum", "step", "unit"}),
+    "number": frozenset({"minimum", "maximum", "step", "unit"}),
     "string": frozenset({"minLength", "maxLength"}),
     "enum": frozenset({"options"}),
+    "colour": frozenset({"alpha"}),
+    "list": frozenset({"options", "minItems", "maxItems"}),
+    "text": frozenset({"minLength", "maxLength", "rows"}),
+    "path": frozenset({"kind", "mustExist"}),
 }
 SETTING_STRING_MAX = 4096
+SETTING_PATH_MAX = 1024
 SETTING_ENUM_MAX_OPTIONS = 32
+COLOUR_RE = re.compile(r"^#[0-9a-fA-F]{6}$")
+COLOUR_ALPHA_RE = re.compile(r"^#[0-9a-fA-F]{6}(?:[0-9a-fA-F]{2})?$")
 NETWORK_APIS = ["XMLHttpRequest", "WebSocket", "NetworkRequest", "TcpSocket"]
 
 AUDIT_FILE = "quality-audit.json"
@@ -170,19 +187,19 @@ def default_matches(declared, value) -> bool:
         return isinstance(value, int) and not isinstance(value, bool)
     if declared == "number":
         return isinstance(value, (int, float)) and not isinstance(value, bool) and math.isfinite(value)
-    if declared == "string":
+    if declared in ("string", "enum", "colour", "text", "path"):
         return isinstance(value, str)
-    if declared == "enum":
-        return isinstance(value, str)
+    if declared == "list":
+        return isinstance(value, list)
     return False
 
 
 def setting_value_valid(spec: dict, value) -> bool:
-    """Whether value satisfies a typed setting declaration (shell #374)."""
+    """Whether value satisfies a typed setting declaration (shell #374, RFC 0003)."""
     kind = spec.get("type")
     if not default_matches(kind, value):
         return False
-    if kind == "string":
+    if kind in ("string", "text"):
         if len(value) > SETTING_STRING_MAX:
             return False
         if "minLength" in spec and len(value) < spec["minLength"]:
@@ -191,12 +208,28 @@ def setting_value_valid(spec: dict, value) -> bool:
             return False
     elif kind == "enum":
         return value in spec.get("options", [])
+    elif kind == "colour":
+        return (COLOUR_ALPHA_RE if spec.get("alpha") is True else COLOUR_RE).fullmatch(value) is not None
+    elif kind == "list":
+        options = spec.get("options", [])
+        if any(not isinstance(i, str) or i not in options for i in value) or len(value) != len(set(value)):
+            return False
+        return spec.get("minItems", 0) <= len(value) <= spec.get("maxItems", len(options))
+    elif kind == "path":
+        return len(value) <= SETTING_PATH_MAX and not any(ord(c) < 32 or ord(c) == 127 for c in value)
     elif kind in ("integer", "number"):
         if "minimum" in spec and value < spec["minimum"]:
             return False
         if "maximum" in spec and value > spec["maximum"]:
             return False
     return True
+
+
+def settings_need_level(settings: dict) -> int:
+    for spec in settings.values():
+        if isinstance(spec, dict) and (spec.get("type") in SETTING_TYPES_V4 or SETTING_V4_FIELDS & set(spec)):
+            return 4
+    return 3
 
 
 def validate_manifest_fields(tag: str, manifest: dict) -> list:
@@ -214,6 +247,9 @@ def validate_manifest_fields(tag: str, manifest: dict) -> list:
         )
     elif type(manifest.get("schemaVersion")) is not int or manifest.get("schemaVersion") not in SCHEMA_VERSIONS:
         errors.append(f"{tag}: schemaVersion must be 3 (the Hornero Signal PluginKit 3 contract)")
+    level = manifest.get("pluginKit", 3)
+    if type(level) is not int or not 3 <= level <= PLUGINKIT_API_LEVEL:
+        errors.append(f"{tag}: pluginKit must be an integer between 3 and {PLUGINKIT_API_LEVEL}")
     if not ID_RE.match(str(manifest.get("id", ""))):
         errors.append(f"{tag}: id does not match {ID_RE.pattern}")
     if not SEMVER_RE.match(str(manifest.get("version", ""))):
@@ -265,7 +301,7 @@ def validate_manifest_fields(tag: str, manifest: dict) -> list:
         if not isinstance(caps, dict) or not {"processCommands", "networkHosts", "settings"} <= set(caps) <= {"processCommands", "networkHosts", "settings", "actions", "providers"}:
             errors.append(f"{tag}: capabilities must contain processCommands, networkHosts, and settings, plus optional actions and providers")
         else:
-            errors += validate_capabilities(tag, caps, manifest.get("schemaVersion"))
+            errors += validate_capabilities(tag, caps, manifest.get("schemaVersion"), manifest.get("pluginKit", 3))
     return errors
 
 
@@ -483,6 +519,11 @@ def validate_surfaces(tag: str, manifest: dict, safe_files: set) -> list:
                 errors.append(f"{where}.{low} must not exceed {where}.{high}")
         if "resizable" in surface and not isinstance(surface["resizable"], bool):
             errors.append(f"{where}.resizable must be a boolean")
+        if "instances" in surface:
+            if not isinstance(surface["instances"], bool):
+                errors.append(f"{where}.instances must be a boolean")
+            elif surface["instances"] and manifest.get("pluginKit", 3) != 4:
+                errors.append(f'{where}.instances needs PluginKit 4; declare "pluginKit": 4')
         if "anchor" in surface and surface["anchor"] not in DESKTOP_ANCHORS:
             errors.append(f"{where}.anchor must be one of {', '.join(DESKTOP_ANCHORS)}")
         # Bar section hint (shell#439): native island the indicator joins.
@@ -616,7 +657,7 @@ def validate_translation_catalogs(tag: str, plugin_dir: Path, manifest: dict, co
     return errors
 
 
-def validate_capabilities(tag: str, caps: dict, schema_version=None) -> list:
+def validate_capabilities(tag: str, caps: dict, schema_version=None, plugin_kit=3) -> list:
     errors = []
     extra_keys = set(caps) - {"processCommands", "networkHosts", "settings", "actions", "providers"}
     if extra_keys:
@@ -665,7 +706,7 @@ def validate_capabilities(tag: str, caps: dict, schema_version=None) -> list:
                 errors.append(f"{tag}: settings.{key}.type must be one of {sorted(SETTING_TYPES)}")
                 continue
             kind = spec["type"]
-            misplaced = (set(spec) - {"type", "default", "description"}) - SETTING_CONSTRAINTS[kind]
+            misplaced = (set(spec) - {"type", "default", "description"}) - (SETTING_CONSTRAINTS[kind] | SETTING_DISPLAY_ALL)
             if misplaced:
                 errors.append(f"{tag}: settings.{key} of type {kind} cannot declare {', '.join(sorted(misplaced))}")
                 continue
@@ -690,20 +731,84 @@ def validate_capabilities(tag: str, caps: dict, schema_version=None) -> list:
                 if "minLength" in spec and "maxLength" in spec and spec["minLength"] > spec["maxLength"]:
                     errors.append(f"{tag}: settings.{key} minLength must not exceed maxLength")
                     continue
-            if kind == "enum":
+            if kind in ("enum", "list"):
                 options = spec.get("options")
                 if (
                     not isinstance(options, list) or not options or len(options) > SETTING_ENUM_MAX_OPTIONS
                     or any(not isinstance(o, str) or not o or len(o) > 64 for o in options)
                     or len(options) != len(set(options))
                 ):
-                    errors.append(f"{tag}: settings.{key} of type enum must declare options: 1 to {SETTING_ENUM_MAX_OPTIONS} unique non-empty strings of at most 64 chars")
+                    errors.append(f"{tag}: settings.{key} of type {kind} must declare options: 1 to {SETTING_ENUM_MAX_OPTIONS} unique non-empty strings of at most 64 chars")
                     continue
+            bad = False
+            for field, limit in (("title", 48), ("group", 32), ("unit", 8)):
+                if field in spec and (not isinstance(spec[field], str) or not spec[field].strip() or len(spec[field]) > limit):
+                    errors.append(f"{tag}: settings.{key}.{field} must be a non-blank string of at most {limit} chars")
+                    bad = True
+            if "step" in spec and (not default_matches("number", spec["step"]) or spec["step"] <= 0 or (kind == "integer" and not default_matches("integer", spec["step"]))):
+                errors.append(f"{tag}: settings.{key}.step must be a positive {'integer' if kind == 'integer' else 'number'}")
+                bad = True
+            if kind == "text":
+                if "rows" in spec and not (default_matches("integer", spec["rows"]) and 1 <= spec["rows"] <= 12):
+                    errors.append(f"{tag}: settings.{key}.rows must be an integer between 1 and 12")
+                    bad = True
+                lengths = [b for b in ("minLength", "maxLength") if b in spec and not (default_matches("integer", spec[b]) and 0 <= spec[b] <= SETTING_STRING_MAX)]
+                if lengths:
+                    errors.append(f"{tag}: settings.{key} {'/'.join(lengths)} must be an integer between 0 and {SETTING_STRING_MAX}")
+                    bad = True
+                elif "minLength" in spec and "maxLength" in spec and spec["minLength"] > spec["maxLength"]:
+                    errors.append(f"{tag}: settings.{key} minLength must not exceed maxLength")
+                    bad = True
+            if kind == "list":
+                for b in ("minItems", "maxItems"):
+                    if b in spec and not (default_matches("integer", spec[b]) and 0 <= spec[b] <= len(spec["options"])):
+                        errors.append(f"{tag}: settings.{key}.{b} must be an integer between 0 and the number of options")
+                        bad = True
+                if not bad and "minItems" in spec and "maxItems" in spec and spec["minItems"] > spec["maxItems"]:
+                    errors.append(f"{tag}: settings.{key} minItems must not exceed maxItems")
+                    bad = True
+            if kind == "colour" and "alpha" in spec and not isinstance(spec["alpha"], bool):
+                errors.append(f"{tag}: settings.{key}.alpha must be a boolean")
+                bad = True
+            if kind == "path":
+                if "kind" in spec and spec["kind"] not in ("file", "directory"):
+                    errors.append(f"{tag}: settings.{key}.kind must be file or directory")
+                    bad = True
+                if "mustExist" in spec and not isinstance(spec["mustExist"], bool):
+                    errors.append(f"{tag}: settings.{key}.mustExist must be a boolean")
+                    bad = True
+                default = spec["default"]
+                if isinstance(default, str) and default and (default.startswith(("/", "~")) or "\\" in default or ".." in default.split("/")):
+                    errors.append(f"{tag}: settings.{key}.default must be empty or a safe relative path (no leading / or ~, no ..)")
+                    bad = True
+            if bad:
+                continue
             if not setting_value_valid(spec, spec["default"]):
                 errors.append(f"{tag}: settings.{key}.default does not match declared type {spec['type']} or its constraints")
             desc = spec.get("description")
             if desc is not None and (not isinstance(desc, str) or not desc.strip() or len(desc) > 160):
                 errors.append(f"{tag}: settings.{key}.description must be non-blank, at most 160 chars")
+        for key, spec in settings.items():
+            if not isinstance(spec, dict) or "visibleWhen" not in spec:
+                continue
+            condition = spec["visibleWhen"]
+            target = condition.get("key") if isinstance(condition, dict) else None
+            if not isinstance(condition, dict) or set(condition) != {"key", "equals"}:
+                errors.append(f"{tag}: settings.{key}.visibleWhen must be exactly {{key, equals}}")
+            elif target == key or target not in settings or not isinstance(settings[target], dict) or "type" not in settings[target]:
+                errors.append(f"{tag}: settings.{key}.visibleWhen must reference another declared setting")
+            elif settings[target].get("type") in SETTING_TYPES and not setting_value_valid(settings[target], condition["equals"]):
+                errors.append(f"{tag}: settings.{key}.visibleWhen.equals does not satisfy {target}'s declaration")
+            else:
+                seen, current = {key}, target
+                while isinstance(settings.get(current), dict) and isinstance(settings[current].get("visibleWhen"), dict):
+                    current = settings[current]["visibleWhen"].get("key")
+                    if current in seen:
+                        errors.append(f"{tag}: settings.{key}.visibleWhen forms a cycle")
+                        break
+                    seen.add(current)
+        if settings_need_level(settings) > (plugin_kit if isinstance(plugin_kit, int) else 3):
+            errors.append(f'{tag}: capabilities.settings uses PluginKit 4 features (colour/list/text/path settings or title/group/unit/step/visibleWhen); declare "pluginKit": 4')
     return errors
 
 

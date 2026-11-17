@@ -13,6 +13,15 @@ def catalog(stamp, plugins):
     return json.dumps({"schemaVersion": 1, "generatedFrom": stamp, "plugins": plugins})
 
 
+class PluginKitLevelTest(unittest.TestCase):
+    def test_level_is_recorded_only_above_the_baseline(self):
+        built = gen_catalog.build()
+        # No official package requires level 4 yet: entries are unchanged.
+        self.assertTrue(all("pluginKit" not in e for e in built["plugins"]))
+        source = SCRIPT.read_text()
+        self.assertIn('manifest.get("pluginKit", 3) != 3', source)
+
+
 class CatalogFreshnessTest(unittest.TestCase):
     def setUp(self):
         self.built = {
