@@ -55,11 +55,10 @@ ACTION_RE = re.compile(r"^[a-z][a-z0-9_]{0,63}$")
 MARKETPLACE_SCREENSHOT_SUFFIXES = (".png", ".jpg", ".jpeg", ".webp")
 MARKETPLACE_MAX_SCREENSHOTS = 6
 MARKETPLACE_MAX_CHANGELOG = 20
-SCHEMA_VERSIONS = (1, 2, 3)
 # PluginKit 3 (Hornero Signal) is the only contract the shipped shell
-# loads. 1/2 targeted the removed Material-era kit: still validated here
-# while the catalogue is ported (HorneroOS/plugins#62), reported as
-# legacy, then dropped by the v3-only flip.
+# loads. 1/2 targeted the removed Material-era kit and are rejected with a
+# migration hint (HorneroOS/plugins#62).
+SCHEMA_VERSIONS = (3,)
 CURRENT_SCHEMA_VERSION = 3
 LEGACY_SCHEMA_VERSIONS = (1, 2)
 DESKTOP_ANCHORS = (
@@ -207,8 +206,14 @@ def validate_manifest_fields(tag: str, manifest: dict) -> list:
             errors.append(f"{tag}: missing required field {field}")
     for field in sorted(set(manifest) - ALLOWED_FIELDS):
         errors.append(f"{tag}: unknown top-level field {field} (schema is additionalProperties: false)")
-    if type(manifest.get("schemaVersion")) is not int or manifest.get("schemaVersion") not in SCHEMA_VERSIONS:
-        errors.append(f"{tag}: schemaVersion must be one of {list(SCHEMA_VERSIONS)} (3 is the Hornero Signal PluginKit 3 contract)")
+    if type(manifest.get("schemaVersion")) is int and manifest.get("schemaVersion") in LEGACY_SCHEMA_VERSIONS:
+        errors.append(
+            f"{tag}: schemaVersion {manifest['schemaVersion']} targets the Material-era PluginKit, which Hornero Signal removed; "
+            "port the extension to PluginKit 3 (Theme.palette roles, Hornero Glyph names, glyph/name icon properties, "
+            "capabilities.providers) and set schemaVersion: 3 (shell docs/PLUGINS.md, Migrating to PluginKit 3)"
+        )
+    elif type(manifest.get("schemaVersion")) is not int or manifest.get("schemaVersion") not in SCHEMA_VERSIONS:
+        errors.append(f"{tag}: schemaVersion must be 3 (the Hornero Signal PluginKit 3 contract)")
     if not ID_RE.match(str(manifest.get("id", ""))):
         errors.append(f"{tag}: id does not match {ID_RE.pattern}")
     if not SEMVER_RE.match(str(manifest.get("version", ""))):
@@ -360,9 +365,6 @@ def validate_surfaces(tag: str, manifest: dict, safe_files: set) -> list:
     errors = []
     if "surfaces" not in manifest:
         return errors
-    if manifest.get("schemaVersion") not in (2, 3):
-        errors.append(f"{tag}: surfaces requires schemaVersion 2 or 3 (schemaVersion 1 supports only the single placement/entrypoint surface)")
-        return errors
     surfaces = manifest["surfaces"]
     if not isinstance(surfaces, dict) or not surfaces:
         errors.append(f"{tag}: surfaces must be a non-empty object")
@@ -385,8 +387,6 @@ def validate_surfaces(tag: str, manifest: dict, safe_files: set) -> list:
         hints = [key for key in DESKTOP_KEYS if key in surface]
         if hints and name != "desktop":
             errors.append(f"{where}.{hints[0]} is a desktop widget hint and is only allowed on the desktop surface")
-        if hints and manifest.get("schemaVersion") != CURRENT_SCHEMA_VERSION:
-            errors.append(f"{where}.{hints[0]}: desktop widget hints require schemaVersion 3")
         for key in DESKTOP_SIZE_KEYS:
             if key in surface and (type(surface[key]) is not int or not 80 <= surface[key] <= 1600):
                 errors.append(f"{where}.{key} must be an integer between 80 and 1600 (logical pixels)")
@@ -535,8 +535,6 @@ def validate_capabilities(tag: str, caps: dict, schema_version=None) -> list:
         errors.append(f"{tag}: capabilities contains unknown keys: {', '.join(sorted(extra_keys))}")
     if "providers" in caps:
         providers = caps["providers"]
-        if schema_version != CURRENT_SCHEMA_VERSION:
-            errors.append(f"{tag}: capabilities.providers requires schemaVersion 3")
         if (
             not isinstance(providers, list)
             or any(item not in PROVIDER_DOMAINS for item in providers)
@@ -875,8 +873,7 @@ def validate_plugin_dir(plugin_dir: Path):
             code += (plugin_dir / name).read_text(errors="replace") + "\n"
     if code:
         errors += validate_qml_contract(tag, manifest, code)
-        if manifest.get("schemaVersion") == CURRENT_SCHEMA_VERSION:
-            errors += validate_signal_contract(tag, manifest, plugin_dir)
+        errors += validate_signal_contract(tag, manifest, plugin_dir)
         errors += validate_translation_catalogs(tag, plugin_dir, manifest, code)
     return errors, manifest, code
 
@@ -1261,9 +1258,7 @@ def main(argv=None, root: Path = ROOT) -> int:
         print("\n".join(errors), file=sys.stderr)
         return 1
     print("plugins valid:", ", ".join(p.name for p in official_dirs))
-    legacy = sorted(n for n, m in manifests.items() if m.get("schemaVersion") in LEGACY_SCHEMA_VERSIONS)
-    print(f"pluginkit 3: {len(manifests) - len(legacy)}/{len(manifests)} official plugins on schemaVersion 3"
-          + (f"; legacy (refused by the shipped host): {', '.join(legacy)}" if legacy else ""))
+    print(f"pluginkit 3: {len(manifests)}/{len(manifests)} official plugins on schemaVersion 3")
     if community_root.is_dir():
         print("community valid (unreviewed, not catalogued):", ", ".join(p.name for p in community_dirs) or "none")
     counts = {}

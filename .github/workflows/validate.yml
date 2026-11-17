@@ -26,7 +26,7 @@ jobs:
       - name: Catalog is fresh
         run: python3 scripts/gen_catalog.py --check
       # The shell validator is the canonical PluginKit contract. Every
-      # schemaVersion 3 package must pass it unchanged. The shell revision
+      # package must be schemaVersion 3 and pass it unchanged. The shell revision
       # is pinned and bumped together with the catalogue.
       - name: Check out the pinned shell (validator only)
         uses: actions/checkout@v4

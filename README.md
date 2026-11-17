@@ -2,10 +2,13 @@
 
 First-party extensions for Hornero Shell, plus the curated catalogue
 the Shell and `horneroctl` use for discovery. Real software, real data,
-no fake screenshots. Extensions are moving to
-[Hornero Signal](https://github.com/HorneroOS/docs/blob/main/development/rfc-0001-hornero-signal.md),
-the HorneroOS design language, through PluginKit; that migration is in
-progress ([HorneroOS/.github#28](https://github.com/HorneroOS/.github/issues/28)).
+no fake screenshots. Every official extension is a PluginKit 3 package (`schemaVersion: 3`)
+in [Hornero Signal](https://github.com/HorneroOS/docs/blob/main/development/rfc-0001-hornero-signal.md),
+the HorneroOS design language: shared colour roles, IBM Plex type, Hornero
+Glyphs and the instrument components, over the shell's shared data
+providers ([HorneroOS/.github#28](https://github.com/HorneroOS/.github/issues/28),
+[#62](https://github.com/HorneroOS/plugins/issues/62)). The shipped shell
+refuses the Material-era `schemaVersion` 1/2 manifests.
 
 ## Trust model (read this first)
 
@@ -42,8 +45,10 @@ from them. Unlicensed references were treated as study-only.
 - `community/index.json` and `.minisig` — signed community index
   artifacts, published only after registry-key custody and client
   verification are ready. The generator itself emits unsigned JSON.
-- `schema/plugin-manifest.schema.json` — the shell manifest contract
-  (kept in sync with HorneroOS/shell; the shell copy is canonical).
+- `schema/plugin-manifest.schema.json` — the shell manifest contract,
+  `schemaVersion: 3` (PluginKit 3, Hornero Signal) only; kept in sync with
+  HorneroOS/shell, whose copy is canonical. `schema/hornero-glyphs.names`
+  is the vendored Hornero Glyph name list the validator checks icons against.
 - `templates/starter-plugin/` — copy this to start a new extension.
 - `docs/` — contributor guide, security model, review process.
 
