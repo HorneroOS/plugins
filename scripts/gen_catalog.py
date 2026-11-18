@@ -79,7 +79,7 @@ def payload_sha256(plugin_dir: Path, manifest: dict) -> str:
 def load_permission_notes() -> dict:
     if not PERMISSIONS.exists():
         return {}
-    data = json.loads(PERMISSIONS.read_text())
+    data = json.loads(PERMISSIONS.read_text(encoding="utf-8"))
     if data.get("schemaVersion") != 1 or not isinstance(data.get("plugins"), dict):
         raise SystemExit("catalog-permissions.json: schemaVersion 1 with a plugins object is required")
     return data["plugins"]
@@ -216,12 +216,12 @@ def main() -> int:
     catalog = build()
     text = json.dumps(catalog, indent=2, ensure_ascii=False) + "\n"
     if check:
-        if not CATALOG.exists() or not catalog_is_current(CATALOG.read_text(), catalog):
+        if not CATALOG.exists() or not catalog_is_current(CATALOG.read_text(encoding="utf-8"), catalog):
             print("catalog.json is stale; run scripts/gen_catalog.py", file=sys.stderr)
             return 1
         print(f"catalog OK: {len(catalog['plugins'])} plugins @ {catalog['generatedFrom'][:8]}")
         return 0
-    CATALOG.write_text(text)
+    CATALOG.write_text(text, encoding="utf-8")
     print(f"wrote catalog.json: {len(catalog['plugins'])} plugins @ {catalog['generatedFrom'][:8]}")
     return 0
 

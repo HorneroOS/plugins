@@ -119,7 +119,11 @@ class StoreFieldsTest(unittest.TestCase):
                 data = (gen_catalog.ROOT / shot["path"]).read_bytes()
                 self.assertEqual(hashlib.sha256(data).hexdigest(), shot["sha256"])
                 self.assertEqual(len(data), shot["bytes"])
-                self.assertNotIn(shot["path"], entry.get("files", []))
+                plugin_dir = gen_catalog.ROOT / entry["path"]
+                manifest = json.loads((plugin_dir / "manifest.json").read_text(encoding="utf-8"))
+                payload = {f"{entry['path']}/{name}" for name in ["manifest.json", *manifest.get("files", [])]}
+                self.assertNotIn(shot["path"], payload)
+                self.assertFalse(shot["path"].startswith(entry["path"] + "/"))
 
 
 if __name__ == "__main__":
