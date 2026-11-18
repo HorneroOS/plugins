@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedFrom": "e2d94c20a2f72c8f7a65447d0ab0c7a7b684c901",
+  "generatedFrom": "1514a862428faa3c18d5397715f2f832091b3e62",
   "plugins": [
     {
       "id": "hornero-agenda",
@@ -38,7 +38,60 @@
       },
       "trust": "official",
       "path": "plugins/hornero-agenda",
-      "sha256": "6ce1012d9131bef7cec5fcc265eadd9d17dbdb7158e629ab277d1613182cf587"
+      "sha256": "6ce1012d9131bef7cec5fcc265eadd9d17dbdb7158e629ab277d1613182cf587",
+      "marketplace": {
+        "compatibility": {
+          "minShellVersion": "1.2.79"
+        },
+        "changelog": [
+          {
+            "version": "3.0.1",
+            "notes": "Shorter footnote so it is not clipped at the bottom of the widget."
+          },
+          {
+            "version": "3.0.0",
+            "notes": "PluginKit 3 desktop widget on Hornero Signal: host-owned frame, position and size (sizeClass and showOnDesktop settings removed); day readout, ISO week/quarter/day-of-year readouts and a year partition bar with a dimension line."
+          },
+          {
+            "version": "2.1.1",
+            "notes": "Popover actions use the native full-width UiActionRow (shell 1.2.79 PluginKit) instead of small buttons."
+          },
+          {
+            "version": "2.1.0",
+            "notes": "Desktop Widgets 2.0 (#32): manifest v2 with the desktop surface redeclared on the same entrypoint, read-only Desktop.position slot and display shown in a host-owned popover, persisted compact/standard/wide size class and hide-with-restore visibility as typed settings (defaults standard/visible, so 2.0 content is unchanged), and reset for size and visibility. Moving stays in Control Center: PluginKit has no slot setter."
+          },
+          {
+            "version": "2.0.0",
+            "notes": "Time and Agenda 2.0: the 1.x date facts as labelled metrics plus quarter, ISO week-year, days remaining in the month and a year-progress bar, locale-correct dates and numbers, typed row settings with 1.x defaults and Argentine Spanish catalog. No events are shown: PluginKit has no calendar data source."
+          },
+          {
+            "version": "1.0.0",
+            "notes": "Desktop widget showing weekday, day and month, ISO week number, day of year and days remaining in the year, computed with pure Date math from PluginKit Time."
+          }
+        ]
+      },
+      "screenshots": [
+        {
+          "path": "docs/screenshots/hornero-agenda.png",
+          "sha256": "2a4052b7f075aa550c8be0b49ff4e5b7a44f682a1a84524e48538fa2aa0827d0",
+          "bytes": 24002,
+          "alt": "Hornero Agenda, rendered by Hornero Shell"
+        }
+      ],
+      "permissions": [
+        {
+          "kind": "data",
+          "value": "time",
+          "en": "Reads the clock and calendar from the shell's shared data (read-only).",
+          "es": "Lee el reloj y el calendario de los datos compartidos del shell (solo lectura)."
+        },
+        {
+          "kind": "settings",
+          "value": "showDayOfYear, showIsoWeek, showYearProgress",
+          "en": "Stores only its own settings (showDayOfYear, showIsoWeek, showYearProgress).",
+          "es": "Guarda solo su propia configuración (showDayOfYear, showIsoWeek, showYearProgress)."
+        }
+      ]
     },
     {
       "id": "hornero-ai-usage",
@@ -67,7 +120,44 @@
       },
       "trust": "official",
       "path": "plugins/hornero-ai-usage",
-      "sha256": "7918808354d40f584d5a54a28830a4dac879fdab9bbda72512836f0139218919"
+      "sha256": "7918808354d40f584d5a54a28830a4dac879fdab9bbda72512836f0139218919",
+      "marketplace": {
+        "compatibility": {
+          "minShellVersion": "1.2.79"
+        },
+        "changelog": [
+          {
+            "version": "3.0.0",
+            "notes": "PluginKit 3 on Hornero Signal: instrument module header and a segmented quota meter that appears only when the provider reports a limit; quota stays unknown otherwise."
+          },
+          {
+            "version": "2.0.1",
+            "notes": "Popover actions use the native full-width UiActionRow (shell 1.2.79 PluginKit) instead of small buttons."
+          }
+        ]
+      },
+      "screenshots": [
+        {
+          "path": "docs/screenshots/hornero-ai-usage.png",
+          "sha256": "e65fb9aa4d07c4583de5dd3f3dfc52be533a826e96b7c9ffc82a1f43d2467997",
+          "bytes": 33892,
+          "alt": "Hornero AI Usage, rendered by Hornero Shell"
+        }
+      ],
+      "permissions": [
+        {
+          "kind": "program",
+          "value": "horneroctl",
+          "en": "Runs horneroctl agent usage and horneroctl assistant usage (read-only) to show token and cost totals.",
+          "es": "Ejecuta horneroctl agent usage y horneroctl assistant usage (solo lectura) para mostrar el total de tokens y costos."
+        },
+        {
+          "kind": "settings",
+          "value": "refreshSeconds",
+          "en": "Stores only its own settings (refreshSeconds).",
+          "es": "Guarda solo su propia configuración (refreshSeconds)."
+        }
+      ]
     },
     {
       "id": "hornero-audio-deck",
@@ -109,7 +199,56 @@
       },
       "trust": "official",
       "path": "plugins/hornero-audio-deck",
-      "sha256": "64986ae0fc1042bc15cefb28816d5ef5deb743df6927433f021b0cb4b3f105b3"
+      "sha256": "64986ae0fc1042bc15cefb28816d5ef5deb743df6927433f021b0cb4b3f105b3",
+      "marketplace": {
+        "compatibility": {
+          "minShellVersion": "1.0.0"
+        },
+        "changelog": [
+          {
+            "version": "1.1.0",
+            "notes": "Setting: number of spectrum bands (4 to 24); more bands than the provider reports are never invented, fewer average neighbouring real bands."
+          },
+          {
+            "version": "1.0.0",
+            "notes": "Initial release: real PipeWire spectrum as phosphor VU strips, now playing and output volume over the shared providers (PluginKit 3 desktop widget)."
+          }
+        ]
+      },
+      "screenshots": [
+        {
+          "path": "docs/screenshots/hornero-audio-deck.png",
+          "sha256": "6d7149e781964cd8bbfe8f01af77a981b3698dd2b07b0f6b051e2efd451bd310",
+          "bytes": 18140,
+          "alt": "Hornero Audio Deck, rendered by Hornero Shell"
+        }
+      ],
+      "permissions": [
+        {
+          "kind": "data",
+          "value": "media",
+          "en": "Reads the track that is playing and its controls from the shell's shared data (read-only).",
+          "es": "Lee el tema que se está reproduciendo y sus controles de los datos compartidos del shell (solo lectura)."
+        },
+        {
+          "kind": "data",
+          "value": "audio",
+          "en": "Reads volume and audio devices from the shell's shared data (read-only).",
+          "es": "Lee volumen y dispositivos de audio de los datos compartidos del shell (solo lectura)."
+        },
+        {
+          "kind": "data",
+          "value": "spectrum",
+          "en": "Reads the audio spectrum of what is playing from the shell's shared data (read-only).",
+          "es": "Lee el espectro del audio que se está reproduciendo de los datos compartidos del shell (solo lectura)."
+        },
+        {
+          "kind": "settings",
+          "value": "bandCount, showArtist, showSpectrum",
+          "en": "Stores only its own settings (bandCount, showArtist, showSpectrum).",
+          "es": "Guarda solo su propia configuración (bandCount, showArtist, showSpectrum)."
+        }
+      ]
     },
     {
       "id": "hornero-base-converter",
@@ -134,7 +273,54 @@
       },
       "trust": "official",
       "path": "plugins/hornero-base-converter",
-      "sha256": "91a3af9818c950630754c92ab968e303f8e24eaebc87333b66d2d903da5ec022"
+      "sha256": "91a3af9818c950630754c92ab968e303f8e24eaebc87333b66d2d903da5ec022",
+      "marketplace": {
+        "compatibility": {
+          "minShellVersion": "1.0.0"
+        },
+        "changelog": [
+          {
+            "version": "3.0.2",
+            "notes": "Deprecated in favour of hornero-toolbox."
+          },
+          {
+            "version": "3.0.1",
+            "notes": "Second action button uses the same secondary style as the first."
+          },
+          {
+            "version": "3.0.0",
+            "notes": "PluginKit 3 on Hornero Signal: Signal text controls (UiTextField), instrument module header, palette roles."
+          },
+          {
+            "version": "2.0.0",
+            "notes": "Utility Tools 2.0 (plugins#30): bar quick action with popover, compact Utilities dashboard detail panel and a declaration-only launcher entrypoint (not loaded until shell#250) over one tested pure-JS logic block; typed settings default to 1.x behaviour; Spanish catalog."
+          },
+          {
+            "version": "1.0.0",
+            "notes": "Dashboard base converter: decimal to binary/octal/hex and hex back to decimal."
+          }
+        ],
+        "deprecation": {
+          "message": "Retired: Toolbox covers this tool (and six siblings) in one Signal card with typed settings and live results; this extension keeps working where installed.",
+          "replacedBy": "hornero-toolbox"
+        }
+      },
+      "screenshots": [
+        {
+          "path": "docs/screenshots/hornero-base-converter.png",
+          "sha256": "a98c7f3c28fb316cf054588fa201e87b67e66e5809f616ace2e5a70088482c3b",
+          "bytes": 14188,
+          "alt": "Hornero Base Converter, rendered by Hornero Shell"
+        }
+      ],
+      "permissions": [
+        {
+          "kind": "settings",
+          "value": "uppercaseHex",
+          "en": "Stores only its own settings (uppercaseHex).",
+          "es": "Guarda solo su propia configuración (uppercaseHex)."
+        }
+      ]
     },
     {
       "id": "hornero-battery",
@@ -179,7 +365,48 @@
       },
       "trust": "official",
       "path": "plugins/hornero-battery",
-      "sha256": "c5c582a7128e84a5a9753d256f8025435613020893b4ebd234f38554c1e34574"
+      "sha256": "c5c582a7128e84a5a9753d256f8025435613020893b4ebd234f38554c1e34574",
+      "marketplace": {
+        "compatibility": {
+          "minShellVersion": "1.0.0"
+        },
+        "changelog": [
+          {
+            "version": "3.0.0",
+            "notes": "PluginKit 3 on Hornero Signal: Hornero Glyph battery indicator in place of emoji, segmented charge meter that crosses to signal when low, and the details the Power facade now exposes (time to empty/full, energy rate, health, power profile), each shown only when reported."
+          },
+          {
+            "version": "2.0.0",
+            "notes": "Battery & Uptime 2.0 (#31): no permanent 'No battery' bar item by default (showWhenNoBattery opt-in restores it), host-owned popover and dashboard card with charge/state/power-source detail from PluginKit Power only, low-battery chip, typed settings, host-context layout and Spanish catalog."
+          },
+          {
+            "version": "1.0.0",
+            "notes": "Bar widget showing battery percentage and charging state from PluginKit Power; showed 'No battery' on machines without a battery."
+          }
+        ]
+      },
+      "screenshots": [
+        {
+          "path": "docs/screenshots/hornero-battery.png",
+          "sha256": "d82a61d83d07e6213e239d5ddf3e6ba1526554fbcd27d60370dbb7e4d972cf69",
+          "bytes": 18980,
+          "alt": "Hornero Battery, rendered by Hornero Shell"
+        }
+      ],
+      "permissions": [
+        {
+          "kind": "data",
+          "value": "power",
+          "en": "Reads battery and power profile from the shell's shared data (read-only).",
+          "es": "Lee batería y perfil de energía de los datos compartidos del shell (solo lectura)."
+        },
+        {
+          "kind": "settings",
+          "value": "lowBatteryPercent, showPercentage, showStateText, showWhenNoBattery",
+          "en": "Stores only its own settings (lowBatteryPercent, showPercentage, showStateText, showWhenNoBattery).",
+          "es": "Guarda solo su propia configuración (lowBatteryPercent, showPercentage, showStateText, showWhenNoBattery)."
+        }
+      ]
     },
     {
       "id": "hornero-calculator",
@@ -209,7 +436,66 @@
       },
       "trust": "official",
       "path": "plugins/hornero-calculator",
-      "sha256": "2236bb3469dd7ae331ef757c3c13d1859305754150e212452934e49b1a711d59"
+      "sha256": "2236bb3469dd7ae331ef757c3c13d1859305754150e212452934e49b1a711d59",
+      "marketplace": {
+        "compatibility": {
+          "minShellVersion": "1.2.73"
+        },
+        "changelog": [
+          {
+            "version": "3.0.1",
+            "notes": "Deprecated in favour of hornero-toolbox."
+          },
+          {
+            "version": "3.0.0",
+            "notes": "PluginKit 3 on Hornero Signal: keypad redrawn (digits secondary, operators quiet, '=' the single primary key), mono expression field and a result readout well that reads alert on an invalid expression (#49)."
+          },
+          {
+            "version": "2.2.1",
+            "notes": "Popover: one short hint instead of two developer notes that overflowed the popout."
+          },
+          {
+            "version": "2.2.0",
+            "notes": "Bar quick action joins the native quick actions island (section actions). Needs Hornero Shell 1.2.73 (bar sections)."
+          },
+          {
+            "version": "2.1.0",
+            "notes": "Native look: card header with the calculate icon, icon-only bar button, tonal keypad with a primary \"=\". Needs Hornero Shell 1.2.72 (PluginKit UiIcon/iconName/card header)."
+          },
+          {
+            "version": "2.0.1",
+            "notes": "Dashboard keypad uses tonal keys with \"=\" as the primary action, matching native shell controls (needs the PluginKit tonal button variant; older shells show filled keys)."
+          },
+          {
+            "version": "2.0.0",
+            "notes": "Utility Tools 2.0 (plugins#30): bar quick action with popover, compact Utilities dashboard detail panel and a declaration-only launcher entrypoint (not loaded until shell#250) over one tested pure-JS logic block; typed settings default to 1.x behaviour; Spanish catalog."
+          },
+          {
+            "version": "1.0.0",
+            "notes": "Dashboard calculator with a safe tokenizer and recursive-descent parser; division by zero showed Error."
+          }
+        ],
+        "deprecation": {
+          "message": "Retired: Toolbox covers this tool (and six siblings) in one Signal card with typed settings and live results; this extension keeps working where installed.",
+          "replacedBy": "hornero-toolbox"
+        }
+      },
+      "screenshots": [
+        {
+          "path": "docs/screenshots/hornero-calculator.png",
+          "sha256": "b3206380c2e42a9b34b3ec70f77ab35549fe16a411cadc4944fb666ea16a3315",
+          "bytes": 14965,
+          "alt": "Hornero Calculator, rendered by Hornero Shell"
+        }
+      ],
+      "permissions": [
+        {
+          "kind": "settings",
+          "value": "liveResult, showKeypad",
+          "en": "Stores only its own settings (liveResult, showKeypad).",
+          "es": "Guarda solo su propia configuración (liveResult, showKeypad)."
+        }
+      ]
     },
     {
       "id": "hornero-calendar",
@@ -266,7 +552,68 @@
       },
       "trust": "official",
       "path": "plugins/hornero-calendar",
-      "sha256": "fc89b4bddcd7dbd566687db826e8291219e51d9d8966cf2db1ad09c7f5be9261"
+      "sha256": "fc89b4bddcd7dbd566687db826e8291219e51d9d8966cf2db1ad09c7f5be9261",
+      "marketplace": {
+        "compatibility": {
+          "minShellVersion": "1.2.79"
+        },
+        "changelog": [
+          {
+            "version": "3.1.0",
+            "notes": "Setting: date format (long, short or ISO)."
+          },
+          {
+            "version": "3.0.2",
+            "notes": "The duplicate shell time line is off by default (it printed 06:48AM under the clock)."
+          },
+          {
+            "version": "3.0.1",
+            "notes": "Shorter footnote so it is not clipped at the bottom of the widget."
+          },
+          {
+            "version": "3.0.0",
+            "notes": "PluginKit 3 desktop widget on Hornero Signal: the host now owns the frame, position, size and edit mode, so the in-widget size class, hide/show and placement popover (settings sizeClass, showOnDesktop) are removed; display clock, square-celled month grid with today in signal."
+          },
+          {
+            "version": "2.1.1",
+            "notes": "Popover actions use the native full-width UiActionRow (shell 1.2.79 PluginKit) instead of small buttons."
+          },
+          {
+            "version": "2.1.0",
+            "notes": "Desktop Widgets 2.0 (#32): manifest v2 with the desktop surface redeclared on the same entrypoint, read-only Desktop.position slot and display shown in a host-owned popover, persisted compact/standard/wide size class (month-grid cells follow it) and hide-with-restore visibility as typed settings (defaults standard/visible, so 2.0 content is unchanged), and reset for size and visibility. Moving stays in Control Center: PluginKit has no slot setter."
+          },
+          {
+            "version": "2.0.0",
+            "notes": "Time and Agenda 2.0: current-month grid with today marked under the unchanged 1.x time/date header, locale-correct month and weekday names, typed clock-format/week-start settings with 1.x defaults, shared Time facade and Argentine Spanish catalog. No events are shown: PluginKit has no calendar data source."
+          },
+          {
+            "version": "1.0.0",
+            "notes": "Desktop widget showing the current time and full date from the PluginKit Time service."
+          }
+        ]
+      },
+      "screenshots": [
+        {
+          "path": "docs/screenshots/hornero-calendar.png",
+          "sha256": "3e36ac17ab5188400d89d7ad29e4822b6fd8a239765b0816c8a9a55fc5fd3309",
+          "bytes": 25854,
+          "alt": "Hornero Calendar, rendered by Hornero Shell"
+        }
+      ],
+      "permissions": [
+        {
+          "kind": "data",
+          "value": "time",
+          "en": "Reads the clock and calendar from the shell's shared data (read-only).",
+          "es": "Lee el reloj y el calendario de los datos compartidos del shell (solo lectura)."
+        },
+        {
+          "kind": "settings",
+          "value": "dateStyle, showMonthGrid, showShellTime, twentyFourHour, weekStart",
+          "en": "Stores only its own settings (dateStyle, showMonthGrid, showShellTime, twentyFourHour, weekStart).",
+          "es": "Guarda solo su propia configuración (dateStyle, showMonthGrid, showShellTime, twentyFourHour, weekStart)."
+        }
+      ]
     },
     {
       "id": "hornero-clipboard",
@@ -327,7 +674,38 @@
       "trust": "official",
       "path": "plugins/hornero-clipboard",
       "sha256": "4512d7f5e1c5519886a2708c30dda68c0ab3c9ece5b57e9535e5e82077a1217a",
-      "pluginKit": 4
+      "pluginKit": 4,
+      "marketplace": {
+        "compatibility": {
+          "minShellVersion": "1.3.0"
+        },
+        "changelog": [
+          {
+            "version": "1.0.0",
+            "notes": "Initial release: >clipboard launcher provider (several rows, Enter copies), in-memory text history with retention, size and excluded-word limits, password-manager secrets skipped, pause/resume/clear commands. Needs the Hornero Shell with multi-row launcher results and PluginKit 4 commands."
+          }
+        ]
+      },
+      "permissions": [
+        {
+          "kind": "program",
+          "value": "wl-paste",
+          "en": "Reads the text on your clipboard with wl-paste and watches it for changes, to build the history.",
+          "es": "Lee el texto del portapapeles con wl-paste y lo vigila para detectar cambios y armar el historial."
+        },
+        {
+          "kind": "program",
+          "value": "echo",
+          "en": "Used only as the change signal for wl-paste --watch; it prints the word changed and nothing else.",
+          "es": "Se usa solo como aviso de cambio para wl-paste --watch; imprime la palabra changed y nada más."
+        },
+        {
+          "kind": "settings",
+          "value": "excludeWords, maxChars, maxEntries, recording, retentionMinutes, skipSensitive",
+          "en": "Stores only its own settings (excludeWords, maxChars, maxEntries, recording, retentionMinutes, skipSensitive).",
+          "es": "Guarda solo su propia configuración (excludeWords, maxChars, maxEntries, recording, retentionMinutes, skipSensitive)."
+        }
+      ]
     },
     {
       "id": "hornero-color-converter",
@@ -358,7 +736,54 @@
       },
       "trust": "official",
       "path": "plugins/hornero-color-converter",
-      "sha256": "d081da53c8d95af2112c52c95d331e74e8e3bbf7a896b8d2909fee856a528620"
+      "sha256": "d081da53c8d95af2112c52c95d331e74e8e3bbf7a896b8d2909fee856a528620",
+      "marketplace": {
+        "compatibility": {
+          "minShellVersion": "1.3.0"
+        },
+        "changelog": [
+          {
+            "version": "3.1.1",
+            "notes": "Deprecated in favour of hornero-toolbox."
+          },
+          {
+            "version": "3.1.0",
+            "notes": "Reference extension for Hornero Chromatic (RFC 0002): the dashboard panel shows the dynamic palette's seed colours (Theme.chromatic), re-reads them on every settled palette change (Theme.revision), picks sample ink with Theme.ensureContrast, and declares one theme template rendered by horneroctl into the extension's cache folder."
+          },
+          {
+            "version": "3.0.0",
+            "notes": "PluginKit 3 on Hornero Signal: Signal text and spin controls, instrument module header, palette roles."
+          },
+          {
+            "version": "2.0.0",
+            "notes": "Utility Tools 2.0 (plugins#30): bar quick action with popover, compact Utilities dashboard detail panel and a declaration-only launcher entrypoint (not loaded until shell#250) over one tested pure-JS logic block; typed settings default to 1.x behaviour; Spanish catalog."
+          },
+          {
+            "version": "1.0.0",
+            "notes": "Dashboard color converter: validated hex to RGB/HSL and RGB inputs back to hex."
+          }
+        ],
+        "deprecation": {
+          "message": "Retired: Toolbox covers this tool (and six siblings) in one Signal card with typed settings and live results; this extension keeps working where installed.",
+          "replacedBy": "hornero-toolbox"
+        }
+      },
+      "screenshots": [
+        {
+          "path": "docs/screenshots/hornero-color-converter.png",
+          "sha256": "b92b8a34dd61878836ce7b8d005bf21bfbe6afa76334ed75ab297037c76cd2f6",
+          "bytes": 20195,
+          "alt": "Hornero Color Converter, rendered by Hornero Shell"
+        }
+      ],
+      "permissions": [
+        {
+          "kind": "settings",
+          "value": "defaultHex, showPreview",
+          "en": "Stores only its own settings (defaultHex, showPreview).",
+          "es": "Guarda solo su propia configuración (defaultHex, showPreview)."
+        }
+      ]
     },
     {
       "id": "hornero-containers",
@@ -416,7 +841,46 @@
       },
       "trust": "official",
       "path": "plugins/hornero-containers",
-      "sha256": "08df1fb9f1e714b5ef78a4bfb0f8c063a0debc29e9a45a4926aa5deacba4f5dd"
+      "sha256": "08df1fb9f1e714b5ef78a4bfb0f8c063a0debc29e9a45a4926aa5deacba4f5dd",
+      "marketplace": {
+        "compatibility": {
+          "minShellVersion": "1.0.0"
+        },
+        "changelog": [
+          {
+            "version": "1.0.0",
+            "notes": "Initial release: read-only Podman/Docker container roster with state, image, status and published ports, as a dashboard card and a desktop widget."
+          }
+        ]
+      },
+      "screenshots": [
+        {
+          "path": "docs/screenshots/hornero-containers.png",
+          "sha256": "fd91746edc6cb639c12a458f4f3fa4249dd69e02900ad37a790555d3851f7130",
+          "bytes": 24944,
+          "alt": "Hornero Containers, rendered by Hornero Shell"
+        }
+      ],
+      "permissions": [
+        {
+          "kind": "program",
+          "value": "podman",
+          "en": "Lists your containers with podman ps (read-only). It never starts, stops or removes a container.",
+          "es": "Lista tus contenedores con podman ps (solo lectura). Nunca inicia, detiene ni borra un contenedor."
+        },
+        {
+          "kind": "program",
+          "value": "docker",
+          "en": "Lists your containers with docker ps (read-only). It never starts, stops or removes a container.",
+          "es": "Lista tus contenedores con docker ps (solo lectura). Nunca inicia, detiene ni borra un contenedor."
+        },
+        {
+          "kind": "settings",
+          "value": "maxRows, refreshSeconds, runtime, showPorts, showStopped",
+          "en": "Stores only its own settings (maxRows, refreshSeconds, runtime, showPorts, showStopped).",
+          "es": "Guarda solo su propia configuración (maxRows, refreshSeconds, runtime, showPorts, showStopped)."
+        }
+      ]
     },
     {
       "id": "hornero-countdown",
@@ -489,7 +953,43 @@
       },
       "trust": "official",
       "path": "plugins/hornero-countdown",
-      "sha256": "5a3d3702c6a90c46d5aeabf3f10b633051df13cbd0baedb61abbc984b7f70c58"
+      "sha256": "5a3d3702c6a90c46d5aeabf3f10b633051df13cbd0baedb61abbc984b7f70c58",
+      "marketplace": {
+        "changelog": [
+          {
+            "version": "3.1.0",
+            "notes": "Absorbs Stopwatch: the popover switches between countdown and stopwatch, the indicator follows whichever is running. Stopwatch stored state carries over."
+          },
+          {
+            "version": "3.0.0",
+            "notes": "PluginKit 3 on Hornero Signal: tokens, glyph and variant names ported; task progress via UiProgress."
+          },
+          {
+            "version": "2.0.0",
+            "notes": "Productivity Timers 2.0: compact indicator plus popover with presets and progress, deadline-correct timing persisted across sleep/reload, typed defaultMinutes setting (default 5), completion toast, Theme tokens and Argentine Spanish translation."
+          },
+          {
+            "version": "1.0.0",
+            "notes": "Bar countdown with 5/10/25 minute presets, start/pause/reset and a flashing DONE ring at zero."
+          }
+        ]
+      },
+      "screenshots": [
+        {
+          "path": "docs/screenshots/hornero-countdown.png",
+          "sha256": "e38bc25a82ac42261f04b91186b9186c1e71e6254b3be3d6b3ca0e2e07c857dd",
+          "bytes": 3495,
+          "alt": "Hornero Countdown, rendered by Hornero Shell"
+        }
+      ],
+      "permissions": [
+        {
+          "kind": "settings",
+          "value": "accumulatedMs, deadlineEpochMs, defaultMinutes, defaultMode, remainingSeconds, showTenths, startedEpochMs, totalSeconds",
+          "en": "Stores only its own settings (accumulatedMs, deadlineEpochMs, defaultMinutes, defaultMode, remainingSeconds, showTenths, startedEpochMs, totalSeconds).",
+          "es": "Guarda solo su propia configuración (accumulatedMs, deadlineEpochMs, defaultMinutes, defaultMode, remainingSeconds, showTenths, startedEpochMs, totalSeconds)."
+        }
+      ]
     },
     {
       "id": "hornero-date-calculator",
@@ -514,7 +1014,54 @@
       },
       "trust": "official",
       "path": "plugins/hornero-date-calculator",
-      "sha256": "69c8595961ff3d7e5cdfb65a4a59efa7d2e5e2b2157ce627cd5c7180c3fc1086"
+      "sha256": "69c8595961ff3d7e5cdfb65a4a59efa7d2e5e2b2157ce627cd5c7180c3fc1086",
+      "marketplace": {
+        "compatibility": {
+          "minShellVersion": "1.0.0"
+        },
+        "changelog": [
+          {
+            "version": "3.0.2",
+            "notes": "Deprecated in favour of hornero-toolbox."
+          },
+          {
+            "version": "3.0.1",
+            "notes": "Second action button uses the same secondary style as the first."
+          },
+          {
+            "version": "3.0.0",
+            "notes": "PluginKit 3 on Hornero Signal: tokens ported."
+          },
+          {
+            "version": "2.0.0",
+            "notes": "Utility Tools 2.0 (plugins#30): bar quick action with popover, compact Utilities dashboard detail panel and a declaration-only launcher entrypoint (not loaded until shell#250) over one tested pure-JS logic block; typed settings default to 1.x behaviour; Spanish catalog."
+          },
+          {
+            "version": "1.0.0",
+            "notes": "Dashboard date calculator: days-between and add-days with UTC math."
+          }
+        ],
+        "deprecation": {
+          "message": "Retired: Toolbox covers this tool (and six siblings) in one Signal card with typed settings and live results; this extension keeps working where installed.",
+          "replacedBy": "hornero-toolbox"
+        }
+      },
+      "screenshots": [
+        {
+          "path": "docs/screenshots/hornero-date-calculator.png",
+          "sha256": "fdec70d2b1622eb3a63972d9f6377b39dd2fde96df4d171ff63cc42fa1e92878",
+          "bytes": 22883,
+          "alt": "Hornero Date Calculator, rendered by Hornero Shell"
+        }
+      ],
+      "permissions": [
+        {
+          "kind": "settings",
+          "value": "showUtcNote",
+          "en": "Stores only its own settings (showUtcNote).",
+          "es": "Guarda solo su propia configuración (showUtcNote)."
+        }
+      ]
     },
     {
       "id": "hornero-device-battery",
@@ -569,7 +1116,40 @@
       },
       "trust": "official",
       "path": "plugins/hornero-device-battery",
-      "sha256": "0553fc6ad207ace3464e73b8625b32fabc3d99fb0c1219b730cf96963685ce66"
+      "sha256": "0553fc6ad207ace3464e73b8625b32fabc3d99fb0c1219b730cf96963685ce66",
+      "marketplace": {
+        "compatibility": {
+          "minShellVersion": "1.0.0"
+        },
+        "changelog": [
+          {
+            "version": "1.0.0",
+            "notes": "Initial release: wireless peripheral batteries (controllers, mice, keyboards, headsets, pens, phones) from UPower, as a dashboard card and a desktop widget."
+          }
+        ]
+      },
+      "screenshots": [
+        {
+          "path": "docs/screenshots/hornero-device-battery.png",
+          "sha256": "4c7f8213754d916d8e192ed5c4cc6725296ea35fddf209628a1638cb5b799294",
+          "bytes": 25062,
+          "alt": "Hornero Device Battery, rendered by Hornero Shell"
+        }
+      ],
+      "permissions": [
+        {
+          "kind": "program",
+          "value": "upower",
+          "en": "Reads battery levels of connected devices with upower -d (read-only).",
+          "es": "Lee el nivel de batería de los dispositivos conectados con upower -d (solo lectura)."
+        },
+        {
+          "kind": "settings",
+          "value": "includeInternal, lowPercent, refreshSeconds, showModel, sortBy",
+          "en": "Stores only its own settings (includeInternal, lowPercent, refreshSeconds, showModel, sortBy).",
+          "es": "Guarda solo su propia configuración (includeInternal, lowPercent, refreshSeconds, showModel, sortBy)."
+        }
+      ]
     },
     {
       "id": "hornero-disk-usage",
@@ -604,7 +1184,52 @@
       },
       "trust": "official",
       "path": "plugins/hornero-disk-usage",
-      "sha256": "599bde38e10e6e5451d2b418207a00d5bb9da47cae3d341fe0c9dfc7a2181391"
+      "sha256": "599bde38e10e6e5451d2b418207a00d5bb9da47cae3d341fe0c9dfc7a2181391",
+      "marketplace": {
+        "compatibility": {
+          "minShellVersion": "1.0.0"
+        },
+        "changelog": [
+          {
+            "version": "3.0.1",
+            "notes": "Plain wording in footnotes and labels (no internal terms)."
+          },
+          {
+            "version": "3.0.0",
+            "notes": "PluginKit 3 on Hornero Signal: per-disk UiPartition bars with dimension lines and a signal-toned near-full flag."
+          },
+          {
+            "version": "2.0.0",
+            "notes": "Per-disk card on the shared System.disks facade: used/total/free in correct KiB units, most-full summary, near-full alerts, typed settings and Spanish catalog. No SMART data invented."
+          },
+          {
+            "version": "1.0.0",
+            "notes": "Dashboard card listing mounted disks with used/total space and a percentage bar."
+          }
+        ]
+      },
+      "screenshots": [
+        {
+          "path": "docs/screenshots/hornero-disk-usage.png",
+          "sha256": "16127226d94d55ac3ee396df1f13230cb8bedf8242180bb2c5dc40ed710bd05f",
+          "bytes": 22405,
+          "alt": "Hornero Disk Usage, rendered by Hornero Shell"
+        }
+      ],
+      "permissions": [
+        {
+          "kind": "data",
+          "value": "system",
+          "en": "Reads CPU, memory, temperature and disk use from the shell's shared data (read-only).",
+          "es": "Lee uso de CPU, memoria, temperatura y disco de los datos compartidos del shell (solo lectura)."
+        },
+        {
+          "kind": "settings",
+          "value": "showFreeSpace, warnPercent",
+          "en": "Stores only its own settings (showFreeSpace, warnPercent).",
+          "es": "Guarda solo su propia configuración (showFreeSpace, warnPercent)."
+        }
+      ]
     },
     {
       "id": "hornero-dual-clock",
@@ -656,7 +1281,76 @@
       },
       "trust": "official",
       "path": "plugins/hornero-dual-clock",
-      "sha256": "8f26d204ec914a0b81abacb978c83c1e171102f34140fa2c7244a4c36613f4cb"
+      "sha256": "8f26d204ec914a0b81abacb978c83c1e171102f34140fa2c7244a4c36613f4cb",
+      "marketplace": {
+        "compatibility": {
+          "minShellVersion": "1.2.74"
+        },
+        "changelog": [
+          {
+            "version": "3.0.3",
+            "notes": "Deprecated in favour of hornero-world-clock."
+          },
+          {
+            "version": "3.0.2",
+            "notes": "Vertical rail stacks HH over mm like the native clock (HH:mm was elided)."
+          },
+          {
+            "version": "3.0.1",
+            "notes": "Vertical bar rail shows a single HH:mm line instead of two clipped lines."
+          },
+          {
+            "version": "3.0.0",
+            "notes": "PluginKit 3 on Hornero Signal: tokens and variant names ported."
+          },
+          {
+            "version": "2.1.2",
+            "notes": "Popover: offset shown as +3:00 (was +3.00:00), short daylight-saving note that wraps inside the popout."
+          },
+          {
+            "version": "2.1.1",
+            "notes": "Suppress the indicator tooltip while its popover is open (it floated over the popover)."
+          },
+          {
+            "version": "2.1.0",
+            "notes": "Native popout: subtitle header, caption date line and label/value detail rows (PluginKit UiDetailRow); DST folds into the zone row label. Needs Hornero Shell 1.2.74 (UiText subtitle, UiDetailRow, borderless UiPopover)."
+          },
+          {
+            "version": "2.0.0",
+            "notes": "Time and Agenda 2.0: shared Time facade instead of an own timer, Theme tokens, keyboard-operable indicator with a details popover (locale dates, applied offsets, DST state, offset difference), selectable second zone defaulting to UTC with the identical 1.x label, typed settings and Argentine Spanish catalog."
+          },
+          {
+            "version": "1.0.1",
+            "notes": "Local time next to UTC in the bar for coordinating across time zones; themed text and vertical two-line layout."
+          }
+        ],
+        "deprecation": {
+          "message": "Retired: World Clock now has the same bar indicator (local time over a second zone, barZone and barShowSeconds) plus its dashboard card.",
+          "replacedBy": "hornero-world-clock"
+        }
+      },
+      "screenshots": [
+        {
+          "path": "docs/screenshots/hornero-dual-clock.png",
+          "sha256": "5ceb7d2010cc11f3743d6868a4e394b1879300b6dd1316a743aa2f8da910d31d",
+          "bytes": 4615,
+          "alt": "Hornero Dual Clock, rendered by Hornero Shell"
+        }
+      ],
+      "permissions": [
+        {
+          "kind": "data",
+          "value": "time",
+          "en": "Reads the clock and calendar from the shell's shared data (read-only).",
+          "es": "Lee el reloj y el calendario de los datos compartidos del shell (solo lectura)."
+        },
+        {
+          "kind": "settings",
+          "value": "secondZone, showSeconds, twentyFourHour",
+          "en": "Stores only its own settings (secondZone, showSeconds, twentyFourHour).",
+          "es": "Guarda solo su propia configuración (secondZone, showSeconds, twentyFourHour)."
+        }
+      ]
     },
     {
       "id": "hornero-emoji",
@@ -703,7 +1397,32 @@
       },
       "trust": "official",
       "path": "plugins/hornero-emoji",
-      "sha256": "8535b65636809f51c2c38408b454720af378fadb16f0e23a965ddd5151b5cf11"
+      "sha256": "8535b65636809f51c2c38408b454720af378fadb16f0e23a965ddd5151b5cf11",
+      "marketplace": {
+        "compatibility": {
+          "minShellVersion": "1.3.0"
+        },
+        "changelog": [
+          {
+            "version": "1.0.0",
+            "notes": "Initial release: >emoji launcher provider (several rows, Enter copies) and a dashboard picker over Unicode 16.0 names. Needs the Hornero Shell with multi-row launcher results; older shells keep the dashboard card and skip the launcher provider."
+          }
+        ]
+      },
+      "permissions": [
+        {
+          "kind": "program",
+          "value": "wl-copy",
+          "en": "Copies the emoji you pick to the clipboard with wl-copy.",
+          "es": "Copia al portapapeles el emoji que elegís, con wl-copy."
+        },
+        {
+          "kind": "settings",
+          "value": "maxResults, showGroup, skinTone",
+          "en": "Stores only its own settings (maxResults, showGroup, skinTone).",
+          "es": "Guarda solo su propia configuración (maxResults, showGroup, skinTone)."
+        }
+      ]
     },
     {
       "id": "hornero-equalizer",
@@ -765,7 +1484,44 @@
       },
       "trust": "official",
       "path": "plugins/hornero-equalizer",
-      "sha256": "aac98882d099c995b3a414f90aa4e0049f27e670a9a69327776cd2c1d03d9d8b"
+      "sha256": "aac98882d099c995b3a414f90aa4e0049f27e670a9a69327776cd2c1d03d9d8b",
+      "marketplace": {
+        "compatibility": {
+          "minShellVersion": "1.3.0"
+        },
+        "changelog": [
+          {
+            "version": "1.0.0",
+            "notes": "Initial release: bar equalizer bars and a popover analyser over Audio.spectrum, peak-hold ticks derived from the real samples, spectrum lease held only while a player is playing by default."
+          }
+        ]
+      },
+      "permissions": [
+        {
+          "kind": "data",
+          "value": "audio",
+          "en": "Reads volume and audio devices from the shell's shared data (read-only).",
+          "es": "Lee volumen y dispositivos de audio de los datos compartidos del shell (solo lectura)."
+        },
+        {
+          "kind": "data",
+          "value": "media",
+          "en": "Reads the track that is playing and its controls from the shell's shared data (read-only).",
+          "es": "Lee el tema que se está reproduciendo y sus controles de los datos compartidos del shell (solo lectura)."
+        },
+        {
+          "kind": "data",
+          "value": "spectrum",
+          "en": "Reads the audio spectrum of what is playing from the shell's shared data (read-only).",
+          "es": "Lee el espectro del audio que se está reproduciendo de los datos compartidos del shell (solo lectura)."
+        },
+        {
+          "kind": "settings",
+          "value": "analyseWhen, barBands, peakHold, popoverBands, whenSilent",
+          "en": "Stores only its own settings (analyseWhen, barBands, peakHold, popoverBands, whenSilent).",
+          "es": "Guarda solo su propia configuración (analyseWhen, barBands, peakHold, popoverBands, whenSilent)."
+        }
+      ]
     },
     {
       "id": "hornero-focus-card",
@@ -806,7 +1562,60 @@
       },
       "trust": "official",
       "path": "plugins/hornero-focus-card",
-      "sha256": "73a72346857fce411c223e7098c471abca4db8026b0589231abb5ee1e052755b"
+      "sha256": "73a72346857fce411c223e7098c471abca4db8026b0589231abb5ee1e052755b",
+      "marketplace": {
+        "compatibility": {
+          "minShellVersion": "1.2.72"
+        },
+        "changelog": [
+          {
+            "version": "3.0.1",
+            "notes": "Deprecated: Retired: a rotating phrase card is low value. Pomodoro now has breaks and an optional Focus experience hook."
+          },
+          {
+            "version": "3.0.0",
+            "notes": "PluginKit 3 on Hornero Signal: Hornero Glyph names, quiet variants, instrument module header."
+          },
+          {
+            "version": "2.1.0",
+            "notes": "Native look: card header with the date, the focus line as the hero text, tonal chevron buttons, integer line counter (was 1.00 of 5.00), no redundant chip. Needs Hornero Shell 1.2.72 (PluginKit UiIcon/iconName/card header)."
+          },
+          {
+            "version": "2.0.0",
+            "notes": "Notes and Focus 2.0: locale-formatted date from the shared Time facade instead of the hard-coded Spanish layout and own date object, keyboard Previous/Next plus pause replacing the mouse-only card click, Ui primitives with Theme tokens, typed settings with 1.x defaults (30 s rotation, date shown, built-in lines only) plus an optional custom leading line, and Argentine Spanish catalog."
+          },
+          {
+            "version": "1.0.1",
+            "notes": "Dashboard card with a rotating original one-line focus reminder and the date."
+          }
+        ],
+        "deprecation": {
+          "message": "Retired: a rotating phrase card is low value. Pomodoro now has breaks and an optional Focus experience hook.",
+          "replacedBy": "hornero-pomodoro"
+        }
+      },
+      "screenshots": [
+        {
+          "path": "docs/screenshots/hornero-focus-card.png",
+          "sha256": "ffafd0f339f1b9ce82faf892f840910cae1dbc45e3c24aa9d107e37cfec50f65",
+          "bytes": 14176,
+          "alt": "Hornero Focus Card, rendered by Hornero Shell"
+        }
+      ],
+      "permissions": [
+        {
+          "kind": "data",
+          "value": "time",
+          "en": "Reads the clock and calendar from the shell's shared data (read-only).",
+          "es": "Lee el reloj y el calendario de los datos compartidos del shell (solo lectura)."
+        },
+        {
+          "kind": "settings",
+          "value": "customLine, rotateSeconds, showDate",
+          "en": "Stores only its own settings (customLine, rotateSeconds, showDate).",
+          "es": "Guarda solo su propia configuración (customLine, rotateSeconds, showDate)."
+        }
+      ]
     },
     {
       "id": "hornero-forge-board",
@@ -862,7 +1671,50 @@
       },
       "trust": "official",
       "path": "plugins/hornero-forge-board",
-      "sha256": "f333a4d7c70f3f60ce7e2aafcbce9c4a8f4704cdbec186e31aa1012f954ad033"
+      "sha256": "f333a4d7c70f3f60ce7e2aafcbce9c4a8f4704cdbec186e31aa1012f954ad033",
+      "marketplace": {
+        "compatibility": {
+          "minShellVersion": "1.0.0"
+        },
+        "changelog": [
+          {
+            "version": "1.0.1",
+            "notes": "Header no longer claims CI GREEN when gh is missing or signed out."
+          },
+          {
+            "version": "1.0.0",
+            "notes": "Initial release: latest workflow run per repository and your open pull requests with check state, via the gh CLI session. No token handling."
+          }
+        ]
+      },
+      "screenshots": [
+        {
+          "path": "docs/screenshots/hornero-forge-board.png",
+          "sha256": "acca98150ce4453dc805851f409b949a7a7e5e7133f2abdb8418e8da16da211b",
+          "bytes": 33092,
+          "alt": "Hornero Forge Board, rendered by Hornero Shell"
+        }
+      ],
+      "permissions": [
+        {
+          "kind": "program",
+          "value": "gh",
+          "en": "Runs gh pr list and gh run list for the repositories you configure, using your existing GitHub CLI login. Read-only.",
+          "es": "Ejecuta gh pr list y gh run list para los repositorios que configures, con tu sesión actual de GitHub CLI. Solo lectura."
+        },
+        {
+          "kind": "network",
+          "value": "api.github.com",
+          "en": "gh contacts api.github.com to read pull requests and CI runs.",
+          "es": "gh se conecta a api.github.com para leer pull requests y ejecuciones de CI."
+        },
+        {
+          "kind": "settings",
+          "value": "maxPullRequests, maxRepositories, refreshMinutes, repositories, showPullRequests",
+          "en": "Stores only its own settings (maxPullRequests, maxRepositories, refreshMinutes, repositories, showPullRequests).",
+          "es": "Guarda solo su propia configuración (maxPullRequests, maxRepositories, refreshMinutes, repositories, showPullRequests)."
+        }
+      ]
     },
     {
       "id": "hornero-git-board",
@@ -923,7 +1775,40 @@
       },
       "trust": "official",
       "path": "plugins/hornero-git-board",
-      "sha256": "03ff19d4a97aa14108d6ebba94e155972c5c764946d9683fa5545dfac4c5ede8"
+      "sha256": "03ff19d4a97aa14108d6ebba94e155972c5c764946d9683fa5545dfac4c5ede8",
+      "marketplace": {
+        "compatibility": {
+          "minShellVersion": "1.0.0"
+        },
+        "changelog": [
+          {
+            "version": "1.0.0",
+            "notes": "Initial release: per-repository branch, upstream drift, working-tree counts and last commit from local git, as a dashboard card and a desktop widget."
+          }
+        ]
+      },
+      "screenshots": [
+        {
+          "path": "docs/screenshots/hornero-git-board.png",
+          "sha256": "7e572fb059f78e5a28238aa2376af36d89de451ded2169a4f9c16f2fd88c6188",
+          "bytes": 34483,
+          "alt": "Hornero Git Board, rendered by Hornero Shell"
+        }
+      ],
+      "permissions": [
+        {
+          "kind": "program",
+          "value": "git",
+          "en": "Runs git status and git log in the local repositories you configure. Read-only: it never commits, fetches or pushes.",
+          "es": "Ejecuta git status y git log en los repositorios locales que configures. Solo lectura: nunca hace commit, fetch ni push."
+        },
+        {
+          "kind": "settings",
+          "value": "maxRepositories, refreshSeconds, repositories, showCleanDetails, showLastCommit, sortBy",
+          "en": "Stores only its own settings (maxRepositories, refreshSeconds, repositories, showCleanDetails, showLastCommit, sortBy).",
+          "es": "Guarda solo su propia configuración (maxRepositories, refreshSeconds, repositories, showCleanDetails, showLastCommit, sortBy)."
+        }
+      ]
     },
     {
       "id": "hornero-json-tools",
@@ -959,7 +1844,54 @@
       },
       "trust": "official",
       "path": "plugins/hornero-json-tools",
-      "sha256": "adb46b5e11d61c9532a5e003847094495d11c09bedbcc7dded65e35c0c3cce26"
+      "sha256": "adb46b5e11d61c9532a5e003847094495d11c09bedbcc7dded65e35c0c3cce26",
+      "marketplace": {
+        "compatibility": {
+          "minShellVersion": "1.0.0"
+        },
+        "changelog": [
+          {
+            "version": "3.0.2",
+            "notes": "Deprecated in favour of hornero-toolbox."
+          },
+          {
+            "version": "3.0.1",
+            "notes": "Second action button uses the same secondary style as the first."
+          },
+          {
+            "version": "3.0.0",
+            "notes": "PluginKit 3 on Hornero Signal: Signal text controls, instrument module header."
+          },
+          {
+            "version": "2.0.0",
+            "notes": "Utility Tools 2.0 (plugins#30): bar quick action with popover, compact Utilities dashboard detail panel and a declaration-only launcher entrypoint (not loaded until shell#250) over one tested pure-JS logic block; typed settings default to 1.x behaviour; Spanish catalog."
+          },
+          {
+            "version": "1.0.0",
+            "notes": "Dashboard JSON tools: Format with 2-space indentation and Minify; parser errors were shown."
+          }
+        ],
+        "deprecation": {
+          "message": "Retired: Toolbox covers this tool (and six siblings) in one Signal card with typed settings and live results; this extension keeps working where installed.",
+          "replacedBy": "hornero-toolbox"
+        }
+      },
+      "screenshots": [
+        {
+          "path": "docs/screenshots/hornero-json-tools.png",
+          "sha256": "37c606d9494847a19ccc29cc7ae8831e2d6bb2b14dc06f3648927b04c73ecf11",
+          "bytes": 9975,
+          "alt": "Hornero JSON Tools, rendered by Hornero Shell"
+        }
+      ],
+      "permissions": [
+        {
+          "kind": "settings",
+          "value": "defaultAction, indentSpaces",
+          "en": "Stores only its own settings (defaultAction, indentSpaces).",
+          "es": "Guarda solo su propia configuración (defaultAction, indentSpaces)."
+        }
+      ]
     },
     {
       "id": "hornero-metronome",
@@ -998,7 +1930,39 @@
       },
       "trust": "official",
       "path": "plugins/hornero-metronome",
-      "sha256": "c21db62e21f902e046d62c246fa383f385a31e65d95c7f740f6fba49a1af757d"
+      "sha256": "c21db62e21f902e046d62c246fa383f385a31e65d95c7f740f6fba49a1af757d",
+      "marketplace": {
+        "changelog": [
+          {
+            "version": "3.0.0",
+            "notes": "PluginKit 3 on Hornero Signal: Signal beat indicator, glyph transport and an on-air chip while running."
+          },
+          {
+            "version": "2.0.0",
+            "notes": "Productivity Timers 2.0: compact indicator plus popover with BPM slider, deadline-scheduled beats (missed beats after sleep are skipped), bpm setting now declares its 40-208 bounds, optional first-beat accent, Theme tokens and Argentine Spanish translation."
+          },
+          {
+            "version": "1.0.0",
+            "notes": "Bar metronome with flashing beat indicator and persisted BPM setting (default 96, clamped 40-208)."
+          }
+        ]
+      },
+      "screenshots": [
+        {
+          "path": "docs/screenshots/hornero-metronome.png",
+          "sha256": "a5abdff01661ac70d38a27669584ec2e0fdd5678da4defb50f7cb600b1b40ba6",
+          "bytes": 3526,
+          "alt": "Hornero Metronome, rendered by Hornero Shell"
+        }
+      ],
+      "permissions": [
+        {
+          "kind": "settings",
+          "value": "accentFirstBeat, beatsPerBar, bpm",
+          "en": "Stores only its own settings (accentFirstBeat, beatsPerBar, bpm).",
+          "es": "Guarda solo su propia configuración (accentFirstBeat, beatsPerBar, bpm)."
+        }
+      ]
     },
     {
       "id": "hornero-microphone",
@@ -1031,7 +1995,56 @@
       },
       "trust": "official",
       "path": "plugins/hornero-microphone",
-      "sha256": "9eb89a7cbf86cdac778903277ef0207cdf5ceedeb48ebbf7d5e1081533062c46"
+      "sha256": "9eb89a7cbf86cdac778903277ef0207cdf5ceedeb48ebbf7d5e1081533062c46",
+      "marketplace": {
+        "compatibility": {
+          "minShellVersion": "1.0.0"
+        },
+        "changelog": [
+          {
+            "version": "3.0.2",
+            "notes": "Plain wording in footnotes and labels (no internal terms)."
+          },
+          {
+            "version": "3.0.1",
+            "notes": "Bar indicator shows only the glyph when there is no input device."
+          },
+          {
+            "version": "3.0.0",
+            "notes": "PluginKit 3 on Hornero Signal: segmented input-gain meter, Hornero Glyph indicator and controls in place of emoji, neutral/phosphor state chips."
+          },
+          {
+            "version": "2.0.0",
+            "notes": "Audio Extensions 2.0: compact indicator with host-owned popover (read-only input level and mute), dashboard card, typed settings, host-context layout and Spanish catalog, over the shared PluginKit Audio facade only."
+          },
+          {
+            "version": "1.0.0",
+            "notes": "Bar widget showing microphone volume and muted state with an inline mute button."
+          }
+        ]
+      },
+      "screenshots": [
+        {
+          "path": "docs/screenshots/hornero-microphone.png",
+          "sha256": "1e683fa5e2f8f9f35c4fdb0154a885232079c166bbe48c0550b0a43f08741963",
+          "bytes": 20718,
+          "alt": "Hornero Microphone, rendered by Hornero Shell"
+        }
+      ],
+      "permissions": [
+        {
+          "kind": "data",
+          "value": "audio",
+          "en": "Reads volume and audio devices from the shell's shared data (read-only).",
+          "es": "Lee volumen y dispositivos de audio de los datos compartidos del shell (solo lectura)."
+        },
+        {
+          "kind": "settings",
+          "value": "showPercentage, showWhenNoSource",
+          "en": "Stores only its own settings (showPercentage, showWhenNoSource).",
+          "es": "Guarda solo su propia configuración (showPercentage, showWhenNoSource)."
+        }
+      ]
     },
     {
       "id": "hornero-moon-phase",
@@ -1085,7 +2098,62 @@
       },
       "trust": "official",
       "path": "plugins/hornero-moon-phase",
-      "sha256": "b36019c031351429284e15f3b46072faa1a8f30a9ff320f5f28d85b2d20f8b2b"
+      "sha256": "b36019c031351429284e15f3b46072faa1a8f30a9ff320f5f28d85b2d20f8b2b",
+      "marketplace": {
+        "compatibility": {
+          "minShellVersion": "1.2.79"
+        },
+        "changelog": [
+          {
+            "version": "3.1.0",
+            "notes": "Setting: hemisphere, which mirrors the lit side of the disc for the southern hemisphere."
+          },
+          {
+            "version": "3.0.2",
+            "notes": "Illumination caption can no longer overflow the widget."
+          },
+          {
+            "version": "3.0.1",
+            "notes": "Plain wording in footnotes and labels (no internal terms)."
+          },
+          {
+            "version": "3.0.0",
+            "notes": "PluginKit 3 desktop widget on Hornero Signal: host-owned frame, position and size (sizeClass and showOnDesktop settings removed); the moon disc is drawn from the same approximate illumination, one scanline per row. Bar indicator unchanged in meaning."
+          },
+          {
+            "version": "2.1.1",
+            "notes": "Popover actions use the native full-width UiActionRow (shell 1.2.79 PluginKit) instead of small buttons."
+          },
+          {
+            "version": "2.1.0",
+            "notes": "Desktop Widgets 2.0 (#32): desktop surface redeclared on the same entrypoint alongside the bar surface, read-only Desktop.position slot and display shown in a host-owned popover, persisted compact/standard/wide size class and hide-with-restore visibility as typed settings (defaults standard/visible, so 2.0 content is unchanged; the bar surface is untouched), and reset for size and visibility. Moving stays in Control Center: PluginKit has no slot setter."
+          },
+          {
+            "version": "2.0.0",
+            "notes": "Weather & Astronomy 2.0: same synodic approximation as 1.x, plus derived next new/full moon countdowns, illumination progress, contextual bar indicator, configurable density, typed settings, host-context layout and Spanish catalog. No PluginKit facade exposes lunar data; every value stays labelled approximate."
+          },
+          {
+            "version": "1.0.0",
+            "notes": "Desktop widget showing the current moon phase name and approximate illumination from a pure-JS synodic approximation anchored on the 2000-01-06 new moon."
+          }
+        ]
+      },
+      "screenshots": [
+        {
+          "path": "docs/screenshots/hornero-moon-phase.png",
+          "sha256": "a30d1f7eec09e13a2efa272f90d4f56f4489ff639ff117dee6d4a38846a32c95",
+          "bytes": 20281,
+          "alt": "Hornero Moon Phase, rendered by Hornero Shell"
+        }
+      ],
+      "permissions": [
+        {
+          "kind": "settings",
+          "value": "dataDensity, hemisphere, showAge, showIllumination, showNextPhases",
+          "en": "Stores only its own settings (dataDensity, hemisphere, showAge, showIllumination, showNextPhases).",
+          "es": "Guarda solo su propia configuración (dataDensity, hemisphere, showAge, showIllumination, showNextPhases)."
+        }
+      ]
     },
     {
       "id": "hornero-network-monitor",
@@ -1118,7 +2186,56 @@
       },
       "trust": "official",
       "path": "plugins/hornero-network-monitor",
-      "sha256": "3418cc2cde9c074ec9f480b69cfba73e4b3965c84d65a3a00b97abd3f99f5b4d"
+      "sha256": "3418cc2cde9c074ec9f480b69cfba73e4b3965c84d65a3a00b97abd3f99f5b4d",
+      "marketplace": {
+        "compatibility": {
+          "minShellVersion": "1.0.0"
+        },
+        "changelog": [
+          {
+            "version": "3.0.1",
+            "notes": "Deprecated: Retired: Network Scope is the maintained network instrument (dual oscilloscope, Wi-Fi signal, session totals) with typed settings."
+          },
+          {
+            "version": "3.0.0",
+            "notes": "PluginKit 3 on Hornero Signal: cue-toned download oscilloscope and upload sparkline over the shared Telemetry history with the scale stated in the eyebrow. The sampleSeconds setting and Clear history button are removed (history is the shared window)."
+          },
+          {
+            "version": "2.0.0",
+            "notes": "Dashboard card on the shared Network facade: 1.x speeds and session totals plus history sparkline, peak readouts, honest unavailable state, typed settings and Spanish catalog."
+          },
+          {
+            "version": "1.0.0",
+            "notes": "Dashboard card with download/upload speeds and session totals from the PluginKit Network service."
+          }
+        ],
+        "deprecation": {
+          "message": "Retired: Network Scope is the maintained network instrument (dual oscilloscope, Wi-Fi signal, session totals) with typed settings.",
+          "replacedBy": "hornero-network-scope"
+        }
+      },
+      "screenshots": [
+        {
+          "path": "docs/screenshots/hornero-network-monitor.png",
+          "sha256": "68515f0c6d42abb4763908ee51193d6676ad98a8fad42f7080f6d04f135b68d8",
+          "bytes": 35914,
+          "alt": "Hornero Network Monitor, rendered by Hornero Shell"
+        }
+      ],
+      "permissions": [
+        {
+          "kind": "data",
+          "value": "network",
+          "en": "Reads network throughput and connection state from the shell's shared data (read-only).",
+          "es": "Lee tráfico de red y estado de la conexión de los datos compartidos del shell (solo lectura)."
+        },
+        {
+          "kind": "settings",
+          "value": "showHistory, showSessionTotals",
+          "en": "Stores only its own settings (showHistory, showSessionTotals).",
+          "es": "Guarda solo su propia configuración (showHistory, showSessionTotals)."
+        }
+      ]
     },
     {
       "id": "hornero-network-scope",
@@ -1162,7 +2279,44 @@
       },
       "trust": "official",
       "path": "plugins/hornero-network-scope",
-      "sha256": "210c1f4654afdd5b7a3baa64e8743240169bd598345ce84e7e2c98745956e2ab"
+      "sha256": "210c1f4654afdd5b7a3baa64e8743240169bd598345ce84e7e2c98745956e2ab",
+      "marketplace": {
+        "compatibility": {
+          "minShellVersion": "1.0.0"
+        },
+        "changelog": [
+          {
+            "version": "1.1.0",
+            "notes": "Setting: fix the oscilloscope scale at 1, 10 or 100 MiB/s instead of auto-scaling to the recent peak."
+          },
+          {
+            "version": "1.0.0",
+            "notes": "Initial release: cue-toned download and upload oscilloscopes over the shared Telemetry history, Wi-Fi signal meter and session totals (PluginKit 3 desktop widget)."
+          }
+        ]
+      },
+      "screenshots": [
+        {
+          "path": "docs/screenshots/hornero-network-scope.png",
+          "sha256": "b8ca12d41619c9fa70e7277ab0f5890f50b8af89da581b1537aafff3cbd4cc8c",
+          "bytes": 30544,
+          "alt": "Hornero Network Scope, rendered by Hornero Shell"
+        }
+      ],
+      "permissions": [
+        {
+          "kind": "data",
+          "value": "network",
+          "en": "Reads network throughput and connection state from the shell's shared data (read-only).",
+          "es": "Lee tráfico de red y estado de la conexión de los datos compartidos del shell (solo lectura)."
+        },
+        {
+          "kind": "settings",
+          "value": "scale, showNetworkName, showSessionTotals",
+          "en": "Stores only its own settings (scale, showNetworkName, showSessionTotals).",
+          "es": "Guarda solo su propia configuración (scale, showNetworkName, showSessionTotals)."
+        }
+      ]
     },
     {
       "id": "hornero-now-playing",
@@ -1202,7 +2356,52 @@
       },
       "trust": "official",
       "path": "plugins/hornero-now-playing",
-      "sha256": "d4815386499451188979c445f670d9830fe50beb34333a51ff89608be59fe04e"
+      "sha256": "d4815386499451188979c445f670d9830fe50beb34333a51ff89608be59fe04e",
+      "marketplace": {
+        "compatibility": {
+          "minShellVersion": "1.0.0"
+        },
+        "changelog": [
+          {
+            "version": "3.0.1",
+            "notes": "Bar indicator hides the idle 'No player' sentence."
+          },
+          {
+            "version": "3.0.0",
+            "notes": "PluginKit 3 on Hornero Signal: Hornero Glyph transport and indicator in place of emoji/unicode symbols, instrument module header."
+          },
+          {
+            "version": "2.0.0",
+            "notes": "Compact bar indicator with host-owned details popover, dashboard card, typed settings, host-context layout and Spanish catalog, over the shared PluginKit Media facade."
+          },
+          {
+            "version": "1.0.0",
+            "notes": "Bar widget showing player identity, title and artist with inline previous, play/pause and next buttons."
+          }
+        ]
+      },
+      "screenshots": [
+        {
+          "path": "docs/screenshots/hornero-now-playing.png",
+          "sha256": "92b3b783fdbb50086bf61fecfb1977c9c41ae74732def54f5becfb71a74475a4",
+          "bytes": 20144,
+          "alt": "Hornero Now Playing, rendered by Hornero Shell"
+        }
+      ],
+      "permissions": [
+        {
+          "kind": "data",
+          "value": "media",
+          "en": "Reads the track that is playing and its controls from the shell's shared data (read-only).",
+          "es": "Lee el tema que se está reproduciendo y sus controles de los datos compartidos del shell (solo lectura)."
+        },
+        {
+          "kind": "settings",
+          "value": "maxTitleWidth, showArtist, showWhenNoPlayer",
+          "en": "Stores only its own settings (maxTitleWidth, showArtist, showWhenNoPlayer).",
+          "es": "Guarda solo su propia configuración (maxTitleWidth, showArtist, showWhenNoPlayer)."
+        }
+      ]
     },
     {
       "id": "hornero-pomodoro",
@@ -1296,7 +2495,68 @@
       },
       "trust": "official",
       "path": "plugins/hornero-pomodoro",
-      "sha256": "2eb5803a81875f72f4c8cb5b385dafd7878195f4f21c5a80f38be6dd803aeaaa"
+      "sha256": "2eb5803a81875f72f4c8cb5b385dafd7878195f4f21c5a80f38be6dd803aeaaa",
+      "marketplace": {
+        "changelog": [
+          {
+            "version": "4.0.0",
+            "notes": "Break cycle (short and long breaks, configurable set size, optional auto-start), Skip, a display readout with set meter, and an optional Experience hook that switches to Focus during focus phases and restores your previous mode. Stored session state is unchanged; the hook is off by default."
+          },
+          {
+            "version": "3.0.0",
+            "notes": "PluginKit 3 on Hornero Signal: Hornero Glyph indicator (hourglass/bell) in place of Material names, no icon fill axis."
+          },
+          {
+            "version": "2.2.2",
+            "notes": "Popover: session length in whole minutes (was 25.00)."
+          },
+          {
+            "version": "2.2.1",
+            "notes": "Suppress the indicator tooltip while its popover is open (it floated over the popover)."
+          },
+          {
+            "version": "2.2.0",
+            "notes": "Native popout: subtitle header, caption state line and label/value detail rows (PluginKit UiDetailRow); session actions without floating tooltips. Needs Hornero Shell 1.2.74 (UiText subtitle, UiDetailRow, borderless UiPopover)."
+          },
+          {
+            "version": "2.1.0",
+            "notes": "Native look: timer icon plus time in the bar (filled while running), alarm icon when finished. Needs Hornero Shell 1.2.72 (PluginKit UiIcon/iconName/card header)."
+          },
+          {
+            "version": "2.0.0",
+            "notes": "Productivity Timers 2.0: compact indicator plus popover controls, deadline-correct timing persisted across sleep/reload, typed focusMinutes setting (default 25), completion toast, Theme tokens and Argentine Spanish translation."
+          },
+          {
+            "version": "1.0.1",
+            "notes": "Bar focus timer: click to start or pause, flashing DONE at zero, then reset."
+          }
+        ],
+        "compatibility": {
+          "minShellVersion": "1.2.74"
+        }
+      },
+      "screenshots": [
+        {
+          "path": "docs/screenshots/hornero-pomodoro.png",
+          "sha256": "f0875cccf5a0ca15b95d72d0e83a0b5fb15905615f53206e1c8bb2a3b8dba2f0",
+          "bytes": 3890,
+          "alt": "Hornero Pomodoro, rendered by Hornero Shell"
+        }
+      ],
+      "permissions": [
+        {
+          "kind": "program",
+          "value": "horneroctl",
+          "en": "Optionally runs horneroctl experience set to switch the experience mode when a focus session starts or ends. Off unless you turn the hook on.",
+          "es": "Opcionalmente ejecuta horneroctl experience set para cambiar el modo de experiencia al empezar o terminar una sesión. Apagado salvo que actives el enganche."
+        },
+        {
+          "kind": "settings",
+          "value": "autoStartNext, cyclesBeforeLongBreak, deadlineEpochMs, experienceHook, focusMinutes, longBreakMinutes, phase, remainingSeconds, setCount, shortBreakMinutes",
+          "en": "Stores only its own settings (autoStartNext, cyclesBeforeLongBreak, deadlineEpochMs, experienceHook, focusMinutes, longBreakMinutes, phase, remainingSeconds, setCount, shortBreakMinutes).",
+          "es": "Guarda solo su propia configuración (autoStartNext, cyclesBeforeLongBreak, deadlineEpochMs, experienceHook, focusMinutes, longBreakMinutes, phase, remainingSeconds, setCount, shortBreakMinutes)."
+        }
+      ]
     },
     {
       "id": "hornero-port-watch",
@@ -1363,7 +2623,40 @@
       },
       "trust": "official",
       "path": "plugins/hornero-port-watch",
-      "sha256": "ecd4d2ea549c1ac6b22becc69532f03cbf1a6cc13f2b38dd8dbc110b2252f75b"
+      "sha256": "ecd4d2ea549c1ac6b22becc69532f03cbf1a6cc13f2b38dd8dbc110b2252f75b",
+      "marketplace": {
+        "compatibility": {
+          "minShellVersion": "1.0.0"
+        },
+        "changelog": [
+          {
+            "version": "1.0.0",
+            "notes": "Initial release: listening TCP/UDP ports with bind reach and owning process from `ss`, optional watched ports shown as free, as a dashboard card and a desktop widget."
+          }
+        ]
+      },
+      "screenshots": [
+        {
+          "path": "docs/screenshots/hornero-port-watch.png",
+          "sha256": "d845efdc925a090128f7a341f418abd24b869c24968729e604d0196a9733fbe2",
+          "bytes": 27045,
+          "alt": "Hornero Port Watch, rendered by Hornero Shell"
+        }
+      ],
+      "permissions": [
+        {
+          "kind": "program",
+          "value": "ss",
+          "en": "Lists listening network ports with ss -tulnp (read-only).",
+          "es": "Lista los puertos de red en escucha con ss -tulnp (solo lectura)."
+        },
+        {
+          "kind": "settings",
+          "value": "maxRows, protocols, refreshSeconds, scope, showProcess, watchedPorts",
+          "en": "Stores only its own settings (maxRows, protocols, refreshSeconds, scope, showProcess, watchedPorts).",
+          "es": "Guarda solo su propia configuración (maxRows, protocols, refreshSeconds, scope, showProcess, watchedPorts)."
+        }
+      ]
     },
     {
       "id": "hornero-quick-notes",
@@ -1401,7 +2694,46 @@
       },
       "trust": "official",
       "path": "plugins/hornero-quick-notes",
-      "sha256": "d5b06a99088144a6259e35be721941b90410b2e478c58664e3c3c920845395ae"
+      "sha256": "d5b06a99088144a6259e35be721941b90410b2e478c58664e3c3c920845395ae",
+      "marketplace": {
+        "compatibility": {
+          "minShellVersion": "1.0.0"
+        },
+        "changelog": [
+          {
+            "version": "3.0.1",
+            "notes": "Plain wording in footnotes and labels (no internal terms)."
+          },
+          {
+            "version": "3.0.0",
+            "notes": "PluginKit 3 on Hornero Signal: palette roles in place of Material tokens."
+          },
+          {
+            "version": "2.0.0",
+            "notes": "Notes and Focus 2.0: explicit Persistent labelling distinct from session-only Quiet Notes, save-state and save-failure chips, pending-edit flush on disable/unload, Ctrl+S save-now, confirmed clear, word count, Ui primitives with Theme tokens, typed autosave/count settings (600 ms and shown, the 1.x defaults) and Argentine Spanish catalog. Stored note key unchanged, so existing notes carry over with no migration."
+          },
+          {
+            "version": "1.0.0",
+            "notes": "Dashboard card with one persistent note saved through PluginKit Settings, debounced, counted and truncated at 4096 characters."
+          }
+        ]
+      },
+      "screenshots": [
+        {
+          "path": "docs/screenshots/hornero-quick-notes.png",
+          "sha256": "eb9fa56a72fa3aef8fa97e5337f217e2bdb0dff848095445315e0ac8b0afadeb",
+          "bytes": 18379,
+          "alt": "Hornero Quick Notes, rendered by Hornero Shell"
+        }
+      ],
+      "permissions": [
+        {
+          "kind": "settings",
+          "value": "autoSaveDelayMs, note, showCounts",
+          "en": "Stores only its own settings (autoSaveDelayMs, note, showCounts).",
+          "es": "Guarda solo su propia configuración (autoSaveDelayMs, note, showCounts)."
+        }
+      ]
     },
     {
       "id": "hornero-quiet-notes",
@@ -1433,7 +2765,54 @@
       },
       "trust": "official",
       "path": "plugins/hornero-quiet-notes",
-      "sha256": "6a48a60da4b131a2f65db05a15c48a2e504131bd802323209a0d98906e8e7534"
+      "sha256": "6a48a60da4b131a2f65db05a15c48a2e504131bd802323209a0d98906e8e7534",
+      "marketplace": {
+        "compatibility": {
+          "minShellVersion": "1.2.72"
+        },
+        "changelog": [
+          {
+            "version": "3.0.1",
+            "notes": "Deprecated: Retired: Quick Notes keeps a persistent note; a session-only intention line did not justify a separate extension."
+          },
+          {
+            "version": "3.0.0",
+            "notes": "PluginKit 3 on Hornero Signal: palette roles and glyph module header."
+          },
+          {
+            "version": "2.1.0",
+            "notes": "Native look: card header, neutral session chip, no repeated never-saved prose, empty state as a caption. Needs Hornero Shell 1.2.72 (PluginKit UiIcon/iconName/card header)."
+          },
+          {
+            "version": "2.0.0",
+            "notes": "Notes and Focus 2.0: explicit Session only - never saved labelling distinct from persistent Quick Notes, keyboard-first capture (UiButton, themed editor, Enter/Esc) replacing the mouse-only card click and its hard-coded colours, Ui primitives with Theme tokens, typed display preferences (140-char default as in 1.x; the intention itself is deliberately not a setting) and Argentine Spanish catalog."
+          },
+          {
+            "version": "1.0.1",
+            "notes": "Calm dashboard card for one short intention for this session; in-memory only, gone when the shell closes."
+          }
+        ],
+        "deprecation": {
+          "message": "Retired: Quick Notes keeps a persistent note; a session-only intention line did not justify a separate extension.",
+          "replacedBy": "hornero-quick-notes"
+        }
+      },
+      "screenshots": [
+        {
+          "path": "docs/screenshots/hornero-quiet-notes.png",
+          "sha256": "528e9966b47fbde87d1ec6883753fe3ae25d0809c0cafb0dfbf225ba19739f37",
+          "bytes": 12844,
+          "alt": "Hornero Quiet Notes, rendered by Hornero Shell"
+        }
+      ],
+      "permissions": [
+        {
+          "kind": "settings",
+          "value": "maxLength, showCounter",
+          "en": "Stores only its own settings (maxLength, showCounter).",
+          "es": "Guarda solo su propia configuración (maxLength, showCounter)."
+        }
+      ]
     },
     {
       "id": "hornero-stopwatch",
@@ -1470,7 +2849,47 @@
       },
       "trust": "official",
       "path": "plugins/hornero-stopwatch",
-      "sha256": "8bbeaa5cd1d162c32b7b6616e315723799d7a47ed349af82571161347b76d5d1"
+      "sha256": "8bbeaa5cd1d162c32b7b6616e315723799d7a47ed349af82571161347b76d5d1",
+      "marketplace": {
+        "changelog": [
+          {
+            "version": "3.0.1",
+            "notes": "Deprecated in favour of hornero-countdown."
+          },
+          {
+            "version": "3.0.0",
+            "notes": "PluginKit 3 on Hornero Signal: tokens and variant names ported."
+          },
+          {
+            "version": "2.0.0",
+            "notes": "Productivity Timers 2.0: compact indicator plus popover controls, wall-clock-anchored timing persisted across sleep/reload (no per-tick drift), typed showTenths setting (default on), Theme tokens and Argentine Spanish translation."
+          },
+          {
+            "version": "1.0.0",
+            "notes": "Bar stopwatch with start, pause and reset, showing elapsed time as mm:ss.t."
+          }
+        ],
+        "deprecation": {
+          "message": "Retired: Countdown now includes the stopwatch (same anchor-based timing and stored state); the popover switches between them.",
+          "replacedBy": "hornero-countdown"
+        }
+      },
+      "screenshots": [
+        {
+          "path": "docs/screenshots/hornero-stopwatch.png",
+          "sha256": "ab8321524a2a221489654b06e9b1067778ca57d1e5d5a6781e95a49cd1dfd32e",
+          "bytes": 3591,
+          "alt": "Hornero Stopwatch, rendered by Hornero Shell"
+        }
+      ],
+      "permissions": [
+        {
+          "kind": "settings",
+          "value": "accumulatedMs, showTenths, startedEpochMs",
+          "en": "Stores only its own settings (accumulatedMs, showTenths, startedEpochMs).",
+          "es": "Guarda solo su propia configuración (accumulatedMs, showTenths, startedEpochMs)."
+        }
+      ]
     },
     {
       "id": "hornero-studio-audio",
@@ -1507,7 +2926,78 @@
       },
       "trust": "official",
       "path": "plugins/hornero-studio-audio",
-      "sha256": "8d92c5cc30d5e70aaa93422949c9d20dce0a100446635b3140b452c0be0ffdca"
+      "sha256": "8d92c5cc30d5e70aaa93422949c9d20dce0a100446635b3140b452c0be0ffdca",
+      "marketplace": {
+        "compatibility": {
+          "minShellVersion": "1.2.79"
+        },
+        "changelog": [
+          {
+            "version": "3.0.1",
+            "notes": "Bar indicator is a single short line."
+          },
+          {
+            "version": "3.0.0",
+            "notes": "PluginKit 3 on Hornero Signal: Hornero Glyph mode icons, segmented output meter and instrument module header."
+          },
+          {
+            "version": "2.3.2",
+            "notes": "Popover actions use the native full-width UiActionRow (shell 1.2.79 PluginKit) instead of small buttons."
+          },
+          {
+            "version": "2.3.1",
+            "notes": "Suppress the indicator tooltip while its popover is open (it floated over the popover and covered the Output row)."
+          },
+          {
+            "version": "2.3.0",
+            "notes": "Native popout: subtitle header, caption state line and label/value detail rows (PluginKit UiDetailRow), no hero metrics or outlined chip. Needs Hornero Shell 1.2.74 (UiText subtitle, UiDetailRow, borderless UiPopover)."
+          },
+          {
+            "version": "2.2.0",
+            "notes": "Bar indicator joins the native status icons island (section status), next to volume and microphone. Needs Hornero Shell 1.2.73 (bar sections)."
+          },
+          {
+            "version": "2.1.0",
+            "notes": "Native look: card header, one native icon per studio mode in the bar (filled while Temporary Performance is on), shorter read-only note, Refresh with icon. Needs Hornero Shell 1.2.72 (PluginKit UiIcon/iconName/card header)."
+          },
+          {
+            "version": "2.0.0",
+            "notes": "Audio Extensions 2.0: compact indicator with host-owned popover and dashboard card (mode, Temporary Performance, read-only output state, refresh), typed refreshSeconds/showWhenUnavailable settings, Theme tokens, host-context layout and Spanish catalog. Still read-only over the typed horneroctl studio contract."
+          },
+          {
+            "version": "1.0.2",
+            "notes": "Bar indicator for the Studio audio mode and Temporary Performance state; stacked caption so the mode code does not clip in the bar."
+          }
+        ]
+      },
+      "screenshots": [
+        {
+          "path": "docs/screenshots/hornero-studio-audio.png",
+          "sha256": "193519bdea21276daa576deeea4f2b2c78b2723e94805dc82f27ad31b8b71ea3",
+          "bytes": 19729,
+          "alt": "Hornero Studio Audio, rendered by Hornero Shell"
+        }
+      ],
+      "permissions": [
+        {
+          "kind": "program",
+          "value": "horneroctl",
+          "en": "Reads the Studio audio mode with horneroctl studio mode (read-only).",
+          "es": "Lee el modo de audio de Studio con horneroctl studio mode (solo lectura)."
+        },
+        {
+          "kind": "data",
+          "value": "audio",
+          "en": "Reads volume and audio devices from the shell's shared data (read-only).",
+          "es": "Lee volumen y dispositivos de audio de los datos compartidos del shell (solo lectura)."
+        },
+        {
+          "kind": "settings",
+          "value": "refreshSeconds, showWhenUnavailable",
+          "en": "Stores only its own settings (refreshSeconds, showWhenUnavailable).",
+          "es": "Guarda solo su propia configuración (refreshSeconds, showWhenUnavailable)."
+        }
+      ]
     },
     {
       "id": "hornero-studio-jobs",
@@ -1553,7 +3043,48 @@
       },
       "trust": "official",
       "path": "plugins/hornero-studio-jobs",
-      "sha256": "16cfa7afec56e5cbe63ec04e309fdeab4ce61176a85896ccffd3af39d731e50f"
+      "sha256": "16cfa7afec56e5cbe63ec04e309fdeab4ce61176a85896ccffd3af39d731e50f",
+      "marketplace": {
+        "compatibility": {
+          "minShellVersion": "1.2.72"
+        },
+        "changelog": [
+          {
+            "version": "2.1.0",
+            "notes": "Typed settings: refreshSeconds, maxRows, showAdapter, showFinished (defaults keep the 2.0 behaviour: 30 s, four rows, adapter shown, finished jobs kept)."
+          },
+          {
+            "version": "2.0.0",
+            "notes": "PluginKit 3 on Hornero Signal: instrument module with Hornero Glyph state icons in palette roles and an on-air chip for running jobs."
+          },
+          {
+            "version": "1.1.0",
+            "notes": "Rebuilt on PluginKit: native card header, empty and unavailable states, one row per job with a semantic state icon. Needs Hornero Shell 1.2.72 (PluginKit UiIcon/iconName/card header)."
+          }
+        ]
+      },
+      "screenshots": [
+        {
+          "path": "docs/screenshots/hornero-studio-jobs.png",
+          "sha256": "27bc43c135110ae9264a20bc184513d797d9a12e0d81856a8d2f5f1a00fd554f",
+          "bytes": 18052,
+          "alt": "Hornero Studio Jobs, rendered by Hornero Shell"
+        }
+      ],
+      "permissions": [
+        {
+          "kind": "program",
+          "value": "horneroctl",
+          "en": "Lists Studio jobs with horneroctl studio jobs list (read-only).",
+          "es": "Lista los trabajos de Studio con horneroctl studio jobs list (solo lectura)."
+        },
+        {
+          "kind": "settings",
+          "value": "maxRows, refreshSeconds, showAdapter, showFinished",
+          "en": "Stores only its own settings (maxRows, refreshSeconds, showAdapter, showFinished).",
+          "es": "Guarda solo su propia configuración (maxRows, refreshSeconds, showAdapter, showFinished)."
+        }
+      ]
     },
     {
       "id": "hornero-sun-card",
@@ -1602,7 +3133,70 @@
       },
       "trust": "official",
       "path": "plugins/hornero-sun-card",
-      "sha256": "a4975f6ee8a4c807c832197439bfa22b6eafdb4a3c56528d50643ce8d91e7463"
+      "sha256": "a4975f6ee8a4c807c832197439bfa22b6eafdb4a3c56528d50643ce8d91e7463",
+      "marketplace": {
+        "compatibility": {
+          "minShellVersion": "1.0.0"
+        },
+        "changelog": [
+          {
+            "version": "3.0.3",
+            "notes": "Deprecated in favour of hornero-weather."
+          },
+          {
+            "version": "3.0.2",
+            "notes": "Plain wording in footnotes and labels (no internal terms)."
+          },
+          {
+            "version": "3.0.1",
+            "notes": "Bar indicator: sunset glyph plus sunrise/sunset times; glyph only without data."
+          },
+          {
+            "version": "3.0.0",
+            "notes": "PluginKit 3 on Hornero Signal: tokens and variant names ported."
+          },
+          {
+            "version": "2.0.0",
+            "notes": "Weather & Astronomy 2.0: astronomy detail derived from the facade sunrise/sunset strings (day length, sun progress, next sun event), contextual bar indicator, configurable density, typed settings, host-context layout and Spanish catalog. Solar noon, twilight and moon times are not exposed by the facade and are labelled unavailable."
+          },
+          {
+            "version": "1.0.0",
+            "notes": "Dashboard card showing sunrise, sunset, temperature, description and humidity from PluginKit Weather, with a not-configured state when no location is set."
+          }
+        ],
+        "deprecation": {
+          "message": "Retired: Weather now shows day length, the next sun event and daylight progress, and its bar indicator can show sunrise and sunset (barIndicator = sun).",
+          "replacedBy": "hornero-weather"
+        }
+      },
+      "screenshots": [
+        {
+          "path": "docs/screenshots/hornero-sun-card.png",
+          "sha256": "70a5efe8e73ec76608f53cb9cd14d2f7f46919350f61158d21de107822cf1286",
+          "bytes": 25922,
+          "alt": "Hornero Sun Card, rendered by Hornero Shell"
+        }
+      ],
+      "permissions": [
+        {
+          "kind": "data",
+          "value": "weather",
+          "en": "Reads the weather for your configured location from the shell's shared data (read-only).",
+          "es": "Lee el clima de la ubicación que configuraste de los datos compartidos del shell (solo lectura)."
+        },
+        {
+          "kind": "data",
+          "value": "time",
+          "en": "Reads the clock and calendar from the shell's shared data (read-only).",
+          "es": "Lee el reloj y el calendario de los datos compartidos del shell (solo lectura)."
+        },
+        {
+          "kind": "settings",
+          "value": "dataDensity, showAstronomy, showHumidity, showTemperature",
+          "en": "Stores only its own settings (dataDensity, showAstronomy, showHumidity, showTemperature).",
+          "es": "Guarda solo su propia configuración (dataDensity, showAstronomy, showHumidity, showTemperature)."
+        }
+      ]
     },
     {
       "id": "hornero-system-health",
@@ -1651,7 +3245,72 @@
       },
       "trust": "official",
       "path": "plugins/hornero-system-health",
-      "sha256": "8874a2d7768125c9bbf20581f3e8d3dc92b6b05b9f20c55c1f56212887a6b2bc"
+      "sha256": "8874a2d7768125c9bbf20581f3e8d3dc92b6b05b9f20c55c1f56212887a6b2bc",
+      "marketplace": {
+        "compatibility": {
+          "minShellVersion": "1.0.0"
+        },
+        "changelog": [
+          {
+            "version": "3.0.2",
+            "notes": "Deprecated: Retired: System Insight covers CPU, memory, GPU and disk meters with a configurable warning threshold; battery and network have their own indicators."
+          },
+          {
+            "version": "3.0.1",
+            "notes": "Plain wording in footnotes and labels (no internal terms)."
+          },
+          {
+            "version": "3.0.0",
+            "notes": "PluginKit 3 on Hornero Signal: segmented meter rows with threshold crossing to signal, status chips and instrument channel header; unavailable sources render as unavailable meters."
+          },
+          {
+            "version": "2.0.0",
+            "notes": "Health summary on the shared System/Power/Network facades: per-row health states from typed thresholds, troubleshooting hints, honest unavailable states and Spanish catalog."
+          },
+          {
+            "version": "1.0.0",
+            "notes": "Dashboard card summarising CPU, memory, storage, battery and network with honest unavailable states."
+          }
+        ],
+        "deprecation": {
+          "message": "Retired: System Insight covers CPU, memory, GPU and disk meters with a configurable warning threshold; battery and network have their own indicators.",
+          "replacedBy": "hornero-system-insight"
+        }
+      },
+      "screenshots": [
+        {
+          "path": "docs/screenshots/hornero-system-health.png",
+          "sha256": "b190308478c151c6d4fe73590e0fb959b5849f069adc3afb840282a73932aea6",
+          "bytes": 21942,
+          "alt": "Hornero System Health, rendered by Hornero Shell"
+        }
+      ],
+      "permissions": [
+        {
+          "kind": "data",
+          "value": "system",
+          "en": "Reads CPU, memory, temperature and disk use from the shell's shared data (read-only).",
+          "es": "Lee uso de CPU, memoria, temperatura y disco de los datos compartidos del shell (solo lectura)."
+        },
+        {
+          "kind": "data",
+          "value": "power",
+          "en": "Reads battery and power profile from the shell's shared data (read-only).",
+          "es": "Lee batería y perfil de energía de los datos compartidos del shell (solo lectura)."
+        },
+        {
+          "kind": "data",
+          "value": "network",
+          "en": "Reads network throughput and connection state from the shell's shared data (read-only).",
+          "es": "Lee tráfico de red y estado de la conexión de los datos compartidos del shell (solo lectura)."
+        },
+        {
+          "kind": "settings",
+          "value": "batteryWarnPercent, showHints, showNetwork, warnPercent",
+          "en": "Stores only its own settings (batteryWarnPercent, showHints, showNetwork, warnPercent).",
+          "es": "Guarda solo su propia configuración (batteryWarnPercent, showHints, showNetwork, warnPercent)."
+        }
+      ]
     },
     {
       "id": "hornero-system-insight",
@@ -1710,7 +3369,52 @@
       },
       "trust": "official",
       "path": "plugins/hornero-system-insight",
-      "sha256": "f45c114733edee1d75cc8e1a8dcddd4ef0889fe097b05e53774bb86309038f45"
+      "sha256": "f45c114733edee1d75cc8e1a8dcddd4ef0889fe097b05e53774bb86309038f45",
+      "marketplace": {
+        "compatibility": {
+          "minShellVersion": "1.0.0"
+        },
+        "changelog": [
+          {
+            "version": "1.1.1",
+            "notes": "The oscilloscope shrinks (down to 48 px) on short frames so the temperature row is no longer clipped."
+          },
+          {
+            "version": "1.1.0",
+            "notes": "Settings: show or hide the GPU and disk meters, and show temperatures in Celsius or Fahrenheit."
+          },
+          {
+            "version": "1.0.1",
+            "notes": "Taller default frame so the per-core strip is drawn instead of a header with nothing under it."
+          },
+          {
+            "version": "1.0.0",
+            "notes": "Initial release: CPU oscilloscope, segmented meters, per-core strips and temperatures over the shared system provider (PluginKit 3 desktop widget)."
+          }
+        ]
+      },
+      "screenshots": [
+        {
+          "path": "docs/screenshots/hornero-system-insight.png",
+          "sha256": "3e45b1054e7eb148a1a94bc13ab60e81efc4c9113faf034859d8fed839e0d0ce",
+          "bytes": 29956,
+          "alt": "Hornero System Insight, rendered by Hornero Shell"
+        }
+      ],
+      "permissions": [
+        {
+          "kind": "data",
+          "value": "system",
+          "en": "Reads CPU, memory, temperature and disk use from the shell's shared data (read-only).",
+          "es": "Lee uso de CPU, memoria, temperatura y disco de los datos compartidos del shell (solo lectura)."
+        },
+        {
+          "kind": "settings",
+          "value": "showCores, showDisk, showGpu, showTemperatures, temperatureUnit, warnPercent",
+          "en": "Stores only its own settings (showCores, showDisk, showGpu, showTemperatures, temperatureUnit, warnPercent).",
+          "es": "Guarda solo su propia configuración (showCores, showDisk, showGpu, showTemperatures, temperatureUnit, warnPercent)."
+        }
+      ]
     },
     {
       "id": "hornero-system-monitor",
@@ -1750,7 +3454,56 @@
       },
       "trust": "official",
       "path": "plugins/hornero-system-monitor",
-      "sha256": "c4b4405f73432bfec473c69a36b8a54612b2ea5f8b538f016081faead1847dba"
+      "sha256": "c4b4405f73432bfec473c69a36b8a54612b2ea5f8b538f016081faead1847dba",
+      "marketplace": {
+        "compatibility": {
+          "minShellVersion": "1.0.0"
+        },
+        "changelog": [
+          {
+            "version": "3.0.1",
+            "notes": "Deprecated: Retired: System Insight is the maintained system instrument (CPU oscilloscope, meters, temperatures, per-core strips) with typed settings and a desktop surface."
+          },
+          {
+            "version": "3.0.0",
+            "notes": "PluginKit 3 on Hornero Signal: oscilloscope and segmented meters over the shared Telemetry history; Material tokens and the hand-drawn sparkline are gone. The sampleSeconds setting and Clear history button are removed (history is the shared 120-sample window)."
+          },
+          {
+            "version": "2.0.0",
+            "notes": "Dashboard card on the shared System facade: 1.x bars plus session history sparkline, peak/average, high-load alert, typed settings, host-context layout and Spanish catalog."
+          },
+          {
+            "version": "1.0.0",
+            "notes": "Dashboard card with CPU, memory, GPU and storage usage bars from the PluginKit System service."
+          }
+        ],
+        "deprecation": {
+          "message": "Retired: System Insight is the maintained system instrument (CPU oscilloscope, meters, temperatures, per-core strips) with typed settings and a desktop surface.",
+          "replacedBy": "hornero-system-insight"
+        }
+      },
+      "screenshots": [
+        {
+          "path": "docs/screenshots/hornero-system-monitor.png",
+          "sha256": "07af3cf518de0be189eec82c5570d6384339243ed198b2f074e17b205be47b1c",
+          "bytes": 26270,
+          "alt": "Hornero System Monitor, rendered by Hornero Shell"
+        }
+      ],
+      "permissions": [
+        {
+          "kind": "data",
+          "value": "system",
+          "en": "Reads CPU, memory, temperature and disk use from the shell's shared data (read-only).",
+          "es": "Lee uso de CPU, memoria, temperatura y disco de los datos compartidos del shell (solo lectura)."
+        },
+        {
+          "kind": "settings",
+          "value": "showHistory, showTemperatures, warnPercent",
+          "en": "Stores only its own settings (showHistory, showTemperatures, warnPercent).",
+          "es": "Guarda solo su propia configuración (showHistory, showTemperatures, warnPercent)."
+        }
+      ]
     },
     {
       "id": "hornero-text-tools",
@@ -1786,7 +3539,50 @@
       },
       "trust": "official",
       "path": "plugins/hornero-text-tools",
-      "sha256": "fa46d9625b0b395b33b734bcb5f7389db052dad7500c10d252c71450a68fcad7"
+      "sha256": "fa46d9625b0b395b33b734bcb5f7389db052dad7500c10d252c71450a68fcad7",
+      "marketplace": {
+        "compatibility": {
+          "minShellVersion": "1.0.0"
+        },
+        "changelog": [
+          {
+            "version": "3.0.1",
+            "notes": "Deprecated in favour of hornero-toolbox."
+          },
+          {
+            "version": "3.0.0",
+            "notes": "PluginKit 3 on Hornero Signal: Signal text controls, instrument module header."
+          },
+          {
+            "version": "2.0.0",
+            "notes": "Utility Tools 2.0 (plugins#30): bar quick action with popover, compact Utilities dashboard detail panel and a declaration-only launcher entrypoint (not loaded until shell#250) over one tested pure-JS logic block; typed settings default to 1.x behaviour; Spanish catalog."
+          },
+          {
+            "version": "1.0.0",
+            "notes": "Dashboard text tools: four transforms with live character, word and line counts."
+          }
+        ],
+        "deprecation": {
+          "message": "Retired: Toolbox covers this tool (and six siblings) in one Signal card with typed settings and live results; this extension keeps working where installed.",
+          "replacedBy": "hornero-toolbox"
+        }
+      },
+      "screenshots": [
+        {
+          "path": "docs/screenshots/hornero-text-tools.png",
+          "sha256": "bf0139611096accb6e71fe8f344e72efe326457830421f350e71d383a5a8427c",
+          "bytes": 19636,
+          "alt": "Hornero Text Tools, rendered by Hornero Shell"
+        }
+      ],
+      "permissions": [
+        {
+          "kind": "settings",
+          "value": "defaultMode, showCounts",
+          "en": "Stores only its own settings (defaultMode, showCounts).",
+          "es": "Guarda solo su propia configuración (defaultMode, showCounts)."
+        }
+      ]
     },
     {
       "id": "hornero-toolbox",
@@ -1883,7 +3679,34 @@
       },
       "trust": "official",
       "path": "plugins/hornero-toolbox",
-      "sha256": "5b0378f74c97f575a4a2bd97d1294648b68091db35752c1b46896dbfe1ddf5af"
+      "sha256": "5b0378f74c97f575a4a2bd97d1294648b68091db35752c1b46896dbfe1ddf5af",
+      "marketplace": {
+        "compatibility": {
+          "minShellVersion": "1.0.0"
+        },
+        "changelog": [
+          {
+            "version": "1.0.0",
+            "notes": "Initial release: replaces Calculator, Unit Converter, Base Converter, Colour Converter, Date Calculator, JSON Tools and Text Tools with one tabbed card. Adds imperial lengths, ounces, grams, data sizes and WCAG contrast. Settings of the old extensions do not carry over (new id)."
+          }
+        ]
+      },
+      "screenshots": [
+        {
+          "path": "docs/screenshots/hornero-toolbox.png",
+          "sha256": "4dbf84782651303b5b6e43f0937d5e14aaac2924314a955a04a41cab3b403654",
+          "bytes": 1590,
+          "alt": "Hornero Toolbox, rendered by Hornero Shell"
+        }
+      ],
+      "permissions": [
+        {
+          "kind": "settings",
+          "value": "defaultCategory, defaultHex, defaultTextMode, defaultTool, indentSpaces, precision, showCounts, showKeypad, showUtcNote, uppercaseHex",
+          "en": "Stores only its own settings (defaultCategory, defaultHex, defaultTextMode, defaultTool, indentSpaces, precision, showCounts, showKeypad, showUtcNote, uppercaseHex).",
+          "es": "Guarda solo su propia configuración (defaultCategory, defaultHex, defaultTextMode, defaultTool, indentSpaces, precision, showCounts, showKeypad, showUtcNote, uppercaseHex)."
+        }
+      ]
     },
     {
       "id": "hornero-unit-converter",
@@ -1920,7 +3743,50 @@
       },
       "trust": "official",
       "path": "plugins/hornero-unit-converter",
-      "sha256": "771c7eb0d413336edbe54f7ebf23551fdaf11bf0c33e9eb727d6bbaa5a24c347"
+      "sha256": "771c7eb0d413336edbe54f7ebf23551fdaf11bf0c33e9eb727d6bbaa5a24c347",
+      "marketplace": {
+        "compatibility": {
+          "minShellVersion": "1.0.0"
+        },
+        "changelog": [
+          {
+            "version": "3.0.1",
+            "notes": "Deprecated in favour of hornero-toolbox."
+          },
+          {
+            "version": "3.0.0",
+            "notes": "PluginKit 3 on Hornero Signal: Signal text, combo and spin controls, instrument module header."
+          },
+          {
+            "version": "2.0.0",
+            "notes": "Utility Tools 2.0 (plugins#30): bar quick action with popover, compact Utilities dashboard detail panel and a declaration-only launcher entrypoint (not loaded until shell#250) over one tested pure-JS logic block; typed settings default to 1.x behaviour; Spanish catalog."
+          },
+          {
+            "version": "1.0.0",
+            "notes": "Dashboard unit converter for length, mass and temperature, computed live from a text field and selectors."
+          }
+        ],
+        "deprecation": {
+          "message": "Retired: Toolbox covers this tool (and six siblings) in one Signal card with typed settings and live results; this extension keeps working where installed.",
+          "replacedBy": "hornero-toolbox"
+        }
+      },
+      "screenshots": [
+        {
+          "path": "docs/screenshots/hornero-unit-converter.png",
+          "sha256": "36bd6eccccbb9d05cd91147819853b591a2eb0b3363830994baef9811f2ceac7",
+          "bytes": 10150,
+          "alt": "Hornero Unit Converter, rendered by Hornero Shell"
+        }
+      ],
+      "permissions": [
+        {
+          "kind": "settings",
+          "value": "defaultCategory, precision",
+          "en": "Stores only its own settings (defaultCategory, precision).",
+          "es": "Guarda solo su propia configuración (defaultCategory, precision)."
+        }
+      ]
     },
     {
       "id": "hornero-uptime",
@@ -1959,7 +3825,56 @@
       },
       "trust": "official",
       "path": "plugins/hornero-uptime",
-      "sha256": "f7fed404bc025ec44e3817e7370e143a8d577e65bca183aab5ec4a4980280df4"
+      "sha256": "f7fed404bc025ec44e3817e7370e143a8d577e65bca183aab5ec4a4980280df4",
+      "marketplace": {
+        "compatibility": {
+          "minShellVersion": "1.2.79"
+        },
+        "changelog": [
+          {
+            "version": "3.0.1",
+            "notes": "Plain wording in footnotes and labels (no internal terms)."
+          },
+          {
+            "version": "3.0.0",
+            "notes": "PluginKit 3 on Hornero Signal: instrument module header and equal-width readouts; unreadable idle time shows an em dash."
+          },
+          {
+            "version": "2.0.1",
+            "notes": "Popover actions use the native full-width UiActionRow (shell 1.2.79 PluginKit) instead of small buttons."
+          },
+          {
+            "version": "2.0.0",
+            "notes": "Battery & Uptime 2.0 (#31): activation popover and dashboard card with uptime, derived boot time and /proc/uptime idle time, refresh on activation, typed refresh setting (60s 1.x default), host-context layout and Spanish catalog. PluginKit exposes no uptime member, so the declared cat /proc/uptime read is kept."
+          },
+          {
+            "version": "1.0.0",
+            "notes": "Bar widget showing system uptime from /proc/uptime every 60 seconds; error state when unreadable."
+          }
+        ]
+      },
+      "screenshots": [
+        {
+          "path": "docs/screenshots/hornero-uptime.png",
+          "sha256": "4b1dd0dd5dfb26345f68b1f2baeccf4ca66ce13854dd5a61707b90da56513d99",
+          "bytes": 20243,
+          "alt": "Hornero Uptime, rendered by Hornero Shell"
+        }
+      ],
+      "permissions": [
+        {
+          "kind": "program",
+          "value": "cat",
+          "en": "Reads /proc/uptime with cat to show how long the machine has been on.",
+          "es": "Lee /proc/uptime con cat para mostrar cuánto tiempo lleva encendida la máquina."
+        },
+        {
+          "kind": "settings",
+          "value": "refreshSeconds, showLabel, showWhenUnavailable",
+          "en": "Stores only its own settings (refreshSeconds, showLabel, showWhenUnavailable).",
+          "es": "Guarda solo su propia configuración (refreshSeconds, showLabel, showWhenUnavailable)."
+        }
+      ]
     },
     {
       "id": "hornero-volume",
@@ -1992,7 +3907,56 @@
       },
       "trust": "official",
       "path": "plugins/hornero-volume",
-      "sha256": "747e9255d828d468f2db2dcb1d3fca9b5ebce1cfa09ab39777a6a9f23f75d3e9"
+      "sha256": "747e9255d828d468f2db2dcb1d3fca9b5ebce1cfa09ab39777a6a9f23f75d3e9",
+      "marketplace": {
+        "compatibility": {
+          "minShellVersion": "1.0.0"
+        },
+        "changelog": [
+          {
+            "version": "3.0.2",
+            "notes": "Plain wording in footnotes and labels (no internal terms)."
+          },
+          {
+            "version": "3.0.1",
+            "notes": "Bar indicator shows only the glyph when there is no output device."
+          },
+          {
+            "version": "3.0.0",
+            "notes": "PluginKit 3 on Hornero Signal: segmented output meter, Hornero Glyph indicator and controls in place of emoji, neutral/phosphor state chips."
+          },
+          {
+            "version": "2.0.0",
+            "notes": "Audio Extensions 2.0: compact indicator with host-owned popover (volume slider, step and mute controls), dashboard card, typed settings, host-context layout and Spanish catalog, over the shared PluginKit Audio facade only."
+          },
+          {
+            "version": "1.0.0",
+            "notes": "Bar widget showing output volume with inline mute, decrease and increase buttons."
+          }
+        ]
+      },
+      "screenshots": [
+        {
+          "path": "docs/screenshots/hornero-volume.png",
+          "sha256": "8f4a745412529f4fb60f6d109e0a046365c3358df08bbe5e1b6988c378acd4fc",
+          "bytes": 17592,
+          "alt": "Hornero Volume, rendered by Hornero Shell"
+        }
+      ],
+      "permissions": [
+        {
+          "kind": "data",
+          "value": "audio",
+          "en": "Reads volume and audio devices from the shell's shared data (read-only).",
+          "es": "Lee volumen y dispositivos de audio de los datos compartidos del shell (solo lectura)."
+        },
+        {
+          "kind": "settings",
+          "value": "showPercentage, showWhenNoSink",
+          "en": "Stores only its own settings (showPercentage, showWhenNoSink).",
+          "es": "Guarda solo su propia configuración (showPercentage, showWhenNoSink)."
+        }
+      ]
     },
     {
       "id": "hornero-weather",
@@ -2069,7 +4033,66 @@
       },
       "trust": "official",
       "path": "plugins/hornero-weather",
-      "sha256": "911b836b3502537c369e725d2a2e87417f8a95d4076804b829bb1b61a7212717"
+      "sha256": "911b836b3502537c369e725d2a2e87417f8a95d4076804b829bb1b61a7212717",
+      "marketplace": {
+        "compatibility": {
+          "minShellVersion": "1.0.0"
+        },
+        "changelog": [
+          {
+            "version": "3.1.0",
+            "notes": "Absorbs Sun Card: day length, next sun event and daylight progress on the card (showSunProgress) and a sunrise/sunset bar indicator (barIndicator = sun)."
+          },
+          {
+            "version": "3.0.2",
+            "notes": "Plain wording in footnotes and labels (no internal terms)."
+          },
+          {
+            "version": "3.0.1",
+            "notes": "Bar indicator: cloud glyph plus temperature; glyph only without data."
+          },
+          {
+            "version": "3.0.0",
+            "notes": "PluginKit 3 on Hornero Signal: tokens and variant names ported."
+          },
+          {
+            "version": "2.0.0",
+            "notes": "Weather & Astronomy 2.0: dashboard card plus contextual bar indicator, configurable density and forecast days, local high-wind threshold alert, typed settings, host-context layout and Spanish catalog. Only PluginKit Weather fields are shown; official alerts and multi-location are not exposed by the facade and are labelled unavailable."
+          },
+          {
+            "version": "1.0.0",
+            "notes": "Dashboard card for current weather and forecast from the PluginKit Weather service, with a not-configured state instead of fake data."
+          }
+        ]
+      },
+      "screenshots": [
+        {
+          "path": "docs/screenshots/hornero-weather.png",
+          "sha256": "4f8dc96984eb892a3fbed5f1fd4a8149124758cc0753707b847ed9cb55306e37",
+          "bytes": 18626,
+          "alt": "Hornero Weather, rendered by Hornero Shell"
+        }
+      ],
+      "permissions": [
+        {
+          "kind": "data",
+          "value": "time",
+          "en": "Reads the clock and calendar from the shell's shared data (read-only).",
+          "es": "Lee el reloj y el calendario de los datos compartidos del shell (solo lectura)."
+        },
+        {
+          "kind": "data",
+          "value": "weather",
+          "en": "Reads the weather for your configured location from the shell's shared data (read-only).",
+          "es": "Lee el clima de la ubicación que configuraste de los datos compartidos del shell (solo lectura)."
+        },
+        {
+          "kind": "settings",
+          "value": "barIndicator, dataDensity, forecastDays, showHumidity, showSunProgress, showSunTimes, showWind, windAlertKmh",
+          "en": "Stores only its own settings (barIndicator, dataDensity, forecastDays, showHumidity, showSunProgress, showSunTimes, showWind, windAlertKmh).",
+          "es": "Guarda solo su propia configuración (barIndicator, dataDensity, forecastDays, showHumidity, showSunProgress, showSunTimes, showWind, windAlertKmh)."
+        }
+      ]
     },
     {
       "id": "hornero-world-clock",
@@ -2193,7 +4216,56 @@
       },
       "trust": "official",
       "path": "plugins/hornero-world-clock",
-      "sha256": "934d854d961135a6afa27f5252a9f0fe458e932c9ebb47b7bb580fdee5306fcd"
+      "sha256": "934d854d961135a6afa27f5252a9f0fe458e932c9ebb47b7bb580fdee5306fcd",
+      "marketplace": {
+        "compatibility": {
+          "minShellVersion": "1.0.0"
+        },
+        "changelog": [
+          {
+            "version": "3.2.0",
+            "notes": "Absorbs Dual Clock: a bar indicator with local time over a second zone (barZone, barShowSeconds) and a popover with dates, offsets and the difference."
+          },
+          {
+            "version": "3.0.1",
+            "notes": "Plain wording in footnotes and labels (no internal terms)."
+          },
+          {
+            "version": "3.0.0",
+            "notes": "PluginKit 3 on Hornero Signal: tokens and variant names ported."
+          },
+          {
+            "version": "2.0.0",
+            "notes": "Time and Agenda 2.0: dashboard card (Time category) on the shared Time facade with no own timer, three selectable city slots (defaults Buenos Aires, Madrid, Tokyo as in 1.x), EU/US/southern DST rules with per-row offset and DST labels, locale dates, typed settings and Argentine Spanish catalog."
+          },
+          {
+            "version": "1.0.0",
+            "notes": "Dashboard card showing local time, UTC, and Buenos Aires, Madrid and Tokyo with pure-JS offsets (Madrid followed the EU DST rule)."
+          }
+        ]
+      },
+      "screenshots": [
+        {
+          "path": "docs/screenshots/hornero-world-clock.png",
+          "sha256": "15b6738a0e7eeed46111a9c2e3ee8e79d9b721dbc193d25fe34cf32d14b4ca66",
+          "bytes": 29501,
+          "alt": "Hornero World Clock, rendered by Hornero Shell"
+        }
+      ],
+      "permissions": [
+        {
+          "kind": "data",
+          "value": "time",
+          "en": "Reads the clock and calendar from the shell's shared data (read-only).",
+          "es": "Lee el reloj y el calendario de los datos compartidos del shell (solo lectura)."
+        },
+        {
+          "kind": "settings",
+          "value": "barShowSeconds, barZone, city1, city2, city3, showLocal, showSeconds, showUtc, twentyFourHour",
+          "en": "Stores only its own settings (barShowSeconds, barZone, city1, city2, city3, showLocal, showSeconds, showUtc, twentyFourHour).",
+          "es": "Guarda solo su propia configuración (barShowSeconds, barZone, city1, city2, city3, showLocal, showSeconds, showUtc, twentyFourHour)."
+        }
+      ]
     }
   ]
 }

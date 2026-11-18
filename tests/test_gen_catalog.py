@@ -62,5 +62,69 @@ class CatalogFreshnessTest(unittest.TestCase):
         self.assertFalse(gen_catalog.catalog_is_current("{nope", self.built))
 
 
+class StoreFieldsTest(unittest.TestCase):
+    """Fields Control Center > Extensions shows before install (gap #4)."""
+
+    @classmethod
+    def setUpClass(cls):
+        cls.built = gen_catalog.build()
+        cls.by_id = {e["id"]: e for e in cls.built["plugins"]}
+
+    def test_every_entry_has_bilingual_permission_lines(self):
+        for entry in self.built["plugins"]:
+            self.assertIn("permissions", entry, entry["id"])
+            for line in entry["permissions"]:
+                self.assertIn(line["kind"], {"program", "network", "data", "action", "settings"})
+                self.assertTrue(line["en"].strip() and line["es"].strip(), (entry["id"], line))
+
+    def test_each_declared_program_and_host_has_a_curated_reason(self):
+        for entry in self.built["plugins"]:
+            caps = entry["capabilities"]
+            lines = {(l["kind"], l["value"]) for l in entry["permissions"]}
+            for cmd in caps.get("processCommands", []):
+                self.assertIn(("program", cmd), lines, entry["id"])
+            for host in caps.get("networkHosts", []):
+                self.assertIn(("network", host), lines, entry["id"])
+        forge = {l["value"]: l for l in self.by_id["hornero-forge-board"]["permissions"]}
+        self.assertIn("api.github.com", forge)
+        self.assertIn("Solo lectura", forge["gh"]["es"])
+
+    def test_missing_reason_fails_generation(self):
+        with self.assertRaises(SystemExit) as ctx:
+            gen_catalog.permission_lines("hornero-x", {"processCommands": ["curl"]}, {})
+        self.assertIn("program:curl", str(ctx.exception))
+
+    def test_reason_for_an_undeclared_use_fails(self):
+        notes = {"hornero-x": {"program:curl": {"en": "a", "es": "b"}}}
+        with self.assertRaises(SystemExit):
+            gen_catalog.permission_lines("hornero-x", {}, notes)
+
+    def test_providers_are_plain_language(self):
+        lines = gen_catalog.permission_lines("hornero-x", {"providers": ["system"]}, {})
+        self.assertEqual(lines[0]["kind"], "data")
+        self.assertIn("CPU", lines[0]["en"])
+        self.assertIn("solo lectura", lines[0]["es"])
+
+    def test_marketplace_changelog_reaches_the_catalogue(self):
+        agenda = self.by_id["hornero-agenda"]
+        self.assertEqual(agenda["marketplace"]["changelog"][0]["version"], agenda["version"])
+
+    def test_screenshots_are_hashed_files_outside_the_payload(self):
+        import hashlib
+        shot_entries = [e for e in self.built["plugins"] if e.get("screenshots")]
+        self.assertGreater(len(shot_entries), 0)
+        for entry in shot_entries:
+            for shot in entry["screenshots"]:
+                self.assertTrue(shot["path"].startswith("docs/screenshots/"))
+                data = (gen_catalog.ROOT / shot["path"]).read_bytes()
+                self.assertEqual(hashlib.sha256(data).hexdigest(), shot["sha256"])
+                self.assertEqual(len(data), shot["bytes"])
+                plugin_dir = gen_catalog.ROOT / entry["path"]
+                manifest = json.loads((plugin_dir / "manifest.json").read_text(encoding="utf-8"))
+                payload = {f"{entry['path']}/{name}" for name in ["manifest.json", *manifest.get("files", [])]}
+                self.assertNotIn(shot["path"], payload)
+                self.assertFalse(shot["path"].startswith(entry["path"] + "/"))
+
+
 if __name__ == "__main__":
     unittest.main()

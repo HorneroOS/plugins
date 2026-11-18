@@ -1,0 +1,90 @@
+{
+  "schemaVersion": 1,
+  "disclaimer": "Plain-language reasons shown before install in Control Center > Extensions. They explain what each declared program or network host is used for. They are review text, not enforced permissions: plugin QML runs as the user without a sandbox.",
+  "plugins": {
+    "hornero-ai-usage": {
+      "program:horneroctl": {
+        "en": "Runs horneroctl agent usage and horneroctl assistant usage (read-only) to show token and cost totals.",
+        "es": "Ejecuta horneroctl agent usage y horneroctl assistant usage (solo lectura) para mostrar el total de tokens y costos."
+      }
+    },
+    "hornero-clipboard": {
+      "program:wl-paste": {
+        "en": "Reads the text on your clipboard with wl-paste and watches it for changes, to build the history.",
+        "es": "Lee el texto del portapapeles con wl-paste y lo vigila para detectar cambios y armar el historial."
+      },
+      "program:echo": {
+        "en": "Used only as the change signal for wl-paste --watch; it prints the word changed and nothing else.",
+        "es": "Se usa solo como aviso de cambio para wl-paste --watch; imprime la palabra changed y nada más."
+      }
+    },
+    "hornero-containers": {
+      "program:podman": {
+        "en": "Lists your containers with podman ps (read-only). It never starts, stops or removes a container.",
+        "es": "Lista tus contenedores con podman ps (solo lectura). Nunca inicia, detiene ni borra un contenedor."
+      },
+      "program:docker": {
+        "en": "Lists your containers with docker ps (read-only). It never starts, stops or removes a container.",
+        "es": "Lista tus contenedores con docker ps (solo lectura). Nunca inicia, detiene ni borra un contenedor."
+      }
+    },
+    "hornero-device-battery": {
+      "program:upower": {
+        "en": "Reads battery levels of connected devices with upower -d (read-only).",
+        "es": "Lee el nivel de batería de los dispositivos conectados con upower -d (solo lectura)."
+      }
+    },
+    "hornero-emoji": {
+      "program:wl-copy": {
+        "en": "Copies the emoji you pick to the clipboard with wl-copy.",
+        "es": "Copia al portapapeles el emoji que elegís, con wl-copy."
+      }
+    },
+    "hornero-forge-board": {
+      "program:gh": {
+        "en": "Runs gh pr list and gh run list for the repositories you configure, using your existing GitHub CLI login. Read-only.",
+        "es": "Ejecuta gh pr list y gh run list para los repositorios que configures, con tu sesión actual de GitHub CLI. Solo lectura."
+      },
+      "network:api.github.com": {
+        "en": "gh contacts api.github.com to read pull requests and CI runs.",
+        "es": "gh se conecta a api.github.com para leer pull requests y ejecuciones de CI."
+      }
+    },
+    "hornero-git-board": {
+      "program:git": {
+        "en": "Runs git status and git log in the local repositories you configure. Read-only: it never commits, fetches or pushes.",
+        "es": "Ejecuta git status y git log en los repositorios locales que configures. Solo lectura: nunca hace commit, fetch ni push."
+      }
+    },
+    "hornero-pomodoro": {
+      "program:horneroctl": {
+        "en": "Optionally runs horneroctl experience set to switch the experience mode when a focus session starts or ends. Off unless you turn the hook on.",
+        "es": "Opcionalmente ejecuta horneroctl experience set para cambiar el modo de experiencia al empezar o terminar una sesión. Apagado salvo que actives el enganche."
+      }
+    },
+    "hornero-port-watch": {
+      "program:ss": {
+        "en": "Lists listening network ports with ss -tulnp (read-only).",
+        "es": "Lista los puertos de red en escucha con ss -tulnp (solo lectura)."
+      }
+    },
+    "hornero-studio-audio": {
+      "program:horneroctl": {
+        "en": "Reads the Studio audio mode with horneroctl studio mode (read-only).",
+        "es": "Lee el modo de audio de Studio con horneroctl studio mode (solo lectura)."
+      }
+    },
+    "hornero-studio-jobs": {
+      "program:horneroctl": {
+        "en": "Lists Studio jobs with horneroctl studio jobs list (read-only).",
+        "es": "Lista los trabajos de Studio con horneroctl studio jobs list (solo lectura)."
+      }
+    },
+    "hornero-uptime": {
+      "program:cat": {
+        "en": "Reads /proc/uptime with cat to show how long the machine has been on.",
+        "es": "Lee /proc/uptime con cat para mostrar cuánto tiempo lleva encendida la máquina."
+      }
+    }
+  }
+}

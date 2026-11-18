@@ -358,6 +358,28 @@ differs from the catalogue at the same version. CI runs
 `python3 scripts/bump_version.py <id> "<note>"` (patch bump plus a
 changelog entry), then `python3 scripts/gen_catalog.py`.
 
+### Store fields: permissions text, changelog, screenshots
+
+Control Center > Extensions shows each catalogue entry before install
+without running any plugin code. `scripts/gen_catalog.py` adds three
+fields to every entry for that:
+
+| Field | Source | Notes |
+| --- | --- | --- |
+| `permissions` | `capabilities` + `catalog-permissions.json` | One line per declared program, network host, shared data domain, broker action and settings block, with `en` and `es` text. |
+| `marketplace` | the manifest's `marketplace` object | Changelog, compatibility, deprecation and packaged screenshots, copied as is. |
+| `screenshots` | `docs/screenshots/<id>.<png\|jpg\|jpeg\|webp>` | Path, SHA-256, byte size and alt text. Outside the payload; `horneroctl` verifies the hash before it caches the image for the pane. |
+
+Every `processCommands` and `networkHosts` entry needs a curated reason
+in `catalog-permissions.json` (`"program:<name>"` or
+`"network:<host>"`, English and Spanish). Generation fails when a
+reason is missing, when one names a use the manifest does not declare,
+or when it names a plugin that does not exist. Write what the program
+is run for and whether it only reads ("Lists your containers with
+podman ps (read-only)"), not what the program is. These lines are
+review text shown before consent; they do not restrict what plugin QML
+can do.
+
 ### Quality gate and audit: `quality-audit.json` (#21)
 
 The same `scripts/validate_plugins.py` run also enforces the
