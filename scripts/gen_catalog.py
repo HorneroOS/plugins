@@ -9,6 +9,19 @@ every file listed in manifest.files, in sorted order, framed as
 name NUL bytes NUL) so installers can verify integrity before the
 shell validator even runs.
 
+Store fields for Control Center > Extensions (shown before install,
+without running plugin code):
+  marketplace  the manifest's marketplace object (changelog,
+               compatibility, deprecation, packaged screenshots).
+  screenshots  catalogue screenshots kept outside the payload at
+               docs/screenshots/<id>.<ext>, each with its SHA-256 so
+               horneroctl can verify the bytes before caching them.
+  permissions  one plain-language line per declared program, network
+               host, shared data domain, broker action and settings
+               block, in English and Spanish. Program and network
+               reasons come from catalog-permissions.json and are
+               required: a declared program without a reason fails.
+
 Usage:
   python3 scripts/gen_catalog.py           # write catalog.json
   python3 scripts/gen_catalog.py --check   # fail if stale or invalid
@@ -23,6 +36,23 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 PLUGINS = ROOT / "plugins"
 CATALOG = ROOT / "catalog.json"
+PERMISSIONS = ROOT / "catalog-permissions.json"
+SCREENSHOTS = ROOT / "docs" / "screenshots"
+SCREENSHOT_EXTENSIONS = (".png", ".jpg", ".jpeg", ".webp")
+# Shared data domains (PluginKit Providers) in plain language. These are
+# read-only facades the shell already samples; the line says what the
+# extension can see, not what it can change.
+PROVIDER_TEXT = {
+    "system": ("CPU, memory, temperature and disk use", "uso de CPU, memoria, temperatura y disco"),
+    "network": ("network throughput and connection state", "tráfico de red y estado de la conexión"),
+    "spectrum": ("the audio spectrum of what is playing", "el espectro del audio que se está reproduciendo"),
+    "media": ("the track that is playing and its controls", "el tema que se está reproduciendo y sus controles"),
+    "audio": ("volume and audio devices", "volumen y dispositivos de audio"),
+    "power": ("battery and power profile", "batería y perfil de energía"),
+    "weather": ("the weather for your configured location", "el clima de la ubicación que configuraste"),
+    "time": ("the clock and calendar", "el reloj y el calendario"),
+    "workspaces": ("your workspaces and windows", "tus espacios de trabajo y ventanas"),
+}
 CATEGORIES = {
     "hornero-pomodoro": "productivity",
     "hornero-dual-clock": "utilities",
@@ -46,7 +76,76 @@ def payload_sha256(plugin_dir: Path, manifest: dict) -> str:
     return h.hexdigest()
 
 
+def load_permission_notes() -> dict:
+    if not PERMISSIONS.exists():
+        return {}
+    data = json.loads(PERMISSIONS.read_text())
+    if data.get("schemaVersion") != 1 or not isinstance(data.get("plugins"), dict):
+        raise SystemExit("catalog-permissions.json: schemaVersion 1 with a plugins object is required")
+    return data["plugins"]
+
+
+def permission_lines(plugin_id: str, capabilities: dict, notes: dict) -> list:
+    """Plain-language permission lines, EN and ES, for one entry.
+
+    Program and network reasons are mandatory curated text; the shared
+    data, broker action and settings lines are generated because their
+    meaning does not depend on the plugin.
+    """
+    own = notes.get(plugin_id, {})
+    lines = []
+    for kind, key in (("program", "processCommands"), ("network", "networkHosts")):
+        for value in capabilities.get(key, []) or []:
+            note = own.get(f"{kind}:{value}")
+            if not isinstance(note, dict) or not note.get("en", "").strip() or not note.get("es", "").strip():
+                raise SystemExit(
+                    f"{plugin_id}: declares {kind} {value!r} but catalog-permissions.json has no "
+                    f"English and Spanish reason for \"{kind}:{value}\"")
+            lines.append({"kind": kind, "value": value, "en": note["en"], "es": note["es"]})
+    for domain in capabilities.get("providers", []) or []:
+        en, es = PROVIDER_TEXT.get(domain, (domain, domain))
+        lines.append({"kind": "data", "value": domain,
+                      "en": f"Reads {en} from the shell's shared data (read-only).",
+                      "es": f"Lee {es} de los datos compartidos del shell (solo lectura)."})
+    for action in capabilities.get("actions", []) or []:
+        name = action if isinstance(action, str) else str(action.get("id", action)) if isinstance(action, dict) else str(action)
+        lines.append({"kind": "action", "value": name,
+                      "en": f"May ask horneroctl to run the system action {name}; the broker checks every request.",
+                      "es": f"Puede pedirle a horneroctl la acción de sistema {name}; el intermediario revisa cada pedido."})
+    settings = capabilities.get("settings") or {}
+    if settings:
+        keys = ", ".join(sorted(settings))
+        lines.append({"kind": "settings", "value": keys,
+                      "en": f"Stores only its own settings ({keys}).",
+                      "es": f"Guarda solo su propia configuración ({keys})."})
+    unused = sorted(k for k in own if k.split(":", 1)[1] not in
+                    (capabilities.get("processCommands", []) if k.startswith("program:") else
+                     capabilities.get("networkHosts", []) if k.startswith("network:") else []))
+    if unused:
+        raise SystemExit(f"{plugin_id}: catalog-permissions.json has reasons for undeclared uses: {', '.join(unused)}")
+    return lines
+
+
+def catalogue_screenshots(plugin_id: str, name: str) -> list:
+    shots = []
+    for ext in SCREENSHOT_EXTENSIONS:
+        path = SCREENSHOTS / f"{plugin_id}{ext}"
+        if path.is_file():
+            shots.append({
+                "path": path.relative_to(ROOT).as_posix(),
+                "sha256": hashlib.sha256(path.read_bytes()).hexdigest(),
+                "bytes": path.stat().st_size,
+                "alt": f"{name}, rendered by Hornero Shell",
+            })
+    return shots
+
+
 def build() -> dict:
+    notes = load_permission_notes()
+    known = {p.name for p in PLUGINS.iterdir() if p.is_dir()}
+    stray = sorted(set(notes) - known)
+    if stray:
+        raise SystemExit(f"catalog-permissions.json names unknown plugins: {', '.join(stray)}")
     entries = []
     for plugin_dir in sorted(p for p in PLUGINS.iterdir() if p.is_dir()):
         manifest = json.loads((plugin_dir / "manifest.json").read_text())
@@ -72,6 +171,12 @@ def build() -> dict:
         # a registry can hide what a given Shell cannot run.
         if manifest.get("pluginKit", 3) != 3:
             entry["pluginKit"] = manifest["pluginKit"]
+        if isinstance(manifest.get("marketplace"), dict):
+            entry["marketplace"] = manifest["marketplace"]
+        shots = catalogue_screenshots(manifest["id"], manifest["name"])
+        if shots:
+            entry["screenshots"] = shots
+        entry["permissions"] = permission_lines(manifest["id"], manifest.get("capabilities", {}), notes)
         entries.append(entry)
     # Revision of the last commit that touched plugins/ at generation
     # time. It is provenance for the snapshot, not freshness: a squash
