@@ -2,8 +2,8 @@
   "schemaVersion": 3,
   "id": "hornero-battery",
   "name": "Hornero Battery",
-  "version": "3.0.0",
-  "description": "Battery 3.0 on Hornero Signal: contextual bar indicator with a Hornero Glyph and a popover/dashboard module showing charge, time left, rate, health and power profile from the shared power provider. Read-only.",
+  "version": "3.0.1",
+  "description": "Contextual bar indicator with a Hornero Glyph and a popover/dashboard module showing charge, time left, rate, health and power profile from the shared power provider. Read-only.",
   "author": "HorneroOS contributors",
   "license": "MIT",
   "homepage": "https://github.com/HorneroOS/plugins",
@@ -28,6 +28,10 @@
       "minShellVersion": "1.0.0"
     },
     "changelog": [
+      {
+        "version": "3.0.1",
+        "notes": "Catalogue description no longer leads with an internal version; it says what the extension does first."
+      },
       {
         "version": "3.0.0",
         "notes": "PluginKit 3 on Hornero Signal: Hornero Glyph battery indicator in place of emoji, segmented charge meter that crosses to signal when low, and the details the Power facade now exposes (time to empty/full, energy rate, health, power profile), each shown only when reported."

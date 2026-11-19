@@ -2,7 +2,7 @@
   "schemaVersion": 3,
   "id": "hornero-countdown",
   "name": "Hornero Countdown",
-  "version": "3.1.0",
+  "version": "3.1.1",
   "description": "Bar timers: a countdown with 5/10/25 minute presets and a stopwatch behind one indicator, deadline and anchor based so sleep never loses time.",
   "author": "HorneroOS contributors",
   "license": "MIT",
@@ -82,7 +82,14 @@
     }
   },
   "marketplace": {
+    "compatibility": {
+      "minShellVersion": "1.0.0"
+    },
     "changelog": [
+      {
+        "version": "3.1.1",
+        "notes": "Declare marketplace compatibility (minShellVersion); catalogue description no longer leads with an internal version."
+      },
       {
         "version": "3.1.0",
         "notes": "Absorbs Stopwatch: the popover switches between countdown and stopwatch, the indicator follows whichever is running. Stopwatch stored state carries over."

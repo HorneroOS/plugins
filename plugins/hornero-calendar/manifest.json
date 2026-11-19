@@ -2,8 +2,8 @@
   "schemaVersion": 3,
   "id": "hornero-calendar",
   "name": "Hornero Calendar",
-  "version": "3.1.0",
-  "description": "Calendar 3.0 on Hornero Signal: a desktop widget with a display clock, the full date and a square-celled month grid over the shared time provider. Dates only; no events source.",
+  "version": "3.1.1",
+  "description": "A desktop widget with a display clock, the full date and a square-celled month grid over the shared time provider. Dates only; no events source.",
   "author": "HorneroOS contributors",
   "license": "MIT",
   "homepage": "https://github.com/HorneroOS/plugins",
@@ -31,6 +31,10 @@
       "minShellVersion": "1.2.79"
     },
     "changelog": [
+      {
+        "version": "3.1.1",
+        "notes": "Catalogue description no longer leads with an internal version; it says what the extension does first."
+      },
       {
         "version": "3.1.0",
         "notes": "Setting: date format (long, short or ISO)."

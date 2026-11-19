@@ -2,8 +2,8 @@
   "schemaVersion": 3,
   "id": "hornero-metronome",
   "name": "Hornero Metronome",
-  "version": "3.0.0",
-  "description": "Metronome 2.0: compact bar metronome with a popover (BPM slider plus minus/plus), deadline-scheduled beats that skip missed beats after sleep, and optional first-beat accent. No processes, no network.",
+  "version": "3.0.1",
+  "description": "Compact bar metronome with a popover (BPM slider plus minus/plus), deadline-scheduled beats that skip missed beats after sleep, and optional first-beat accent. No processes, no network.",
   "author": "HorneroOS contributors",
   "license": "MIT",
   "homepage": "https://github.com/HorneroOS/plugins",
@@ -48,7 +48,14 @@
     }
   },
   "marketplace": {
+    "compatibility": {
+      "minShellVersion": "1.0.0"
+    },
     "changelog": [
+      {
+        "version": "3.0.1",
+        "notes": "Declare marketplace compatibility (minShellVersion); catalogue description no longer leads with an internal version."
+      },
       {
         "version": "3.0.0",
         "notes": "PluginKit 3 on Hornero Signal: Signal beat indicator, glyph transport and an on-air chip while running."

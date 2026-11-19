@@ -2,8 +2,8 @@
   "schemaVersion": 3,
   "id": "hornero-disk-usage",
   "name": "Hornero Disk Usage",
-  "version": "3.0.1",
-  "description": "Disk Usage 3.0 on Hornero Signal: every physical disk as a partition bar with a dimension line, free space and a near-full flag from the shared system provider. Read-only.",
+  "version": "3.0.2",
+  "description": "Every physical disk as a partition bar with a dimension line, free space and a near-full flag from the shared system provider. Read-only.",
   "author": "HorneroOS contributors",
   "license": "MIT",
   "homepage": "https://github.com/HorneroOS/plugins",
@@ -28,6 +28,10 @@
       "minShellVersion": "1.0.0"
     },
     "changelog": [
+      {
+        "version": "3.0.2",
+        "notes": "Catalogue description no longer leads with an internal version; it says what the extension does first."
+      },
       {
         "version": "3.0.1",
         "notes": "Plain wording in footnotes and labels (no internal terms)."
