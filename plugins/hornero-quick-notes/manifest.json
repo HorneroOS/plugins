@@ -2,8 +2,8 @@
   "schemaVersion": 3,
   "id": "hornero-quick-notes",
   "name": "Hornero Quick Notes",
-  "version": "3.0.1",
-  "description": "Quick Notes 2.0: dashboard card with one persistent note saved through PluginKit Settings (same key as 1.x). Debounced autosave, Ctrl+S, flush on unload, clear confirmation, no processes or network.",
+  "version": "3.0.2",
+  "description": "Dashboard card with one persistent note saved through PluginKit Settings. Debounced autosave, Ctrl+S, flush on unload, clear confirmation, no processes or network.",
   "author": "HorneroOS contributors",
   "license": "MIT",
   "homepage": "https://github.com/HorneroOS/plugins",
@@ -21,6 +21,10 @@
       "minShellVersion": "1.0.0"
     },
     "changelog": [
+      {
+        "version": "3.0.2",
+        "notes": "Catalogue description no longer leads with an internal version; it says what the extension does first."
+      },
       {
         "version": "3.0.1",
         "notes": "Plain wording in footnotes and labels (no internal terms)."

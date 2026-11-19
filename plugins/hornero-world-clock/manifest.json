@@ -2,8 +2,8 @@
   "schemaVersion": 3,
   "id": "hornero-world-clock",
   "name": "Hornero World Clock",
-  "version": "3.2.0",
-  "description": "World Clock 2.0: dashboard card with local, UTC and three selectable cities. Pure-JS rule-based offsets (fixed, EU, US and southern DST rules) labelled per row; no processes or network.",
+  "version": "3.2.1",
+  "description": "Dashboard card with local, UTC and three selectable cities. Pure-JS rule-based offsets (fixed, EU, US and southern DST rules) labelled per row; no processes or network.",
   "author": "HorneroOS contributors",
   "license": "MIT",
   "homepage": "https://github.com/HorneroOS/plugins",
@@ -32,6 +32,10 @@
       "minShellVersion": "1.0.0"
     },
     "changelog": [
+      {
+        "version": "3.2.1",
+        "notes": "Catalogue description no longer leads with an internal version; it says what the extension does first."
+      },
       {
         "version": "3.2.0",
         "notes": "Absorbs Dual Clock: a bar indicator with local time over a second zone (barZone, barShowSeconds) and a popover with dates, offsets and the difference."

@@ -1,12 +1,12 @@
 {
   "schemaVersion": 1,
-  "generatedFrom": "1514a862428faa3c18d5397715f2f832091b3e62",
+  "generatedFrom": "59c7e8db432244f06e3ca976caaefa585b74c31f",
   "plugins": [
     {
       "id": "hornero-agenda",
       "name": "Hornero Agenda",
-      "version": "3.0.1",
-      "description": "Agenda 3.0 on Hornero Signal: a desktop widget of date facts (day, ISO week, quarter, day of year, days remaining) with a year partition bar, from the shared time provider. Dates only; no events source.",
+      "version": "3.0.2",
+      "description": "A desktop widget of date facts (day, ISO week, quarter, day of year, days remaining) with a year partition bar, from the shared time provider. Dates only; no events source.",
       "author": "HorneroOS contributors",
       "license": "MIT",
       "homepage": "https://github.com/HorneroOS/plugins",
@@ -38,12 +38,16 @@
       },
       "trust": "official",
       "path": "plugins/hornero-agenda",
-      "sha256": "6ce1012d9131bef7cec5fcc265eadd9d17dbdb7158e629ab277d1613182cf587",
+      "sha256": "2ff1be168bdca9ac81d31f215c088fcb0802f56e9c59632f848f70f39c5ae02d",
       "marketplace": {
         "compatibility": {
           "minShellVersion": "1.2.79"
         },
         "changelog": [
+          {
+            "version": "3.0.2",
+            "notes": "Catalogue description no longer leads with an internal version; it says what the extension does first."
+          },
           {
             "version": "3.0.1",
             "notes": "Shorter footnote so it is not clipped at the bottom of the widget."
@@ -96,8 +100,8 @@
     {
       "id": "hornero-ai-usage",
       "name": "Hornero AI Usage",
-      "version": "3.0.0",
-      "description": "AI Usage 2.0: bar indicator, provider switcher popover and dashboard card over the normalized horneroctl agent usage records. Quota is shown only when a provider record carries it; otherwise it is unknown.",
+      "version": "3.0.1",
+      "description": "Bar indicator, provider switcher popover and dashboard card over the normalized horneroctl agent usage records. Quota is shown only when a provider record carries it; otherwise it is unknown.",
       "author": "HorneroOS contributors",
       "license": "MIT",
       "homepage": "https://github.com/HorneroOS/plugins",
@@ -120,12 +124,16 @@
       },
       "trust": "official",
       "path": "plugins/hornero-ai-usage",
-      "sha256": "7918808354d40f584d5a54a28830a4dac879fdab9bbda72512836f0139218919",
+      "sha256": "e6efe3bd4888e71abf3f486ad52b6f4cac5b35030beb66ec588273b6d5d4ac11",
       "marketplace": {
         "compatibility": {
           "minShellVersion": "1.2.79"
         },
         "changelog": [
+          {
+            "version": "3.0.1",
+            "notes": "Catalogue description no longer leads with an internal version; it says what the extension does first."
+          },
           {
             "version": "3.0.0",
             "notes": "PluginKit 3 on Hornero Signal: instrument module header and a segmented quota meter that appears only when the provider reports a limit; quota stays unknown otherwise."
@@ -325,8 +333,8 @@
     {
       "id": "hornero-battery",
       "name": "Hornero Battery",
-      "version": "3.0.0",
-      "description": "Battery 3.0 on Hornero Signal: contextual bar indicator with a Hornero Glyph and a popover/dashboard module showing charge, time left, rate, health and power profile from the shared power provider. Read-only.",
+      "version": "3.0.1",
+      "description": "Contextual bar indicator with a Hornero Glyph and a popover/dashboard module showing charge, time left, rate, health and power profile from the shared power provider. Read-only.",
       "author": "HorneroOS contributors",
       "license": "MIT",
       "homepage": "https://github.com/HorneroOS/plugins",
@@ -365,12 +373,16 @@
       },
       "trust": "official",
       "path": "plugins/hornero-battery",
-      "sha256": "c5c582a7128e84a5a9753d256f8025435613020893b4ebd234f38554c1e34574",
+      "sha256": "89f889bbfdbb51f9f8bc56ad2f0a61fbab48141a657ef2ccdd70edff4372249b",
       "marketplace": {
         "compatibility": {
           "minShellVersion": "1.0.0"
         },
         "changelog": [
+          {
+            "version": "3.0.1",
+            "notes": "Catalogue description no longer leads with an internal version; it says what the extension does first."
+          },
           {
             "version": "3.0.0",
             "notes": "PluginKit 3 on Hornero Signal: Hornero Glyph battery indicator in place of emoji, segmented charge meter that crosses to signal when low, and the details the Power facade now exposes (time to empty/full, energy rate, health, power profile), each shown only when reported."
@@ -500,8 +512,8 @@
     {
       "id": "hornero-calendar",
       "name": "Hornero Calendar",
-      "version": "3.1.0",
-      "description": "Calendar 3.0 on Hornero Signal: a desktop widget with a display clock, the full date and a square-celled month grid over the shared time provider. Dates only; no events source.",
+      "version": "3.1.1",
+      "description": "A desktop widget with a display clock, the full date and a square-celled month grid over the shared time provider. Dates only; no events source.",
       "author": "HorneroOS contributors",
       "license": "MIT",
       "homepage": "https://github.com/HorneroOS/plugins",
@@ -552,12 +564,16 @@
       },
       "trust": "official",
       "path": "plugins/hornero-calendar",
-      "sha256": "fc89b4bddcd7dbd566687db826e8291219e51d9d8966cf2db1ad09c7f5be9261",
+      "sha256": "a701d71d320a8419b3102eee810cbe0ff42345567c6ca1067e7e78c94fd0bc4d",
       "marketplace": {
         "compatibility": {
           "minShellVersion": "1.2.79"
         },
         "changelog": [
+          {
+            "version": "3.1.1",
+            "notes": "Catalogue description no longer leads with an internal version; it says what the extension does first."
+          },
           {
             "version": "3.1.0",
             "notes": "Setting: date format (long, short or ISO)."
@@ -885,7 +901,7 @@
     {
       "id": "hornero-countdown",
       "name": "Hornero Countdown",
-      "version": "3.1.0",
+      "version": "3.1.1",
       "description": "Bar timers: a countdown with 5/10/25 minute presets and a stopwatch behind one indicator, deadline and anchor based so sleep never loses time.",
       "author": "HorneroOS contributors",
       "license": "MIT",
@@ -953,9 +969,16 @@
       },
       "trust": "official",
       "path": "plugins/hornero-countdown",
-      "sha256": "5a3d3702c6a90c46d5aeabf3f10b633051df13cbd0baedb61abbc984b7f70c58",
+      "sha256": "0eaa266a1c89d0a3feee4c1d8ec68b6956e87e5aa9cf920deb1f8a8d631014b7",
       "marketplace": {
+        "compatibility": {
+          "minShellVersion": "1.0.0"
+        },
         "changelog": [
+          {
+            "version": "3.1.1",
+            "notes": "Declare marketplace compatibility (minShellVersion); catalogue description no longer leads with an internal version."
+          },
           {
             "version": "3.1.0",
             "notes": "Absorbs Stopwatch: the popover switches between countdown and stopwatch, the indicator follows whichever is running. Stopwatch stored state carries over."
@@ -1154,8 +1177,8 @@
     {
       "id": "hornero-disk-usage",
       "name": "Hornero Disk Usage",
-      "version": "3.0.1",
-      "description": "Disk Usage 3.0 on Hornero Signal: every physical disk as a partition bar with a dimension line, free space and a near-full flag from the shared system provider. Read-only.",
+      "version": "3.0.2",
+      "description": "Every physical disk as a partition bar with a dimension line, free space and a near-full flag from the shared system provider. Read-only.",
       "author": "HorneroOS contributors",
       "license": "MIT",
       "homepage": "https://github.com/HorneroOS/plugins",
@@ -1184,12 +1207,16 @@
       },
       "trust": "official",
       "path": "plugins/hornero-disk-usage",
-      "sha256": "599bde38e10e6e5451d2b418207a00d5bb9da47cae3d341fe0c9dfc7a2181391",
+      "sha256": "d2f84baa699caef3a8549df340c64f767d391d87e0a0d155be48cf6e5489f883",
       "marketplace": {
         "compatibility": {
           "minShellVersion": "1.0.0"
         },
         "changelog": [
+          {
+            "version": "3.0.2",
+            "notes": "Catalogue description no longer leads with an internal version; it says what the extension does first."
+          },
           {
             "version": "3.0.1",
             "notes": "Plain wording in footnotes and labels (no internal terms)."
@@ -1896,8 +1923,8 @@
     {
       "id": "hornero-metronome",
       "name": "Hornero Metronome",
-      "version": "3.0.0",
-      "description": "Metronome 2.0: compact bar metronome with a popover (BPM slider plus minus/plus), deadline-scheduled beats that skip missed beats after sleep, and optional first-beat accent. No processes, no network.",
+      "version": "3.0.1",
+      "description": "Compact bar metronome with a popover (BPM slider plus minus/plus), deadline-scheduled beats that skip missed beats after sleep, and optional first-beat accent. No processes, no network.",
       "author": "HorneroOS contributors",
       "license": "MIT",
       "homepage": "https://github.com/HorneroOS/plugins",
@@ -1930,9 +1957,16 @@
       },
       "trust": "official",
       "path": "plugins/hornero-metronome",
-      "sha256": "c21db62e21f902e046d62c246fa383f385a31e65d95c7f740f6fba49a1af757d",
+      "sha256": "96368e1c3ef3a6a250ef364bc803998e21126b08a40df1c054ff755afcf62119",
       "marketplace": {
+        "compatibility": {
+          "minShellVersion": "1.0.0"
+        },
         "changelog": [
+          {
+            "version": "3.0.1",
+            "notes": "Declare marketplace compatibility (minShellVersion); catalogue description no longer leads with an internal version."
+          },
           {
             "version": "3.0.0",
             "notes": "PluginKit 3 on Hornero Signal: Signal beat indicator, glyph transport and an on-air chip while running."
@@ -1967,8 +2001,8 @@
     {
       "id": "hornero-microphone",
       "name": "Hornero Microphone",
-      "version": "3.0.2",
-      "description": "Audio Extensions 2.0: compact bar indicator, details popover and dashboard card for microphone state over the shared PluginKit Audio facade, with honest muted and no-input-device states. Never records audio.",
+      "version": "3.0.3",
+      "description": "Compact bar indicator, details popover and dashboard card for microphone state over the shared PluginKit Audio facade, with honest muted and no-input-device states. Never records audio.",
       "author": "HorneroOS contributors",
       "license": "MIT",
       "homepage": "https://github.com/HorneroOS/plugins",
@@ -1995,12 +2029,16 @@
       },
       "trust": "official",
       "path": "plugins/hornero-microphone",
-      "sha256": "9eb89a7cbf86cdac778903277ef0207cdf5ceedeb48ebbf7d5e1081533062c46",
+      "sha256": "7a738c07b17b23059d20fb704b437bc755463c630667c2373b394ce5a7acb4e8",
       "marketplace": {
         "compatibility": {
           "minShellVersion": "1.0.0"
         },
         "changelog": [
+          {
+            "version": "3.0.3",
+            "notes": "Catalogue description no longer leads with an internal version; it says what the extension does first."
+          },
           {
             "version": "3.0.2",
             "notes": "Plain wording in footnotes and labels (no internal terms)."
@@ -2321,8 +2359,8 @@
     {
       "id": "hornero-now-playing",
       "name": "Hornero Now Playing",
-      "version": "3.0.1",
-      "description": "Now Playing 2.0: compact bar indicator, details popover and dashboard card over the shared PluginKit Media (MPRIS) facade, with graceful no-player and idle-player states.",
+      "version": "3.0.2",
+      "description": "Compact bar indicator, details popover and dashboard card over the shared PluginKit Media (MPRIS) facade, with graceful no-player and idle-player states.",
       "author": "HorneroOS contributors",
       "license": "MIT",
       "homepage": "https://github.com/HorneroOS/plugins",
@@ -2356,12 +2394,16 @@
       },
       "trust": "official",
       "path": "plugins/hornero-now-playing",
-      "sha256": "d4815386499451188979c445f670d9830fe50beb34333a51ff89608be59fe04e",
+      "sha256": "97151ea6c69c9b31dc8fa71a27b948925e08df3c51b73b9dcb8c099d165d3e77",
       "marketplace": {
         "compatibility": {
           "minShellVersion": "1.0.0"
         },
         "changelog": [
+          {
+            "version": "3.0.2",
+            "notes": "Catalogue description no longer leads with an internal version; it says what the extension does first."
+          },
           {
             "version": "3.0.1",
             "notes": "Bar indicator hides the idle 'No player' sentence."
@@ -2661,8 +2703,8 @@
     {
       "id": "hornero-quick-notes",
       "name": "Hornero Quick Notes",
-      "version": "3.0.1",
-      "description": "Quick Notes 2.0: dashboard card with one persistent note saved through PluginKit Settings (same key as 1.x). Debounced autosave, Ctrl+S, flush on unload, clear confirmation, no processes or network.",
+      "version": "3.0.2",
+      "description": "Dashboard card with one persistent note saved through PluginKit Settings. Debounced autosave, Ctrl+S, flush on unload, clear confirmation, no processes or network.",
       "author": "HorneroOS contributors",
       "license": "MIT",
       "homepage": "https://github.com/HorneroOS/plugins",
@@ -2694,12 +2736,16 @@
       },
       "trust": "official",
       "path": "plugins/hornero-quick-notes",
-      "sha256": "d5b06a99088144a6259e35be721941b90410b2e478c58664e3c3c920845395ae",
+      "sha256": "3359df83af21b5616d47d1e850891a71978b1fa13fda3031e563ba42b51bbba0",
       "marketplace": {
         "compatibility": {
           "minShellVersion": "1.0.0"
         },
         "changelog": [
+          {
+            "version": "3.0.2",
+            "notes": "Catalogue description no longer leads with an internal version; it says what the extension does first."
+          },
           {
             "version": "3.0.1",
             "notes": "Plain wording in footnotes and labels (no internal terms)."
@@ -2894,8 +2940,8 @@
     {
       "id": "hornero-studio-audio",
       "name": "Hornero Studio Audio",
-      "version": "3.0.1",
-      "description": "Audio Extensions 2.0: bar indicator, popover and dashboard card for the Studio audio mode and Temporary Performance state from the typed horneroctl contract. Read-only; mode changes stay in the CLI and Control Center.",
+      "version": "3.0.2",
+      "description": "Bar indicator, popover and dashboard card for the Studio audio mode and Temporary Performance state from the typed horneroctl contract. Read-only; mode changes stay in the CLI and Control Center.",
       "author": "HorneroOS contributors",
       "license": "MIT",
       "homepage": "https://github.com/HorneroOS/plugins",
@@ -2926,12 +2972,16 @@
       },
       "trust": "official",
       "path": "plugins/hornero-studio-audio",
-      "sha256": "8d92c5cc30d5e70aaa93422949c9d20dce0a100446635b3140b452c0be0ffdca",
+      "sha256": "b91ea1c78aa1203048b36b430120c2ee9a236507c44d9784283aef2d457f41a0",
       "marketplace": {
         "compatibility": {
           "minShellVersion": "1.2.79"
         },
         "changelog": [
+          {
+            "version": "3.0.2",
+            "notes": "Catalogue description no longer leads with an internal version; it says what the extension does first."
+          },
           {
             "version": "3.0.1",
             "notes": "Bar indicator is a single short line."
@@ -3791,8 +3841,8 @@
     {
       "id": "hornero-uptime",
       "name": "Hornero Uptime",
-      "version": "3.0.1",
-      "description": "Uptime 2.0: bar indicator plus popover/dashboard session detail (uptime, boot time, idle time) from /proc/uptime with the declared cat command. No PluginKit uptime facade exists; error state instead of a fabricated zero.",
+      "version": "3.0.2",
+      "description": "Bar indicator plus popover/dashboard session detail (uptime, boot time, idle time) from /proc/uptime with the declared cat command. No PluginKit uptime facade exists; error state instead of a fabricated zero.",
       "author": "HorneroOS contributors",
       "license": "MIT",
       "homepage": "https://github.com/HorneroOS/plugins",
@@ -3825,12 +3875,16 @@
       },
       "trust": "official",
       "path": "plugins/hornero-uptime",
-      "sha256": "f7fed404bc025ec44e3817e7370e143a8d577e65bca183aab5ec4a4980280df4",
+      "sha256": "04caccfc3886c60ef38cbbe5efe49f9b3547d0fd338c8b988c608dea3c3cbc91",
       "marketplace": {
         "compatibility": {
           "minShellVersion": "1.2.79"
         },
         "changelog": [
+          {
+            "version": "3.0.2",
+            "notes": "Catalogue description no longer leads with an internal version; it says what the extension does first."
+          },
           {
             "version": "3.0.1",
             "notes": "Plain wording in footnotes and labels (no internal terms)."
@@ -3879,8 +3933,8 @@
     {
       "id": "hornero-volume",
       "name": "Hornero Volume",
-      "version": "3.0.2",
-      "description": "Audio Extensions 2.0: compact bar indicator, details popover and dashboard card for output volume over the shared PluginKit Audio facade, with honest muted and no-output-device states.",
+      "version": "3.0.3",
+      "description": "Compact bar indicator, details popover and dashboard card for output volume over the shared PluginKit Audio facade, with honest muted and no-output-device states.",
       "author": "HorneroOS contributors",
       "license": "MIT",
       "homepage": "https://github.com/HorneroOS/plugins",
@@ -3907,12 +3961,16 @@
       },
       "trust": "official",
       "path": "plugins/hornero-volume",
-      "sha256": "747e9255d828d468f2db2dcb1d3fca9b5ebce1cfa09ab39777a6a9f23f75d3e9",
+      "sha256": "d566b2ddcc8fb36d96f63245cc5f76b4ecd1fdc8667a5166846a8eab26e33ce3",
       "marketplace": {
         "compatibility": {
           "minShellVersion": "1.0.0"
         },
         "changelog": [
+          {
+            "version": "3.0.3",
+            "notes": "Catalogue description no longer leads with an internal version; it says what the extension does first."
+          },
           {
             "version": "3.0.2",
             "notes": "Plain wording in footnotes and labels (no internal terms)."
@@ -3961,8 +4019,8 @@
     {
       "id": "hornero-weather",
       "name": "Hornero Weather",
-      "version": "3.1.0",
-      "description": "Weather 2.0: dashboard card and contextual bar indicator complementing native Weather with configurable density, a local wind-threshold alert and forecast detail from the PluginKit Weather facade only",
+      "version": "3.1.1",
+      "description": "Dashboard card and contextual bar indicator complementing native Weather with configurable density, a local wind-threshold alert and forecast detail from the PluginKit Weather facade only",
       "author": "HorneroOS contributors",
       "license": "MIT",
       "homepage": "https://github.com/HorneroOS/plugins",
@@ -4033,12 +4091,16 @@
       },
       "trust": "official",
       "path": "plugins/hornero-weather",
-      "sha256": "911b836b3502537c369e725d2a2e87417f8a95d4076804b829bb1b61a7212717",
+      "sha256": "441da7a9e9560ed7833b75e2f0832629202c14d6b7998210ad534712f489ebc7",
       "marketplace": {
         "compatibility": {
           "minShellVersion": "1.0.0"
         },
         "changelog": [
+          {
+            "version": "3.1.1",
+            "notes": "Catalogue description no longer leads with an internal version; it says what the extension does first."
+          },
           {
             "version": "3.1.0",
             "notes": "Absorbs Sun Card: day length, next sun event and daylight progress on the card (showSunProgress) and a sunrise/sunset bar indicator (barIndicator = sun)."
@@ -4097,8 +4159,8 @@
     {
       "id": "hornero-world-clock",
       "name": "Hornero World Clock",
-      "version": "3.2.0",
-      "description": "World Clock 2.0: dashboard card with local, UTC and three selectable cities. Pure-JS rule-based offsets (fixed, EU, US and southern DST rules) labelled per row; no processes or network.",
+      "version": "3.2.1",
+      "description": "Dashboard card with local, UTC and three selectable cities. Pure-JS rule-based offsets (fixed, EU, US and southern DST rules) labelled per row; no processes or network.",
       "author": "HorneroOS contributors",
       "license": "MIT",
       "homepage": "https://github.com/HorneroOS/plugins",
@@ -4216,12 +4278,16 @@
       },
       "trust": "official",
       "path": "plugins/hornero-world-clock",
-      "sha256": "934d854d961135a6afa27f5252a9f0fe458e932c9ebb47b7bb580fdee5306fcd",
+      "sha256": "a99af4bc47d8cfe8e2fb0199e6c191bce3af5014d5cc84eee3b6c56a9aecfdc8",
       "marketplace": {
         "compatibility": {
           "minShellVersion": "1.0.0"
         },
         "changelog": [
+          {
+            "version": "3.2.1",
+            "notes": "Catalogue description no longer leads with an internal version; it says what the extension does first."
+          },
           {
             "version": "3.2.0",
             "notes": "Absorbs Dual Clock: a bar indicator with local time over a second zone (barZone, barShowSeconds) and a popover with dates, offsets and the difference."
