@@ -1,5 +1,7 @@
 # HorneroOS Plugins — official extensions marketplace
 
+[![validate](https://github.com/HorneroOS/plugins/actions/workflows/validate.yml/badge.svg)](https://github.com/HorneroOS/plugins/actions/workflows/validate.yml)
+
 First-party extensions for Hornero Shell, plus the curated catalogue
 the Shell and `horneroctl` use for discovery. Real software, real data,
 no fake screenshots. Every official extension is a PluginKit 3 package (`schemaVersion: 3`)
@@ -54,6 +56,17 @@ from them. Unlicensed references were treated as study-only.
   is the vendored Hornero Glyph name list the validator checks icons against.
 - `templates/starter-plugin/` — copy this to start a new extension.
 - `docs/` — contributor guide, security model, review process.
+
+<p align="center">
+  <img src="https://www.horneroos.com/captures/cap-cc-07.png" alt="Control Center Extensions pane listing installed extensions with trust and load state; visible warning that enabled QML plugins run as your user without a sandbox" width="960">
+  <br>
+  <sub>Install, update, remove — with honest warnings. Real capture —
+  maintainer machine, staged demo content.</sub>
+</p>
+
+See also: [HorneroOS/shell](https://github.com/HorneroOS/shell) ·
+[Extensions](https://horneroos.com/extensions/) ·
+[Website](https://horneroos.com/) · [Docs](https://horneroos.com/docs/)
 
 ## Quick start (users)
 
