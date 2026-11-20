@@ -150,55 +150,6 @@
       }
     },
     {
-      "id": "hornero-base-converter",
-      "classification": "deprecated-with-replacement",
-      "valueProposition": "Base Converter 2.0: bar quick conversion with an explicit 0x hex prefix plus compact Utilities dashboard detail, over the preserved safe-range validated conversions; declared launcher entrypoint carries the same tested logic for shell#250.",
-      "nativeOverlap": "Converter family overlap with hornero-unit-converter and hornero-color-converter; distinct value is numeric-base conversion.",
-      "dimensions": {
-        "tooltips": {
-          "status": "pass",
-          "note": "Bar indicator, popover run button and dashboard action buttons carry PluginKit tooltipText; QtQuick.Controls fields (no PluginKit text-input primitive exists) carry ToolTip.text (static probe)."
-        },
-        "accessibility": {
-          "status": "pass",
-          "note": "UiButton/UiPopover accessibleName, Accessible.name on fields and the dashboard card; actions are real buttons, no mouse-only MouseArea (static probe). Live AT-SPI behaviour is not verified."
-        },
-        "translation": {
-          "status": "pass",
-          "note": "Chrome literals go through PluginKit Translations; es (Argentine Spanish) catalog declared and checked complete for literal tr() strings (static probe). Computed result strings are values/units/parser output from the logic block."
-        },
-        "settings": {
-          "status": "pass",
-          "note": "Typed uppercaseHex (boolean, default true, the 1.x output) setting declared and read via PluginKit Settings (static probe)."
-        },
-        "themeTokens": {
-          "status": "pass",
-          "note": "Visible chrome colours come from PluginKit Ui primitives/Theme tokens; the color-converter preview fill is a computed user-color binding, not chrome (static probe)."
-        },
-        "screenshots": {
-          "status": "pass",
-          "note": "docs/screenshots/hornero-base-converter.png: offscreen fixture render of its night surfaces (offscreen-reviewed 2026-11-17 against the Signal Bezel; fixture data, not product telemetry). Day renders and every surface are in docs/evidence/offscreen/."
-        },
-        "orientation": {
-          "status": "unverified",
-          "note": "Bar indicator seen only on the top bar (real-shell-captured) or offscreen; not yet captured on a vertical rail."
-        },
-        "loadingErrorStates": {
-          "status": "unverified",
-          "note": "UiState empty/error placeholders plus the 1.x explicit error strings cover empty and invalid input on bar popover and dashboard; presentation is not verified graphically in a live shell. The launcher declaration states honestly in the README that it runs nothing today."
-        },
-        "performance": {
-          "status": "pass",
-          "note": "QA VM (shell main + PluginKit 3, 3 vCPU llvmpipe, 2026-11-17): loads without a slow-load or load-churn flag; idle CPU of the shell process measured as one set, not per plugin: bare shell 9.2%, 6 desktop widgets 9.4%, 22 bar indicators 11.8%, 12 dashboard cards 11.5% of one core (VM measurement, noise about 0.5 pp; mission evidence plugin-e2e/idle-cpu.txt). Not a published estimate."
-        }
-      },
-      "graphicalReview": {
-        "reviewer": "Claude Code agent (offscreen fixture review and QA VM captures; not a human design review)",
-        "date": "2026-11-17"
-      },
-      "replacement": "hornero-toolbox"
-    },
-    {
       "id": "hornero-battery",
       "classification": "needs-upgrade",
       "valueProposition": "Battery 2.0 (#31): contextual bar indicator over the shared PluginKit Power facade, hidden by default when no battery is reported (showWhenNoBattery opt-in restores the permanent 1.x item), with an activation popover and dashboard card showing charge, mapped state and on-battery/charging flags plus a low-battery chip. Time left, rate, health and power profile are shown only when the Power facade (UPower) reports them; nothing is invented.",
@@ -246,55 +197,6 @@
         "reviewer": "Claude Code agent (offscreen fixture review and QA VM captures; not a human design review)",
         "date": "2026-11-17"
       }
-    },
-    {
-      "id": "hornero-calculator",
-      "classification": "deprecated-with-replacement",
-      "valueProposition": "Calculator 3.0: bar quick action and dashboard keypad on Hornero Signal: digits as secondary keys, operators quiet, one primary equals key (#49), a mono expression field and a result readout well that reads alert on an invalid expression.",
-      "nativeOverlap": "No native shell calculator identified; overlaps converter tools only as another dashboard utility.",
-      "dimensions": {
-        "tooltips": {
-          "status": "pass",
-          "note": "Bar indicator, popover run button and dashboard action buttons carry PluginKit tooltipText; QtQuick.Controls fields (no PluginKit text-input primitive exists) carry ToolTip.text (static probe)."
-        },
-        "accessibility": {
-          "status": "pass",
-          "note": "UiButton/UiPopover accessibleName, Accessible.name on fields and the dashboard card; actions are real buttons, no mouse-only MouseArea (static probe). Live AT-SPI behaviour is not verified."
-        },
-        "translation": {
-          "status": "pass",
-          "note": "Chrome literals go through PluginKit Translations; es (Argentine Spanish) catalog declared and checked complete for literal tr() strings (static probe). Computed result strings are values/units/parser output from the logic block."
-        },
-        "settings": {
-          "status": "pass",
-          "note": "Typed showKeypad (boolean, default true, the 1.x keypad) and liveResult (boolean, default false, the 1.x explicit compute) settings declared and read via PluginKit Settings (static probe)."
-        },
-        "themeTokens": {
-          "status": "pass",
-          "note": "Visible chrome colours come from PluginKit Ui primitives/Theme tokens; the color-converter preview fill is a computed user-color binding, not chrome (static probe)."
-        },
-        "screenshots": {
-          "status": "pass",
-          "note": "docs/screenshots/hornero-calculator.png: offscreen fixture render of its night surfaces (offscreen-reviewed 2026-11-17 against the Signal Bezel; fixture data, not product telemetry). Day renders and every surface are in docs/evidence/offscreen/. Real-shell captured (QA VM) on: classic-top, see docs/evidence/qa-vm/."
-        },
-        "orientation": {
-          "status": "unverified",
-          "note": "Bar indicator seen only on the top bar (real-shell-captured) or offscreen; not yet captured on a vertical rail."
-        },
-        "loadingErrorStates": {
-          "status": "unverified",
-          "note": "UiState empty/error placeholders plus the 1.x explicit error strings cover empty and invalid input on bar popover and dashboard; presentation is not verified graphically in a live shell. The launcher declaration states honestly in the README that it runs nothing today."
-        },
-        "performance": {
-          "status": "pass",
-          "note": "QA VM (shell main + PluginKit 3, 3 vCPU llvmpipe, 2026-11-17): loads without a slow-load or load-churn flag; idle CPU of the shell process measured as one set, not per plugin: bare shell 9.2%, 6 desktop widgets 9.4%, 22 bar indicators 11.8%, 12 dashboard cards 11.5% of one core (VM measurement, noise about 0.5 pp; mission evidence plugin-e2e/idle-cpu.txt). Not a published estimate."
-        }
-      },
-      "graphicalReview": {
-        "reviewer": "Claude Code agent (offscreen fixture review and QA VM captures; not a human design review)",
-        "date": "2026-11-17"
-      },
-      "replacement": "hornero-toolbox"
     },
     {
       "id": "hornero-calendar",
@@ -391,55 +293,6 @@
       "issue": "HorneroOS/plugins#62"
     },
     {
-      "id": "hornero-color-converter",
-      "classification": "deprecated-with-replacement",
-      "valueProposition": "Color Converter 2.0: bar quick hex lookup plus compact Utilities dashboard panel with preview and RGB inputs, over the preserved validated conversions; declared launcher entrypoint carries the same tested logic for shell#250.",
-      "nativeOverlap": "Converter family overlap with hornero-base-converter and hornero-unit-converter; distinct value is colour-space conversion.",
-      "dimensions": {
-        "tooltips": {
-          "status": "pass",
-          "note": "Bar indicator, popover run button and dashboard action buttons carry PluginKit tooltipText; QtQuick.Controls fields (no PluginKit text-input primitive exists) carry ToolTip.text (static probe)."
-        },
-        "accessibility": {
-          "status": "pass",
-          "note": "UiButton/UiPopover accessibleName, Accessible.name on fields and the dashboard card; actions are real buttons, no mouse-only MouseArea (static probe). Live AT-SPI behaviour is not verified."
-        },
-        "translation": {
-          "status": "pass",
-          "note": "Chrome literals go through PluginKit Translations; es (Argentine Spanish) catalog declared and checked complete for literal tr() strings (static probe). Computed result strings are values/units/parser output from the logic block."
-        },
-        "settings": {
-          "status": "pass",
-          "note": "Typed defaultHex (string, default #336699, the 1.x initial color) and showPreview (boolean, default true) settings declared and read via PluginKit Settings (static probe)."
-        },
-        "themeTokens": {
-          "status": "pass",
-          "note": "Visible chrome colours come from PluginKit Ui primitives/Theme tokens; the color-converter preview fill is a computed user-color binding, not chrome (static probe)."
-        },
-        "screenshots": {
-          "status": "pass",
-          "note": "docs/screenshots/hornero-color-converter.png: offscreen fixture render of its night surfaces (offscreen-reviewed 2026-11-17 against the Signal Bezel; fixture data, not product telemetry). Day renders and every surface are in docs/evidence/offscreen/."
-        },
-        "orientation": {
-          "status": "unverified",
-          "note": "Bar indicator seen only on the top bar (real-shell-captured) or offscreen; not yet captured on a vertical rail."
-        },
-        "loadingErrorStates": {
-          "status": "unverified",
-          "note": "UiState empty/error placeholders plus the 1.x explicit error strings cover empty and invalid input on bar popover and dashboard; presentation is not verified graphically in a live shell. The launcher declaration states honestly in the README that it runs nothing today."
-        },
-        "performance": {
-          "status": "pass",
-          "note": "QA VM (shell main + PluginKit 3, 3 vCPU llvmpipe, 2026-11-17): loads without a slow-load or load-churn flag; idle CPU of the shell process measured as one set, not per plugin: bare shell 9.2%, 6 desktop widgets 9.4%, 22 bar indicators 11.8%, 12 dashboard cards 11.5% of one core (VM measurement, noise about 0.5 pp; mission evidence plugin-e2e/idle-cpu.txt). Not a published estimate."
-        }
-      },
-      "graphicalReview": {
-        "reviewer": "Claude Code agent (offscreen fixture review and QA VM captures; not a human design review)",
-        "date": "2026-11-17"
-      },
-      "replacement": "hornero-toolbox"
-    },
-    {
       "id": "hornero-containers",
       "classification": "needs-upgrade",
       "valueProposition": "Containers 1.0: read-only Podman/Docker container roster (state, image, status, published ports).",
@@ -532,55 +385,6 @@
         "reviewer": "Claude Code agent (offscreen fixture review and QA VM captures; not a human design review)",
         "date": "2026-11-17"
       }
-    },
-    {
-      "id": "hornero-date-calculator",
-      "classification": "deprecated-with-replacement",
-      "valueProposition": "Date Calculator 2.0: one-line bar date math plus compact Utilities dashboard detail, over the preserved UTC-only real-date validation; declared launcher entrypoint carries the same tested logic for shell#250.",
-      "nativeOverlap": "Overlaps hornero-agenda on date arithmetic display; distinct value is days-between and add-days calculation.",
-      "dimensions": {
-        "tooltips": {
-          "status": "pass",
-          "note": "Bar indicator, popover run button and dashboard action buttons carry PluginKit tooltipText; QtQuick.Controls fields (no PluginKit text-input primitive exists) carry ToolTip.text (static probe)."
-        },
-        "accessibility": {
-          "status": "pass",
-          "note": "UiButton/UiPopover accessibleName, Accessible.name on fields and the dashboard card; actions are real buttons, no mouse-only MouseArea (static probe). Live AT-SPI behaviour is not verified."
-        },
-        "translation": {
-          "status": "pass",
-          "note": "Chrome literals go through PluginKit Translations; es (Argentine Spanish) catalog declared and checked complete for literal tr() strings (static probe). Computed result strings are values/units/parser output from the logic block."
-        },
-        "settings": {
-          "status": "pass",
-          "note": "Typed showUtcNote (boolean, default true, the 1.x note) setting declared and read via PluginKit Settings (static probe)."
-        },
-        "themeTokens": {
-          "status": "pass",
-          "note": "Visible chrome colours come from PluginKit Ui primitives/Theme tokens; the color-converter preview fill is a computed user-color binding, not chrome (static probe)."
-        },
-        "screenshots": {
-          "status": "pass",
-          "note": "docs/screenshots/hornero-date-calculator.png: offscreen fixture render of its night surfaces (offscreen-reviewed 2026-11-17 against the Signal Bezel; fixture data, not product telemetry). Day renders and every surface are in docs/evidence/offscreen/."
-        },
-        "orientation": {
-          "status": "unverified",
-          "note": "Bar indicator seen only on the top bar (real-shell-captured) or offscreen; not yet captured on a vertical rail."
-        },
-        "loadingErrorStates": {
-          "status": "unverified",
-          "note": "UiState empty/error placeholders plus the 1.x explicit error strings cover empty and invalid input on bar popover and dashboard; presentation is not verified graphically in a live shell. The launcher declaration states honestly in the README that it runs nothing today."
-        },
-        "performance": {
-          "status": "pass",
-          "note": "QA VM (shell main + PluginKit 3, 3 vCPU llvmpipe, 2026-11-17): loads without a slow-load or load-churn flag; idle CPU of the shell process measured as one set, not per plugin: bare shell 9.2%, 6 desktop widgets 9.4%, 22 bar indicators 11.8%, 12 dashboard cards 11.5% of one core (VM measurement, noise about 0.5 pp; mission evidence plugin-e2e/idle-cpu.txt). Not a published estimate."
-        }
-      },
-      "graphicalReview": {
-        "reviewer": "Claude Code agent (offscreen fixture review and QA VM captures; not a human design review)",
-        "date": "2026-11-17"
-      },
-      "replacement": "hornero-toolbox"
     },
     {
       "id": "hornero-device-battery",
@@ -677,55 +481,6 @@
       }
     },
     {
-      "id": "hornero-dual-clock",
-      "classification": "deprecated-with-replacement",
-      "valueProposition": "Dual Clock 2.0: compact bar indicator with local time over a second zone (UTC by default, identical 1.x label), opening a popover with locale dates, applied offsets, DST state and the signed offset difference. Non-UTC zones use the same pure-JS DST rule table as World Clock.",
-      "nativeOverlap": "Overlaps hornero-world-clock (many zones on the dashboard) and the shell clock; distinct value is one glanceable second zone in the bar plus a details popover.",
-      "dimensions": {
-        "tooltips": {
-          "status": "pass",
-          "note": "The indicator carries PluginKit tooltipText (host-owned UiTooltip, static probe); it is the only interactive control."
-        },
-        "accessibility": {
-          "status": "pass",
-          "note": "UiButton accessibleName announces both times and UiPopover carries an accessibleName; no mouse-only MouseArea (static probe). Live AT-SPI behaviour is not verified."
-        },
-        "translation": {
-          "status": "pass",
-          "note": "All user-visible literals, including city names, go through PluginKit Translations; es (Argentine Spanish) catalog declared in the manifest and checked complete for literal tr() strings (static probe)."
-        },
-        "settings": {
-          "status": "pass",
-          "note": "Typed secondZone (enum, default utc), showSeconds (boolean, default false) and twentyFourHour (boolean, default true) declared in the manifest and read via PluginKit Settings; defaults reproduce the 1.x HH:mm over HH:mm UTC label exactly (static probe)."
-        },
-        "themeTokens": {
-          "status": "pass",
-          "note": "Visible colours come from PluginKit Ui primitives/Theme tokens with no hard-coded chrome colours; the 1.x palette.windowText is gone (static probe)."
-        },
-        "screenshots": {
-          "status": "pass",
-          "note": "docs/screenshots/hornero-dual-clock.png: offscreen fixture render of its night surfaces (offscreen-reviewed 2026-11-17 against the Signal Bezel; fixture data, not product telemetry). Day renders and every surface are in docs/evidence/offscreen/. Real-shell captured (QA VM) on: classic-top, hornero-left, see docs/evidence/qa-vm/."
-        },
-        "orientation": {
-          "status": "pass",
-          "note": "Real-shell captured in the QA VM on classic-top, hornero-left: glyph or stacked short text fits the 36 px rail, popover anchors on each edge (real-shell-captured 2026-11-17)."
-        },
-        "loadingErrorStates": {
-          "status": "unverified",
-          "note": "The popover labels the rule-table limit and unknown stored zones fall back to UTC; presentation has not been verified graphically in a live shell."
-        },
-        "performance": {
-          "status": "pass",
-          "note": "QA VM (shell main + PluginKit 3, 3 vCPU llvmpipe, 2026-11-17): loads without a slow-load or load-churn flag; idle CPU of the shell process measured as one set, not per plugin: bare shell 9.2%, 6 desktop widgets 9.4%, 22 bar indicators 11.8%, 12 dashboard cards 11.5% of one core (VM measurement, noise about 0.5 pp; mission evidence plugin-e2e/idle-cpu.txt). Not a published estimate."
-        }
-      },
-      "graphicalReview": {
-        "reviewer": "Claude Code agent (offscreen fixture review and QA VM captures; not a human design review)",
-        "date": "2026-11-17"
-      },
-      "replacement": "hornero-world-clock"
-    },
-    {
       "id": "hornero-emoji",
       "classification": "needs-upgrade",
       "valueProposition": "Emoji search for the launcher (>emoji) and a dashboard picker over the bundled Unicode 16.0 names, with skin tone and result count as settings. Local only, no history.",
@@ -816,55 +571,6 @@
       "issue": "HorneroOS/plugins#62"
     },
     {
-      "id": "hornero-focus-card",
-      "classification": "deprecated-with-replacement",
-      "valueProposition": "Focus Card 2.0: dashboard card with the locale date from PluginKit Time and a rotating original one-line focus reminder (optional own leading line via the customLine setting). Stores no note; Previous/Next and a pause toggle replace the 1.x mouse-only click. Pure QML, no processes or network.",
-      "nativeOverlap": "Focus/session overlap with hornero-quiet-notes and hornero-pomodoro reviewed under #29, not consolidated: Quiet Notes holds your ephemeral line, Pomodoro times a session, Focus Card shows shipped reminders and stores no note, so there is no user text to migrate between them.",
-      "dimensions": {
-        "tooltips": {
-          "status": "pass",
-          "note": "Previous/Next buttons and the pause toggle carry PluginKit tooltipText (host-owned UiTooltip, static probe)."
-        },
-        "accessibility": {
-          "status": "pass",
-          "note": "Card Accessible.name announces the current line and UiButton/UiToggle accessibleName covers every control; the mouse-only 1.x advance is gone (static probe). Live AT-SPI behaviour is not verified."
-        },
-        "translation": {
-          "status": "pass",
-          "note": "All user-visible literals, including the five built-in lines, go through PluginKit Translations; es (Argentine Spanish) catalog declared in the manifest and checked complete for literal tr() strings (static probe). The date and line counter are locale-formatted via Translations."
-        },
-        "settings": {
-          "status": "pass",
-          "note": "Typed rotateSeconds (integer 5-600, default 30 = 1.x cadence), showDate (boolean, default true) and customLine (string, default empty = built-in lines only as in 1.x) settings declared in the manifest and read via PluginKit Settings (static probe)."
-        },
-        "themeTokens": {
-          "status": "pass",
-          "note": "Visible colours come from PluginKit Ui primitives/Theme tokens with no hard-coded chrome colours; palette.windowText is gone (static probe)."
-        },
-        "screenshots": {
-          "status": "pass",
-          "note": "docs/screenshots/hornero-focus-card.png: offscreen fixture render of its night surfaces (offscreen-reviewed 2026-11-17 against the Signal Bezel; fixture data, not product telemetry). Day renders and every surface are in docs/evidence/offscreen/."
-        },
-        "orientation": {
-          "status": "na",
-          "note": "No bar surface: the host fixes the size of a dashboard card or desktop widget, so rail orientation does not apply."
-        },
-        "loadingErrorStates": {
-          "status": "unverified",
-          "note": "Line position, the own-line marker and the paused state render from in-memory state and Time.date; presentation has not been verified graphically in a live shell."
-        },
-        "performance": {
-          "status": "pass",
-          "note": "QA VM (shell main + PluginKit 3, 3 vCPU llvmpipe, 2026-11-17): loads without a slow-load or load-churn flag; idle CPU of the shell process measured as one set, not per plugin: bare shell 9.2%, 6 desktop widgets 9.4%, 22 bar indicators 11.8%, 12 dashboard cards 11.5% of one core (VM measurement, noise about 0.5 pp; mission evidence plugin-e2e/idle-cpu.txt). Not a published estimate."
-        }
-      },
-      "graphicalReview": {
-        "reviewer": "Claude Code agent (offscreen fixture review and QA VM captures; not a human design review)",
-        "date": "2026-11-17"
-      },
-      "replacement": "hornero-pomodoro"
-    },
-    {
       "id": "hornero-forge-board",
       "classification": "needs-upgrade",
       "valueProposition": "Forge Board 1.0: latest CI run and your open pull requests (review and check state) for named GitHub repositories, through the signed-in gh CLI; no token handling.",
@@ -953,55 +659,6 @@
         }
       },
       "issue": "HorneroOS/plugins#21"
-    },
-    {
-      "id": "hornero-json-tools",
-      "classification": "deprecated-with-replacement",
-      "valueProposition": "JSON Tools 2.0: bar quick format/validate plus compact Utilities dashboard Format/Minify detail, over the preserved JSON.parse/stringify-only logic; declared launcher entrypoint carries the same tested logic for shell#250.",
-      "nativeOverlap": "Developer-tool overlap with hornero-text-tools and hornero-base-converter; distinct value is JSON format/minify.",
-      "dimensions": {
-        "tooltips": {
-          "status": "pass",
-          "note": "Bar indicator, popover run button and dashboard action buttons carry PluginKit tooltipText; QtQuick.Controls fields (no PluginKit text-input primitive exists) carry ToolTip.text (static probe)."
-        },
-        "accessibility": {
-          "status": "pass",
-          "note": "UiButton/UiPopover accessibleName, Accessible.name on fields and the dashboard card; actions are real buttons, no mouse-only MouseArea (static probe). Live AT-SPI behaviour is not verified."
-        },
-        "translation": {
-          "status": "pass",
-          "note": "Chrome literals go through PluginKit Translations; es (Argentine Spanish) catalog declared and checked complete for literal tr() strings (static probe). Computed result strings are values/units/parser output from the logic block."
-        },
-        "settings": {
-          "status": "pass",
-          "note": "Typed indentSpaces (integer 0-8, default 2, the 1.x formatting) and defaultAction (enum, default format) settings declared and read via PluginKit Settings (static probe)."
-        },
-        "themeTokens": {
-          "status": "pass",
-          "note": "Visible chrome colours come from PluginKit Ui primitives/Theme tokens; the color-converter preview fill is a computed user-color binding, not chrome (static probe)."
-        },
-        "screenshots": {
-          "status": "pass",
-          "note": "docs/screenshots/hornero-json-tools.png: offscreen fixture render of its night surfaces (offscreen-reviewed 2026-11-17 against the Signal Bezel; fixture data, not product telemetry). Day renders and every surface are in docs/evidence/offscreen/."
-        },
-        "orientation": {
-          "status": "unverified",
-          "note": "Bar indicator seen only on the top bar (real-shell-captured) or offscreen; not yet captured on a vertical rail."
-        },
-        "loadingErrorStates": {
-          "status": "unverified",
-          "note": "UiState empty/error placeholders plus the 1.x explicit error strings cover empty and invalid input on bar popover and dashboard; presentation is not verified graphically in a live shell. The launcher declaration states honestly in the README that it runs nothing today."
-        },
-        "performance": {
-          "status": "pass",
-          "note": "QA VM (shell main + PluginKit 3, 3 vCPU llvmpipe, 2026-11-17): loads without a slow-load or load-churn flag; idle CPU of the shell process measured as one set, not per plugin: bare shell 9.2%, 6 desktop widgets 9.4%, 22 bar indicators 11.8%, 12 dashboard cards 11.5% of one core (VM measurement, noise about 0.5 pp; mission evidence plugin-e2e/idle-cpu.txt). Not a published estimate."
-        }
-      },
-      "graphicalReview": {
-        "reviewer": "Claude Code agent (offscreen fixture review and QA VM captures; not a human design review)",
-        "date": "2026-11-17"
-      },
-      "replacement": "hornero-toolbox"
     },
     {
       "id": "hornero-metronome",
@@ -1149,55 +806,6 @@
         "reviewer": "Claude Code agent (offscreen fixture review and QA VM captures; not a human design review)",
         "date": "2026-11-17"
       }
-    },
-    {
-      "id": "hornero-network-monitor",
-      "classification": "deprecated-with-replacement",
-      "valueProposition": "Network Monitor 3.0: Signal dashboard module over the shared network provider: a cue-toned download oscilloscope and upload trace from the shared Telemetry history with the scale stated, peaks, current speeds and session totals.",
-      "nativeOverlap": "Overlaps the network rows in hornero-system-health and native current-rate displays; distinct value is shared-history oscilloscope, peaks alongside the shell-session totals. The facade exposes no interface, address or per-process traffic and none is shown.",
-      "dimensions": {
-        "tooltips": {
-          "status": "na",
-          "note": "No interactive controls in the card, so tooltips do not apply (static probe)."
-        },
-        "accessibility": {
-          "status": "na",
-          "note": "No interactive controls; the card carries Accessible.name and the sparkline an accessibleName (static probe classifies non-interactive surfaces as na)."
-        },
-        "translation": {
-          "status": "pass",
-          "note": "All user-visible literals go through PluginKit Translations; es (Argentine Spanish) catalog declared in the manifest and checked complete for literal tr() strings (static probe). Facade-supplied labels (disk names, battery state text) stay in the shell's language."
-        },
-        "settings": {
-          "status": "pass",
-          "note": "Typed showSessionTotals/showHistory (true) settings declared in the manifest and read via PluginKit Settings; 1.x speeds/totals stay visible by default and 3.0 dropped sampleSeconds (static probe)."
-        },
-        "themeTokens": {
-          "status": "pass",
-          "note": "Visible colours come from PluginKit Ui primitives/Theme tokens with no hard-coded chrome colours (static probe)."
-        },
-        "screenshots": {
-          "status": "pass",
-          "note": "docs/screenshots/hornero-network-monitor.png: offscreen fixture render of its night surfaces (offscreen-reviewed 2026-11-17 against the Signal Bezel; fixture data, not product telemetry). Day renders and every surface are in docs/evidence/offscreen/."
-        },
-        "orientation": {
-          "status": "na",
-          "note": "No bar surface: the host fixes the size of a dashboard card or desktop widget, so rail orientation does not apply."
-        },
-        "loadingErrorStates": {
-          "status": "unverified",
-          "note": "UiState placeholders cover the unavailable-speeds and collecting-history states and totals stay as last reported; presentation has not been verified graphically in a live shell."
-        },
-        "performance": {
-          "status": "pass",
-          "note": "QA VM (shell main + PluginKit 3, 3 vCPU llvmpipe, 2026-11-17): loads without a slow-load or load-churn flag; idle CPU of the shell process measured as one set, not per plugin: bare shell 9.2%, 6 desktop widgets 9.4%, 22 bar indicators 11.8%, 12 dashboard cards 11.5% of one core (VM measurement, noise about 0.5 pp; mission evidence plugin-e2e/idle-cpu.txt). Not a published estimate."
-        }
-      },
-      "graphicalReview": {
-        "reviewer": "Claude Code agent (offscreen fixture review and QA VM captures; not a human design review)",
-        "date": "2026-11-17"
-      },
-      "replacement": "hornero-network-scope"
     },
     {
       "id": "hornero-network-scope",
@@ -1441,104 +1049,6 @@
       }
     },
     {
-      "id": "hornero-quiet-notes",
-      "classification": "deprecated-with-replacement",
-      "valueProposition": "Quiet Notes 2.0: dashboard card for one short session-only intention, in-memory only as in 1.x and now labelled Session only - never saved. Keyboard-first capture (themed editor, Enter accepts, Esc cancels); the intention has deliberately no Settings key, only display preferences are stored.",
-      "nativeOverlap": "Family overlap with hornero-quick-notes is deliberate and now labelled in both cards, not consolidated (#29 review): persisting a Quiet Notes line would break its privacy contract, so no migration path into Quick Notes exists; Focus Card stores no note either.",
-      "dimensions": {
-        "tooltips": {
-          "status": "pass",
-          "note": "Editor and every UiButton carry ToolTip.text/tooltipText (host-owned UiTooltip, static probe)."
-        },
-        "accessibility": {
-          "status": "pass",
-          "note": "Card Accessible.name announces the intention, the TextField has an Accessible.name and every UiButton an accessibleName; the mouse-only 1.x card click is gone and focus returns to the edit button after editing (static probe). Live AT-SPI behaviour is not verified."
-        },
-        "translation": {
-          "status": "pass",
-          "note": "All user-visible literals go through PluginKit Translations; es (Argentine Spanish) catalog declared in the manifest and checked complete for literal tr() strings (static probe). The intention itself is user content, never translated."
-        },
-        "settings": {
-          "status": "pass",
-          "note": "Typed display preferences maxLength (integer 20-500, default 140 = 1.x limit) and showCounter (boolean, default true) declared in the manifest and read via PluginKit Settings; the intention text deliberately has no key and the QML contains no Settings write (static probe; absence of setValue pinned by tests/test_notes_focus_logic.py)."
-        },
-        "themeTokens": {
-          "status": "pass",
-          "note": "Visible colours come from PluginKit Ui primitives/Theme tokens; the 1.x hard-coded editor colours are gone (static probe)."
-        },
-        "screenshots": {
-          "status": "pass",
-          "note": "docs/screenshots/hornero-quiet-notes.png: offscreen fixture render of its night surfaces (offscreen-reviewed 2026-11-17 against the Signal Bezel; fixture data, not product telemetry). Day renders and every surface are in docs/evidence/offscreen/."
-        },
-        "orientation": {
-          "status": "na",
-          "note": "No bar surface: the host fixes the size of a dashboard card or desktop widget, so rail orientation does not apply."
-        },
-        "loadingErrorStates": {
-          "status": "unverified",
-          "note": "The session-only erasure contract is an always-visible chip and caption rather than a surprise on exit; presentation has not been verified graphically in a live shell."
-        },
-        "performance": {
-          "status": "pass",
-          "note": "QA VM (shell main + PluginKit 3, 3 vCPU llvmpipe, 2026-11-17): loads without a slow-load or load-churn flag; idle CPU of the shell process measured as one set, not per plugin: bare shell 9.2%, 6 desktop widgets 9.4%, 22 bar indicators 11.8%, 12 dashboard cards 11.5% of one core (VM measurement, noise about 0.5 pp; mission evidence plugin-e2e/idle-cpu.txt). Not a published estimate."
-        }
-      },
-      "graphicalReview": {
-        "reviewer": "Claude Code agent (offscreen fixture review and QA VM captures; not a human design review)",
-        "date": "2026-11-17"
-      },
-      "replacement": "hornero-quick-notes"
-    },
-    {
-      "id": "hornero-stopwatch",
-      "classification": "deprecated-with-replacement",
-      "valueProposition": "Stopwatch 2.0 bar stopwatch: compact indicator plus popover (elapsed time, start/pause/resume, reset), wall-clock-anchored timing persisted across sleep/reload with no per-tick drift. Pure QML, no processes or network.",
-      "nativeOverlap": "Timer family overlap with hornero-countdown and hornero-metronome; distinct value is elapsed-time measurement.",
-      "dimensions": {
-        "tooltips": {
-          "status": "pass",
-          "note": "Indicator and popover controls carry PluginKit tooltipText (host-owned UiTooltip, static probe)."
-        },
-        "accessibility": {
-          "status": "pass",
-          "note": "UiButton/UiPopover accessibleName on every control; no mouse-only MouseArea remains (static probe). Live AT-SPI behaviour is not verified."
-        },
-        "translation": {
-          "status": "pass",
-          "note": "All user-visible literals go through PluginKit Translations; es (Argentine Spanish) catalog declared in the manifest and checked complete for literal tr() strings (static probe)."
-        },
-        "settings": {
-          "status": "pass",
-          "note": "Typed showTenths setting (boolean, default true = 1.x mm:ss.t display) plus timer-managed saved-state anchors, all read/written via PluginKit Settings (static probe)."
-        },
-        "themeTokens": {
-          "status": "pass",
-          "note": "Visible colours come from PluginKit Ui primitives/Theme tokens with no hard-coded chrome colours (static probe)."
-        },
-        "screenshots": {
-          "status": "pass",
-          "note": "docs/screenshots/hornero-stopwatch.png: offscreen fixture render of its night surfaces (offscreen-reviewed 2026-11-17 against the Signal Bezel; fixture data, not product telemetry). Day renders and every surface are in docs/evidence/offscreen/."
-        },
-        "orientation": {
-          "status": "unverified",
-          "note": "Bar indicator seen only on the top bar (real-shell-captured) or offscreen; not yet captured on a vertical rail."
-        },
-        "loadingErrorStates": {
-          "status": "unverified",
-          "note": "Finished/paused/running states are shown with UiChip plus a completion toast where the timer has a finish; presentation has not been verified graphically in a live shell."
-        },
-        "performance": {
-          "status": "pass",
-          "note": "QA VM (shell main + PluginKit 3, 3 vCPU llvmpipe, 2026-11-17): loads without a slow-load or load-churn flag; idle CPU of the shell process measured as one set, not per plugin: bare shell 9.2%, 6 desktop widgets 9.4%, 22 bar indicators 11.8%, 12 dashboard cards 11.5% of one core (VM measurement, noise about 0.5 pp; mission evidence plugin-e2e/idle-cpu.txt). Not a published estimate."
-        }
-      },
-      "graphicalReview": {
-        "reviewer": "Claude Code agent (offscreen fixture review and QA VM captures; not a human design review)",
-        "date": "2026-11-17"
-      },
-      "replacement": "hornero-countdown"
-    },
-    {
       "id": "hornero-studio-audio",
       "classification": "needs-upgrade",
       "valueProposition": "Studio Audio 2.0: compact bar indicator with details popover and dashboard card for the Studio audio mode (Balanced, Low Latency, Advanced) and Temporary Performance state from the typed horneroctl studio mode contract, plus read-only output state from PluginKit Audio. Read-only; mode changes stay in the CLI and Control Center.",
@@ -1637,104 +1147,6 @@
       }
     },
     {
-      "id": "hornero-sun-card",
-      "classification": "deprecated-with-replacement",
-      "valueProposition": "Sun Card 2.0: compact dashboard astronomy card plus contextual bar indicator with the 1.x sunrise/sunset/temperature/humidity rows plus day length, sun progress and next sun event derived from the facade sunrise/sunset strings and PluginKit Time, labelled derived.",
-      "nativeOverlap": "Overlaps native Weather and hornero-weather on sunrise/sunset; distinct value is the derived astronomy detail. Solar noon, twilight, moonrise/moonset, the location name and multi-location are not exposed by the facade and are labelled unavailable; after sunset the next event reads unavailable because the facade reports today only.",
-      "dimensions": {
-        "tooltips": {
-          "status": "pass",
-          "note": "The bar indicator carries PluginKit tooltipText (host-owned UiTooltip, static probe); it is the only interactive control."
-        },
-        "accessibility": {
-          "status": "pass",
-          "note": "UiButton/UiPopover accessibleName on the bar control, UiProgress accessibleName and Accessible.name on the card; no mouse-only MouseArea (static probe). Live AT-SPI behaviour is not verified."
-        },
-        "translation": {
-          "status": "pass",
-          "note": "All user-visible literals go through PluginKit Translations; es (Argentine Spanish) catalog declared in the manifest and checked complete for literal tr() strings (static probe). Facade-supplied temp/description/error strings stay in the shell's language."
-        },
-        "settings": {
-          "status": "pass",
-          "note": "Typed showTemperature/showHumidity/showAstronomy (true) and dataDensity (standard) settings declared in the manifest and read via PluginKit Settings; the plugin stored no settings before 2.0 and 1.x rows stay visible by default (static probe)."
-        },
-        "themeTokens": {
-          "status": "pass",
-          "note": "Visible colours come from PluginKit Ui primitives/Theme tokens with no hard-coded chrome colours (static probe)."
-        },
-        "screenshots": {
-          "status": "pass",
-          "note": "docs/screenshots/hornero-sun-card.png: offscreen fixture render of its night surfaces (offscreen-reviewed 2026-11-17 against the Signal Bezel; fixture data, not product telemetry). Day renders and every surface are in docs/evidence/offscreen/. Real-shell captured (QA VM) on: classic-top, hornero-left, see docs/evidence/qa-vm/."
-        },
-        "orientation": {
-          "status": "pass",
-          "note": "Real-shell captured in the QA VM on classic-top, hornero-left: glyph or stacked short text fits the 36 px rail, popover anchors on each edge (real-shell-captured 2026-11-17)."
-        },
-        "loadingErrorStates": {
-          "status": "pass",
-          "note": "QA VM: with no matching device/service the surface renders its empty/unavailable state instead of failing (observed in the dashboard Extensions tab and bar, 2026-11-17)."
-        },
-        "performance": {
-          "status": "pass",
-          "note": "QA VM (shell main + PluginKit 3, 3 vCPU llvmpipe, 2026-11-17): loads without a slow-load or load-churn flag; idle CPU of the shell process measured as one set, not per plugin: bare shell 9.2%, 6 desktop widgets 9.4%, 22 bar indicators 11.8%, 12 dashboard cards 11.5% of one core (VM measurement, noise about 0.5 pp; mission evidence plugin-e2e/idle-cpu.txt). Not a published estimate."
-        }
-      },
-      "graphicalReview": {
-        "reviewer": "Claude Code agent (offscreen fixture review and QA VM captures; not a human design review)",
-        "date": "2026-11-17"
-      },
-      "replacement": "hornero-weather"
-    },
-    {
-      "id": "hornero-system-health",
-      "classification": "deprecated-with-replacement",
-      "valueProposition": "System Health 2.0: dashboard health summary over the shared PluginKit System, Power and Network facades: the 1.x CPU/memory/storage/battery/network rows plus per-row health states and an overall verdict derived only from reported values and typed thresholds, with one-line troubleshooting hints. No SMART, battery-health or per-process data is exposed by PluginKit, so none is shown.",
-      "nativeOverlap": "Reads the same facades as the native Performance view and hornero-system-monitor/-disk-usage/-network-monitor/-battery; distinct value is the combined health judgement (states, verdict, hints). History belongs to System Monitor, per-disk detail to Disk Usage.",
-      "dimensions": {
-        "tooltips": {
-          "status": "na",
-          "note": "No interactive controls in the entrypoint, so tooltips do not apply (static probe)."
-        },
-        "accessibility": {
-          "status": "na",
-          "note": "No interactive controls in the entrypoint; the card carries Accessible.name and rows are static PluginKit text/metrics (static probe classifies non-interactive surfaces as na)."
-        },
-        "translation": {
-          "status": "pass",
-          "note": "All user-visible literals go through PluginKit Translations; es (Argentine Spanish) catalog declared in the manifest and checked complete for literal tr() strings (static probe). Facade-supplied labels (disk names, battery state text) stay in the shell's language."
-        },
-        "settings": {
-          "status": "pass",
-          "note": "Typed warnPercent (90), batteryWarnPercent (20), showNetwork/showHints (true) settings declared in the manifest and read via PluginKit Settings; the plugin stored no settings before 2.0 and every 1.x row stays visible by default (static probe)."
-        },
-        "themeTokens": {
-          "status": "pass",
-          "note": "Visible colours come from PluginKit Ui primitives/Theme tokens with no hard-coded chrome colours (static probe)."
-        },
-        "screenshots": {
-          "status": "pass",
-          "note": "docs/screenshots/hornero-system-health.png: offscreen fixture render of its night surfaces (offscreen-reviewed 2026-11-17 against the Signal Bezel; fixture data, not product telemetry). Day renders and every surface are in docs/evidence/offscreen/."
-        },
-        "orientation": {
-          "status": "na",
-          "note": "No bar surface: the host fixes the size of a dashboard card or desktop widget, so rail orientation does not apply."
-        },
-        "loadingErrorStates": {
-          "status": "unverified",
-          "note": "Honest per-row Unavailable states, a Partial data verdict and a UiState empty placeholder exist in QML; presentation has not been verified graphically in a live shell."
-        },
-        "performance": {
-          "status": "pass",
-          "note": "QA VM (shell main + PluginKit 3, 3 vCPU llvmpipe, 2026-11-17): loads without a slow-load or load-churn flag; idle CPU of the shell process measured as one set, not per plugin: bare shell 9.2%, 6 desktop widgets 9.4%, 22 bar indicators 11.8%, 12 dashboard cards 11.5% of one core (VM measurement, noise about 0.5 pp; mission evidence plugin-e2e/idle-cpu.txt). Not a published estimate."
-        }
-      },
-      "graphicalReview": {
-        "reviewer": "Claude Code agent (offscreen fixture review and QA VM captures; not a human design review)",
-        "date": "2026-11-17"
-      },
-      "replacement": "hornero-system-insight"
-    },
-    {
       "id": "hornero-system-insight",
       "classification": "needs-upgrade",
       "valueProposition": "System Insight 1.0: a desktop instrument over the shared system provider: a CPU oscilloscope from the shared Telemetry history, segmented meters for CPU/memory/GPU/storage, per-core load strips and temperature readouts, real telemetry only.",
@@ -1784,104 +1196,6 @@
       }
     },
     {
-      "id": "hornero-system-monitor",
-      "classification": "deprecated-with-replacement",
-      "valueProposition": "System Monitor 3.0: Signal dashboard module over the shared system provider: a CPU oscilloscope from the shared Telemetry history, segmented meter rows for CPU/memory/GPU/storage that cross to signal at a typed threshold, and CPU/memory peak and CPU average readouts.",
-      "nativeOverlap": "Overlaps the shell native Performance view and hornero-system-health on instantaneous percentages; distinct value is the shared-history oscilloscope with peak/average readouts and the threshold crossing, which neither keeps for extensions. Per-process/per-core data is not exposed by PluginKit and is not shown.",
-      "dimensions": {
-        "tooltips": {
-          "status": "na",
-          "note": "No interactive controls in the card, so tooltips do not apply (static probe)."
-        },
-        "accessibility": {
-          "status": "na",
-          "note": "No interactive controls; the card carries Accessible.name and each UiMeterRow an accessible name (static probe classifies non-interactive surfaces as na)."
-        },
-        "translation": {
-          "status": "pass",
-          "note": "All user-visible literals go through PluginKit Translations; es (Argentine Spanish) catalog declared in the manifest and checked complete for literal tr() strings (static probe). Facade-supplied labels (disk names, battery state text) stay in the shell's language."
-        },
-        "settings": {
-          "status": "pass",
-          "note": "Typed warnPercent (90), showTemperatures and showHistory (true) settings declared in the manifest and read via PluginKit Settings; 3.0 dropped sampleSeconds (static probe)."
-        },
-        "themeTokens": {
-          "status": "pass",
-          "note": "Visible colours come from PluginKit Ui primitives/Theme tokens with no hard-coded chrome colours (static probe)."
-        },
-        "screenshots": {
-          "status": "pass",
-          "note": "docs/screenshots/hornero-system-monitor.png: offscreen fixture render of its night surfaces (offscreen-reviewed 2026-11-17 against the Signal Bezel; fixture data, not product telemetry). Day renders and every surface are in docs/evidence/offscreen/."
-        },
-        "orientation": {
-          "status": "na",
-          "note": "No bar surface: the host fixes the size of a dashboard card or desktop widget, so rail orientation does not apply."
-        },
-        "loadingErrorStates": {
-          "status": "unverified",
-          "note": "UiState loading placeholder covers the scope's collecting-samples state and unavailable facade values read as Unavailable; presentation has not been verified graphically in a live shell."
-        },
-        "performance": {
-          "status": "pass",
-          "note": "QA VM (shell main + PluginKit 3, 3 vCPU llvmpipe, 2026-11-17): loads without a slow-load or load-churn flag; idle CPU of the shell process measured as one set, not per plugin: bare shell 9.2%, 6 desktop widgets 9.4%, 22 bar indicators 11.8%, 12 dashboard cards 11.5% of one core (VM measurement, noise about 0.5 pp; mission evidence plugin-e2e/idle-cpu.txt). Not a published estimate."
-        }
-      },
-      "graphicalReview": {
-        "reviewer": "Claude Code agent (offscreen fixture review and QA VM captures; not a human design review)",
-        "date": "2026-11-17"
-      },
-      "replacement": "hornero-system-insight"
-    },
-    {
-      "id": "hornero-text-tools",
-      "classification": "deprecated-with-replacement",
-      "valueProposition": "Text Tools 2.0: bar quick transform (configured default mode) plus compact Utilities dashboard panel with all 1.x transforms and counts; declared launcher entrypoint carries the same tested logic for shell#250.",
-      "nativeOverlap": "Developer-tool overlap with hornero-json-tools; distinct value is case/reverse transforms with counts.",
-      "dimensions": {
-        "tooltips": {
-          "status": "pass",
-          "note": "Bar indicator, popover run button and dashboard action buttons carry PluginKit tooltipText; QtQuick.Controls fields (no PluginKit text-input primitive exists) carry ToolTip.text (static probe)."
-        },
-        "accessibility": {
-          "status": "pass",
-          "note": "UiButton/UiPopover accessibleName, Accessible.name on fields and the dashboard card; actions are real buttons, no mouse-only MouseArea (static probe). Live AT-SPI behaviour is not verified."
-        },
-        "translation": {
-          "status": "pass",
-          "note": "Chrome literals go through PluginKit Translations; es (Argentine Spanish) catalog declared and checked complete for literal tr() strings (static probe). Computed result strings are values/units/parser output from the logic block."
-        },
-        "settings": {
-          "status": "pass",
-          "note": "Typed defaultMode (enum, default uppercase, the 1.x preselected transform) and showCounts (boolean, default true) settings declared and read via PluginKit Settings (static probe)."
-        },
-        "themeTokens": {
-          "status": "pass",
-          "note": "Visible chrome colours come from PluginKit Ui primitives/Theme tokens; the color-converter preview fill is a computed user-color binding, not chrome (static probe)."
-        },
-        "screenshots": {
-          "status": "pass",
-          "note": "docs/screenshots/hornero-text-tools.png: offscreen fixture render of its night surfaces (offscreen-reviewed 2026-11-17 against the Signal Bezel; fixture data, not product telemetry). Day renders and every surface are in docs/evidence/offscreen/."
-        },
-        "orientation": {
-          "status": "unverified",
-          "note": "Bar indicator seen only on the top bar (real-shell-captured) or offscreen; not yet captured on a vertical rail."
-        },
-        "loadingErrorStates": {
-          "status": "unverified",
-          "note": "UiState empty/error placeholders plus the 1.x explicit error strings cover empty and invalid input on bar popover and dashboard; presentation is not verified graphically in a live shell. The launcher declaration states honestly in the README that it runs nothing today."
-        },
-        "performance": {
-          "status": "pass",
-          "note": "QA VM (shell main + PluginKit 3, 3 vCPU llvmpipe, 2026-11-17): loads without a slow-load or load-churn flag; idle CPU of the shell process measured as one set, not per plugin: bare shell 9.2%, 6 desktop widgets 9.4%, 22 bar indicators 11.8%, 12 dashboard cards 11.5% of one core (VM measurement, noise about 0.5 pp; mission evidence plugin-e2e/idle-cpu.txt). Not a published estimate."
-        }
-      },
-      "graphicalReview": {
-        "reviewer": "Claude Code agent (offscreen fixture review and QA VM captures; not a human design review)",
-        "date": "2026-11-17"
-      },
-      "replacement": "hornero-toolbox"
-    },
-    {
       "id": "hornero-toolbox",
       "classification": "needs-upgrade",
       "valueProposition": "Toolbox 1.0: calculator, units (with data sizes), base, colour with WCAG contrast, date maths, JSON and text tools in one tabbed Signal card; replaces seven single-purpose extensions.",
@@ -1925,55 +1239,6 @@
         }
       },
       "issue": "HorneroOS/plugins#80"
-    },
-    {
-      "id": "hornero-unit-converter",
-      "classification": "deprecated-with-replacement",
-      "valueProposition": "Unit Converter 2.0: one-line bar quick conversion plus compact Utilities dashboard selectors, over the preserved base-unit formulas; declared launcher entrypoint carries the same tested logic for shell#250.",
-      "nativeOverlap": "Converter family overlap with hornero-base-converter and hornero-color-converter; distinct value is physical-unit conversion.",
-      "dimensions": {
-        "tooltips": {
-          "status": "pass",
-          "note": "Bar indicator, popover run button and dashboard action buttons carry PluginKit tooltipText; QtQuick.Controls fields (no PluginKit text-input primitive exists) carry ToolTip.text (static probe)."
-        },
-        "accessibility": {
-          "status": "pass",
-          "note": "UiButton/UiPopover accessibleName, Accessible.name on fields and the dashboard card; actions are real buttons, no mouse-only MouseArea (static probe). Live AT-SPI behaviour is not verified."
-        },
-        "translation": {
-          "status": "pass",
-          "note": "Chrome literals go through PluginKit Translations; es (Argentine Spanish) catalog declared and checked complete for literal tr() strings (static probe). Computed result strings are values/units/parser output from the logic block."
-        },
-        "settings": {
-          "status": "pass",
-          "note": "Typed defaultCategory (enum, default length, the 1.x first category) and precision (integer 0-10, default 6, the 1.x rounding) settings declared and read via PluginKit Settings (static probe)."
-        },
-        "themeTokens": {
-          "status": "pass",
-          "note": "Visible chrome colours come from PluginKit Ui primitives/Theme tokens; the color-converter preview fill is a computed user-color binding, not chrome (static probe)."
-        },
-        "screenshots": {
-          "status": "pass",
-          "note": "docs/screenshots/hornero-unit-converter.png: offscreen fixture render of its night surfaces (offscreen-reviewed 2026-11-17 against the Signal Bezel; fixture data, not product telemetry). Day renders and every surface are in docs/evidence/offscreen/."
-        },
-        "orientation": {
-          "status": "unverified",
-          "note": "Bar indicator seen only on the top bar (real-shell-captured) or offscreen; not yet captured on a vertical rail."
-        },
-        "loadingErrorStates": {
-          "status": "unverified",
-          "note": "UiState empty/error placeholders plus the 1.x explicit error strings cover empty and invalid input on bar popover and dashboard; presentation is not verified graphically in a live shell. The launcher declaration states honestly in the README that it runs nothing today."
-        },
-        "performance": {
-          "status": "pass",
-          "note": "QA VM (shell main + PluginKit 3, 3 vCPU llvmpipe, 2026-11-17): loads without a slow-load or load-churn flag; idle CPU of the shell process measured as one set, not per plugin: bare shell 9.2%, 6 desktop widgets 9.4%, 22 bar indicators 11.8%, 12 dashboard cards 11.5% of one core (VM measurement, noise about 0.5 pp; mission evidence plugin-e2e/idle-cpu.txt). Not a published estimate."
-        }
-      },
-      "graphicalReview": {
-        "reviewer": "Claude Code agent (offscreen fixture review and QA VM captures; not a human design review)",
-        "date": "2026-11-17"
-      },
-      "replacement": "hornero-toolbox"
     },
     {
       "id": "hornero-uptime",

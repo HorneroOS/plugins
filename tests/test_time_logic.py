@@ -64,9 +64,7 @@ def run_node(block: str, driver: str, cases) -> list:
 class TzBlockStructure(unittest.TestCase):
     def test_tz_blocks_present_and_identical(self):
         world = extract_block("hornero-world-clock", "TZ-LOGIC")
-        dual = extract_block("hornero-dual-clock", "TZ-LOGIC")
         self.assertIn("function effectiveOffsetMin", world)
-        self.assertEqual(world, dual, "TZ-LOGIC copies must stay verbatim")
 
     def test_zone_options_match_table_and_oracle(self):
         # Every enum option offered in a manifest must be a zone the
@@ -74,7 +72,6 @@ class TzBlockStructure(unittest.TestCase):
         block = extract_block("hornero-world-clock", "TZ-LOGIC")
         for plugin, keys in (
             ("hornero-world-clock", ("city1", "city2", "city3")),
-            ("hornero-dual-clock", ("secondZone",)),
         ):
             manifest = json.loads((ROOT / "plugins" / plugin / "manifest.json").read_text())
             settings = manifest["capabilities"]["settings"]

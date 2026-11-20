@@ -63,29 +63,13 @@ class PersistenceSplit(unittest.TestCase):
         self.assertIn('value("note"', code)
         self.assertIn('setValue("note"', code)
 
-    def test_quiet_notes_never_writes_settings(self):
-        code = (ROOT / "plugins" / "hornero-quiet-notes" / "Main.qml").read_text()
-        self.assertNotIn("setValue", code)
-        self.assertNotIn("resetValue", code)
-        comments_stripped = re.sub(r"(?<!:)//.*", "", code)
-        self.assertNotIn("setValue", comments_stripped)
-
     def test_defaults_reproduce_1x(self):
         quick = manifest("hornero-quick-notes")["capabilities"]["settings"]
         self.assertEqual(quick["autoSaveDelayMs"]["default"], 600)
         self.assertIs(quick["showCounts"]["default"], True)
-        quiet = manifest("hornero-quiet-notes")["capabilities"]["settings"]
-        self.assertEqual(quiet["maxLength"]["default"], 140)
-        self.assertIs(quiet["showCounter"]["default"], True)
-        focus = manifest("hornero-focus-card")["capabilities"]["settings"]
-        self.assertEqual(focus["rotateSeconds"]["default"], 30)
-        self.assertIs(focus["showDate"]["default"], True)
-        self.assertEqual(focus["customLine"]["default"], "")
 
     def test_logic_blocks_present(self):
         self.assertIn("function clampedNote", extract_block("hornero-quick-notes", "NOTE-LOGIC"))
-        self.assertIn("function normalizeIntention", extract_block("hornero-quiet-notes", "INTENTION-LOGIC"))
-        self.assertIn("function nextIndex", extract_block("hornero-focus-card", "FOCUS-LOGIC"))
 
 
 @unittest.skipUnless(NODE, "node not available; JS oracle comparison skipped")
@@ -108,57 +92,6 @@ process.stdout.write(JSON.stringify(cases.map(c => [
                 len(text.split()),
             ])
         got = run_node(extract_block("hornero-quick-notes", "NOTE-LOGIC"), self.DRIVER, cases)
-        self.assertEqual(expected, got)
-
-
-@unittest.skipUnless(NODE, "node not available; JS oracle comparison skipped")
-class IntentionLogicOracle(unittest.TestCase):
-    DRIVER = """
-const fs = require("fs");
-const cases = JSON.parse(fs.readFileSync(process.argv[2], "utf8"));
-process.stdout.write(JSON.stringify(cases.map(c => [
-    normalizeIntention(c[0], c[1]), remainingChars(c[0], c[1])
-])));
-"""
-
-    def test_normalize_and_remaining(self):
-        cases = [
-            ["", 140], ["  ship   it \n today ", 140], ["a" * 200, 140],
-            ["one", 20], ["x" * 30, 20],
-        ]
-        expected = []
-        for text, limit in cases:
-            one_line = " ".join(text.split())
-            expected.append([one_line[:limit], max(0, limit - len(text))])
-        got = run_node(extract_block("hornero-quiet-notes", "INTENTION-LOGIC"), self.DRIVER, cases)
-        self.assertEqual(expected, got)
-
-
-@unittest.skipUnless(NODE, "node not available; JS oracle comparison skipped")
-class FocusLogicOracle(unittest.TestCase):
-    DRIVER = """
-const fs = require("fs");
-const cases = JSON.parse(fs.readFileSync(process.argv[2], "utf8"));
-process.stdout.write(JSON.stringify(cases.map(c => [
-    nextIndex(c[0], c[1]), previousIndex(c[0], c[1]),
-    effectiveLineCount(c[2], c[1]), wrappedIndex(c[0], c[1])
-])));
-"""
-
-    def test_wrap_and_counts(self):
-        cases = [
-            [0, 5, ""], [4, 5, "mine"], [0, 1, "  "],
-            [7, 5, "x"], [-1, 5, ""], [0, 0, ""],
-        ]
-        expected = []
-        for index, count, custom in cases:
-            expected.append([
-                (index + 1) % count if count > 0 else 0,
-                (index - 1) % count if count > 0 else 0,
-                count + (1 if custom.strip() else 0),
-                index % count if count > 0 else 0,
-            ])
-        got = run_node(extract_block("hornero-focus-card", "FOCUS-LOGIC"), self.DRIVER, cases)
         self.assertEqual(expected, got)
 
 

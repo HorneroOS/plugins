@@ -224,26 +224,6 @@ capabilities:
     inspiration_notes: "First-party HorneroOS plugin written for this catalogue; no upstream code is copied. Upstream ideas, where any, are credited in the researched entries above."
     hornero_equivalent: "plugins/hornero-ai-usage"
     status: implemented
-  - id: hornero-system-monitor
-    name: Hornero System Monitor
-    category: dashboard
-    origin: {project: HorneroOS/plugins, url: "https://github.com/HorneroOS/plugins", license: MIT}
-    classification: implemented
-    license_status: verified
-    license_evidence: plugins/hornero-system-monitor/LICENSE
-    inspiration_notes: "First-party HorneroOS plugin written for this catalogue; no upstream code is copied. Upstream ideas, where any, are credited in the researched entries above."
-    hornero_equivalent: "plugins/hornero-system-monitor"
-    status: implemented
-  - id: hornero-network-monitor
-    name: Hornero Network Monitor
-    category: dashboard
-    origin: {project: HorneroOS/plugins, url: "https://github.com/HorneroOS/plugins", license: MIT}
-    classification: implemented
-    license_status: verified
-    license_evidence: plugins/hornero-network-monitor/LICENSE
-    inspiration_notes: "First-party HorneroOS plugin written for this catalogue; no upstream code is copied. Upstream ideas, where any, are credited in the researched entries above."
-    hornero_equivalent: "plugins/hornero-network-monitor"
-    status: implemented
   - id: hornero-now-playing
     name: Hornero Now Playing
     category: bar
@@ -284,36 +264,6 @@ capabilities:
     inspiration_notes: "First-party HorneroOS plugin written for this catalogue; no upstream code is copied. Upstream ideas, where any, are credited in the researched entries above."
     hornero_equivalent: "plugins/hornero-pomodoro"
     status: implemented
-  - id: hornero-dual-clock
-    name: Hornero Dual Clock
-    category: utilities
-    origin: {project: HorneroOS/plugins, url: "https://github.com/HorneroOS/plugins", license: MIT}
-    classification: implemented
-    license_status: verified
-    license_evidence: plugins/hornero-dual-clock/LICENSE
-    inspiration_notes: "First-party HorneroOS plugin written for this catalogue; no upstream code is copied. Upstream ideas, where any, are credited in the researched entries above."
-    hornero_equivalent: "plugins/hornero-dual-clock"
-    status: implemented
-  - id: hornero-focus-card
-    name: Hornero Focus Card
-    category: utilities
-    origin: {project: HorneroOS/plugins, url: "https://github.com/HorneroOS/plugins", license: MIT}
-    classification: implemented
-    license_status: verified
-    license_evidence: plugins/hornero-focus-card/LICENSE
-    inspiration_notes: "First-party HorneroOS plugin written for this catalogue; no upstream code is copied. Upstream ideas, where any, are credited in the researched entries above."
-    hornero_equivalent: "plugins/hornero-focus-card"
-    status: implemented
-  - id: hornero-quiet-notes
-    name: Hornero Quiet Notes
-    category: productivity
-    origin: {project: HorneroOS/plugins, url: "https://github.com/HorneroOS/plugins", license: MIT}
-    classification: implemented
-    license_status: verified
-    license_evidence: plugins/hornero-quiet-notes/LICENSE
-    inspiration_notes: "First-party HorneroOS plugin written for this catalogue; no upstream code is copied. Upstream ideas, where any, are credited in the researched entries above."
-    hornero_equivalent: "plugins/hornero-quiet-notes"
-    status: implemented
   - id: hornero-world-clock
     name: Hornero World Clock
     category: dashboard
@@ -333,16 +283,6 @@ capabilities:
     license_evidence: plugins/hornero-disk-usage/LICENSE
     inspiration_notes: "First-party HorneroOS plugin written for this catalogue; no upstream code is copied. Upstream ideas, where any, are credited in the researched entries above."
     hornero_equivalent: "plugins/hornero-disk-usage"
-    status: implemented
-  - id: hornero-stopwatch
-    name: Hornero Stopwatch
-    category: bar
-    origin: {project: HorneroOS, url: "https://github.com/HorneroOS/plugins", license: MIT}
-    classification: hornero-original
-    license_status: verified
-    license_evidence: plugins/hornero-stopwatch/LICENSE
-    inspiration_notes: "First-party HorneroOS plugin written for this catalogue; no upstream code is copied. Upstream ideas, where any, are credited in the researched entries above."
-    hornero_equivalent: "plugins/hornero-stopwatch"
     status: implemented
   - id: hornero-countdown
     name: Hornero Countdown
@@ -373,16 +313,6 @@ capabilities:
     license_evidence: plugins/hornero-battery/LICENSE
     inspiration_notes: "First-party HorneroOS plugin written for this catalogue; no upstream code is copied. Upstream ideas, where any, are credited in the researched entries above."
     hornero_equivalent: "plugins/hornero-battery"
-    status: implemented
-  - id: hornero-unit-converter
-    name: Hornero Unit Converter
-    category: dashboard
-    origin: {project: HorneroOS, url: "https://github.com/HorneroOS/plugins", license: MIT}
-    classification: hornero-original
-    license_status: verified
-    license_evidence: plugins/hornero-unit-converter/LICENSE
-    inspiration_notes: "First-party HorneroOS plugin written for this catalogue; no upstream code is copied. Upstream ideas, where any, are credited in the researched entries above."
-    hornero_equivalent: "plugins/hornero-unit-converter"
     status: implemented
   - id: hornero-moon-phase
     name: Hornero Moon Phase
@@ -434,16 +364,6 @@ capabilities:
     inspiration_notes: "First-party HorneroOS plugin written for this catalogue; no upstream code is copied. Upstream ideas, where any, are credited in the researched entries above."
     hornero_equivalent: "plugins/hornero-microphone"
     status: implemented
-  - id: hornero-system-health
-    name: Hornero System Health
-    category: dashboard
-    origin: {project: HorneroOS, url: "https://github.com/HorneroOS/plugins", license: MIT}
-    classification: hornero-original
-    license_status: verified
-    license_evidence: plugins/hornero-system-health/LICENSE
-    inspiration_notes: "First-party HorneroOS plugin written for this catalogue; no upstream code is copied. Upstream ideas, where any, are credited in the researched entries above."
-    hornero_equivalent: "plugins/hornero-system-health"
-    status: implemented
   - id: hornero-quick-notes
     name: Hornero Quick Notes
     category: dashboard
@@ -453,16 +373,6 @@ capabilities:
     license_evidence: plugins/hornero-quick-notes/LICENSE
     inspiration_notes: "First-party HorneroOS plugin written for this catalogue; no upstream code is copied. Upstream ideas, where any, are credited in the researched entries above."
     hornero_equivalent: "plugins/hornero-quick-notes"
-    status: implemented
-  - id: hornero-calculator
-    name: Hornero Calculator
-    category: dashboard
-    origin: {project: HorneroOS, url: "https://github.com/HorneroOS/plugins", license: MIT}
-    classification: hornero-original
-    license_status: verified
-    license_evidence: plugins/hornero-calculator/LICENSE
-    inspiration_notes: "First-party HorneroOS plugin written for this catalogue; no upstream code is copied. Upstream ideas, where any, are credited in the researched entries above."
-    hornero_equivalent: "plugins/hornero-calculator"
     status: implemented
   - id: hornero-agenda
     name: Hornero Agenda
@@ -474,16 +384,6 @@ capabilities:
     inspiration_notes: "First-party HorneroOS plugin written for this catalogue; no upstream code is copied. Upstream ideas, where any, are credited in the researched entries above."
     hornero_equivalent: "plugins/hornero-agenda"
     status: implemented
-  - id: hornero-sun-card
-    name: Hornero Sun Card
-    category: dashboard
-    origin: {project: HorneroOS, url: "https://github.com/HorneroOS/plugins", license: MIT}
-    classification: hornero-original
-    license_status: verified
-    license_evidence: plugins/hornero-sun-card/LICENSE
-    inspiration_notes: "First-party HorneroOS plugin written for this catalogue; no upstream code is copied. Upstream ideas, where any, are credited in the researched entries above."
-    hornero_equivalent: "plugins/hornero-sun-card"
-    status: implemented
   - id: hornero-metronome
     name: Hornero Metronome
     category: bar
@@ -493,56 +393,6 @@ capabilities:
     license_evidence: plugins/hornero-metronome/LICENSE
     inspiration_notes: "First-party HorneroOS plugin written for this catalogue; no upstream code is copied. Upstream ideas, where any, are credited in the researched entries above."
     hornero_equivalent: "plugins/hornero-metronome"
-    status: implemented
-  - id: hornero-text-tools
-    name: Hornero Text Tools
-    category: dashboard
-    origin: {project: HorneroOS, url: "https://github.com/HorneroOS/plugins", license: MIT}
-    classification: hornero-original
-    license_status: verified
-    license_evidence: plugins/hornero-text-tools/LICENSE
-    inspiration_notes: "First-party HorneroOS plugin written for this catalogue; no upstream code is copied. Upstream ideas, where any, are credited in the researched entries above."
-    hornero_equivalent: "plugins/hornero-text-tools"
-    status: implemented
-  - id: hornero-color-converter
-    name: Hornero Color Converter
-    category: dashboard
-    origin: {project: HorneroOS, url: "https://github.com/HorneroOS/plugins", license: MIT}
-    classification: hornero-original
-    license_status: verified
-    license_evidence: plugins/hornero-color-converter/LICENSE
-    inspiration_notes: "First-party HorneroOS plugin written for this catalogue; no upstream code is copied. Upstream ideas, where any, are credited in the researched entries above."
-    hornero_equivalent: "plugins/hornero-color-converter"
-    status: implemented
-  - id: hornero-json-tools
-    name: Hornero JSON Tools
-    category: dashboard
-    origin: {project: HorneroOS, url: "https://github.com/HorneroOS/plugins", license: MIT}
-    classification: hornero-original
-    license_status: verified
-    license_evidence: plugins/hornero-json-tools/LICENSE
-    inspiration_notes: "First-party HorneroOS plugin written for this catalogue; no upstream code is copied. Upstream ideas, where any, are credited in the researched entries above."
-    hornero_equivalent: "plugins/hornero-json-tools"
-    status: implemented
-  - id: hornero-base-converter
-    name: Hornero Base Converter
-    category: dashboard
-    origin: {project: HorneroOS, url: "https://github.com/HorneroOS/plugins", license: MIT}
-    classification: hornero-original
-    license_status: verified
-    license_evidence: plugins/hornero-base-converter/LICENSE
-    inspiration_notes: "First-party HorneroOS plugin written for this catalogue; no upstream code is copied. Upstream ideas, where any, are credited in the researched entries above."
-    hornero_equivalent: "plugins/hornero-base-converter"
-    status: implemented
-  - id: hornero-date-calculator
-    name: Hornero Date Calculator
-    category: dashboard
-    origin: {project: HorneroOS, url: "https://github.com/HorneroOS/plugins", license: MIT}
-    classification: hornero-original
-    license_status: verified
-    license_evidence: plugins/hornero-date-calculator/LICENSE
-    inspiration_notes: "First-party HorneroOS plugin written for this catalogue; no upstream code is copied. Upstream ideas, where any, are credited in the researched entries above."
-    hornero_equivalent: "plugins/hornero-date-calculator"
     status: implemented
   - id: hornero-system-insight
     name: Hornero System Insight

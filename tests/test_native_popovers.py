@@ -4,7 +4,7 @@ import json
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-POPOVERS = ["hornero-studio-audio", "hornero-pomodoro", "hornero-dual-clock"]
+POPOVERS = ["hornero-studio-audio", "hornero-pomodoro"]
 
 
 def test_popovers_use_native_pattern():
