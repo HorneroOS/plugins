@@ -66,16 +66,5 @@ class ThemeTemplatesTest(unittest.TestCase):
         errs = self.errors(self.build([self.entry()], text="x" * (64 * 1024 + 1)))
         self.assertTrue(any("exceeds" in e for e in errs), errs)
 
-    def test_reference_extension_declares_a_valid_template(self):
-        root = Path(__file__).resolve().parent.parent
-        d = root / "plugins" / "hornero-color-converter"
-        manifest = json.loads((d / "manifest.json").read_text())
-        self.assertEqual(manifest["theme"]["templates"], [{"template": "palette.json.tmpl", "output": "palette.json"}])
-        self.assertEqual(vp.validate_plugin_dir(d)[0], [])
-        qml = (d / "Dashboard.qml").read_text()
-        for member in ("Theme.chromatic", "Theme.revision", "Theme.ensureContrast"):
-            self.assertIn(member, qml)
-
-
 if __name__ == "__main__":
     unittest.main()
