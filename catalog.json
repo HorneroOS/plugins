@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedFrom": "9b14a40e64ef02cabcce4082fa3304314498a8a6",
+  "generatedFrom": "aa8280f57b8944abcae95a33ac9e45505b1f9fa8",
   "plugins": [
     {
       "id": "hornero-agenda",
@@ -100,8 +100,8 @@
     {
       "id": "hornero-ai-usage",
       "name": "Hornero AI Usage",
-      "version": "3.0.1",
-      "description": "Bar indicator, provider switcher popover and dashboard card over the normalized horneroctl agent usage records. Quota is shown only when a provider record carries it; otherwise it is unknown.",
+      "version": "4.0.0",
+      "description": "Agent Deck: every discovered coding-agent subscription in one place - provider-reported quota windows with resets, plans, and local activity. Unavailable quotas are labelled unknown, never guessed.",
       "author": "HorneroOS contributors",
       "license": "MIT",
       "homepage": "https://github.com/HorneroOS/plugins",
@@ -109,27 +109,40 @@
       "category": "utilities",
       "capabilities": {
         "processCommands": [
-          "horneroctl"
+          "horneroctl",
+          "qs"
         ],
         "networkHosts": [],
         "settings": {
           "refreshSeconds": {
             "type": "integer",
-            "default": 60,
-            "minimum": 15,
+            "default": 180,
+            "minimum": 30,
             "maximum": 3600,
             "description": "Seconds between AI usage refreshes."
+          },
+          "warningPercent": {
+            "type": "integer",
+            "default": 80,
+            "minimum": 50,
+            "maximum": 99,
+            "description": "Quota used percent that counts as approaching a limit."
           }
         }
       },
       "trust": "official",
       "path": "plugins/hornero-ai-usage",
-      "sha256": "e6efe3bd4888e71abf3f486ad52b6f4cac5b35030beb66ec588273b6d5d4ac11",
+      "sha256": "5fe7f0c6e17f47e54d30158d24e211e3cd197e206eb8aa0f377231d67d8953e7",
+      "pluginKit": 5,
       "marketplace": {
         "compatibility": {
           "minShellVersion": "1.2.79"
         },
         "changelog": [
+          {
+            "version": "4.0.0",
+            "notes": "Agent Deck (PluginKit 5): a top-level Agents dashboard page, real subscription quota windows with reset countdowns (Claude Code, Codex, Muse Code, Cursor) over horneroctl schema v2, a tightest-quota bar indicator, and a richer popover. Needs a PluginKit 5 shell and a horneroctl with agent usage schema v2; older backends keep the legacy fallback."
+          },
           {
             "version": "3.0.1",
             "notes": "Catalogue description no longer leads with an internal version; it says what the extension does first."
@@ -156,14 +169,20 @@
         {
           "kind": "program",
           "value": "horneroctl",
-          "en": "Runs horneroctl agent usage and horneroctl assistant usage (read-only) to show token and cost totals.",
-          "es": "Ejecuta horneroctl agent usage y horneroctl assistant usage (solo lectura) para mostrar el total de tokens y costos."
+          "en": "Runs horneroctl agent usage (read-only) to show each coding agent's subscription quota windows, resets, plan and token activity. Quota probing happens only inside horneroctl; this extension never reads sign-in credentials.",
+          "es": "Ejecuta horneroctl agent usage (solo lectura) para mostrar las ventanas de cuota, restablecimientos, plan y actividad de tokens de cada agente. La comprobación de cuotas ocurre solo dentro de horneroctl; esta extensión nunca lee credenciales."
+        },
+        {
+          "kind": "program",
+          "value": "qs",
+          "en": "Asks the shell to open the Agents dashboard page when you choose Open Agents. Nothing else is sent.",
+          "es": "Pide al shell que abra la página Agentes del panel cuando elegís Abrir Agentes. No se envía nada más."
         },
         {
           "kind": "settings",
-          "value": "refreshSeconds",
-          "en": "Stores only its own settings (refreshSeconds).",
-          "es": "Guarda solo su propia configuración (refreshSeconds)."
+          "value": "refreshSeconds, warningPercent",
+          "en": "Stores only its own settings (refreshSeconds, warningPercent).",
+          "es": "Guarda solo su propia configuración (refreshSeconds, warningPercent)."
         }
       ]
     },

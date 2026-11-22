@@ -29,21 +29,7 @@ Item {
         id: usage
     }
 
-    function statusText(status: string): string {
-        if (status === "ok")
-            return i18n.tr("Available");
-        if (status === "error")
-            return i18n.tr("Error");
-        return i18n.tr("Unavailable");
-    }
-
-    function freshnessText(freshness: string): string {
-        if (freshness === "fresh")
-            return i18n.tr("Fresh");
-        if (freshness === "stale")
-            return i18n.tr("Stale");
-        return i18n.tr("Freshness unknown");
-    }
+    // Status/freshness wording lives on UsageData (one code path).
 
     UiCard {
         id: card
@@ -86,17 +72,23 @@ Item {
 
                         UiText {
                             role: "body"
-                            text: modelData.provider
+                            text: usage.recordName(modelData)
                         }
 
                         UiChip {
-                            text: root.statusText(String(modelData.status || ""))
-                            tone: modelData.status === "ok" ? "phosphor" : modelData.status === "alert" ? "alert" : "neutral"
+                            visible: typeof modelData.plan === "string" && modelData.plan.length > 0
+                            text: String(modelData.plan || "")
+                            tone: "signal"
+                        }
+
+                        UiChip {
+                            text: usage.statusText(String(modelData.status || ""))
+                            tone: modelData.status === "ok" ? "phosphor" : "neutral"
                         }
 
                         UiChip {
                             visible: modelData.status === "ok"
-                            text: root.freshnessText(String(modelData.freshness || ""))
+                            text: usage.freshnessText(String(modelData.freshness || ""))
                         }
                     }
 
@@ -159,33 +151,46 @@ Item {
                         text: i18n.tr("Period: %1 to %2").arg(String(modelData.periodStart || "")).arg(String(modelData.periodEnd || ""))
                     }
 
-                    Column {
-                        visible: modelData.status === "ok" && modelData.quota === "available"
-                        width: parent.width
-                        spacing: Theme.spacing.small
+                    Repeater {
+                        model: modelData.status === "ok" ? usage.windowsOf(modelData) : []
 
-                        // Shown only when the provider itself reports a limit.
-                        UiMeterRow {
+                        Column {
+                            required property var modelData
+
                             width: parent.width
-                            label: i18n.tr("QUOTA")
-                            labelWidth: 56
-                            valueWidth: 56
-                            value: Math.max(0, Math.min(1, Number(modelData.quotaUsedPercent || 0) / 100))
-                            valueText: i18n.formatNumber(Math.round(Number(modelData.quotaUsedPercent || 0))) + " %"
-                        }
+                            spacing: Theme.spacing.small
 
-                        UiText {
-                            visible: Number(modelData.quotaResetsAtUnix || 0) > 0
-                            role: "caption"
-                            text: i18n.tr("Quota resets: %1").arg(i18n.formatDateTime(new Date(Number(modelData.quotaResetsAtUnix || 0) * 1000), "yyyy-MM-dd HH:mm"))
+                            // Shown only when the provider itself reports a limit.
+                            UiMeterRow {
+                                width: parent.width
+                                label: String(modelData.label || "").toUpperCase()
+                                labelWidth: 110
+                                valueWidth: 56
+                                value: Math.max(0, Math.min(1, Number(modelData.usedPercent || 0) / 100))
+                                valueText: i18n.formatNumber(Math.round(Number(modelData.usedPercent || 0))) + " %"
+                                threshold: usage.warningPercent / 100
+                            }
+
+                            UiText {
+                                visible: Number(modelData.resetsAtUnix || 0) > 0
+                                role: "caption"
+                                text: i18n.tr("Quota resets: %1").arg(i18n.formatDateTime(new Date(Number(modelData.resetsAtUnix || 0) * 1000), "yyyy-MM-dd HH:mm"))
+                            }
                         }
                     }
 
                     UiText {
-                        visible: modelData.status === "ok" && modelData.quota !== "available"
+                        visible: modelData.status === "ok" && usage.windowsOf(modelData).length === 0
                         width: parent.width
                         role: "caption"
                         text: i18n.tr("Quota: unknown - the provider does not expose a limit.")
+                    }
+
+                    UiText {
+                        visible: typeof modelData.note === "string" && modelData.note.length > 0
+                        width: parent.width
+                        role: "caption"
+                        text: String(modelData.note || "")
                     }
 
                     UiText {
@@ -198,7 +203,7 @@ Item {
                         visible: modelData.status !== "ok"
                         width: parent.width
                         role: "caption"
-                        text: i18n.tr("Unavailable: %1").arg(Array.isArray(modelData.errors) && modelData.errors.length > 0 ? modelData.errors.join("; ") : root.statusText(String(modelData.status || "")))
+                        text: i18n.tr("Unavailable: %1").arg(Array.isArray(modelData.errors) && modelData.errors.length > 0 ? modelData.errors.join("; ") : usage.statusText(String(modelData.status || "")))
                     }
                 }
             }
@@ -209,7 +214,7 @@ Item {
                 text: i18n.tr("Refresh")
                 tooltipText: i18n.tr("Reload AI usage from horneroctl")
                 accessibleName: i18n.tr("Refresh AI usage")
-                onClicked: usage.refresh()
+                onClicked: usage.refresh(true)
             }
         }
     }

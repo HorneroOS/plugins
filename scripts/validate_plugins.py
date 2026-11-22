@@ -70,7 +70,7 @@ DESKTOP_SIZE_KEYS = ("width", "height", "minWidth", "minHeight")
 DESKTOP_KEYS = DESKTOP_SIZE_KEYS + ("resizable", "anchor", "instances")
 # PluginKit capability level this validator mirrors (shell scripts/validate_plugin.py
 # PLUGINKIT_API_LEVEL, RFC 0003). Level 4 adds settings schema v2 and instances.
-PLUGINKIT_API_LEVEL = 4
+PLUGINKIT_API_LEVEL = 5
 # Shared provider domains (RFC 0001 section 5b); mirrors the shell validator.
 PROVIDER_DOMAINS = (
     "system", "network", "spectrum", "media", "audio", "power", "weather",
@@ -91,14 +91,17 @@ GLYPH_NAMES_FILE = ROOT / "schema" / "hornero-glyphs.names"
 # Manifest v2 surfaces (shell docs/PLUGINS.md): the first four have
 # runtime hosts today; launcher/settings are validated declarations
 # only. Mirrors the shell validator's SURFACES.
-SURFACES = ("background", "bar", "dashboard", "desktop", "launcher", "settings", "commands", "quickSetting", "panel")
+SURFACES = ("background", "bar", "dashboard", "desktop", "launcher", "settings", "commands", "quickSetting", "panel", "dashboardTab")
 SURFACES_V4 = ("commands", "quickSetting", "panel")
-CONTRIBUTION_SURFACES = {"commands": "commands", "quickSettings": "quickSetting", "panels": "panel"}
-CONTRIBUTION_LIMITS = {"commands": 16, "quickSettings": 4, "panels": 4}
+SURFACES_V5 = ("dashboardTab",)
+CONTRIBUTION_SURFACES = {"commands": "commands", "quickSettings": "quickSetting", "panels": "panel",
+                         "dashboardTabs": "dashboardTab"}
+CONTRIBUTION_LIMITS = {"commands": 16, "quickSettings": 4, "panels": 4, "dashboardTabs": 2}
 CONTRIBUTION_FIELDS = {
     "commands": {"id", "title", "description", "glyph", "keywords"},
     "quickSettings": {"id", "title", "glyph", "kind"},
     "panels": {"id", "title", "glyph"},
+    "dashboardTabs": {"id", "title", "glyph"},
 }
 CONTRIBUTION_ID_RE = re.compile(r"^[a-z][a-zA-Z0-9]{0,31}$")
 LOCALE_TAG_RE = re.compile(r"^[a-z]{2,3}(_[A-Z]{2})?$")
@@ -509,8 +512,10 @@ def validate_contributes(tag: str, manifest: dict) -> list:
                 errors.append(f"{tag}: surfaces.{surface} needs contributes.{kind}")
         return errors
     contributes = manifest["contributes"]
-    if manifest.get("pluginKit", 3) != 4:
+    if manifest.get("pluginKit", 3) < 4:
         errors.append(f'{tag}: contributes needs PluginKit 4; declare "pluginKit": 4')
+    if isinstance(contributes, dict) and "dashboardTabs" in contributes and manifest.get("pluginKit", 3) < 5:
+        errors.append(f'{tag}: contributes.dashboardTabs needs PluginKit 5; declare "pluginKit": 5')
     if not isinstance(contributes, dict) or not contributes:
         return errors + [f"{tag}: contributes must be a non-empty object"]
     for kind in sorted(set(contributes) - set(CONTRIBUTION_SURFACES)):
@@ -533,6 +538,12 @@ def validate_contributes(tag: str, manifest: dict) -> list:
             seen.add(entry["id"])
             if not isinstance(entry["title"], str) or not entry["title"].strip() or len(entry["title"]) > 48:
                 errors.append(f"{where}.title must be a non-blank string of at most 48 chars")
+            if kind == "dashboardTabs":
+                if entry.get("id") in ("dash", "media", "performance", "weather", "workspaces", "extensions"):
+                    errors.append(f"{where}.id is reserved for a native Dashboard tab")
+                if isinstance(entry.get("title"), str) and entry["title"].strip().lower() in (
+                        "dashboard", "media", "performance", "weather", "workspaces", "extensions"):
+                    errors.append(f"{where}.title must not reuse a native Dashboard tab title")
             if "kind" in entry and entry["kind"] not in ("toggle", "button"):
                 errors.append(f"{where}.kind must be toggle or button")
         if CONTRIBUTION_SURFACES[kind] not in surfaces:
@@ -562,8 +573,10 @@ def validate_surfaces(tag: str, manifest: dict, safe_files: set) -> list:
         if not isinstance(surface, dict):
             errors.append(f"{where} must be an object")
             continue
-        if name in SURFACES_V4 and manifest.get("pluginKit", 3) != 4:
+        if name in SURFACES_V4 and manifest.get("pluginKit", 3) < 4:
             errors.append(f'{where} is a PluginKit 4 surface; declare "pluginKit": 4')
+        if name in SURFACES_V5 and manifest.get("pluginKit", 3) < 5:
+            errors.append(f'{where} is a PluginKit 5 surface; declare "pluginKit": 5')
         extra = set(surface) - {"entrypoint", "enabled", "size", "category", "section", *DESKTOP_KEYS}
         if extra:
             errors.append(f"{where} contains unknown fields: {', '.join(sorted(extra))}")

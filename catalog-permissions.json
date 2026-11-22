@@ -4,8 +4,12 @@
   "plugins": {
     "hornero-ai-usage": {
       "program:horneroctl": {
-        "en": "Runs horneroctl agent usage and horneroctl assistant usage (read-only) to show token and cost totals.",
-        "es": "Ejecuta horneroctl agent usage y horneroctl assistant usage (solo lectura) para mostrar el total de tokens y costos."
+        "en": "Runs horneroctl agent usage (read-only) to show each coding agent's subscription quota windows, resets, plan and token activity. Quota probing happens only inside horneroctl; this extension never reads sign-in credentials.",
+        "es": "Ejecuta horneroctl agent usage (solo lectura) para mostrar las ventanas de cuota, restablecimientos, plan y actividad de tokens de cada agente. La comprobación de cuotas ocurre solo dentro de horneroctl; esta extensión nunca lee credenciales."
+      },
+      "program:qs": {
+        "en": "Asks the shell to open the Agents dashboard page when you choose Open Agents. Nothing else is sent.",
+        "es": "Pide al shell que abra la página Agentes del panel cuando elegís Abrir Agentes. No se envía nada más."
       }
     },
     "hornero-clipboard": {
