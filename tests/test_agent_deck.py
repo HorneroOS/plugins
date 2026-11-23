@@ -42,6 +42,16 @@ class AgentDeckContractTests(unittest.TestCase):
         self.assertIn("quotaWindows", data)
         self.assertIn('record.quota === "available"', data)
 
+    def test_record_arrays_survive_qml_property_boundaries(self):
+        # JSON arrays become QVariantLists across QML properties;
+        # Array.isArray on them is False and silently dropped every
+        # quota window on the live host (4.0.1). Length checks only.
+        for name in ("Bar.qml", "Main.qml", "Agents.qml", "UsageData.qml"):
+            src = read(name)
+            self.assertNotIn("Array.isArray(record.", src, name)
+            self.assertNotIn("Array.isArray(modelData.", src, name)
+            self.assertNotIn("Array.isArray(root.current.", src, name)
+
     def test_no_cross_provider_token_summing_in_bar(self):
         bar = read("Bar.qml")
         self.assertNotIn("totalTokensAll", bar)
