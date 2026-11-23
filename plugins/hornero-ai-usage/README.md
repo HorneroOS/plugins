@@ -1,55 +1,65 @@
-# Hornero AI Usage
+# Hornero AI Usage — Agent Deck
 
-AI Usage 3.0 (manifest v3, PluginKit 3 on Hornero Signal): one package, two surfaces over the
-normalized `horneroctl agent usage --json` records (hornero#407).
+Agent Deck 4.0 (PluginKit 5): every coding-agent subscription this
+machine is already signed into, in one native Hornero Signal place —
+real quota windows with resets, plans, and token activity over the
+normalized `horneroctl agent usage --json` schema-v2 records
+(hornero#407). No provider registration: enable the extension and
+discovered agents appear on their own.
 
-- **Dashboard** (`"placement": "dashboard"`, primary): one block per
-  provider — status, freshness, total/input/output tokens, sessions,
-  API calls, per-model breakdown, measured period, balance when the
-  provider records one, and quota usage/reset only when the
-  provider's own record carries an official quota snapshot.
-- **Bar** (`surfaces.bar`): a compact self-hiding indicator (it
-  takes no bar space until at least one provider reports usage)
-  opening a popover with a provider switcher and per-provider
-  detail.
+- **Agents page** (`contributes.dashboardTabs`, `Agents.qml`): a
+  top-level Dashboard tab next to Media/Performance (contributed
+  through PluginKit 5, not hardcoded in the shell; it disappears when
+  the extension is disabled). One instrument module per subscription:
+  every reported window (5-hour, weekly, monthly, model-scoped,
+  on-demand) as its own meter with percent remaining and a reset
+  countdown, plan/billing chips, and token activity. Modules are
+  ordered tightest verified quota first.
+- **Bar** (`surfaces.bar`): a compact self-hiding indicator showing
+  the tightest verified quota percent (never an average, never a
+  summed token total), opening a quick popover with every account,
+  a provider switcher, manual refresh, and **Open Agents**.
+- **Dashboard card** (`"placement": "dashboard"`): the compact
+  per-provider blocks in Dashboard › Extensions, as before.
 
-Both surfaces share `UsageData.qml`, refresh on the typed
-`refreshSeconds` setting (integer, 15–3600, default 60 — the same
-cadence the 1.x card hardcoded), and render with PluginKit `Ui*`
-primitives, host context (`hostOrientation`/`hostCompact` via
-`UiStack`), accessible names, host-owned tooltips, Theme tokens and
-English source strings with an Argentine Spanish catalog
-(`translations/es.json`, via PluginKit `Translations`).
+All surfaces share `UsageData.qml`; `horneroctl` caches one
+collection for every surface, so their timers never duplicate
+provider traffic. Settings (Control Center › Extensions):
+`refreshSeconds` (30–3600, default 180) and `warningPercent`
+(50–99, default 80). Reset countdowns tick locally. English source
+strings with an Argentine Spanish catalog.
 
 ## Honest limits
 
-- **Normalized records only.** QML never parses a provider's raw
-  store and never reads credentials; the `horneroctl` collectors own
-  provider specifics. There is no cost field in the contract, so no
-  costs are shown.
-- **Quota is usually unknown.** It is displayed only when a
-  provider's own record carries an official quota (today: a Codex
-  rollout's latest `rate_limits`); otherwise the UI says so instead
-  of inventing a limit, a reset clock arithmetic, or a percentage.
-  The reset shown is the timestamp the provider recorded.
-- **Providers degrade independently.** A missing or failed collector
-  is labelled unavailable/error with its reason, beside the healthy
-  providers; no-data is never zero usage, and a total CLI failure
-  shows an error state instead of fabricated zeros.
-- **No trends yet.** The normalized contract reports period
-  aggregates, not a time series, so this package shows the measured
-  period rather than inventing trend data.
+- **Normalized records only.** QML never parses a provider store,
+  never reads credentials, and holds no network capability
+  (`networkHosts: []`). Quota probing lives in `horneroctl` alone:
+  first-party `muse usage --json`, Codex's recorded rollout windows,
+  and — credential scope B — Anthropic's and Cursor's authenticated
+  usage endpoints using the stored sign-in read-only in memory.
+  Tokens are never seen, printed, or stored by this extension.
+- **Unknown stays unknown.** A window is drawn only when the
+  provider itself reported it; unsupported quotas are labelled
+  unknown (never 0%), stale data is marked stale with its real fetch
+  time, and account-wide figures (Cursor) are never added to this
+  machine's activity. There is no cost field, so no costs are shown.
+- **Providers degrade independently.** A missing, signed-out, or
+  rate-limited provider is labelled with its reason beside the
+  healthy ones; a failed refresh keeps last-known-good data and
+  backs off.
+- **No fake history.** The contract reports current windows and
+  period aggregates, not a time series, so there are no trend charts.
 
 ## Compatibility
 
-- A `horneroctl` too old for `agent usage` falls back to the pre-2.0
-  `horneroctl assistant usage --json` aggregate, mapped to a single
-  `javi-hermes` record (`source: assistant-usage-legacy`), so older
-  installs keep working with their previous numbers.
-- The plugin declared no settings before 2.0, so no stored values
-  migrate; `refreshSeconds` starts at the previous hardcoded 60 s.
-- Installing this package needs a shell with PluginKit 3 (Hornero Signal): it declares
-  `schemaVersion: 3` and `capabilities.providers`, and earlier shells refuse or cannot render it.
+- Needs a PluginKit 5 shell (`pluginKit: 5`); older shells refuse the
+  package plainly instead of loading it without its Agents page.
+- A `horneroctl` with schema-v1 records still works (single legacy
+  quota window); one too old for `agent usage` falls back to the
+  pre-2.0 `assistant usage` aggregate as a single `javi-hermes`
+  record.
+- `refreshSeconds` default moved 60 → 180 s (quota endpoints
+  rate-limit readily; the backend cache makes reads cheap either way).
 
 Original HorneroOS code, MIT licensed. Plugin QML runs with your
 user privileges inside Quickshell; it is not sandboxed.

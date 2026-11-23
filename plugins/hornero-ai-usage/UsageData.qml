@@ -2,19 +2,19 @@ import QtQuick
 import Quickshell.Io
 import Hornero.PluginKit
 
-// Shared data layer for the AI Usage surfaces. Consumes ONLY the
-// normalized records from `horneroctl agent usage --json`
-// (hornero#407): one record per provider, each degrading
-// independently (status ok/unavailable/error). Unavailable data is
-// labelled through the record status, never shown as zeros, and
-// quota/balance are surfaced only when the provider's own record
-// carries them. No credentials are read here; the CLI collectors
-// own all provider-specific parsing.
+// Shared data layer for every Agent Deck surface. Consumes ONLY the
+// normalized records from `horneroctl agent usage --json` (schema v2,
+// hornero#407): one record per discovered agent, each degrading
+// independently. horneroctl is the single data service — its own
+// short result cache collapses this component's per-surface timers
+// into one backend collection, and quota probes are cached there
+// too. This component never reads credentials, never touches the
+// network, and never invents a quota: unknown stays unknown.
 //
-// Backward compatibility: a horneroctl too old to know `agent usage`
-// (unknown command, no records) falls back to the pre-2.0
-// `horneroctl assistant usage --json` aggregate, mapped to a single
-// javi-hermes record marked with source "assistant-usage-legacy".
+// Derived values never mix scopes: token totals sum machine-local
+// records only (account-global figures are never added in), and the
+// "tightest quota" is the single most constrained *verified* window,
+// never an average across providers.
 Item {
     id: root
 
@@ -22,13 +22,26 @@ Item {
     property bool hasData: false
     property bool loading: false
     property bool failed: false
+    property bool stale: false
     property string sourceKind: ""
     property int okCount: 0
-    property int totalTokensAll: 0
+    property int subCount: 0
+    property int totalTokensLocal: 0
+    property double worstPercent: -1
+    property string worstLabel: ""
+    property double nextResetUnix: 0
+    property double lastUpdatedMs: 0
     readonly property bool anyOk: root.okCount > 0
 
     property string _agentBuffer: ""
     property string _legacyBuffer: ""
+    property int _backoff: 1
+
+    Translations {
+        id: i18n
+
+        pluginId: "hornero-ai-usage"
+    }
 
     Settings {
         id: pluginSettings
@@ -36,48 +49,162 @@ Item {
         pluginId: "hornero-ai-usage"
     }
 
-    // Typed setting (manifest: integer 15..3600, default 60 — the
-    // same cadence the 1.x card hardcoded, so existing installs keep
-    // their behaviour). Stored out-of-range values read as the
-    // declared default through the PluginKit migration path.
     readonly property int refreshSeconds: {
-        const value = Number(pluginSettings.value("refreshSeconds", 60));
-        return isFinite(value) && value >= 15 ? Math.min(3600, Math.floor(value)) : 60;
+        const value = Number(pluginSettings.value("refreshSeconds", 180));
+        return isFinite(value) && value >= 30 ? Math.min(3600, Math.floor(value)) : 180;
     }
 
-    function refresh(): void {
-        if (!agentProc.running && !legacyProc.running) {
-            root._agentBuffer = "";
-            root.loading = true;
-            agentProc.running = true;
-        }
+    readonly property int warningPercent: {
+        const value = Number(pluginSettings.value("warningPercent", 80));
+        return isFinite(value) && value >= 50 ? Math.min(99, Math.floor(value)) : 80;
+    }
+
+    // Tightest verified quota first, then healthy without quota,
+    // then unavailable/error — the order the pages lead with.
+    readonly property var sortedRecords: {
+        const rank = r => {
+            if (r && r.status === "ok" && root.maxPercent(r) >= 0)
+                return 0;
+            if (r && r.status === "ok")
+                return 1;
+            if (r && r.status === "unavailable")
+                return 2;
+            return 3;
+        };
+        return root.records.slice().sort((a, b) => {
+            const d = rank(a) - rank(b);
+            return d !== 0 ? d : root.maxPercent(b) - root.maxPercent(a);
+        });
+    }
+
+    function windowsOf(record: var): var {
+        if (record && Array.isArray(record.quotaWindows))
+            return record.quotaWindows;
+        // Legacy (schema v1) single-window mirror.
+        if (record && record.quota === "available")
+            return [{
+                "id": "quota",
+                "label": "Quota",
+                "usedPercent": Number(record.quotaUsedPercent || 0),
+                "resetsAtUnix": Number(record.quotaResetsAtUnix || 0)
+            }];
+        return [];
+    }
+
+    function maxPercent(record: var): double {
+        let best = -1;
+        for (const w of root.windowsOf(record))
+            best = Math.max(best, Number(w.usedPercent ?? -1));
+        return best;
+    }
+
+    function recordName(record: var): string {
+        return String((record && (record.name || record.provider)) || "");
+    }
+
+    function statusText(status: string): string {
+        if (status === "ok")
+            return i18n.tr("Available");
+        if (status === "error")
+            return i18n.tr("Error");
+        return i18n.tr("Unavailable");
+    }
+
+    function freshnessText(freshness: string): string {
+        if (freshness === "fresh")
+            return i18n.tr("Fresh");
+        if (freshness === "stale")
+            return i18n.tr("Stale");
+        return i18n.tr("Freshness unknown");
+    }
+
+    // "in 4h 12m" from a provider reset timestamp; "" when the
+    // provider reported no reset. Pure local arithmetic.
+    function resetInText(resetsAtUnix: double, nowMs: double): string {
+        if (!(resetsAtUnix > 0))
+            return "";
+        const secs = Math.round(resetsAtUnix - nowMs / 1000);
+        if (secs <= 0)
+            return i18n.tr("reset due");
+        if (secs < 3600)
+            return i18n.tr("in %1m").arg(Math.max(1, Math.round(secs / 60)));
+        if (secs < 86400)
+            return i18n.tr("in %1h %2m").arg(Math.floor(secs / 3600)).arg(Math.round(secs % 3600 / 60));
+        return i18n.tr("in %1d %2h").arg(Math.floor(secs / 86400)).arg(Math.round(secs % 86400 / 3600));
+    }
+
+    function refresh(force: bool): void {
+        if (agentProc.running || legacyProc.running)
+            return;
+        root._agentBuffer = "";
+        root.loading = true;
+        agentProc.command = force ? ["horneroctl", "agent", "usage", "--force-refresh", "--json"] : ["horneroctl", "agent", "usage", "--json"];
+        agentProc.running = true;
     }
 
     function _apply(recordsIn: var, kind: string): void {
         let ok = 0;
+        let subs = 0;
         let total = 0;
+        let worst = -1;
+        let worstText = "";
+        let nextReset = 0;
+        const nowSec = Date.now() / 1000;
         for (const record of recordsIn) {
-            if (record && record.status === "ok") {
-                ok += 1;
+            if (!record || record.status !== "ok")
+                continue;
+            ok += 1;
+            if (record.billing === "subscription")
+                subs += 1;
+            if (record.scope !== "account" && record.totalTokens !== undefined)
                 total += Number(record.totalTokens || 0);
+            for (const w of root.windowsOf(record)) {
+                const pct = Number(w.usedPercent ?? -1);
+                if (pct > worst) {
+                    worst = pct;
+                    worstText = root.recordName(record) + " · " + String(w.label || "");
+                }
+                const reset = Number(w.resetsAtUnix || 0);
+                if (reset > nowSec && (nextReset === 0 || reset < nextReset))
+                    nextReset = reset;
             }
         }
         root.records = recordsIn;
         root.okCount = ok;
-        root.totalTokensAll = total;
+        root.subCount = subs;
+        root.totalTokensLocal = total;
+        root.worstPercent = worst;
+        root.worstLabel = worstText;
+        root.nextResetUnix = nextReset;
         root.sourceKind = kind;
         root.hasData = recordsIn.length > 0;
         root.failed = false;
+        root.stale = false;
         root.loading = false;
+        root.lastUpdatedMs = Date.now();
+        root._backoff = 1;
+    }
+
+    function _fail(): void {
+        root.loading = false;
+        root._backoff = Math.min(4, root._backoff * 2);
+        if (root.hasData) {
+            // Keep last-known-good records; say they are stale.
+            root.stale = true;
+        } else {
+            root.records = [];
+            root.okCount = 0;
+            root.subCount = 0;
+            root.totalTokensLocal = 0;
+            root.worstPercent = -1;
+            root.failed = true;
+        }
     }
 
     function _parseNormalized(text: string): var {
         const parsed = JSON.parse(text);
         const data = (parsed && parsed.data) || {};
         let recordsIn = data.records;
-        // The horneroctl envelope carries data as string values, so
-        // records arrives as a JSON-encoded array string; accept a
-        // real array too in case the envelope ever nests it.
         if (typeof recordsIn === "string")
             recordsIn = JSON.parse(recordsIn);
         if (!Array.isArray(recordsIn))
@@ -97,6 +224,7 @@ Item {
         const output = Number(data.outputTokens || 0);
         const record = {
             "provider": "javi-hermes",
+            "name": "Javi (Hermes)",
             "account": "unknown",
             "source": "assistant-usage-legacy",
             "status": "ok",
@@ -117,13 +245,13 @@ Item {
         return [record];
     }
 
-    Component.onCompleted: refresh()
+    Component.onCompleted: refresh(false)
 
     Timer {
-        interval: root.refreshSeconds * 1000
+        interval: root.refreshSeconds * 1000 * root._backoff
         repeat: true
         running: true
-        onTriggered: root.refresh()
+        onTriggered: root.refresh(false)
     }
 
     Process {
@@ -139,9 +267,6 @@ Item {
         onExited: exitCode => {
             let recordsIn = null;
             try {
-                // Exit code 1 only means "no collector produced data";
-                // the per-provider records are still in the JSON and
-                // stay truthful, so parse regardless of exit status.
                 recordsIn = root._parseNormalized(root._agentBuffer.trim());
             } catch (e) {
                 recordsIn = null;
@@ -172,16 +297,10 @@ Item {
             } catch (e) {
                 recordsIn = null;
             }
-            if (recordsIn) {
+            if (recordsIn)
                 root._apply(recordsIn, "legacy");
-            } else {
-                root.records = [];
-                root.okCount = 0;
-                root.totalTokensAll = 0;
-                root.hasData = false;
-                root.failed = true;
-                root.loading = false;
-            }
+            else
+                root._fail();
         }
     }
 }
