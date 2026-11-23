@@ -3,7 +3,7 @@
   "pluginKit": 5,
   "id": "hornero-ai-usage",
   "name": "Hornero AI Usage",
-  "version": "4.1.0",
+  "version": "4.2.0",
   "description": "Agent Deck: every discovered coding-agent subscription in one place - provider-reported quota windows with resets, plans, and local activity. Unavailable quotas are labelled unknown, never guessed.",
   "author": "HorneroOS contributors",
   "license": "MIT",
@@ -63,6 +63,18 @@
         "minimum": 50,
         "maximum": 99,
         "description": "Quota used percent that counts as approaching a limit."
+      },
+      "statsWindow": {
+        "type": "enum",
+        "default": "30",
+        "options": [
+          "7",
+          "30",
+          "60",
+          "90",
+          "all"
+        ],
+        "description": "Activity window for Agent Deck daily statistics."
       }
     }
   },
@@ -71,6 +83,10 @@
       "minShellVersion": "1.2.79"
     },
     "changelog": [
+      {
+        "version": "4.2.0",
+        "notes": "Holistic daily statistics with an activity-window selector (7/30/60/90/all, segmented on wide screens, dropdown when compact): an all-agents daily chart and windowed per-provider totals over the backend's 90-day real buckets, filtered locally from cached records."
+      },
       {
         "version": "4.1.0",
         "notes": "Agents page scrolls inside the room the dashboard offers, uses the full width with two-column instrument modules, and charts real per-day token activity (horneroctl recentDays) plus an in/out/cache partition. No invented series."
