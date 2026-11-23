@@ -54,6 +54,20 @@ Item {
         return isFinite(value) && value >= 30 ? Math.min(3600, Math.floor(value)) : 180;
     }
 
+    // Activity window for daily statistics, persisted as a setting
+    // ("7" | "30" | "60" | "90" | "all"). Filtering is client-side
+    // over the already-collected records — changing it never costs
+    // a provider call.
+    property string statsWindow: "30"
+    readonly property int statsWindowDays: statsWindow === "all" ? 0 : Number(statsWindow)
+
+    function setStatsWindow(w: string): void {
+        if (!["7", "30", "60", "90", "all"].includes(w))
+            return;
+        root.statsWindow = w;
+        pluginSettings.setValue("statsWindow", w);
+    }
+
     readonly property int warningPercent: {
         const value = Number(pluginSettings.value("warningPercent", 80));
         return isFinite(value) && value >= 50 ? Math.min(99, Math.floor(value)) : 80;
@@ -94,19 +108,73 @@ Item {
         return [];
     }
 
-    // Real per-day token totals from the backend's recentDays
-    // buckets ('YYYY-MM-DD:tokens,...'), oldest first. Empty when
-    // the provider's source carries no timestamps — no chart then.
-    function dailyValues(record: var): var {
+    // Real per-day token buckets from the backend's recentDays
+    // ('YYYY-MM-DD:tokens,...'), oldest first. Empty when the
+    // provider's source carries no timestamps — no chart then.
+    function dailyEntries(record: var): var {
         if (!record || typeof record.recentDays !== "string" || record.recentDays.length === 0)
             return [];
         const out = [];
         for (const part of record.recentDays.split(",")) {
-            const n = Number(part.split(":")[1]);
-            if (isFinite(n))
-                out.push(n);
+            const bits = part.split(":");
+            const n = Number(bits[1]);
+            const ms = Date.parse(bits[0] + "T00:00:00Z");
+            if (isFinite(n) && isFinite(ms))
+                out.push({ "date": bits[0], "tokens": n, "ms": ms });
         }
         return out;
+    }
+
+    function _inWindow(entries: var, days: int): var {
+        if (days <= 0)
+            return entries;
+        const startToday = Math.floor(Date.now() / 86400000) * 86400000;
+        const cutoff = startToday - (days - 1) * 86400000;
+        return entries.filter(e => e.ms >= cutoff);
+    }
+
+    function dailyValues(record: var, days: int): var {
+        return root._inWindow(root.dailyEntries(record), days || 0).map(e => e.tokens);
+    }
+
+    function windowTokens(record: var, days: int): double {
+        let total = 0;
+        for (const e of root._inWindow(root.dailyEntries(record), days || 0))
+            total += e.tokens;
+        return total;
+    }
+
+    // Holistic daily activity across local harnesses: same-date
+    // buckets summed over machine-local records only. Account-scope
+    // figures never join (they are not this machine's activity and
+    // carry no daily series), and days a provider did not report
+    // contribute nothing rather than an invented zero.
+    function holisticSeries(days: int): var {
+        const byDate = ({});
+        let providers = 0;
+        for (const record of root.records) {
+            if (!record || record.status !== "ok" || record.scope === "account")
+                continue;
+            const entries = root._inWindow(root.dailyEntries(record), days || 0);
+            if (entries.length === 0)
+                continue;
+            providers += 1;
+            for (const e of entries)
+                byDate[e.date] = (byDate[e.date] || 0) + e.tokens;
+        }
+        const dates = Object.keys(byDate).sort();
+        let total = 0;
+        let peak = 0;
+        let peakDate = "";
+        const values = dates.map(d => {
+            total += byDate[d];
+            if (byDate[d] > peak) {
+                peak = byDate[d];
+                peakDate = d;
+            }
+            return byDate[d];
+        });
+        return { "values": values, "total": total, "peak": peak, "peakDate": peakDate, "providers": providers, "activeDays": dates.length };
     }
 
     function maxPercent(record: var): double {
@@ -273,7 +341,12 @@ Item {
         return [record];
     }
 
-    Component.onCompleted: refresh(false)
+    Component.onCompleted: {
+        const stored = String(pluginSettings.value("statsWindow", "30"));
+        if (["7", "30", "60", "90", "all"].includes(stored))
+            root.statsWindow = stored;
+        refresh(false);
+    }
 
     Timer {
         interval: root.refreshSeconds * 1000 * root._backoff

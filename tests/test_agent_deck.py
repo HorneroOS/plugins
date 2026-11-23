@@ -60,10 +60,23 @@ class AgentDeckContractTests(unittest.TestCase):
         # Real-data charts only: sparkline rides backend daily
         # buckets, partition rides measured token fields.
         self.assertIn("UiSparkline", src)
-        self.assertIn("dailyValues(modelData).length >= 2", src)
+        self.assertIn("dailyValues(modelData, usage.statsWindowDays).length >= 2", src)
         self.assertIn("UiPartition", src)
         data = read("UsageData.qml")
         self.assertIn("recentDays", data)
+
+    def test_window_selector_and_holistic_series(self):
+        agents = read("Agents.qml")
+        # Adaptable selector: segmented wide, dropdown compact.
+        self.assertIn("UiComboBox", agents)
+        self.assertIn("setStatsWindow", agents)
+        self.assertIn("holisticSeries(usage.statsWindowDays)", agents)
+        data = read("UsageData.qml")
+        # Account-scope records never join the holistic series.
+        self.assertIn('record.scope === "account"', data)
+        self.assertIn("statsWindow", MANIFEST["capabilities"]["settings"])
+        self.assertEqual(MANIFEST["capabilities"]["settings"]["statsWindow"]["options"],
+                         ["7", "30", "60", "90", "all"])
 
     def test_no_cross_provider_token_summing_in_bar(self):
         bar = read("Bar.qml")

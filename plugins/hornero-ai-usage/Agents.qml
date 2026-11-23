@@ -25,7 +25,7 @@ Item {
     // The cards scroll inside what is left under the fixed header
     // instead of overflowing off the bottom of the dashboard.
     readonly property int viewportCap: hostAvailableHeight > 0 ? hostAvailableHeight : Screen.height > 0 ? Math.max(320, Screen.height - 220) : 760
-    readonly property int scrollHeight: Math.max(180, Math.min(cardsWrap.implicitHeight, root.viewportCap - 210))
+    readonly property int scrollHeight: Math.max(180, Math.min(cardsWrap.implicitHeight, root.viewportCap - headerCol.implicitHeight - Theme.spacing.normal))
 
     implicitWidth: hostAvailableWidth > 0 ? Math.min(1180, hostAvailableWidth) : 968
     implicitHeight: col.implicitHeight
@@ -53,6 +53,12 @@ Item {
 
         width: parent.width
         spacing: Theme.spacing.normal
+
+        Column {
+            id: headerCol
+
+            width: parent.width
+            spacing: Theme.spacing.normal
 
         UiStack {
             width: parent.width
@@ -124,6 +130,76 @@ Item {
             text: i18n.tr("Tightest right now: %1").arg(usage.worstLabel)
         }
 
+        UiStack {
+            visible: usage.anyOk
+            width: parent.width
+            orientation: root.hostOrientation
+            compact: root.hostCompact
+
+            UiText {
+                role: "caption"
+                text: i18n.tr("ACTIVITY WINDOW")
+            }
+
+            // Adaptable selector: segmented buttons when the page is
+            // wide, a dropdown when it is not. One persisted setting.
+            Row {
+                visible: root.width >= 760
+                spacing: Theme.spacing.small
+
+                Repeater {
+                    model: ["7", "30", "60", "90", "all"]
+
+                    UiButton {
+                        required property var modelData
+
+                        variant: usage.statsWindow === modelData ? "primary" : "secondary"
+                        text: modelData === "all" ? i18n.tr("All") : modelData + "d"
+                        accessibleName: i18n.tr("Activity window")
+                        onClicked: usage.setStatsWindow(modelData)
+                    }
+                }
+            }
+
+            UiComboBox {
+                visible: root.width < 760
+                model: ["7d", "30d", "60d", "90d", i18n.tr("All")]
+                currentIndex: ["7", "30", "60", "90", "all"].indexOf(usage.statsWindow)
+                accessibleName: i18n.tr("Activity window")
+                tooltipText: i18n.tr("Activity window")
+                onActivated: index => usage.setStatsWindow(["7", "30", "60", "90", "all"][index])
+            }
+        }
+
+        Column {
+            visible: usage.anyOk && usage.holisticSeries(usage.statsWindowDays).values.length >= 2
+            width: parent.width
+            spacing: Theme.spacing.small
+
+            UiText {
+                role: "caption"
+                text: i18n.tr("All agents · daily tokens").toUpperCase()
+            }
+
+            UiSparkline {
+                width: parent.width
+                height: 40
+                values: usage.holisticSeries(usage.statsWindowDays).values
+                window: Math.max(2, usage.holisticSeries(usage.statsWindowDays).values.length)
+                tone: "cue"
+                accessibleName: i18n.tr("All agents · daily tokens")
+            }
+
+            UiText {
+                width: parent.width
+                role: "caption"
+                text: {
+                    const h = usage.holisticSeries(usage.statsWindowDays);
+                    return i18n.tr("%1 tokens · peak %2 on %3 · %4 active days").arg(i18n.formatNumber(h.total)).arg(i18n.formatNumber(h.peak)).arg(h.peakDate).arg(i18n.formatNumber(h.activeDays));
+                }
+            }
+        }
+
         UiText {
             visible: usage.stale
             width: parent.width
@@ -143,6 +219,8 @@ Item {
             width: parent.width
             kind: "error"
             message: i18n.tr("AI usage unavailable: horneroctl returned no usable data.")
+        }
+
         }
 
         UiScrollArea {
@@ -256,7 +334,7 @@ Item {
                     }
 
                     Column {
-                        visible: modelData.status === "ok" && usage.dailyValues(modelData).length >= 2
+                        visible: modelData.status === "ok" && usage.dailyValues(modelData, usage.statsWindowDays).length >= 2
                         width: parent.width
                         spacing: Theme.spacing.small
 
@@ -268,10 +346,15 @@ Item {
                         UiSparkline {
                             width: parent.width
                             height: 34
-                            values: usage.dailyValues(modelData)
-                            window: Math.max(2, usage.dailyValues(modelData).length)
+                            values: usage.dailyValues(modelData, usage.statsWindowDays)
+                            window: Math.max(2, usage.dailyValues(modelData, usage.statsWindowDays).length)
                             tone: "cue"
                             accessibleName: i18n.tr("Daily tokens")
+                        }
+
+                        UiText {
+                            role: "caption"
+                            text: i18n.tr("Tokens in window: %1").arg(i18n.formatNumber(usage.windowTokens(modelData, usage.statsWindowDays)))
                         }
                     }
 
