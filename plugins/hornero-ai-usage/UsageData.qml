@@ -78,7 +78,10 @@ Item {
     }
 
     function windowsOf(record: var): var {
-        if (record && Array.isArray(record.quotaWindows))
+        // Records crossing QML property boundaries lose Array
+        // identity (QVariantList), so test for a numeric length —
+        // Array.isArray would silently drop every real window.
+        if (record && record.quotaWindows && typeof record.quotaWindows.length === "number")
             return record.quotaWindows;
         // Legacy (schema v1) single-window mirror.
         if (record && record.quota === "available")
@@ -96,6 +99,16 @@ Item {
         for (const w of root.windowsOf(record))
             best = Math.max(best, Number(w.usedPercent ?? -1));
         return best;
+    }
+
+    // Joined record errors, or "" — QVariantList-safe like windowsOf.
+    function errorsText(record: var): string {
+        if (!record || !record.errors || typeof record.errors.length !== "number" || record.errors.length === 0)
+            return "";
+        const parts = [];
+        for (let i = 0; i < record.errors.length; i++)
+            parts.push(String(record.errors[i]));
+        return parts.join("; ");
     }
 
     function recordName(record: var): string {

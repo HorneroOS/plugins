@@ -195,7 +195,7 @@ Item {
                     visible: root.current !== null && root.current.status !== "ok"
                     width: parent.width
                     role: "caption"
-                    text: root.current ? i18n.tr("Unavailable: %1").arg(Array.isArray(root.current.errors) && root.current.errors.length > 0 ? root.current.errors.join("; ") : usage.statusText(String(root.current.status || ""))) : ""
+                    text: root.current ? i18n.tr("Unavailable: %1").arg(usage.errorsText(root.current).length > 0 ? usage.errorsText(root.current) : usage.statusText(String(root.current.status || ""))) : ""
                 }
             }
 

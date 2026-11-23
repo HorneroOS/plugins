@@ -281,7 +281,7 @@ Item {
                         visible: modelData.status !== "ok"
                         width: parent.width
                         role: "caption"
-                        text: i18n.tr("Unavailable: %1").arg(Array.isArray(modelData.errors) && modelData.errors.length > 0 ? modelData.errors.join("; ") : usage.statusText(String(modelData.status || "")))
+                        text: i18n.tr("Unavailable: %1").arg(usage.errorsText(modelData).length > 0 ? usage.errorsText(modelData) : usage.statusText(String(modelData.status || "")))
                     }
                 }
             }
