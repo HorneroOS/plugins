@@ -14,11 +14,20 @@ Item {
     property string hostOrientation: "horizontal"
     property bool hostCompact: false
     property int hostAvailableWidth: 0
+    property int hostAvailableHeight: 0
     property string hostSurface: "dashboardTab"
 
     property double nowMs: Date.now()
 
-    implicitWidth: hostAvailableWidth > 0 ? Math.min(840, hostAvailableWidth) : 840
+    // Vertical room for the whole page. PluginKit 5 hosts report it
+    // (hostAvailableHeight); older hosts report 0, so fall back to
+    // this screen minus the same reserve the shell itself uses.
+    // The cards scroll inside what is left under the fixed header
+    // instead of overflowing off the bottom of the dashboard.
+    readonly property int viewportCap: hostAvailableHeight > 0 ? hostAvailableHeight : Screen.height > 0 ? Math.max(320, Screen.height - 220) : 760
+    readonly property int scrollHeight: Math.max(180, Math.min(cardsWrap.implicitHeight, root.viewportCap - 210))
+
+    implicitWidth: hostAvailableWidth > 0 ? Math.min(1180, hostAvailableWidth) : 968
     implicitHeight: col.implicitHeight
 
     // Reset countdowns tick locally; providers are never polled for it.
@@ -136,14 +145,34 @@ Item {
             message: i18n.tr("AI usage unavailable: horneroctl returned no usable data.")
         }
 
-        Repeater {
-            model: usage.sortedRecords
+        UiScrollArea {
+            id: scroll
 
-            UiCard {
-                required property var modelData
-                required property int index
+            width: parent.width
+            height: root.scrollHeight
+            accessibleName: i18n.tr("Agent subscriptions")
 
-                width: col.width
+            Column {
+                id: cardsWrap
+
+                width: scroll.width - 8
+                spacing: Theme.spacing.normal
+
+                GridLayout {
+                    width: parent.width
+                    columns: root.width >= 1080 ? 2 : 1
+                    columnSpacing: Theme.spacing.normal
+                    rowSpacing: Theme.spacing.normal
+
+                    Repeater {
+                        model: usage.sortedRecords
+
+                        UiCard {
+                            required property var modelData
+                            required property int index
+
+                            Layout.fillWidth: true
+                            Layout.alignment: Qt.AlignTop
                 title: usage.recordName(modelData)
                 channel: index + 1
                 glyph: "robot"
@@ -226,6 +255,36 @@ Item {
                         text: i18n.tr("Quota: unknown - the provider does not expose a limit.")
                     }
 
+                    Column {
+                        visible: modelData.status === "ok" && usage.dailyValues(modelData).length >= 2
+                        width: parent.width
+                        spacing: Theme.spacing.small
+
+                        UiText {
+                            role: "caption"
+                            text: i18n.tr("Daily tokens").toUpperCase()
+                        }
+
+                        UiSparkline {
+                            width: parent.width
+                            height: 34
+                            values: usage.dailyValues(modelData)
+                            window: Math.max(2, usage.dailyValues(modelData).length)
+                            tone: "cue"
+                            accessibleName: i18n.tr("Daily tokens")
+                        }
+                    }
+
+                    UiPartition {
+                        visible: modelData.status === "ok" && modelData.totalTokens !== undefined && Number(modelData.cacheReadTokens || 0) + Number(modelData.cacheWriteTokens || 0) > 0
+                        width: parent.width
+                        total: Number(modelData.inputTokens || 0) + Number(modelData.outputTokens || 0) + Number(modelData.cacheReadTokens || 0) + Number(modelData.cacheWriteTokens || 0)
+                        used: Number(modelData.inputTokens || 0)
+                        secondary: Number(modelData.outputTokens || 0)
+                        usedLabel: i18n.tr("Tokens in")
+                        secondaryLabel: i18n.tr("Tokens out")
+                    }
+
                     UiStack {
                         visible: modelData.status === "ok" && modelData.totalTokens !== undefined
                         width: parent.width
@@ -287,11 +346,15 @@ Item {
             }
         }
 
-        UiText {
-            visible: usage.hasData
-            width: parent.width
-            role: "caption"
-            text: i18n.tr("Quota appears only when the provider itself reports it. Unknown never means 0% used, and account-wide figures are never added to this machine's activity.")
+                }
+
+                UiText {
+                    visible: usage.hasData
+                    width: parent.width
+                    role: "caption"
+                    text: i18n.tr("Quota appears only when the provider itself reports it. Unknown never means 0% used, and account-wide figures are never added to this machine's activity.")
+                }
+            }
         }
     }
 }

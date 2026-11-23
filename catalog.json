@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedFrom": "80d760da53ddacf58f1e2c9bed5e05ccf6cf7ada",
+  "generatedFrom": "ce0a98191c26940d0cf5d86b002f21ac1181ac23",
   "plugins": [
     {
       "id": "hornero-agenda",
@@ -100,7 +100,7 @@
     {
       "id": "hornero-ai-usage",
       "name": "Hornero AI Usage",
-      "version": "4.0.1",
+      "version": "4.1.0",
       "description": "Agent Deck: every discovered coding-agent subscription in one place - provider-reported quota windows with resets, plans, and local activity. Unavailable quotas are labelled unknown, never guessed.",
       "author": "HorneroOS contributors",
       "license": "MIT",
@@ -132,13 +132,17 @@
       },
       "trust": "official",
       "path": "plugins/hornero-ai-usage",
-      "sha256": "c374436b486d88efacbbdde1e0fb271133f92cf243181054447247587849711a",
+      "sha256": "9e8a865d60847851d8902affc4f18fd15bfd7ecf6105752f7dd13cf0bca28799",
       "pluginKit": 5,
       "marketplace": {
         "compatibility": {
           "minShellVersion": "1.2.79"
         },
         "changelog": [
+          {
+            "version": "4.1.0",
+            "notes": "Agents page scrolls inside the room the dashboard offers, uses the full width with two-column instrument modules, and charts real per-day token activity (horneroctl recentDays) plus an in/out/cache partition. No invented series."
+          },
           {
             "version": "4.0.1",
             "notes": "Fix quota windows collapsing to the legacy single meter: JSON arrays lose Array identity across QML property boundaries, so every provider window now renders (live-host find)."
