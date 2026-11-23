@@ -94,6 +94,21 @@ Item {
         return [];
     }
 
+    // Real per-day token totals from the backend's recentDays
+    // buckets ('YYYY-MM-DD:tokens,...'), oldest first. Empty when
+    // the provider's source carries no timestamps — no chart then.
+    function dailyValues(record: var): var {
+        if (!record || typeof record.recentDays !== "string" || record.recentDays.length === 0)
+            return [];
+        const out = [];
+        for (const part of record.recentDays.split(",")) {
+            const n = Number(part.split(":")[1]);
+            if (isFinite(n))
+                out.push(n);
+        }
+        return out;
+    }
+
     function maxPercent(record: var): double {
         let best = -1;
         for (const w of root.windowsOf(record))

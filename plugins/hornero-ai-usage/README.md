@@ -14,7 +14,11 @@ discovered agents appear on their own.
   every reported window (5-hour, weekly, monthly, model-scoped,
   on-demand) as its own meter with percent remaining and a reset
   countdown, plan/billing chips, and token activity. Modules are
-  ordered tightest verified quota first.
+  ordered tightest verified quota first. The page uses the full
+  dashboard width (two-column modules on wide screens), scrolls
+  inside the room the dashboard offers, and charts real per-day
+  token activity plus an in/out/cache partition where the backend
+  measured them.
 - **Bar** (`surfaces.bar`): a compact self-hiding indicator showing
   the tightest verified quota percent (never an average, never a
   summed token total), opening a quick popover with every account,

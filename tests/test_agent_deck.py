@@ -52,6 +52,19 @@ class AgentDeckContractTests(unittest.TestCase):
             self.assertNotIn("Array.isArray(modelData.", src, name)
             self.assertNotIn("Array.isArray(root.current.", src, name)
 
+    def test_agents_page_scrolls_inside_offered_room(self):
+        src = read("Agents.qml")
+        self.assertIn("UiScrollArea", src)
+        self.assertIn("hostAvailableHeight", src)
+        self.assertIn("scrollHeight", src)
+        # Real-data charts only: sparkline rides backend daily
+        # buckets, partition rides measured token fields.
+        self.assertIn("UiSparkline", src)
+        self.assertIn("dailyValues(modelData).length >= 2", src)
+        self.assertIn("UiPartition", src)
+        data = read("UsageData.qml")
+        self.assertIn("recentDays", data)
+
     def test_no_cross_provider_token_summing_in_bar(self):
         bar = read("Bar.qml")
         self.assertNotIn("totalTokensAll", bar)
