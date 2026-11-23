@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedFrom": "ce0a98191c26940d0cf5d86b002f21ac1181ac23",
+  "generatedFrom": "fe105b28e6e8428a22e72ff60accac5703a061a3",
   "plugins": [
     {
       "id": "hornero-agenda",
@@ -100,7 +100,7 @@
     {
       "id": "hornero-ai-usage",
       "name": "Hornero AI Usage",
-      "version": "4.1.0",
+      "version": "4.2.0",
       "description": "Agent Deck: every discovered coding-agent subscription in one place - provider-reported quota windows with resets, plans, and local activity. Unavailable quotas are labelled unknown, never guessed.",
       "author": "HorneroOS contributors",
       "license": "MIT",
@@ -127,18 +127,34 @@
             "minimum": 50,
             "maximum": 99,
             "description": "Quota used percent that counts as approaching a limit."
+          },
+          "statsWindow": {
+            "type": "enum",
+            "default": "30",
+            "options": [
+              "7",
+              "30",
+              "60",
+              "90",
+              "all"
+            ],
+            "description": "Activity window for Agent Deck daily statistics."
           }
         }
       },
       "trust": "official",
       "path": "plugins/hornero-ai-usage",
-      "sha256": "9e8a865d60847851d8902affc4f18fd15bfd7ecf6105752f7dd13cf0bca28799",
+      "sha256": "ed49a8ecb1b680bf4e6b2b0907a293857980697a7e489e7130f20ac6384d905a",
       "pluginKit": 5,
       "marketplace": {
         "compatibility": {
           "minShellVersion": "1.2.79"
         },
         "changelog": [
+          {
+            "version": "4.2.0",
+            "notes": "Holistic daily statistics with an activity-window selector (7/30/60/90/all, segmented on wide screens, dropdown when compact): an all-agents daily chart and windowed per-provider totals over the backend's 90-day real buckets, filtered locally from cached records."
+          },
           {
             "version": "4.1.0",
             "notes": "Agents page scrolls inside the room the dashboard offers, uses the full width with two-column instrument modules, and charts real per-day token activity (horneroctl recentDays) plus an in/out/cache partition. No invented series."
@@ -188,9 +204,9 @@
         },
         {
           "kind": "settings",
-          "value": "refreshSeconds, warningPercent",
-          "en": "Stores only its own settings (refreshSeconds, warningPercent).",
-          "es": "Guarda solo su propia configuración (refreshSeconds, warningPercent)."
+          "value": "refreshSeconds, statsWindow, warningPercent",
+          "en": "Stores only its own settings (refreshSeconds, statsWindow, warningPercent).",
+          "es": "Guarda solo su propia configuración (refreshSeconds, statsWindow, warningPercent)."
         }
       ]
     },
