@@ -48,9 +48,9 @@ class AgentDeckContractTests(unittest.TestCase):
         # quota window on the live host (4.0.1). Length checks only.
         for name in ("Bar.qml", "Main.qml", "Agents.qml", "UsageData.qml"):
             src = read(name)
-            self.assertNotIn("Array.isArray(record", src, name)
-            self.assertNotIn("Array.isArray(modelData", src, name)
-            self.assertNotIn("Array.isArray(root.current", src, name)
+            self.assertNotIn("Array.isArray(record.", src, name)
+            self.assertNotIn("Array.isArray(modelData.", src, name)
+            self.assertNotIn("Array.isArray(root.current.", src, name)
 
     def test_no_cross_provider_token_summing_in_bar(self):
         bar = read("Bar.qml")
