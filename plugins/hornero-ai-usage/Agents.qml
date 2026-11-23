@@ -269,6 +269,7 @@ Item {
                             width: parent.width
                             height: 34
                             values: usage.dailyValues(modelData)
+                            window: Math.max(2, usage.dailyValues(modelData).length)
                             tone: "cue"
                             accessibleName: i18n.tr("Daily tokens")
                         }
