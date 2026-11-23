@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedFrom": "aa8280f57b8944abcae95a33ac9e45505b1f9fa8",
+  "generatedFrom": "0de2d7b2e902a2d63a6c1cfd8cc9363cba2eaeaf",
   "plugins": [
     {
       "id": "hornero-agenda",
@@ -132,7 +132,7 @@
       },
       "trust": "official",
       "path": "plugins/hornero-ai-usage",
-      "sha256": "5fe7f0c6e17f47e54d30158d24e211e3cd197e206eb8aa0f377231d67d8953e7",
+      "sha256": "5a62678d53b6b826c26b50f86e97ffee79c94628a150f37dd6c1c94a78d1ef8d",
       "pluginKit": 5,
       "marketplace": {
         "compatibility": {
