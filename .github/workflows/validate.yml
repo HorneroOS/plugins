@@ -37,7 +37,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: HorneroOS/shell
-          ref: 8ca7b0dbbaa915c18823406d5d558017590a2ef3
+          ref: 36168cc08c1cb473ed7b224c93934a445058fdd8
           path: .shell
           sparse-checkout: |
             scripts
