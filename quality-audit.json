@@ -1435,6 +1435,96 @@
         "reviewer": "Claude Code agent (offscreen fixture review and QA VM captures; not a human design review)",
         "date": "2026-11-17"
       }
+    },
+    {
+      "id": "hornero-capi",
+      "classification": "needs-upgrade",
+      "issue": "https://github.com/HorneroOS/plugins/issues/100",
+      "valueProposition": "Data-only capybara companion with grass-mound habitat and calm vocabulary.",
+      "nativeOverlap": "Rendered by the shell's native data-companion host (PluginKit 6); no package code runs.",
+      "dimensions": {
+        "tooltips": {
+          "status": "na",
+          "note": "Data-only package: no package QML, settings or chrome; the native host owns this dimension."
+        },
+        "accessibility": {
+          "status": "na",
+          "note": "Data-only package: no package QML, settings or chrome; the native host owns this dimension."
+        },
+        "translation": {
+          "status": "na",
+          "note": "Data-only package: no package QML, settings or chrome; the native host owns this dimension."
+        },
+        "settings": {
+          "status": "na",
+          "note": "Data-only package: no package QML, settings or chrome; the native host owns this dimension."
+        },
+        "themeTokens": {
+          "status": "na",
+          "note": "Data-only package: no package QML, settings or chrome; the native host owns this dimension."
+        },
+        "orientation": {
+          "status": "na",
+          "note": "Data-only package: no package QML, settings or chrome; the native host owns this dimension."
+        },
+        "loadingErrorStates": {
+          "status": "unverified",
+          "note": "Malformed definitions are omitted with registry diagnostics (static probe)."
+        },
+        "performance": {
+          "status": "unverified",
+          "note": "One visibility-gated timer per sprite; benchmark pending."
+        },
+        "screenshots": {
+          "status": "fail",
+          "note": "No catalogue screenshot yet; live-host capture pending."
+        }
+      }
+    },
+    {
+      "id": "hornero-bitin",
+      "classification": "needs-upgrade",
+      "issue": "https://github.com/HorneroOS/plugins/issues/100",
+      "valueProposition": "Data-only retro CRT companion with phosphor expressions and charging-dock habitat.",
+      "nativeOverlap": "Rendered by the shell's native data-companion host (PluginKit 6); no package code runs.",
+      "dimensions": {
+        "tooltips": {
+          "status": "na",
+          "note": "Data-only package: no package QML, settings or chrome; the native host owns this dimension."
+        },
+        "accessibility": {
+          "status": "na",
+          "note": "Data-only package: no package QML, settings or chrome; the native host owns this dimension."
+        },
+        "translation": {
+          "status": "na",
+          "note": "Data-only package: no package QML, settings or chrome; the native host owns this dimension."
+        },
+        "settings": {
+          "status": "na",
+          "note": "Data-only package: no package QML, settings or chrome; the native host owns this dimension."
+        },
+        "themeTokens": {
+          "status": "na",
+          "note": "Data-only package: no package QML, settings or chrome; the native host owns this dimension."
+        },
+        "orientation": {
+          "status": "na",
+          "note": "Data-only package: no package QML, settings or chrome; the native host owns this dimension."
+        },
+        "loadingErrorStates": {
+          "status": "unverified",
+          "note": "Malformed definitions are omitted with registry diagnostics (static probe)."
+        },
+        "performance": {
+          "status": "unverified",
+          "note": "One visibility-gated timer per sprite; benchmark pending."
+        },
+        "screenshots": {
+          "status": "fail",
+          "note": "No catalogue screenshot yet; live-host capture pending."
+        }
+      }
     }
   ]
 }

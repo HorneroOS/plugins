@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 3,
+  "pluginKit": 6,
+  "dataOnly": true,
+  "id": "hornero-bitin",
+  "name": "Hornero Bitín",
+  "version": "1.0.0",
+  "description": "A tiny retro CRT companion for warm hacker desktops.",
+  "author": "HorneroOS contributors",
+  "license": "MIT",
+  "entrypoint": "Main.qml",
+  "placement": "background",
+  "files": [
+    "Main.qml",
+    "README.md",
+    "LICENSE",
+    "companions/bitin/companion.json",
+    "companions/bitin/habitat.png",
+    "companions/bitin/frames/concerned-01.png",
+    "companions/bitin/frames/happy-01.png",
+    "companions/bitin/frames/idle-01.png",
+    "companions/bitin/frames/sleep-01.png",
+    "companions/bitin/frames/think-01.png",
+    "companions/bitin/frames/walk-01.png"
+  ],
+  "capabilities": {
+    "processCommands": [],
+    "networkHosts": [],
+    "settings": {}
+  },
+  "contributes": {
+    "companions": [
+      {
+        "id": "bitin",
+        "title": "Hornero Bitín",
+        "definition": "companions/bitin/companion.json",
+        "preview": "companions/bitin/frames/idle-01.png"
+      }
+    ]
+  }
+}

@@ -1,0 +1,207 @@
+{
+  "schemaVersion": 1,
+  "id": "bitin",
+  "version": "1.0.0",
+  "names": {
+    "en": "Bitín",
+    "es": "Bitín"
+  },
+  "descriptions": {
+    "en": "A tiny retro CRT companion for warm hacker desktops.",
+    "es": "Un CRT retro diminuto para escritorios hacker cálidos."
+  },
+  "archetype": "retroComputer",
+  "provenance": {
+    "author": "HorneroOS contributors",
+    "license": "MIT",
+    "tool": "Muse image generation; deterministic keying and review at desktop size"
+  },
+  "preview": "companions/bitin/frames/idle-01.png",
+  "canvas": {
+    "width": 512,
+    "height": 512,
+    "anchors": {
+      "ground": [
+        256,
+        472
+      ],
+      "center": [
+        256,
+        256
+      ]
+    }
+  },
+  "defaultSkin": "default",
+  "capabilities": [
+    "grounded",
+    "walk",
+    "think",
+    "work",
+    "sleep",
+    "greet",
+    "celebrate",
+    "concern"
+  ],
+  "skins": {
+    "default": {
+      "names": {
+        "en": "Cream and copper",
+        "es": "Crema y cobre"
+      },
+      "animations": {
+        "idle": {
+          "loop": true,
+          "anchor": "ground",
+          "frames": [
+            {
+              "file": "companions/bitin/frames/idle-01.png",
+              "ms": 900
+            }
+          ]
+        },
+        "walk": {
+          "loop": true,
+          "anchor": "ground",
+          "frames": [
+            {
+              "file": "companions/bitin/frames/idle-01.png",
+              "ms": 340
+            },
+            {
+              "file": "companions/bitin/frames/walk-01.png",
+              "ms": 340
+            }
+          ]
+        },
+        "greet": {
+          "loop": false,
+          "anchor": "ground",
+          "frames": [
+            {
+              "file": "companions/bitin/frames/happy-01.png",
+              "ms": 800
+            }
+          ],
+          "next": "idle"
+        },
+        "celebrate": {
+          "loop": false,
+          "anchor": "ground",
+          "frames": [
+            {
+              "file": "companions/bitin/frames/happy-01.png",
+              "ms": 800
+            }
+          ],
+          "next": "idle"
+        },
+        "worry": {
+          "loop": false,
+          "anchor": "ground",
+          "frames": [
+            {
+              "file": "companions/bitin/frames/concerned-01.png",
+              "ms": 800
+            }
+          ],
+          "next": "idle"
+        },
+        "error": {
+          "loop": false,
+          "anchor": "ground",
+          "frames": [
+            {
+              "file": "companions/bitin/frames/concerned-01.png",
+              "ms": 800
+            }
+          ],
+          "next": "idle"
+        },
+        "think": {
+          "loop": true,
+          "anchor": "ground",
+          "frames": [
+            {
+              "file": "companions/bitin/frames/think-01.png",
+              "ms": 700
+            }
+          ]
+        },
+        "work": {
+          "loop": true,
+          "anchor": "ground",
+          "frames": [
+            {
+              "file": "companions/bitin/frames/think-01.png",
+              "ms": 700
+            }
+          ]
+        },
+        "sleep": {
+          "loop": true,
+          "anchor": "ground",
+          "frames": [
+            {
+              "file": "companions/bitin/frames/sleep-01.png",
+              "ms": 900
+            }
+          ]
+        }
+      }
+    }
+  },
+  "personality": {
+    "default": "focused",
+    "options": [
+      {
+        "id": "focused",
+        "names": {
+          "en": "Focused",
+          "es": "Concentrado"
+        },
+        "traits": [
+          "focused",
+          "technical"
+        ],
+        "lines": {
+          "greet": {
+            "en": "Ready.",
+            "es": "Listo."
+          }
+        }
+      },
+      {
+        "id": "cheerful",
+        "names": {
+          "en": "Cheerful",
+          "es": "Alegre"
+        },
+        "traits": [
+          "cheerful",
+          "playful"
+        ],
+        "lines": {
+          "greet": {
+            "en": "Hi!",
+            "es": "¡Hola!"
+          }
+        }
+      }
+    ]
+  },
+  "habitat": {
+    "id": "dock",
+    "names": {
+      "en": "Charging dock",
+      "es": "Base de carga"
+    },
+    "image": "companions/bitin/habitat.png",
+    "anchor": "ground",
+    "sleepAnimation": "sleep"
+  },
+  "assistantCompatibility": [
+    "none",
+    "hermes",
+    "veasel"
+  ]
+}
