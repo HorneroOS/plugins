@@ -171,6 +171,13 @@ Item {
             }
         }
 
+        UiText {
+            visible: usage.anyOk && usage.statsWindow === "all"
+            width: parent.width
+            role: "caption"
+            text: i18n.tr("All available daily history (up to 90 days).")
+        }
+
         Column {
             visible: usage.anyOk && usage.holisticSeries(usage.statsWindowDays).values.length >= 2
             width: parent.width

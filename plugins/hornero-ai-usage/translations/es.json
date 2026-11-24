@@ -1,6 +1,7 @@
 {
   "%1 / %2": "%1 / %2",
   "%1 agents reporting activity": "%1 agentes reportando actividad",
+  "%1 at %2%": "%1 al %2%",
   "%1 subscriptions · tightest: %2 at %3%": "%1 suscripciones · la más justa: %2 al %3%",
   "%1 tokens · peak %2 on %3 · %4 active days": "%1 tokens · pico %2 el %3 · %4 días activos",
   "ACTIVITY WINDOW": "VENTANA DE ACTIVIDAD",
@@ -21,6 +22,7 @@
   "Agents reporting": "Agentes reportando",
   "All": "Todo",
   "All agents · daily tokens": "Todos los agentes · tokens por día",
+  "All available daily history (up to 90 days).": "Todo el historial diario disponible (hasta 90 días).",
   "Available": "Disponible",
   "Balance: %1": "Saldo: %1",
   "Daily tokens": "Tokens por día",
