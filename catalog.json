@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedFrom": "fe105b28e6e8428a22e72ff60accac5703a061a3",
+  "generatedFrom": "bca6312268e0d52151461eaff5e0b8b4bf0c8ba2",
   "plugins": [
     {
       "id": "hornero-agenda",
@@ -100,7 +100,7 @@
     {
       "id": "hornero-ai-usage",
       "name": "Hornero AI Usage",
-      "version": "4.2.0",
+      "version": "4.2.1",
       "description": "Agent Deck: every discovered coding-agent subscription in one place - provider-reported quota windows with resets, plans, and local activity. Unavailable quotas are labelled unknown, never guessed.",
       "author": "HorneroOS contributors",
       "license": "MIT",
@@ -144,13 +144,17 @@
       },
       "trust": "official",
       "path": "plugins/hornero-ai-usage",
-      "sha256": "ed49a8ecb1b680bf4e6b2b0907a293857980697a7e489e7130f20ac6384d905a",
+      "sha256": "0d29ca5f3e9e9c8940792f37184da9b5d9dcae7d916d60af1e2589af518451a4",
       "pluginKit": 5,
       "marketplace": {
         "compatibility": {
           "minShellVersion": "1.2.79"
         },
         "changelog": [
+          {
+            "version": "4.2.1",
+            "notes": "Optional governed companion reaction when a verified quota crosses the warning threshold, and the All window now states it means all available daily history (up to 90 days)."
+          },
           {
             "version": "4.2.0",
             "notes": "Holistic daily statistics with an activity-window selector (7/30/60/90/all, segmented on wide screens, dropdown when compact): an all-agents daily chart and windowed per-provider totals over the backend's 90-day real buckets, filtered locally from cached records."

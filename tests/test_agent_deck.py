@@ -78,6 +78,13 @@ class AgentDeckContractTests(unittest.TestCase):
         self.assertEqual(MANIFEST["capabilities"]["settings"]["statsWindow"]["options"],
                          ["7", "30", "60", "90", "all"])
 
+    def test_quota_reaction_only_on_verified_crossing(self):
+        data = read("UsageData.qml")
+        self.assertIn('Companion.react("hornero-ai-usage", "agent.quota"', data)
+        self.assertIn("root._prevWorst < root.warningPercent && worst >= root.warningPercent", data)
+        agents = read("Agents.qml")
+        self.assertIn("All available daily history (up to 90 days).", agents)
+
     def test_no_cross_provider_token_summing_in_bar(self):
         bar = read("Bar.qml")
         self.assertNotIn("totalTokensAll", bar)

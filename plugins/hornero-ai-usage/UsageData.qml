@@ -33,6 +33,8 @@ Item {
     property double lastUpdatedMs: 0
     readonly property bool anyOk: root.okCount > 0
 
+    property bool _worstSeen: false
+    property double _prevWorst: -1
     property string _agentBuffer: ""
     property string _legacyBuffer: ""
     property int _backoff: 1
@@ -271,6 +273,15 @@ Item {
         root.totalTokensLocal = total;
         root.worstPercent = worst;
         root.worstLabel = worstText;
+        // Governed quota alert: only a verified window crossing the
+        // user's warning threshold, once per crossing. The shell's
+        // reaction policy (kind/mode/quiet hours/cooldown/route)
+        // still decides whether anything is shown. Unknown quota
+        // (worst < 0) can never raise it.
+        if (root._worstSeen && root._prevWorst < root.warningPercent && worst >= root.warningPercent)
+            Companion.react("hornero-ai-usage", "agent.quota", i18n.tr("%1 at %2%").arg(worstText).arg(Math.round(worst)));
+        root._prevWorst = worst;
+        root._worstSeen = true;
         root.nextResetUnix = nextReset;
         root.sourceKind = kind;
         root.hasData = recordsIn.length > 0;
