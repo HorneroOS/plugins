@@ -96,18 +96,19 @@ SURFACES_V4 = ("commands", "quickSetting", "panel")
 SURFACES_V5 = ("dashboardTab",)
 CONTRIBUTION_SURFACES = {"commands": "commands", "quickSettings": "quickSetting", "panels": "panel",
                          "dashboardTabs": "dashboardTab"}
-CONTRIBUTION_LIMITS = {"commands": 16, "quickSettings": 4, "panels": 4, "dashboardTabs": 2, "companions": 4}
+CONTRIBUTION_LIMITS = {"commands": 16, "quickSettings": 4, "panels": 4, "dashboardTabs": 2, "companions": 4, "companionAddons": 4}
 CONTRIBUTION_FIELDS = {
     "commands": {"id", "title", "description", "glyph", "keywords"},
     "quickSettings": {"id", "title", "glyph", "kind"},
     "panels": {"id", "title", "glyph"},
     "dashboardTabs": {"id", "title", "glyph"},
     "companions": {"id", "title", "glyph", "definition", "preview"},
+    "companionAddons": {"id", "title", "glyph", "forCharacter", "definition"},
 }
 # Companions are surface-less: validated data rendered natively.
 # Deep definition/asset budgets are enforced by the shell validator
 # in the shell-parity gate; this mirror enforces the manifest shape.
-CONTRIBUTION_KINDS_KNOWN = set(CONTRIBUTION_SURFACES) | {"companions"}
+CONTRIBUTION_KINDS_KNOWN = set(CONTRIBUTION_SURFACES) | {"companions", "companionAddons"}
 CONTRIBUTION_ID_RE = re.compile(r"^[a-z][a-zA-Z0-9]{0,31}$")
 LOCALE_TAG_RE = re.compile(r"^[a-z]{2,3}(_[A-Z]{2})?$")
 TR_LITERAL_RE = re.compile(r'\btr\(\s*"((?:[^"\\]|\\.)*)"')
@@ -548,7 +549,7 @@ def validate_contributes(tag: str, manifest: dict) -> list:
         seen = set()
         for index, entry in enumerate(items):
             where = f"{tag}: contributes.{kind}[{index}]"
-            required = {"id", "title", "definition"} if kind == "companions" else {"id", "title"}
+            required = {"id", "title", "definition"} if kind == "companions" else {"id", "title", "forCharacter", "definition"} if kind == "companionAddons" else {"id", "title"}
             if not isinstance(entry, dict) or set(entry) - CONTRIBUTION_FIELDS[kind] or not required <= set(entry):
                 errors.append(f"{where} must be an object with {', '.join(sorted(required))} and only {', '.join(sorted(CONTRIBUTION_FIELDS[kind]))}")
                 continue
@@ -565,7 +566,12 @@ def validate_contributes(tag: str, manifest: dict) -> list:
                     errors.append(f"{where}.title must not reuse a native Dashboard tab title")
             if "kind" in entry and entry["kind"] not in ("toggle", "button"):
                 errors.append(f"{where}.kind must be toggle or button")
-        if kind != "companions" and CONTRIBUTION_SURFACES[kind] not in surfaces:
+        if kind == "companionAddons":
+            if manifest.get("pluginKit", 3) < 6 or manifest.get("dataOnly") is not True:
+                errors.append(f'{tag}: contributes.companionAddons needs PluginKit 6 dataOnly')
+            if "companions" not in contributes:
+                errors.append(f"{tag}: contributes.companionAddons needs contributes.companions in the same package")
+        elif kind != "companions" and CONTRIBUTION_SURFACES[kind] not in surfaces:
             errors.append(f"{tag}: contributes.{kind} needs surfaces.{CONTRIBUTION_SURFACES[kind]}")
     for kind, surface in CONTRIBUTION_SURFACES.items():
         if surface in surfaces and not (isinstance(contributes, dict) and kind in contributes):
