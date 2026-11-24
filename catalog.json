@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedFrom": "bca6312268e0d52151461eaff5e0b8b4bf0c8ba2",
+  "generatedFrom": "3f47cf4132faef270c31c4fe63375dfaf3751f04",
   "plugins": [
     {
       "id": "hornero-agenda",
@@ -396,6 +396,27 @@
       ]
     },
     {
+      "id": "hornero-bitin",
+      "name": "Hornero Bitín",
+      "version": "1.0.0",
+      "description": "A tiny retro CRT companion for warm hacker desktops.",
+      "author": "HorneroOS contributors",
+      "license": "MIT",
+      "homepage": "",
+      "placement": "background",
+      "category": "utilities",
+      "capabilities": {
+        "processCommands": [],
+        "networkHosts": [],
+        "settings": {}
+      },
+      "trust": "official",
+      "path": "plugins/hornero-bitin",
+      "sha256": "77338f0fdffbb3ef072958267ab92eae3cf2dae846ec2120dae1b4cf6ff8df1e",
+      "pluginKit": 6,
+      "permissions": []
+    },
+    {
       "id": "hornero-calendar",
       "name": "Hornero Calendar",
       "version": "3.1.1",
@@ -516,6 +537,27 @@
           "es": "Guarda solo su propia configuración (dateStyle, showMonthGrid, showShellTime, twentyFourHour, weekStart)."
         }
       ]
+    },
+    {
+      "id": "hornero-capi",
+      "name": "Hornero Capi",
+      "version": "1.0.0",
+      "description": "A calm Argentine carpincho for a quiet desktop.",
+      "author": "HorneroOS contributors",
+      "license": "MIT",
+      "homepage": "",
+      "placement": "background",
+      "category": "utilities",
+      "capabilities": {
+        "processCommands": [],
+        "networkHosts": [],
+        "settings": {}
+      },
+      "trust": "official",
+      "path": "plugins/hornero-capi",
+      "sha256": "401a41a82f1469bc1750a14b8c05179a30c17f0c6baa93f88e7fc48c55fc4f74",
+      "pluginKit": 6,
+      "permissions": []
     },
     {
       "id": "hornero-clipboard",

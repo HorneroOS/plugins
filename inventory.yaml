@@ -514,3 +514,23 @@ capabilities:
     inspiration_notes: "First-party HorneroOS plugin written for this catalogue; no upstream code is copied."
     hornero_equivalent: "plugins/hornero-clipboard"
     status: implemented
+  - id: hornero-capi
+    name: Hornero Capi
+    category: companion
+    origin: {project: HorneroOS/plugins, url: "https://github.com/HorneroOS/plugins", license: MIT}
+    classification: implemented
+    license_status: verified
+    license_evidence: plugins/hornero-capi/LICENSE
+    inspiration_notes: "First-party HorneroOS data-only companion; original generated artwork, no upstream code or art is copied."
+    hornero_equivalent: "plugins/hornero-capi"
+    status: implemented
+  - id: hornero-bitin
+    name: Hornero Bitín
+    category: companion
+    origin: {project: HorneroOS/plugins, url: "https://github.com/HorneroOS/plugins", license: MIT}
+    classification: implemented
+    license_status: verified
+    license_evidence: plugins/hornero-bitin/LICENSE
+    inspiration_notes: "First-party HorneroOS data-only companion; original generated artwork, no upstream code or art is copied."
+    hornero_equivalent: "plugins/hornero-bitin"
+    status: implemented
