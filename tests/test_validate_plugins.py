@@ -305,7 +305,7 @@ class ContractTest(unittest.TestCase):
             self.assertTrue(any(f"hornero-bad{index}" in e or "settings" in e for e in errors), (settings, errors))
 
     def test_pluginkit_field_is_bounded_and_instances_need_level_4(self):
-        for value in (2, 6, True, "4"):
+        for value in (2, 7, True, "4"):
             errors = self.errors_for(pid="hornero-level", pluginKit=value)
             self.assertTrue(any("pluginKit must be an integer" in e for e in errors), (value, errors))
             for stale in self.root.glob("plugins/hornero-level"):
