@@ -58,6 +58,8 @@ CATEGORIES = {
     "hornero-system-insight": "system",
     "hornero-network-scope": "system",
     "hornero-audio-deck": "media",
+    "hornero-capi": "companions",
+    "hornero-bitin": "companions",
 }
 
 

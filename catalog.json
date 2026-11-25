@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedFrom": "3f47cf4132faef270c31c4fe63375dfaf3751f04",
+  "generatedFrom": "23e372127ae6bb219a4b09ba775cb13c08965037",
   "plugins": [
     {
       "id": "hornero-agenda",
@@ -398,13 +398,13 @@
     {
       "id": "hornero-bitin",
       "name": "Hornero Bitín",
-      "version": "1.0.0",
+      "version": "1.0.1",
       "description": "A tiny retro CRT companion for warm hacker desktops.",
       "author": "HorneroOS contributors",
       "license": "MIT",
-      "homepage": "",
+      "homepage": "https://github.com/HorneroOS/plugins",
       "placement": "background",
-      "category": "utilities",
+      "category": "companions",
       "capabilities": {
         "processCommands": [],
         "networkHosts": [],
@@ -412,8 +412,23 @@
       },
       "trust": "official",
       "path": "plugins/hornero-bitin",
-      "sha256": "77338f0fdffbb3ef072958267ab92eae3cf2dae846ec2120dae1b4cf6ff8df1e",
+      "sha256": "d6a7921d9c464906494e945ff84f1003bdf89c508217431ca6bc1d7fed178856",
       "pluginKit": 6,
+      "marketplace": {
+        "compatibility": {
+          "minShellVersion": "1.3.7"
+        },
+        "changelog": [
+          {
+            "version": "1.0.1",
+            "notes": "First catalogue-complete release: full license text, marketplace metadata and shell compatibility floor."
+          },
+          {
+            "version": "1.0.0",
+            "notes": "First data-only companion pack (PluginKit 6)."
+          }
+        ]
+      },
       "permissions": []
     },
     {
@@ -541,13 +556,13 @@
     {
       "id": "hornero-capi",
       "name": "Hornero Capi",
-      "version": "1.0.0",
+      "version": "1.0.1",
       "description": "A calm Argentine carpincho for a quiet desktop.",
       "author": "HorneroOS contributors",
       "license": "MIT",
-      "homepage": "",
+      "homepage": "https://github.com/HorneroOS/plugins",
       "placement": "background",
-      "category": "utilities",
+      "category": "companions",
       "capabilities": {
         "processCommands": [],
         "networkHosts": [],
@@ -555,8 +570,23 @@
       },
       "trust": "official",
       "path": "plugins/hornero-capi",
-      "sha256": "401a41a82f1469bc1750a14b8c05179a30c17f0c6baa93f88e7fc48c55fc4f74",
+      "sha256": "c3f96f8667ed061459f1958e62452904fd651205cb702fdc44de316affee8559",
       "pluginKit": 6,
+      "marketplace": {
+        "compatibility": {
+          "minShellVersion": "1.3.7"
+        },
+        "changelog": [
+          {
+            "version": "1.0.1",
+            "notes": "First catalogue-complete release: full license text, marketplace metadata and shell compatibility floor."
+          },
+          {
+            "version": "1.0.0",
+            "notes": "First data-only companion pack (PluginKit 6)."
+          }
+        ]
+      },
       "permissions": []
     },
     {
