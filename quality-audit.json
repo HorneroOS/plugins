@@ -1342,7 +1342,7 @@
       "id": "hornero-weather",
       "classification": "needs-upgrade",
       "valueProposition": "Weather 2.0: dashboard card plus contextual bar indicator complementing native Weather with configurable density and forecast days, a derived forecast range and a local high-wind threshold alert (labelled not official), over the PluginKit Weather facade fields only.",
-      "nativeOverlap": "Overlaps the shell native Weather view and hornero-sun-card on current conditions; distinct value is the density/forecast controls, derived range and local wind threshold. Official alerts, multi-location, feels-like, UV, precipitation, hourly data, the location name and a unit preference are not exposed by the facade and are labelled unavailable; forecast temperatures use the facade °C fields.",
+      "nativeOverlap": "Overlaps the shell native Weather view and hornero-sun-card on current conditions; distinct value is the density/forecast controls, derived range and local wind threshold. Official alerts, multi-location, feels-like, UV, precipitation, hourly data, the location name and a unit preference are not exposed by the facade and are labelled unavailable; forecast temperatures use the facade \u00b0C fields.",
       "dimensions": {
         "tooltips": {
           "status": "pass",
@@ -1524,6 +1524,55 @@
           "status": "pass",
           "note": "Real capture from an adopted Arch VM desktop (greetd -> Hyprland -> Hornero Shell), cropped to the companion and its habitat."
         }
+      }
+    },
+    {
+      "id": "hornero-github-stats",
+      "classification": "needs-upgrade",
+      "valueProposition": "Dev Pulse: GitHub contributions, PR/issue totals by actual event date, per-repo activity, an actionable inbox (open PRs, review requests, assigned issues, failing checks) and an optional Agent Deck temporal comparison, through horneroctl github records. Unknown metrics are omitted, never zero-filled.",
+      "nativeOverlap": "hornero-forge-board shows per-repo CI/PR status cards; Dev Pulse is the personal analytics + inbox + dashboard-tab scope it does not cover. hornero-ai-usage (Agent Deck) owns AI quotas; Dev Pulse only consumes its usage records read-only for a temporal side-by-side.",
+      "dimensions": {
+        "tooltips": {
+          "status": "pass",
+          "note": "Bar indicator, popover and page Refresh controls carry PluginKit tooltipText (static probe)."
+        },
+        "accessibility": {
+          "status": "pass",
+          "note": "UiButton/UiPopover/UiActionRow accessibleName values on interactive controls (static probe). Live AT-SPI not verified."
+        },
+        "translation": {
+          "status": "pass",
+          "note": "All literals via PluginKit Translations; es catalog declared and complete for tr() literals (static probe). Backend error text stays in the CLI language."
+        },
+        "settings": {
+          "status": "pass",
+          "note": "Typed refreshSeconds/statsWindow/orgFilter/repoFilter/reactionsEnabled settings declared and read via PluginKit Settings (static probe)."
+        },
+        "themeTokens": {
+          "status": "pass",
+          "note": "PluginKit Theme tokens only; heatmap cells use Theme.palette.signal with opacity (static probe)."
+        },
+        "orientation": {
+          "status": "unverified",
+          "note": "Bar/popover follow the ai-usage hostOrientation pattern; not yet captured on a vertical rail."
+        },
+        "loadingErrorStates": {
+          "status": "unverified",
+          "note": "UiState loading/error and stale banner exist in QML; not yet verified graphically in a live shell."
+        },
+        "performance": {
+          "status": "unverified",
+          "note": "Backend is cached in horneroctl (short TTL); per-plugin idle cost not yet measured on a live shell."
+        },
+        "screenshots": {
+          "status": "fail",
+          "note": "No screenshot yet: graphical review tracked in HorneroOS/plugins#107; no placeholder is shipped."
+        }
+      },
+      "issue": "https://github.com/HorneroOS/plugins/issues/107",
+      "graphicalReview": {
+        "reviewer": "not yet reviewed graphically",
+        "date": "2026-11-25"
       }
     }
   ]

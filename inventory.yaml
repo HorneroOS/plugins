@@ -534,3 +534,13 @@ capabilities:
     inspiration_notes: "First-party HorneroOS data-only companion; original generated artwork, no upstream code or art is copied."
     hornero_equivalent: "plugins/hornero-bitin"
     status: implemented
+  - id: hornero-github-stats
+    name: Hornero Dev Pulse
+    category: dashboard
+    origin: {project: HorneroOS/plugins, url: "https://github.com/HorneroOS/plugins", license: MIT}
+    classification: implemented
+    license_status: verified
+    license_evidence: plugins/hornero-github-stats/LICENSE
+    inspiration_notes: "First-party HorneroOS plugin written for this catalogue; GitHub data comes from the normalized horneroctl github contract (gh owns authentication). No upstream code is copied."
+    hornero_equivalent: "plugins/hornero-github-stats"
+    status: implemented
