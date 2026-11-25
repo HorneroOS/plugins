@@ -31,7 +31,7 @@ Item {
     }
 
     GithubData {
-        id: data
+        id: pulse
     }
 
     Process {
@@ -63,33 +63,33 @@ Item {
             UiEyebrow {
                 channel: 9
                 text: i18n.tr("DEV PULSE")
-                context: data.account.length > 0 ? i18n.tr("GH · %1").arg(data.account) : ""
+                context: pulse.account.length > 0 ? i18n.tr("GH · %1").arg(pulse.account) : ""
             }
 
             UiButton {
                 glyph: "refresh"
                 text: i18n.tr("Refresh")
                 accessibleName: i18n.tr("Refresh GitHub activity")
-                onClicked: data.refresh(true)
+                onClicked: pulse.refresh(true)
             }
         }
 
         UiText {
-            visible: data.stale
+            visible: pulse.stale
             width: parent.width
             role: "caption"
             text: i18n.tr("Showing last known data; the latest check failed.")
         }
 
         UiState {
-            visible: data.failed
+            visible: pulse.failed
             width: parent.width
             kind: "error"
             message: i18n.tr("GitHub unavailable: install github-cli and run gh auth login, then Refresh.")
         }
 
         UiState {
-            visible: data.loading && !data.hasData
+            visible: pulse.loading && !pulse.hasData
             width: parent.width
             kind: "loading"
             message: i18n.tr("Collecting GitHub activity…")
@@ -97,7 +97,7 @@ Item {
 
         // Window selector
         UiStack {
-            visible: data.hasData
+            visible: pulse.hasData
             width: parent.width
             orientation: root.hostOrientation
             compact: root.hostCompact
@@ -117,10 +117,10 @@ Item {
                     UiButton {
                         required property var modelData
 
-                        variant: data.statsWindow === modelData ? "primary" : "secondary"
+                        variant: pulse.statsWindow === modelData ? "primary" : "secondary"
                         text: modelData === "all" ? i18n.tr("All") : modelData + "d"
                         accessibleName: i18n.tr("Activity window")
-                        onClicked: data.setStatsWindow(modelData)
+                        onClicked: pulse.setStatsWindow(modelData)
                     }
                 }
             }
@@ -128,15 +128,15 @@ Item {
             UiComboBox {
                 visible: root.width < 760
                 model: ["7d", "30d", "90d", "365d", i18n.tr("All")]
-                currentIndex: ["7", "30", "90", "365", "all"].indexOf(data.statsWindow)
+                currentIndex: ["7", "30", "90", "365", "all"].indexOf(pulse.statsWindow)
                 accessibleName: i18n.tr("Activity window")
-                onActivated: index => data.setStatsWindow(["7", "30", "90", "365", "all"][index])
+                onActivated: index => pulse.setStatsWindow(["7", "30", "90", "365", "all"][index])
             }
         }
 
         // Overview metrics
         UiStack {
-            visible: data.calendar !== null
+            visible: pulse.calendar !== null
             width: parent.width
             orientation: root.hostOrientation
             compact: root.hostCompact
@@ -146,28 +146,28 @@ Item {
                 Layout.preferredWidth: 1
                 size: "value"
                 label: i18n.tr("Contributions")
-                value: data.calendar ? i18n.formatNumber(Number(data.calendar.totalContributions || 0)) : ""
+                value: pulse.calendar ? i18n.formatNumber(Number(pulse.calendar.totalContributions || 0)) : ""
             }
             UiMetric {
                 Layout.fillWidth: true
                 Layout.preferredWidth: 1
                 size: "value"
                 label: i18n.tr("Commits (recognized)")
-                value: data.calendar ? i18n.formatNumber(Number(data.calendar.totalCommitContributions || 0)) : ""
+                value: pulse.calendar ? i18n.formatNumber(Number(pulse.calendar.totalCommitContributions || 0)) : ""
             }
             UiMetric {
                 Layout.fillWidth: true
                 Layout.preferredWidth: 1
                 size: "value"
                 label: i18n.tr("Active days")
-                value: data.calendar ? i18n.formatNumber(Number(data.calendar.activeDays || 0)) : ""
+                value: pulse.calendar ? i18n.formatNumber(Number(pulse.calendar.activeDays || 0)) : ""
             }
             UiMetric {
                 Layout.fillWidth: true
                 Layout.preferredWidth: 1
                 size: "value"
                 label: i18n.tr("Current streak")
-                value: data.calendar ? i18n.formatNumber(Number(data.calendar.currentStreak || 0)) : ""
+                value: pulse.calendar ? i18n.formatNumber(Number(pulse.calendar.currentStreak || 0)) : ""
                 unit: i18n.tr("d")
             }
             UiMetric {
@@ -175,14 +175,14 @@ Item {
                 Layout.preferredWidth: 1
                 size: "value"
                 label: i18n.tr("Longest streak")
-                value: data.calendar ? i18n.formatNumber(Number(data.calendar.longestStreak || 0)) : ""
+                value: pulse.calendar ? i18n.formatNumber(Number(pulse.calendar.longestStreak || 0)) : ""
                 unit: i18n.tr("d")
             }
         }
 
         // Contribution heatmap + trend (genuine calendar days only)
         Column {
-            visible: data.calendar !== null && data.dailyEntries(data.calendar).length >= 2
+            visible: pulse.calendar !== null && pulse.dailyEntries(pulse.calendar).length >= 2
             width: parent.width
             spacing: Theme.spacing.small
 
@@ -196,7 +196,7 @@ Item {
                 spacing: 2
 
                 Repeater {
-                    model: data.dailyEntries(data.calendar)
+                    model: pulse.dailyEntries(pulse.calendar)
 
                     Rectangle {
                         required property var modelData
@@ -213,8 +213,8 @@ Item {
             UiSparkline {
                 width: parent.width
                 height: 40
-                values: data.dailyEntries(data.calendar).map(e => e.count)
-                window: Math.max(2, data.dailyEntries(data.calendar).length)
+                values: pulse.dailyEntries(pulse.calendar).map(e => e.count)
+                window: Math.max(2, pulse.dailyEntries(pulse.calendar).length)
                 tone: "cue"
                 accessibleName: i18n.tr("Daily contributions")
             }
@@ -222,7 +222,7 @@ Item {
 
         // PR / issue lifecycle from search-partitioned totals
         UiStack {
-            visible: data.totals !== null
+            visible: pulse.totals !== null
             width: parent.width
             orientation: root.hostOrientation
             compact: root.hostCompact
@@ -232,44 +232,44 @@ Item {
                 Layout.preferredWidth: 1
                 size: "value"
                 label: i18n.tr("PRs created")
-                value: data.totals && data.totals.prsCreated !== undefined ? i18n.formatNumber(Number(data.totals.prsCreated)) : ""
-                available: data.totals !== null && data.totals.prsCreated !== undefined
+                value: pulse.totals && pulse.totals.prsCreated !== undefined ? i18n.formatNumber(Number(pulse.totals.prsCreated)) : ""
+                available: pulse.totals !== null && pulse.totals.prsCreated !== undefined
             }
             UiMetric {
                 Layout.fillWidth: true
                 Layout.preferredWidth: 1
                 size: "value"
                 label: i18n.tr("PRs merged")
-                value: data.totals && data.totals.prsMerged !== undefined ? i18n.formatNumber(Number(data.totals.prsMerged)) : ""
-                available: data.totals !== null && data.totals.prsMerged !== undefined
+                value: pulse.totals && pulse.totals.prsMerged !== undefined ? i18n.formatNumber(Number(pulse.totals.prsMerged)) : ""
+                available: pulse.totals !== null && pulse.totals.prsMerged !== undefined
             }
             UiMetric {
                 Layout.fillWidth: true
                 Layout.preferredWidth: 1
                 size: "value"
                 label: i18n.tr("PRs open")
-                value: data.totals && data.totals.prsOpen !== undefined ? i18n.formatNumber(Number(data.totals.prsOpen)) : ""
-                available: data.totals !== null && data.totals.prsOpen !== undefined
+                value: pulse.totals && pulse.totals.prsOpen !== undefined ? i18n.formatNumber(Number(pulse.totals.prsOpen)) : ""
+                available: pulse.totals !== null && pulse.totals.prsOpen !== undefined
             }
             UiMetric {
                 Layout.fillWidth: true
                 Layout.preferredWidth: 1
                 size: "value"
                 label: i18n.tr("Issues opened")
-                value: data.totals && data.totals.issuesOpened !== undefined ? i18n.formatNumber(Number(data.totals.issuesOpened)) : ""
-                available: data.totals !== null && data.totals.issuesOpened !== undefined
+                value: pulse.totals && pulse.totals.issuesOpened !== undefined ? i18n.formatNumber(Number(pulse.totals.issuesOpened)) : ""
+                available: pulse.totals !== null && pulse.totals.issuesOpened !== undefined
             }
             UiMetric {
                 Layout.fillWidth: true
                 Layout.preferredWidth: 1
                 size: "value"
                 label: i18n.tr("Reviews (contributions)")
-                value: data.calendar ? i18n.formatNumber(Number(data.calendar.totalPullRequestReviewContributions || 0)) : ""
+                value: pulse.calendar ? i18n.formatNumber(Number(pulse.calendar.totalPullRequestReviewContributions || 0)) : ""
             }
         }
 
         UiText {
-            visible: data.totals !== null && data.totals.truncated === true
+            visible: pulse.totals !== null && pulse.totals.truncated === true
             width: parent.width
             role: "caption"
             text: i18n.tr("Some totals could not be collected; missing metrics are omitted, not zeroed.")
@@ -277,7 +277,7 @@ Item {
 
         // Repositories
         Column {
-            visible: data.repoRecords.length > 0
+            visible: pulse.repoRecords.length > 0
             width: parent.width
             spacing: Theme.spacing.small
 
@@ -287,7 +287,7 @@ Item {
             }
 
             Repeater {
-                model: data.repoRecords.slice(0, 12)
+                model: pulse.repoRecords.slice(0, 12)
 
                 UiDetailRow {
                     required property var modelData
@@ -301,7 +301,7 @@ Item {
 
         // Development inbox
         Column {
-            visible: data.inboxItems.length > 0
+            visible: pulse.inboxItems.length > 0
             width: parent.width
             spacing: Theme.spacing.small
 
@@ -311,7 +311,7 @@ Item {
             }
 
             Repeater {
-                model: data.inboxItems.slice(0, 20)
+                model: pulse.inboxItems.slice(0, 20)
 
                 UiActionRow {
                     required property var modelData
@@ -327,7 +327,7 @@ Item {
 
         // Optional Agent Deck comparison (temporal association only)
         Column {
-            visible: data.agentRecords.length > 0 && data.calendar !== null
+            visible: pulse.agentRecords.length > 0 && pulse.calendar !== null
             width: parent.width
             spacing: Theme.spacing.small
 
@@ -339,8 +339,8 @@ Item {
             UiSparkline {
                 width: parent.width
                 height: 40
-                values: data.agentDailyValues(data.statsWindowDays)
-                window: Math.max(2, data.agentDailyValues(data.statsWindowDays).length)
+                values: pulse.agentDailyValues(pulse.statsWindowDays)
+                window: Math.max(2, pulse.agentDailyValues(pulse.statsWindowDays).length)
                 tone: "cue"
                 accessibleName: i18n.tr("Daily AI tokens (local scope)")
             }
@@ -353,7 +353,7 @@ Item {
         }
 
         UiText {
-            visible: data.hasData
+            visible: pulse.hasData
             width: parent.width
             role: "caption"
             text: i18n.tr("Coverage: GitHub contributions recognized by GitHub over the selected window, plus search totals by actual event date. Exports: horneroctl github export.")

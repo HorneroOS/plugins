@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
-  "generatedFrom": "0514234e580983d24ba3bcfca8d01452f339d358",
+  "generatedFrom": "0d67225b6390545ae2fe22d2276681c76550c740",
   "catalogSource": {
     "repo": "https://github.com/HorneroOS/plugins",
-    "rev": "0514234e580983d24ba3bcfca8d01452f339d358"
+    "rev": "0d67225b6390545ae2fe22d2276681c76550c740"
   },
   "plugins": [
     {
@@ -1453,7 +1453,7 @@
     {
       "id": "hornero-github-stats",
       "name": "Hornero Dev Pulse",
-      "version": "1.0.0",
+      "version": "1.0.1",
       "description": "Dev Pulse: GitHub development activity through your existing gh sign-in - contributions, pull requests, reviews, an actionable inbox, and an optional side-by-side with Agent Deck AI usage. Local-first; unknown metrics stay unknown.",
       "author": "HorneroOS contributors",
       "license": "MIT",
@@ -1508,13 +1508,17 @@
       },
       "trust": "official",
       "path": "plugins/hornero-github-stats",
-      "sha256": "8617ad1ced32d7eac13f3b3f5e4eb3fea7b864fe75ebe5b27f948c63f2251749",
+      "sha256": "99b5ac76e7e352aea3531a41640373938d287fb552585f2eaea1cacf41d5fe4d",
       "pluginKit": 5,
       "marketplace": {
         "compatibility": {
           "minShellVersion": "1.2.79"
         },
         "changelog": [
+          {
+            "version": "1.0.1",
+            "notes": "Fix the activity-window selector: the data layer id `data` was shadowed by Item.data inside delegates, so no window could be selected or changed; also fixes a Bar label parse error."
+          },
           {
             "version": "1.0.0",
             "notes": "Dev Pulse 1.0: bar indicator, quick popover, full Dev Pulse dashboard tab, development inbox, contribution analytics and optional Agent Deck comparison, all through horneroctl github (gh owns authentication; no token is ever requested or stored)."

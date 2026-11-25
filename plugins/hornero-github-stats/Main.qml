@@ -16,7 +16,7 @@ Item {
     }
 
     GithubData {
-        id: data
+        id: pulse
     }
 
     UiCard {
@@ -30,27 +30,27 @@ Item {
             spacing: Theme.spacing.small
 
             UiMetric {
-                visible: data.calendar !== null
+                visible: pulse.calendar !== null
                 size: "value"
                 label: i18n.tr("Contributions (window)")
-                value: data.calendar ? i18n.formatNumber(Number(data.calendar.totalContributions || 0)) : ""
+                value: pulse.calendar ? i18n.formatNumber(Number(pulse.calendar.totalContributions || 0)) : ""
             }
 
             UiMetric {
-                visible: data.totals !== null && data.totals.prsMerged !== undefined
+                visible: pulse.totals !== null && pulse.totals.prsMerged !== undefined
                 size: "value"
                 label: i18n.tr("PRs merged (window)")
-                value: data.totals ? i18n.formatNumber(Number(data.totals.prsMerged || 0)) : ""
+                value: pulse.totals ? i18n.formatNumber(Number(pulse.totals.prsMerged || 0)) : ""
             }
 
             UiMetric {
                 size: "value"
                 label: i18n.tr("Failing checks")
-                value: i18n.formatNumber(data.failingItems.length)
+                value: i18n.formatNumber(pulse.failingItems.length)
             }
 
             UiText {
-                visible: data.failed
+                visible: pulse.failed
                 width: parent.width
                 role: "caption"
                 text: i18n.tr("GitHub unavailable via gh.")
@@ -61,7 +61,7 @@ Item {
                 glyph: "refresh"
                 text: i18n.tr("Refresh")
                 accessibleName: i18n.tr("Refresh GitHub activity")
-                onClicked: data.refresh(true)
+                onClicked: pulse.refresh(true)
             }
         }
     }

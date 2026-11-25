@@ -70,6 +70,19 @@ class DevPulseContractTests(unittest.TestCase):
             self.assertIn("xdg-open", src)
             self.assertIn("modelData.url", src)
 
+    def test_data_layer_id_never_shadows_item_data(self):
+        # `data` is Item's default children property: an id named
+        # `data` is shadowed inside Repeater delegates, which broke
+        # the activity-window selector (setStatsWindow resolved to
+        # UiTooltip objects and no window ever read as selected).
+        for name in ("Bar.qml", "Main.qml", "DevPulse.qml", "GithubData.qml"):
+            self.assertNotIn("id: data", read(name), name)
+        for name in ("Bar.qml", "Main.qml", "DevPulse.qml"):
+            self.assertNotIn(" data.", read(name), name)
+        page = read("DevPulse.qml")
+        self.assertIn("pulse.setStatsWindow(modelData)", page)
+        self.assertIn('property string statsWindow: "30"', read("GithubData.qml"))
+
     def test_translations_cover_ui_strings(self):
         es = json.loads((PKG / "translations/es.json").read_text())
         self.assertEqual(MANIFEST["translations"]["locales"], ["es"])
