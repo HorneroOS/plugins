@@ -126,5 +126,15 @@ class StoreFieldsTest(unittest.TestCase):
                 self.assertFalse(shot["path"].startswith(entry["path"] + "/"))
 
 
+    def test_catalog_source_is_pinned_and_verifiable(self):
+        # Client compatibility contract v1: a consumer can state
+        # exactly which upstream revision the entries came from.
+        source = self.built.get("catalogSource")
+        self.assertIsInstance(source, dict)
+        self.assertEqual(source.get("repo"), "https://github.com/HorneroOS/plugins")
+        self.assertEqual(source.get("rev"), self.built.get("generatedFrom"))
+        self.assertEqual(len(source.get("rev", "")), 40)
+
+
 if __name__ == "__main__":
     unittest.main()

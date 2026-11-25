@@ -73,6 +73,27 @@ Open a PR. CI re-runs both scripts and verifies `catalog.json` is
 fresh. A maintainer reviews source, capability honesty, and license
 before the `official` trust label is granted.
 
+## Tool routing (which gate catches what)
+
+| Tool | Scope |
+|---|---|
+| `scripts/validate_plugins.py` | Static payload/manifest gates for this repo (no shell is run) |
+| `horneroctl plugin validate <path>` | The shell-side contract gate (PluginKit API level, capabilities, surfaces) |
+| `scripts/gen_catalog.py` | Regenerates `catalog.json`; `--check` is the CI freshness gate |
+| `qs ipc call plugins status` | Live-shell state: loaded, failed, diagnostics |
+
+## Catalogue client contract (v1, frozen)
+
+`catalog.json` is `{schemaVersion: 1, generatedFrom, catalogSource: {repo, rev}, plugins: [...]}`.
+`catalogSource.repo` is the canonical upstream and `rev` is the last
+commit that touched `plugins/` when the catalogue was generated, so a
+client can resolve `repo@rev` to verify any entry against its exact
+source tree. Row fields (`id`, `version`, `sha256` over the payload
+defined by the manifest `files` list, `pluginKit` when above the
+baseline, `marketplace`, `screenshots`, `permissions`) only grow
+additively within v1. Freshness never compares `rev` (squash merges
+rewrite it).
+
 ## Local testing without the marketplace
 
 `horneroctl plugin install <https-git-url> --dry-run` previews any
