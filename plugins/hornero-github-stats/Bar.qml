@@ -12,8 +12,8 @@ Item {
     property string hostOrientation: "horizontal"
     property bool hostCompact: false
 
-    implicitWidth: data.hasData ? indicator.implicitWidth : 0
-    implicitHeight: data.hasData ? indicator.implicitHeight : 0
+    implicitWidth: pulse.hasData ? indicator.implicitWidth : 0
+    implicitHeight: pulse.hasData ? indicator.implicitHeight : 0
 
     Translations {
         id: i18n
@@ -22,29 +22,30 @@ Item {
     }
 
     GithubData {
-        id: data
+        id: pulse
     }
 
-    readonly property double openPrs: data.summaryTotal("mine")
-    readonly property double reviewReq: data.summaryTotal("review")
+    readonly property double openPrs: pulse.summaryTotal("mine")
+    readonly property double reviewReq: pulse.summaryTotal("review")
+    readonly property string indicatorLabel: {
+        const parts = [];
+        if (root.openPrs >= 0)
+            parts.push(i18n.formatNumber(root.openPrs));
+        if (pulse.failingItems.length > 0)
+            parts.push("✗" + i18n.formatNumber(pulse.failingItems.length));
+        if (root.reviewReq > 0)
+            parts.push("◐" + i18n.formatNumber(root.reviewReq));
+        return parts.join(" · ");
+    }
 
     UiButton {
         id: indicator
 
-        visible: data.hasData
+        visible: pulse.hasData
         variant: "quiet"
         glyph: "activity"
-        text: root.hostCompact ? "" : {
-            const parts = [];
-            if (root.openPrs >= 0)
-                parts.push(i18n.formatNumber(root.openPrs));
-            if (data.failingItems.length > 0)
-                parts.push("✗" + i18n.formatNumber(data.failingItems.length));
-            if (root.reviewReq > 0)
-                parts.push("◐" + i18n.formatNumber(root.reviewReq));
-            return parts.join(" · ");
-        }
-        tooltipText: i18n.tr("Dev Pulse: %1 open PRs, %2 failing, %3 review requests. Activate for details.").arg(i18n.formatNumber(Math.max(0, root.openPrs))).arg(i18n.formatNumber(data.failingItems.length)).arg(i18n.formatNumber(Math.max(0, root.reviewReq)))
+        text: root.hostCompact ? "" : root.indicatorLabel
+        tooltipText: i18n.tr("Dev Pulse: %1 open PRs, %2 failing, %3 review requests. Activate for details.").arg(i18n.formatNumber(Math.max(0, root.openPrs))).arg(i18n.formatNumber(pulse.failingItems.length)).arg(i18n.formatNumber(Math.max(0, root.reviewReq)))
         accessibleName: i18n.tr("Dev Pulse GitHub activity")
         onClicked: popover.toggle()
     }
@@ -79,42 +80,42 @@ Item {
             }
 
             UiText {
-                visible: data.account.length > 0
+                visible: pulse.account.length > 0
                 width: parent.width
                 role: "caption"
-                text: i18n.tr("Signed in via gh as %1").arg(data.account)
+                text: i18n.tr("Signed in via gh as %1").arg(pulse.account)
             }
 
             UiText {
-                visible: data.stale
+                visible: pulse.stale
                 width: parent.width
                 role: "caption"
                 text: i18n.tr("Showing last known data; the latest check failed.")
             }
 
             UiState {
-                visible: data.failed
+                visible: pulse.failed
                 width: parent.width
                 kind: "error"
                 message: i18n.tr("GitHub unavailable: check gh is installed and signed in (gh auth login).")
             }
 
             UiMetric {
-                visible: data.calendar !== null
+                visible: pulse.calendar !== null
                 size: "value"
                 label: i18n.tr("Contributions (window)")
-                value: data.calendar ? i18n.formatNumber(Number(data.calendar.totalContributions || 0)) : ""
+                value: pulse.calendar ? i18n.formatNumber(Number(pulse.calendar.totalContributions || 0)) : ""
             }
 
             UiText {
-                visible: data.failingItems.length > 0
+                visible: pulse.failingItems.length > 0
                 width: parent.width
                 role: "caption"
                 text: i18n.tr("Failing checks")
             }
 
             Repeater {
-                model: data.failingItems.slice(0, 3)
+                model: pulse.failingItems.slice(0, 3)
 
                 UiActionRow {
                     required property var modelData
@@ -131,14 +132,14 @@ Item {
             }
 
             UiText {
-                visible: data.reviewItems.length > 0
+                visible: pulse.reviewItems.length > 0
                 width: parent.width
                 role: "caption"
                 text: i18n.tr("Review requested")
             }
 
             Repeater {
-                model: data.reviewItems.slice(0, 3)
+                model: pulse.reviewItems.slice(0, 3)
 
                 UiActionRow {
                     required property var modelData
@@ -155,14 +156,14 @@ Item {
             }
 
             UiText {
-                visible: data.mineItems.length > 0
+                visible: pulse.mineItems.length > 0
                 width: parent.width
                 role: "caption"
                 text: i18n.tr("Recent open PRs")
             }
 
             Repeater {
-                model: data.mineItems.slice(0, 3)
+                model: pulse.mineItems.slice(0, 3)
 
                 UiActionRow {
                     required property var modelData
@@ -194,7 +195,7 @@ Item {
                 glyph: "refresh"
                 text: i18n.tr("Refresh")
                 accessibleName: i18n.tr("Refresh GitHub activity")
-                onClicked: data.refresh(true)
+                onClicked: pulse.refresh(true)
             }
         }
     }
