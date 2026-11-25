@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
-  "generatedFrom": "2c1ab5305bae932b6ead197905344f98f1c98b70",
+  "generatedFrom": "0514234e580983d24ba3bcfca8d01452f339d358",
   "catalogSource": {
     "repo": "https://github.com/HorneroOS/plugins",
-    "rev": "2c1ab5305bae932b6ead197905344f98f1c98b70"
+    "rev": "0514234e580983d24ba3bcfca8d01452f339d358"
   },
   "plugins": [
     {
@@ -1508,7 +1508,7 @@
       },
       "trust": "official",
       "path": "plugins/hornero-github-stats",
-      "sha256": "b2207c3d2c31308fe01df737a6ded1cc8df8410cb1a2a7ff4a688edc0fc08765",
+      "sha256": "8617ad1ced32d7eac13f3b3f5e4eb3fea7b864fe75ebe5b27f948c63f2251749",
       "pluginKit": 5,
       "marketplace": {
         "compatibility": {
