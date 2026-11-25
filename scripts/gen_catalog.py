@@ -185,7 +185,21 @@ def build() -> dict:
         ["git", "log", "-1", "--format=%H", "--", "plugins/"],
         cwd=ROOT, capture_output=True, text=True,
     ).stdout.strip()
-    return {"schemaVersion": 1, "generatedFrom": rev, "plugins": entries}
+    return {
+        "schemaVersion": 1,
+        "generatedFrom": rev,
+        # Client compatibility contract v1: where this catalogue comes
+        # from. `repo` is the canonical upstream; `rev` is the last
+        # commit that touched plugins/ at generation time (same value
+        # as generatedFrom). Clients may resolve repo@rev to verify
+        # entries against the exact source tree; freshness checks must
+        # never compare rev (squash merges rewrite it).
+        "catalogSource": {
+            "repo": "https://github.com/HorneroOS/plugins",
+            "rev": rev,
+        },
+        "plugins": entries,
+    }
 
 
 def catalog_is_current(existing_text: str, built: dict) -> bool:

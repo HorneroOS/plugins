@@ -1,6 +1,10 @@
 {
   "schemaVersion": 1,
   "generatedFrom": "2c1ab5305bae932b6ead197905344f98f1c98b70",
+  "catalogSource": {
+    "repo": "https://github.com/HorneroOS/plugins",
+    "rev": "2c1ab5305bae932b6ead197905344f98f1c98b70"
+  },
   "plugins": [
     {
       "id": "hornero-agenda",
