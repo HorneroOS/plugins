@@ -4,12 +4,28 @@
   "dataOnly": true,
   "id": "hornero-capi",
   "name": "Hornero Capi",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A calm Argentine carpincho for a quiet desktop.",
   "author": "HorneroOS contributors",
   "license": "MIT",
+  "homepage": "https://github.com/HorneroOS/plugins",
   "entrypoint": "Main.qml",
   "placement": "background",
+  "marketplace": {
+    "compatibility": {
+      "minShellVersion": "1.3.7"
+    },
+    "changelog": [
+      {
+        "version": "1.0.1",
+        "notes": "First catalogue-complete release: full license text, marketplace metadata and shell compatibility floor."
+      },
+      {
+        "version": "1.0.0",
+        "notes": "First data-only companion pack (PluginKit 6)."
+      }
+    ]
+  },
   "files": [
     "Main.qml",
     "README.md",
