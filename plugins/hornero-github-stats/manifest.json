@@ -1,0 +1,103 @@
+{
+  "schemaVersion": 3,
+  "pluginKit": 5,
+  "id": "hornero-github-stats",
+  "name": "Hornero Dev Pulse",
+  "version": "1.0.0",
+  "description": "Dev Pulse: GitHub development activity through your existing gh sign-in - contributions, pull requests, reviews, an actionable inbox, and an optional side-by-side with Agent Deck AI usage. Local-first; unknown metrics stay unknown.",
+  "author": "HorneroOS contributors",
+  "license": "MIT",
+  "homepage": "https://github.com/HorneroOS/plugins",
+  "entrypoint": "Main.qml",
+  "placement": "dashboard",
+  "surfaces": {
+    "bar": {
+      "entrypoint": "Bar.qml"
+    },
+    "dashboardTab": {
+      "entrypoint": "DevPulse.qml"
+    }
+  },
+  "contributes": {
+    "dashboardTabs": [
+      {
+        "id": "devpulse",
+        "title": "Dev Pulse",
+        "glyph": "activity"
+      }
+    ]
+  },
+  "translations": {
+    "sourceLocale": "en",
+    "locales": [
+      "es"
+    ],
+    "directory": "translations"
+  },
+  "files": [
+    "Main.qml",
+    "Bar.qml",
+    "DevPulse.qml",
+    "GithubData.qml",
+    "README.md",
+    "LICENSE",
+    "translations/es.json"
+  ],
+  "capabilities": {
+    "processCommands": [
+      "horneroctl",
+      "qs",
+      "xdg-open"
+    ],
+    "networkHosts": [],
+    "settings": {
+      "refreshSeconds": {
+        "type": "integer",
+        "default": 300,
+        "minimum": 60,
+        "maximum": 3600,
+        "description": "Seconds between GitHub refreshes."
+      },
+      "statsWindow": {
+        "type": "enum",
+        "default": "30",
+        "options": [
+          "7",
+          "30",
+          "90",
+          "365",
+          "all"
+        ],
+        "description": "Activity window for Dev Pulse statistics."
+      },
+      "orgFilter": {
+        "type": "string",
+        "default": "",
+        "maxLength": 64,
+        "description": "Optional GitHub organization filter (empty = all)."
+      },
+      "repoFilter": {
+        "type": "string",
+        "default": "",
+        "maxLength": 128,
+        "description": "Optional repository filter as owner/name (empty = all)."
+      },
+      "reactionsEnabled": {
+        "type": "boolean",
+        "default": true,
+        "description": "Allow governed companion reactions for failing checks and review requests."
+      }
+    }
+  },
+  "marketplace": {
+    "compatibility": {
+      "minShellVersion": "1.2.79"
+    },
+    "changelog": [
+      {
+        "version": "1.0.0",
+        "notes": "Dev Pulse 1.0: bar indicator, quick popover, full Dev Pulse dashboard tab, development inbox, contribution analytics and optional Agent Deck comparison, all through horneroctl github (gh owns authentication; no token is ever requested or stored)."
+      }
+    ]
+  }
+}

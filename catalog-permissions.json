@@ -89,6 +89,20 @@
         "en": "Reads /proc/uptime with cat to show how long the machine has been on.",
         "es": "Lee /proc/uptime con cat para mostrar cuánto tiempo lleva encendida la máquina."
       }
+    },
+    "hornero-github-stats": {
+      "program:horneroctl": {
+        "en": "Runs horneroctl github status/stats/inbox (read-only) and horneroctl agent usage for the optional Agent Deck comparison. horneroctl talks to GitHub through your existing gh sign-in; this extension never sees or stores a token.",
+        "es": "Ejecuta horneroctl github status/stats/inbox (solo lectura) y horneroctl agent usage para la comparación opcional con Agent Deck. horneroctl habla con GitHub usando tu sesión de gh; esta extensión nunca ve ni guarda un token."
+      },
+      "program:qs": {
+        "en": "Asks the shell to open the Dev Pulse dashboard page when you choose Open Dev Pulse. Nothing else is sent.",
+        "es": "Pide al shell que abra la página Dev Pulse del panel cuando elegís Abrir Dev Pulse. No se envía nada más."
+      },
+      "program:xdg-open": {
+        "en": "Opens the GitHub page of an inbox item (pull request or issue) in your browser when you activate it. Only that item's URL is opened.",
+        "es": "Abre la página de GitHub de un ítem de la bandeja (pull request o issue) en tu navegador cuando lo activás. Solo se abre la URL de ese ítem."
+      }
     }
   }
 }
