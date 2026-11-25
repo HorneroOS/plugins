@@ -1476,8 +1476,8 @@
           "note": "One visibility-gated timer per sprite; benchmark pending."
         },
         "screenshots": {
-          "status": "fail",
-          "note": "No catalogue screenshot yet; live-host capture pending."
+          "status": "pass",
+          "note": "Real capture from an adopted Arch VM desktop (greetd -> Hyprland -> Hornero Shell), cropped to the companion and its habitat."
         }
       }
     },
@@ -1521,8 +1521,8 @@
           "note": "One visibility-gated timer per sprite; benchmark pending."
         },
         "screenshots": {
-          "status": "fail",
-          "note": "No catalogue screenshot yet; live-host capture pending."
+          "status": "pass",
+          "note": "Real capture from an adopted Arch VM desktop (greetd -> Hyprland -> Hornero Shell), cropped to the companion and its habitat."
         }
       }
     }
