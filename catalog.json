@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedFrom": "23e372127ae6bb219a4b09ba775cb13c08965037",
+  "generatedFrom": "2c1ab5305bae932b6ead197905344f98f1c98b70",
   "plugins": [
     {
       "id": "hornero-agenda",
@@ -429,6 +429,14 @@
           }
         ]
       },
+      "screenshots": [
+        {
+          "path": "docs/screenshots/hornero-bitin.png",
+          "sha256": "42bca7a37cdbecc425081994930714f4e3ae08d4bbe49611772cf4fb09444ffc",
+          "bytes": 60488,
+          "alt": "Hornero Bitín, rendered by Hornero Shell"
+        }
+      ],
       "permissions": []
     },
     {
@@ -587,6 +595,14 @@
           }
         ]
       },
+      "screenshots": [
+        {
+          "path": "docs/screenshots/hornero-capi.png",
+          "sha256": "4d50e077f54be7bb0ba520858d161a264e34ef4db90151db42a1b2cbdc999807",
+          "bytes": 14518,
+          "alt": "Hornero Capi, rendered by Hornero Shell"
+        }
+      ],
       "permissions": []
     },
     {
