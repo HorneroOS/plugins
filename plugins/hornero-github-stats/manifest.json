@@ -3,7 +3,7 @@
   "pluginKit": 5,
   "id": "hornero-github-stats",
   "name": "Hornero Dev Pulse",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Dev Pulse: GitHub development activity through your existing gh sign-in - contributions, pull requests, reviews, an actionable inbox, and an optional side-by-side with Agent Deck AI usage. Local-first; unknown metrics stay unknown.",
   "author": "HorneroOS contributors",
   "license": "MIT",
@@ -49,7 +49,9 @@
       "qs",
       "xdg-open"
     ],
-    "networkHosts": [],
+    "networkHosts": [
+      "api.github.com"
+    ],
     "settings": {
       "refreshSeconds": {
         "type": "integer",
@@ -94,6 +96,10 @@
       "minShellVersion": "1.2.79"
     },
     "changelog": [
+      {
+        "version": "1.0.2",
+        "notes": "Validate https:// URLs before invoking xdg-open and declare api.github.com in networkHosts."
+      },
       {
         "version": "1.0.1",
         "notes": "Fix the activity-window selector: the data layer id `data` was shadowed by Item.data inside delegates, so no window could be selected or changed; also fixes a Bar label parse error."

@@ -26,7 +26,7 @@ class DevPulseContractTests(unittest.TestCase):
             self.assertIn(name, MANIFEST["files"])
 
     def test_ui_never_runs_gh_or_touches_tokens_or_network(self):
-        self.assertEqual(MANIFEST["capabilities"]["networkHosts"], [])
+        self.assertEqual(MANIFEST["capabilities"]["networkHosts"], ["api.github.com"])
         self.assertEqual(sorted(MANIFEST["capabilities"]["processCommands"]), ["horneroctl", "qs", "xdg-open"])
         for name in ("Bar.qml", "Main.qml", "DevPulse.qml", "GithubData.qml"):
             src = read(name)

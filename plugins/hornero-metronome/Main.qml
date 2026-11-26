@@ -96,7 +96,7 @@ Item {
     Timer {
         interval: 50
         repeat: true
-        running: root.running
+        running: root.running && root.visible
         onTriggered: root.pollBeat()
     }
 

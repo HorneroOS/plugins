@@ -181,10 +181,10 @@ class ContractTest(unittest.TestCase):
 
     def test_disallowed_import_and_undeclared_process(self):
         qml = GOOD_QML.replace("import QtQuick", "import QtQuick\nimport Quickshell.Io\nimport Evil.Module")
-        qml += '\nProcess { command: ["curl", "https://example.invalid"] }\n'
+        qml += '\nProcess { command: ["uptime", "https://example.invalid"] }\n'
         errors = self.errors_for(qml=qml)
         self.assertTrue(any("disallowed QML import: Evil.Module" in e for e in errors))
-        self.assertTrue(any("not declared in processCommands: curl" in e for e in errors))
+        self.assertTrue(any("not declared in processCommands: uptime" in e for e in errors))
         self.assertTrue(any("URL host not declared" in e for e in errors))
 
     def test_qstr_is_rejected_as_never_translated(self):
@@ -600,6 +600,96 @@ class InventoryTest(unittest.TestCase):
     def test_duplicate_ids_are_rejected(self):
         errors = self.errors_for([implemented_entry(), researched_entry(), researched_entry()])
         self.assertTrue(any("duplicate entry for upstream-widgets" in e for e in errors))
+
+
+class SecurityBypassVectorTest(unittest.TestCase):
+    def _write_plugin(self, root: Path, plugin_id: str, manifest: dict, files: dict) -> Path:
+        pdir = root / plugin_id
+        pdir.mkdir(parents=True, exist_ok=True)
+        (pdir / "manifest.json").write_text(json.dumps(manifest), encoding="utf-8")
+        (pdir / "README.md").write_text("# test\n", encoding="utf-8")
+        (pdir / "LICENSE").write_text("MIT\n", encoding="utf-8")
+        for rel, content in files.items():
+            target = pdir / rel
+            target.parent.mkdir(parents=True, exist_ok=True)
+            target.write_text(content, encoding="utf-8")
+        return pdir
+
+    def _base_manifest(self, plugin_id: str = "hornero-sec-test", extra_files=None, commands=None, plugin_kit=3, surfaces=None) -> dict:
+        m = {
+            "schemaVersion": 3,
+            "pluginKit": plugin_kit,
+            "id": plugin_id,
+            "name": "Sec Test",
+            "version": "1.0.0",
+            "description": "Security validator unit test plugin.",
+            "author": "Test",
+            "license": "MIT",
+            "entrypoint": "Main.qml",
+            "placement": "bar",
+            "files": ["Main.qml", "README.md", "LICENSE"] + list(extra_files or []),
+            "capabilities": {
+                "processCommands": list(commands or []),
+                "networkHosts": [],
+                "settings": {},
+            },
+        }
+        if surfaces is not None:
+            m["surfaces"] = surfaces
+        return m
+
+    def test_rejects_dangerous_qml_patterns(self):
+        vectors = [
+            ("Quickshell.execDetached", 'import QtQuick\nItem { Component.onCompleted: Quickshell.execDetached(["id"]) }\n'),
+            ("Qt.createQmlObject", 'import QtQuick\nItem { Component.onCompleted: Qt.createQmlObject("import QtQuick; Item {}", this) }\n'),
+            ("Qt.createComponent", 'import QtQuick\nItem { Component.onCompleted: Qt.createComponent("Evil.qml") }\n'),
+            ("eval()", 'import QtQuick\nItem { Component.onCompleted: eval("1+1") }\n'),
+            ("Function()", 'import QtQuick\nItem { Component.onCompleted: Function("return 1")() }\n'),
+        ]
+        for label, qml in vectors:
+            with self.subTest(vector=label), tempfile.TemporaryDirectory() as tmp:
+                pdir = self._write_plugin(Path(tmp), "hornero-sec-test", self._base_manifest(), {"Main.qml": qml})
+                errors, _, _ = vp.validate_plugin_dir(pdir)
+                self.assertTrue(any(label in e for e in errors), f"expected {label} rejection, got: {errors}")
+
+    def test_rejects_dangerous_patterns_in_js_and_mjs(self):
+        for ext in ("helper.js", "helper.mjs"):
+            with self.subTest(file=ext), tempfile.TemporaryDirectory() as tmp:
+                manifest = self._base_manifest(extra_files=[ext])
+                files = {
+                    "Main.qml": "import QtQuick\nItem {}\n",
+                    ext: 'function boom() { return eval("1+1"); }\n',
+                }
+                pdir = self._write_plugin(Path(tmp), "hornero-sec-test", manifest, files)
+                errors, _, _ = vp.validate_plugin_dir(pdir)
+                self.assertTrue(any("eval()" in e for e in errors), f"expected eval() rejection in {ext}, got: {errors}")
+
+    def test_rejects_single_quoted_process_command(self):
+        qml = "import QtQuick\nimport Quickshell.Io\nItem { Process { command: ['cat', '/proc/uptime'] } }\n"
+        with tempfile.TemporaryDirectory() as tmp:
+            pdir = self._write_plugin(Path(tmp), "hornero-sec-test", self._base_manifest(commands=["cat"]), {"Main.qml": qml})
+            errors, _, _ = vp.validate_plugin_dir(pdir)
+            self.assertTrue(any("single quotes" in e for e in errors), f"expected single-quote rejection, got: {errors}")
+
+    def test_rejects_forbidden_interpreters_and_downloaders(self):
+        for cmd in ("python", "python3", "python3.12", "perl", "ruby", "node", "curl", "wget", "pkexec"):
+            with self.subTest(cmd=cmd), tempfile.TemporaryDirectory() as tmp:
+                qml = f'import QtQuick\nimport Quickshell.Io\nItem {{ Process {{ command: ["{cmd}", "--version"] }} }}\n'
+                pdir = self._write_plugin(Path(tmp), "hornero-sec-test", self._base_manifest(commands=[cmd]), {"Main.qml": qml})
+                errors, _, _ = vp.validate_plugin_dir(pdir)
+                self.assertTrue(any("forbidden" in e.lower() for e in errors), f"expected forbidden rejection for {cmd}, got: {errors}")
+
+    def test_instances_true_allowed_on_pluginkit_5_and_6(self):
+        for pk in (4, 5, 6):
+            with self.subTest(pluginKit=pk), tempfile.TemporaryDirectory() as tmp:
+                manifest = self._base_manifest(
+                    plugin_kit=pk,
+                    surfaces={"desktop": {"entrypoint": "Main.qml", "instances": True}},
+                )
+                manifest["placement"] = "desktop"
+                pdir = self._write_plugin(Path(tmp), "hornero-sec-test", manifest, {"Main.qml": "import QtQuick\nItem {}\n"})
+                errors, _, _ = vp.validate_plugin_dir(pdir)
+                self.assertFalse(any("instances" in e for e in errors), f"unexpected instances error for pluginKit {pk}: {errors}")
 
 
 if __name__ == "__main__":

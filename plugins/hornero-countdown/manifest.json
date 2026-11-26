@@ -2,7 +2,7 @@
   "schemaVersion": 3,
   "id": "hornero-countdown",
   "name": "Hornero Countdown",
-  "version": "3.1.1",
+  "version": "3.1.2",
   "description": "Bar timers: a countdown with 5/10/25 minute presets and a stopwatch behind one indicator, deadline and anchor based so sleep never loses time.",
   "author": "HorneroOS contributors",
   "license": "MIT",
@@ -86,6 +86,10 @@
       "minShellVersion": "1.0.0"
     },
     "changelog": [
+      {
+        "version": "3.1.2",
+        "notes": "Gate sub-second stopwatch and flash timers on active/visible state."
+      },
       {
         "version": "3.1.1",
         "notes": "Declare marketplace compatibility (minShellVersion); catalogue description no longer leads with an internal version."

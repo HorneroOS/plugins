@@ -141,7 +141,8 @@ Item {
             id: indicator
 
             variant: "quiet"
-            text: root.hostCompact || root.hostOrientation === "vertical" ? "⏱" : root.statusText
+            glyph: "clock"
+            text: root.hostCompact || root.hostOrientation === "vertical" ? "" : root.statusText
             tooltipText: root.statusText
             accessibleName: i18n.tr("Uptime details")
             onClicked: {
@@ -149,11 +150,6 @@ Item {
                 root.refresh();
             }
         }
-    }
-
-    UiTooltip {
-        target: indicator
-        text: root.statusText
     }
 
     UiPopover {

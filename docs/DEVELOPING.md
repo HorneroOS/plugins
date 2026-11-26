@@ -1,600 +1,175 @@
-# Developing a Hornero Shell plugin (SDK)
+# Developing a Hornero Shell Plugin (SDK)
 
-Developer guide for authors of Hornero Shell extensions. Everything
-below is the verified contract as implemented in this repository
-(`schema/plugin-manifest.schema.json`, `scripts/validate_plugins.py`,
-`scripts/gen_catalog.py`), in HorneroOS/shell (`docs/PLUGINS.md`,
-`scripts/validate_plugin.py`, `plugin/qml/Hornero/PluginKit/*.qml` on
-`main`), and in HorneroOS/hornero (`horneroctl plugin`, see
-`cli/modules/hornero_cli/plugin_options.v`, `help.v`, `dispatch.v` on
-`main`). Where the marketplace gate and the shell validator differ,
-both are stated.
+Developer guide for authors of Hornero Shell extensions targeting
+**`schemaVersion: 3`** and **PluginKit 3–6** (Hornero Signal). Everything below
+reflects the verified contract in `schema/plugin-manifest.schema.json`,
+`scripts/validate_plugins.py`, `scripts/gen_catalog.py`, HorneroOS/shell
+(`docs/PLUGINS.md`, `scripts/validate_plugin.py`,
+`plugin/qml/Hornero/PluginKit/*.qml`), and HorneroOS/hornero (`horneroctl plugin`).
 
-Read [CONTRIBUTING.md](CONTRIBUTING.md) for contribution workflow and
-[SECURITY.md](SECURITY.md) / [SIGNING.md](SIGNING.md) for the security
-and signing contracts. This document does not replace them.
+Read [CONTRIBUTING.md](CONTRIBUTING.md) for contribution workflow,
+[SECURITY.md](SECURITY.md) for the security model, and
+[SIGNING.md](SIGNING.md) for package signing and trust tiers.
 
 ## Security truth (read first)
 
-- Plugin QML executes **in-process inside Quickshell** with the
-  logged-in user's privileges. It is **not sandboxed**: filesystem,
-  processes and network are reachable from QML regardless of what a
-  manifest declares.
-- `capabilities` declarations are **review metadata, not
-  enforcement**. They support code review and the Control Center
-  consent display; they are not an operating-system permission grant.
-- The validators are static review aids. Passing validation is **not
-  a security certification**, and the textual checks can be evaded by
-  dynamic code.
-- Install copies inert data only. Enable is a separate, explicit
-  consent action (`--yes` on the CLI, or the Control Center consent
-  dialog), re-required every time the payload changes.
-- Trust tiers, from `horneroctl plugin list` (see SIGNING.md):
-  `official` (maintainer-reviewed in this repo, pinned by commit +
-  SHA-256 in `catalog.json`) > `signed` (author minisign signature
-  verifies against the manifest's declared key and the payload hash)
-  > `trusted` (local hash pin recorded with `plugin trust`) >
-  `untrusted` / `stale-trust`. A failing signature reports
-  `bad-signature` and cannot be enabled until fixed or removed and
-  local trust is recorded. `community` entries are listed for
-  discovery, unreviewed, and shown with a warning; there is no silent
-  promotion between tiers.
+- Plugin QML executes **in-process inside Quickshell** with the logged-in user's
+  privileges. It is **not sandboxed**.
+- `capabilities` declarations are **review metadata, not enforcement**. They
+  support code review and the Control Center consent display.
+- Static validators (`scripts/validate_plugins.py` and the shell validator) are
+  review aids, not a security certification.
+- Install copies inert data only. Enable is a separate explicit consent action
+  (`--yes` on the CLI, or the Control Center consent dialog), re-required on
+  every payload change.
 
 ## Package shape
 
-One directory per plugin. In this repo: `plugins/<id>/`; the
-directory name must equal the manifest `id`. A package contains:
+One directory per plugin under `plugins/<id>/`; the directory name must equal
+the manifest `id`:
 
-- `manifest.json` — the manifest contract below.
-- The QML `entrypoint` file.
-- Exactly the files listed in manifest `files` (plus `manifest.json`
-  itself). `files` must include `README.md` and `LICENSE`.
+- `manifest.json` — `schemaVersion: 3` manifest.
+- The QML `entrypoint` file (and any surface entrypoints / helper `.qml` or `.js` files).
+- `README.md` and `LICENSE` (required in `files`).
+- Optional `translations/<locale>.json` catalogs (required when `translations` is declared).
 
-## PluginKit 3 (Hornero Signal): `schemaVersion: 3`
+No symlinks, executable bits, or binary suffixes (`.so`, `.o`, `.a`, `.bin`,
+`.exe`, `.dll`, `.pyc`) are allowed, and the files on disk must match
+`files` + `manifest.json` exactly.
 
-The shipped shell loads **only `schemaVersion: 3`** packages and refuses
-1/2 with a migration hint. New extensions start at 3: colours come from
-`Theme.palette.<role>`, type and spacing from `Theme.font` / `Theme.spacing`,
-icons are Hornero Glyph names (`UiIcon { name }`, `glyph` on buttons/rows/
-chips, kebab-case Tabler outline names listed in `schema/hornero-glyphs.names`),
-and every shared data domain read through a facade or `Subscription` is
-declared in `capabilities.providers`. `scripts/validate_plugins.py` rejects
-removed Material-era names with their replacement. The canonical contract is
-the shell's `docs/PLUGINS.md` ("Migrating to PluginKit 3", "Desktop
-widgets", "Instrumentation"); catalogue progress is tracked in
-HorneroOS/plugins#62. The v1 material below documents the retired contract
-and is kept for history only: the validator now rejects `schemaVersion` 1/2.
+## Manifest (`schemaVersion: 3`, PluginKit 3–6)
 
-## Manifest: `schemaVersion: 1` (retired)
+`schemaVersion: 1` and `2` are retired and rejected by the validator. New
+extensions must declare `"schemaVersion": 3` and `"pluginKit": 3` (or `4`, `5`,
+`6` when using higher-level features):
 
-The contract is `schema/plugin-manifest.schema.json` in this repo
-(kept in sync with HorneroOS/shell; the shell copy is canonical).
-`additionalProperties: false` — unknown top-level fields are
-rejected. Required fields:
+- **PluginKit 3** (baseline): Signal `Theme.palette.*` tokens, Hornero Glyphs,
+  `capabilities.providers`, `surfaces` (`bar`, `dashboard`, `desktop`,
+  `background`), JSON `translations`, typed v3 settings (`boolean`, `integer`,
+  `number`, `string`, `enum`).
+- **PluginKit 4**: `contributes` (`commands`, `quickSettings`, `panels`),
+  `surfaces.desktop.instances: true`, and v4 settings (`colour`, `list`,
+  `text`, `path`, `strings`, plus `title`, `group`, `unit`, `step`,
+  `visibleWhen`, `hidden`).
+- **PluginKit 5**: `surfaces.dashboardTab` and `contributes.dashboardTabs`.
+- **PluginKit 6**: `dataOnly: true` packages with `contributes.companions` and
+  `contributes.companionAddons`.
 
-| Field | Constraint (schema) |
-| --- | --- |
-| `schemaVersion` | Must be exactly `1` (`const: 1`; shell validator also requires an integer). |
-| `id` | `^[a-z0-9][a-z0-9-]{0,47}$` (max 48 chars); must equal the directory name. |
-| `name` | Non-blank string, 1–64 chars. |
-| `version` | Semver `MAJOR.MINOR.PATCH[-prerelease][+build]`, max 80 chars, no leading zeros. |
-| `description` | Non-blank string, 1–280 chars. |
-| `author` | Non-blank string, 1–120 chars. |
-| `license` | Non-blank string, 1–80 chars. |
-| `entrypoint` | Safe relative path ending in `.qml`, max 240 chars: no leading `/`, no `..` segments, no `//`. The shell validator additionally requires it to be listed in `files`. |
-| `files` | Array, min 3 items, unique, each a safe relative path (same rules as `entrypoint`), never `manifest.json`; must contain `README.md` and `LICENSE`. |
-| `capabilities` | Object with exactly `processCommands`, `networkHosts`, `settings` (see below). |
-
-Optional fields:
-
-| Field | Constraint |
-| --- | --- |
-| `homepage` | HTTPS URI only (`^https://…`), max 500 chars. |
-| `placement` | One of `background`, `bar`, `dashboard`, `desktop`; default `background`. |
-| `signing` | Object with required `publicKey` (40–80 chars, base64) and `signature` (80–120 chars, base64). Optional author minisign signature over the files-only payload hash; see SIGNING.md. Absence is fine. |
-
-`capabilities`:
-
-- `processCommands`: unique array of exact executable basenames
-  matching `^[A-Za-z0-9_.+-]+$`. Shells and privilege tools are
-  forbidden values: `sh`, `bash`, `dash`, `zsh`, `fish`, `sudo`,
-  `doas`, `su` (case-insensitive in the schema pattern).
-- `networkHosts`: unique array of hostnames (dot-separated labels,
-  each 1–63 chars, alphanumeric and internal hyphens).
-- `settings`: object whose keys match `^[a-z][a-zA-Z0-9]{0,47}$`.
-  Each value is an object with required `type` and `default`, and
-  optional `description` (max 160 chars). `type` is one of
-  `boolean`, `integer`, `number`, `string`, and `default` must match
-  the declared type.
-
-Minimal manifest (from HorneroOS/shell `docs/PLUGINS.md`):
+Minimal `schemaVersion: 3` manifest:
 
 ```json
 {
-  "schemaVersion": 1,
+  "schemaVersion": 3,
+  "pluginKit": 3,
   "id": "example-clock",
   "name": "Example Clock",
   "version": "1.0.0",
-  "description": "A sample clock card.",
+  "description": "A sample clock indicator.",
   "author": "Example Author",
   "license": "MIT",
   "entrypoint": "Main.qml",
-  "files": ["Main.qml", "README.md", "LICENSE"],
+  "placement": "bar",
+  "translations": {
+    "sourceLocale": "en",
+    "locales": ["es"],
+    "directory": "translations"
+  },
+  "files": ["Main.qml", "README.md", "LICENSE", "translations/es.json"],
   "capabilities": {
     "processCommands": [],
     "networkHosts": [],
+    "providers": ["time"],
     "settings": {}
   }
 }
 ```
 
-### Placements
-
-`placement` decides where the shell renders the entrypoint. Each
-plugin gets its own `Loader` in the shell, so one plugin's failure
-does not take down the shell or neighbouring extensions.
-
-| Placement | Behaviour |
-| --- | --- |
-| `background` | Headless; the default when `placement` is omitted. |
-| `bar` | Rendered in the bar's end group. |
-| `dashboard` | Rendered as a card in the dashboard Extensions tab. |
-| `desktop` | Rendered as a widget on each display's background layer, in one of nine named slots per display. Slot choice is made by the user in Control Center and persisted in the user's shell config; plugin code has no setter for it. Unrecognized displays and malformed slot data fall back to `bottom-right`. |
-
-Unknown placement values are rejected by the validator and by the
-runtime host.
-
-## PluginKit API
-
-The shell installs the stable `Hornero.PluginKit` QML module
-(`plugin/qml/Hornero/PluginKit/qmldir` in HorneroOS/shell). Import
-it as:
-
-```qml
-import Hornero.PluginKit
-```
-
-Members (exact names copied from the `.qml` sources on shell
-`main`): `Theme`, `Notifications`, `Desktop`, `System`, `Network`,
-`Media`, `Weather`, `Time`, `Power` and `Audio` are singletons;
-`Settings` is a regular (instantiable) type. All data facades are
-read-only except `Media` transport, `Audio` controls and
-`Settings.setValue`; they have no setters, no `Process` and no
-shell execution. They wrap the shell's existing `qs.services`
-singletons, plus Quickshell's `UPower` service for `Power`. No AI
-quota is exposed by PluginKit.
-
-### `Theme` (singleton)
-
-Read-only properties: `light` (bool); colors `primary`, `onPrimary`,
-`surface`, `surfaceContainer`, `onSurface`, `onSurfaceVariant`,
-`error`, `background`, `onBackground`, `surfaceDim`,
-`surfaceBright`, `surfaceContainerLowest`, `surfaceContainerLow`,
-`surfaceContainerHigh`, `surfaceContainerHighest`, `surfaceVariant`,
-`primaryContainer`, `onPrimaryContainer`, `secondary`,
-`onSecondary`, `secondaryContainer`, `onSecondaryContainer`,
-`tertiary`, `onTertiary`, `tertiaryContainer`,
-`onTertiaryContainer`, `errorContainer`, `onErrorContainer`,
-`onError`, `outline`, `outlineVariant`, `success`;
-`fontFamily`, `monoFontFamily` (string); `fontSizeSmall`, `fontSize`,
-`fontSizeLarge`, `spacingSmall`, `spacing`, `spacingLarge`,
-`roundingSmall`, `rounding`, `roundingLarge` (int). Token names are
-the compatibility contract; the internal palette may change.
-
-### `Notifications` (singleton)
-
-- `toast(summary: string, body: string, icon: string): void` —
-  shows a bounded in-shell toast (empty summary is a no-op; summary
-  is truncated to 120 chars, body to 500, default icon
-  `"extension"`). It does not create a persistent desktop
-  notification.
-
-### `Desktop` (singleton)
-
-- `position(pluginId: string, screenName: string): string` — reads
-  the current named slot for a `desktop` plugin on a screen; returns
-  `"bottom-right"` when the plugin has no `desktop` placement (and
-  as the host fallback described above).
-
-### `Settings` (instantiable)
-
-```qml
-Settings {
-    id: pluginSettings
-    pluginId: "example-clock"
-}
-```
-
-- Property: `pluginId` (string).
-- `value(key: string, fallback: var): var` — returns the stored
-  value if its type matches the manifest declaration for `key`,
-  otherwise the declaration's `default`; returns `fallback` for an
-  invalid/un-declared key.
-- `setValue(key: string, value: var): bool` — writes only declared
-  keys with type-matching values (strings max 4096 chars; integers
-  must be integral; numbers must be finite); returns success.
-- Helpers also present in the source: `validKey(key)`,
-  `validValue(value, type)`.
-
-Declarations come from `capabilities.settings` in the manifest of
-the ID named by `pluginId`; user values are stored under that ID in
-`$XDG_CONFIG_HOME/hornero/shell.json`. The ID is a namespace
-selector, not proof of the caller's identity and not an access
-boundary between extensions. Extensions cannot write the canonical
-shell config through this API.
-
-### `System` (singleton, read-only)
-
-`cpuPerc`, `cpuTemp`, `gpuPerc`, `gpuTemp`, `memUsed`, `memTotal`,
-`memPerc`, `storagePerc` (real), and `disks` (var; a copied list).
-
-### `Network` (singleton, read-only)
-
-`downloadSpeed`, `uploadSpeed`, `downloadTotal`, `uploadTotal`
-(real).
-
-### `Media` (singleton)
-
-Read-only: `hasPlayer` (bool), `identity`, `title`, `artist`
-(string), `isPlaying` (bool). Mutating transport calls —
-`playPause()`, `previous()`, `next()` — which act only when the
-active player reports it can perform them. Call them only from a
-user-initiated handler; PluginKit never auto-plays.
-
-### `Weather` (singleton, read-only)
-
-`ready`, `locationConfigured` (bool), `temp`, `description`
-(string), `humidity` (int), `windSpeed` (real), `sunrise`, `sunset`,
-`lastError` (string), `forecast` (var; a copied list).
-
-### `Time` (singleton)
-
-Read-only: `date` (date), `hours`, `minutes`, `seconds` (int),
-`timeStr` (string). Plus `format(fmt: string): string`.
-
-### `Power` (singleton, read-only)
-
-`hasBattery` (bool), `percentage` (int, 0–100), `charging`,
-`onBattery` (bool), `stateText` (string: `charging`,
-`fully-charged`, `discharging`, `pending-charge`, or empty when no
-battery or state is known). This facade delegates to Quickshell's
-`UPower` service (`Quickshell.Services.UPower`, via
-`UPower.displayDevice` / `UPower.onBattery`) rather than a
-`qs.services` singleton.
-
-### `Audio` (singleton)
-
-Read-only: `volume`, `sourceVolume` (real), `muted`, `sourceMuted`,
-`hasSink`, `hasSource` (bool). `hasSink` / `hasSource` report
-whether a default output sink / input source is present; the
-volumes read `0` when there is none. Mutating calls —
-`setVolume(v: real)`, `incrementVolume()`, `decrementVolume()`,
-`toggleMute()` and `toggleSourceMute()` — which delegate to the
-shell's audio service: it clamps volume to
-`0`–`Config.services.maxVolume` (and clears the sink mute on
-`setVolume`), applies its configured step for the increment /
-decrement calls, and the mute toggles are no-ops when the device
-is absent. Call them only from a user-initiated handler;
-PluginKit never changes volume on load.
-
-Example (from HorneroOS/shell `examples/plugins/example-clock/`):
-
-```qml
-import QtQuick
-import Hornero.PluginKit
-
-Item {
-    Settings {
-        id: pluginSettings
-        pluginId: "example-clock"
-    }
-
-    Text {
-        text: Qt.formatDateTime(new Date(), pluginSettings.value("twentyFourHour", true) ? "ddd, HH:mm" : "ddd, h:mm ap")
-        color: Theme.onSurface
-        font.family: Theme.fontFamily
-        font.pointSize: Theme.fontSize
-    }
-
-    MouseArea {
-        anchors.fill: parent
-        onClicked: Notifications.toast("Example Clock", "This example uses the public PluginKit API.", "schedule")
-    }
-}
-```
-
-## Allowed imports and validator rules
-
-### Allowed imports (shell validator)
-
-The shell validator (`scripts/validate_plugin.py` in
-HorneroOS/shell) scans every `.qml` file in the package and rejects
-any import not in this exact list:
-
-- `QtQuick`
-- `QtQuick.Controls`
-- `QtQuick.Layouts`
-- `QtQml`
-- `Quickshell`
-- `Quickshell.Io`
-- `Hornero.PluginKit`
-
-Imports of Hornero's internal implementation and unknown PluginKit
-submodules are rejected. (The starter template uses only `QtQuick`;
-CONTRIBUTING.md asks you to keep imports minimal so a plugin also
-loads in a stock Quickshell. Note the marketplace validator in this
-repo does not itself check imports — the shell validator does.)
-
-### Marketplace gate: `scripts/validate_plugins.py` (this repo)
-
-Run from the repo root; it validates every directory under
-`plugins/` and `community/` (community submissions pass the same
-gate but are never catalogued). It checks:
-
-- `manifest.json` parses; all required fields present;
-  `schemaVersion` is `1`; `id` matches the pattern above; directory
-  name equals `id`; `version` is semver.
-- `files` includes `README.md` and `LICENSE`; every listed file
-  exists; the files on disk are exactly `files` + `manifest.json`
-  (payload drift fails).
-- No symlinks, no executable bits, no binary suffixes
-  (`.so`, `.o`, `.a`, `.bin`, `.exe`, `.dll`, `.pyc`).
-- The `entrypoint` file exists.
-- Schema-aligned manifest rules (unknown top-level fields, text
-  length limits, `placement` enum, https `homepage`, safe relative
-  paths, `entrypoint` listed in `files`, exact `capabilities` shape,
-  forbidden shell/privilege `processCommands`, settings
-  type/default agreement) and the shell validator's decidable QML
-  rules (import allowlist above, literal `Process` argv whose
-  executable is declared, literal URL hosts declared in
-  `networkHosts`, `Settings` keys declared and used).
-
-### Version bumps
-
-A payload change that keeps its version strands every installed copy:
-`horneroctl plugin catalog update` refuses a package whose payload
-differs from the catalogue at the same version. CI runs
-`scripts/check_version_bumps.py` on pull requests. Use
-`python3 scripts/bump_version.py <id> "<note>"` (patch bump plus a
-changelog entry), then `python3 scripts/gen_catalog.py`.
-
-### Store fields: permissions text, changelog, screenshots
-
-Control Center > Extensions shows each catalogue entry before install
-without running any plugin code. `scripts/gen_catalog.py` adds three
-fields to every entry for that:
-
-| Field | Source | Notes |
-| --- | --- | --- |
-| `permissions` | `capabilities` + `catalog-permissions.json` | One line per declared program, network host, shared data domain, broker action and settings block, with `en` and `es` text. |
-| `marketplace` | the manifest's `marketplace` object | Changelog, compatibility, deprecation and packaged screenshots, copied as is. |
-| `screenshots` | `docs/screenshots/<id>.<png\|jpg\|jpeg\|webp>` | Path, SHA-256, byte size and alt text. Outside the payload; `horneroctl` verifies the hash before it caches the image for the pane. |
-
-Every `processCommands` and `networkHosts` entry needs a curated reason
-in `catalog-permissions.json` (`"program:<name>"` or
-`"network:<host>"`, English and Spanish). Generation fails when a
-reason is missing, when one names a use the manifest does not declare,
-or when it names a plugin that does not exist. Write what the program
-is run for and whether it only reads ("Lists your containers with
-podman ps (read-only)"), not what the program is. These lines are
-review text shown before consent; they do not restrict what plugin QML
-can do.
-
-### Quality gate and audit: `quality-audit.json` (#21)
-
-The same `scripts/validate_plugins.py` run also enforces the
-maintained per-extension quality audit in `quality-audit.json` at
-the repo root (official `plugins/` entries only; community
-submissions are not audited or catalogued). The audit is **not**
-generated and not part of any plugin payload, so it never changes
-`catalog.json`.
-
-Every official plugin must have exactly one entry with:
-
-- `classification`: `premium-ready`, `needs-upgrade`,
-  `consolidated`, or `deprecated-with-replacement`.
-  `needs-upgrade` requires a linked `issue`
-  (`HorneroOS/plugins#N` or its GitHub URL); `consolidated` and
-  `deprecated-with-replacement` require `replacement` to name
-  another official plugin.
-- `valueProposition` and `nativeOverlap`: what the extension is
-  for, and how it overlaps native shell features or other
-  catalogue entries.
-- `dimensions`: a `status` (`pass`, `fail`, `na`, `unverified`)
-  plus a `note` for each of `tooltips`, `accessibility`,
-  `translation`, `settings`, `themeTokens`, `orientation`,
-  `loadingErrorStates`, `performance`, and `screenshots`.
-
-Statically decidable dimensions are probed from the payload and
-the audit must match the probe exactly — an entry may neither
-over-claim nor go stale:
-
-| Dimension | Static probe for `pass` |
-| --- | --- |
-| `tooltips` | Interactive controls present ⇒ `ToolTip.text` used; no interactive controls ⇒ `na`. |
-| `accessibility` | Interactive controls present ⇒ `Accessible.name` used; no interactive controls ⇒ `na`. |
-| `translation` | Translatable string literals ⇒ wrapped via `qsTr(` / `qsTrId(`; none ⇒ `na`. |
-| `settings` | Settings declared ⇒ read through PluginKit `Settings`; none declared ⇒ `na`. |
-| `themeTokens` | Visible placement ⇒ PluginKit `Theme.` used and no hard-coded chrome `color:` literals; `background` ⇒ `na`. |
-| `screenshots` | A file exists at `docs/screenshots/<id>.png` (or `.jpg`/`.jpeg`/`.webp`), outside the payload. |
-
-`orientation`, `loadingErrorStates`, and `performance` cannot be
-decided statically; they are maintainer attestations with a
-required note. `orientation: pass` and any `premium-ready`
-classification additionally require a `graphicalReview`
-(`{reviewer, date}`), and `premium-ready` requires every
-dimension to be `pass` or `na`.
-
-Failing or unverified dimensions print as `quality:` warnings and
-do not fail the default run while an honest audit entry tracks
-them under a linked issue; `python3 scripts/validate_plugins.py
---strict` turns them into errors. As of the #21 baseline all 33
-official extensions are `needs-upgrade` under
-HorneroOS/plugins#21 (none has translations wired, screenshots, or
-a graphical review yet). Adding a plugin now also means adding
-its audit entry in the same change.
-
-This gate is static only. Passing it is **not graphical
-acceptance**: nothing is rendered, screenshotted, or run in a
-shell, and the validator says so on every successful run.
-
-### Shell validator: `scripts/validate_plugin.py <dir>` (HorneroOS/shell)
-
-Stricter, and also run by `horneroctl plugin validate` and again at
-enable time. In addition to the manifest rules above (including
-unknown-field and duplicate-key rejection, the homepage check, and
-settings type/default checks), it rejects:
-
-- Unsafe paths (absolute, `..`, backslash, NUL), an `entrypoint`
-  not listed in `files`, or `files` not exactly matching the
-  package contents.
-- Symlinks; setuid/setgid, executable or world-writable files;
-  compiled/bytecode suffixes (`.so`, `.dll`, `.dylib`, `.exe`,
-  `.pyc`).
-- Disallowed imports (list above).
-- Forbidden source markers: `sudo`/`doas`/`pkexec`, `su -`,
-  `<shell> -c` for the forbidden shells, `.ssh` paths, `/etc` paths,
-  `HOME`/`XDG_CONFIG_HOME` path joins.
-- `Process {}` usage that is not a literal argv array
-  (`command: ["exe", …]`), or whose executable basename is
-  undeclared in `processCommands` or is a forbidden shell/privilege
-  tool.
-- Network API use (`XMLHttpRequest`, `WebSocket`, `NetworkRequest`,
-  `TcpSocket`) with no declared `networkHosts`, and any literal
-  `http(s)://` URL whose hostname is not declared in
-  `networkHosts`.
-
-These textual checks can be evaded by dynamic code; treat them as a
-review aid, never as a sandbox.
-
-## Lifecycle with `horneroctl plugin`
-
-Verified against `plugin_options.v`, `help.v` and `dispatch.v` in
-HorneroOS/hornero on `main`. Subcommands:
-`new`, `install`, `install-local`, `remove`, `list`, `validate`,
-`enable`, `disable`, `trust`, `catalog`, `community`.
-
-General rules: mutation commands (`new`, `install`,
-`install-local`, `remove`, `enable`, `disable`, and the catalog
-mutations) require `--yes` to mutate; `--dry-run` never creates
-files or clones and never loads QML. `list` and `validate` are
-read-only and take no mutation flags. Installed packages are stored
-below XDG data with ownership receipts under XDG state; plugins are
-disabled by default when installed, and installation does not load
-QML.
-
-```sh
-# Scaffold a new plugin (static MIT template).
-# Requires --name, --author, --description, --license and --dir,
-# and exactly one of --dry-run / --yes. --license currently only
-# accepts MIT; other licenses are created manually.
-horneroctl plugin new example-clock --name "Example Clock" \
-  --author "Your Name" --description "A clock widget" \
-  --license MIT --dir ./example-clock --dry-run
-
-# Static contract validation of a package directory (read-only).
-horneroctl plugin validate ./example-clock
-
-# Install from a public git URL (HTTPS) — inert data only.
-horneroctl plugin install https://github.com/example/my-plugin.git --dry-run
-horneroctl plugin install https://github.com/example/my-plugin.git --yes
-
-# Install from a local directory (no network; symlinked path
-# components/entries and any .git are refused; the receipt revision
-# is the payload SHA-256).
-horneroctl plugin install-local ./example-clock --dry-run
-horneroctl plugin install-local ./example-clock --yes
-
-# List receipt-owned installed packages.
-horneroctl plugin list
-horneroctl plugin list --json
-
-# Record explicit trust for the current payload hash of a
-# non-official installed plugin. Never enables; any payload change
-# invalidates it. Non-official plugins need recorded trust before
-# they can be enabled (official-catalogue installs carry reviewed
-# provenance instead).
-horneroctl plugin trust example-clock --yes
-
-# Enable / disable. Enable re-validates the installed payload
-# first; on failure the plugin stays disabled.
-horneroctl plugin enable example-clock --yes
-horneroctl plugin disable example-clock --yes
-
-# Remove only a package owned by a Hornero receipt.
-horneroctl plugin remove example-clock --yes
-
-# Official catalogue (this repository).
-horneroctl plugin catalog [--json]
-horneroctl plugin catalog install hornero-pomodoro [--revision <catalogue-commit>] [--dry-run|--yes]
-horneroctl plugin catalog update <id> [--revision <catalogue-commit>] [--dry-run|--yes]
-horneroctl plugin catalog rollback <id> [--dry-run|--yes]
-
-# Signed community registry (read-only listing only).
-horneroctl plugin community list [--json]
-```
-
-Notes:
-
-- `--revision` is valid only with `catalog install` / `catalog
-  update`, and pins the catalogue commit.
-- Catalog install verifies the payload SHA-256 against
-  `catalog.json` and the pinned revision before copying; update
-  keeps the previous payload, and `catalog rollback` restores it.
-- `plugin community list` fetches this repository, verifies the
-  detached minisign signature against `/etc/hornero/registry.pub`,
-  and fails closed when the key, signature, index or `minisign` is
-  unavailable — there is no unsigned fallback. A registry signature
-  proves publication by that registry, not code review or safety.
-  (In the shell, the community pane is display-only; see shell
-  `docs/PLUGINS.md`.)
-- Inspect a running shell with `qs ipc call plugins status` and
-  rediscover with `qs ipc call plugins reload`.
-
-## Starting from the starter template
-
-This repo ships `templates/starter-plugin/` (`Main.qml`,
-`manifest.json`, `README.md`, MIT `LICENSE`): a `bar`-placement
-label showing `HH:mm` (PluginKit 3: `UiText`, the `time` provider,
-`schemaVersion: 3`).
+## Hornero Signal (`Theme.palette.*`) & Hornero Glyphs
+
+Material-era tokens (`Theme.primary`, `Theme.onSurface`, `Theme.fontSize`,
+`iconName`, `fill: 1`, etc.) were removed in PluginKit 3 and are rejected by
+the validator:
+
+- **Palette roles**: `Theme.palette.ground`, `sunken`, `base`, `panel`,
+  `raised`, `lifted`, `ink`, `inkMuted`, `inkFaint`, `rule`, `ruleStrong`,
+  `focus`, `signal`, `onSignal`, `signalWell`, `onSignalWell`, `cue`, `onCue`,
+  `phosphor`, `onPhosphor`, `alert`, `onAlert`, etc.
+- **Typography & spacing**: `Theme.font.family.sans`, `Theme.font.family.mono`,
+  `Theme.font.size.{small,smaller,normal,larger,large,extraLarge}`,
+  `Theme.spacing.{small,smaller,normal,larger,large}`,
+  `Theme.padding.*`, `Theme.rounding.*`, `Theme.duration(name)`.
+- **Icons**: Use Hornero Glyph kebab-case names listed in
+  `schema/hornero-glyphs.names` via `UiIcon { name: "clock" }` or
+  `glyph: "clock"` on `UiButton`, `UiCard`, `UiChip`, `UiDetailRow`, and
+  `UiActionRow`. Do not use raw emoji for chrome icons.
+
+## Translations (JSON catalogs, not `qsTr()`)
+
+The shell installs no `QTranslator` for extension catalogs, so `qsTr()` and
+`qsTrId()` are rejected by the validator. Instead:
+
+1. Declare `"translations": { "sourceLocale": "en", "locales": ["es"], "directory": "translations" }`
+   in `manifest.json` and include `translations/es.json` in `files`.
+2. Instantiate `Translations { id: i18n; pluginId: "<your-id>" }` in QML and
+   wrap visible strings with `i18n.tr("...")` (preserving `%1`/`%2` placeholders).
+
+## Allowed imports & static security rules
+
+`scripts/validate_plugins.py` scans every `.qml`, `.js`, and `.mjs` file in the
+package and enforces:
+
+- **Allowed QML imports**: `QtQuick`, `QtQuick.Controls`, `QtQuick.Layouts`,
+  `QtQml`, `Quickshell`, `Quickshell.Io`, `Hornero.PluginKit`.
+- **Forbidden dynamic execution**: `Quickshell.execDetached`,
+  `Qt.createQmlObject`, `Qt.createComponent`, `eval(`, and `Function(`.
+- **Process commands**: `Process {}` must use a double-quoted literal `command: ["exe", ...]`
+  array whose basename is declared in `capabilities.processCommands`. Shells,
+  privilege escalators, and script interpreters (`sh`, `bash`, `dash`, `zsh`,
+  `fish`, `sudo`, `doas`, `su`, `pkexec`, `python*`, `perl`, `ruby`, `node`,
+  `curl`, `wget`) are forbidden.
+- **Network hosts**: Every `http(s)://` host literal and every network API
+  (`XMLHttpRequest`, `WebSocket`, `NetworkRequest`, `TcpSocket`) requires a
+  matching entry in `capabilities.networkHosts` and a plain-language reason in
+  `catalog-permissions.json`.
+- **Timers**: Gate sub-second and polling `Timer` instances on active/visible
+  state (e.g. `running: root.running && root.visible`) so idle or hidden
+  plugins do not wake the shell unnecessarily.
+
+## Local development & hot-reload (`scripts/dev_preview.sh`)
+
+Start from `templates/starter-plugin/`:
 
 ```sh
 cp -r templates/starter-plugin plugins/<your-id>
-# rename: set manifest "id" to <your-id> (must equal the directory
-# name), edit name/version/description/author, then write Main.qml
-python3 scripts/validate_plugins.py
-python3 scripts/gen_catalog.py   # see the two-commit flow below
 ```
 
-The entrypoint root is a `QtQuick` `Item`; give it
-`implicitWidth`/`implicitHeight` for visible placements (the
-starter and the pomodoro in `plugins/hornero-pomodoro/` both do).
-Alternatively scaffold outside this repo with
-`horneroctl plugin new … --yes` (above).
-
-Before opening a PR, exercise the package on a real shell:
+Use `scripts/dev_preview.sh` to validate, install locally, and reload the
+running shell on every save:
 
 ```sh
-horneroctl plugin validate ./plugins/<your-id>
-horneroctl plugin catalog install <your-id> --yes   # after merge
-qs ipc call plugins status
+# One-shot validate + install-local + reload
+scripts/dev_preview.sh plugins/<your-id>
+
+# Watch mode: re-validates and reloads Quickshell on every file change
+scripts/dev_preview.sh plugins/<your-id> --watch
 ```
 
-## Regenerating `catalog.json`: the two-commit flow
+## Version bumps & regenerating `catalog.json`
 
-`catalog.json` is generated by `scripts/gen_catalog.py`; never edit
-it by hand. It records, per plugin: identity, `placement`,
-capability disclosure, `trust: "official"`, `path`, a pinned git
-revision (`generatedFrom`: the last commit that touched `plugins/`)
-and a SHA-256 over the payload (`manifest.json` + every file in
-`files`, in sorted order, framed as `name NUL bytes NUL`).
+Every payload change requires a version bump so `horneroctl plugin catalog update`
+can detect it:
 
-Because `generatedFrom` is the last `plugins/` commit, the workflow
-is two separate commits:
+```sh
+python3 scripts/bump_version.py <id> "Short changelog note"
+python3 scripts/validate_plugins.py
+python3 -m unittest discover -s tests
+```
 
-1. Commit the plugin sources first.
-2. Then run `python3 scripts/gen_catalog.py` and commit
-   `catalog.json` on its own. Never mix the two commits.
+Because `catalog.json` records `generatedFrom` (the last commit touching
+`plugins/`), commit plugin source changes first, then regenerate and commit
+`catalog.json`:
 
-CI re-runs the validator and `gen_catalog.py --check`, which fails
-if `catalog.json` is stale.
+```sh
+python3 scripts/gen_catalog.py
+python3 scripts/gen_catalog.py --check
+```

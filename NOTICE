@@ -1,0 +1,7 @@
+# HorneroOS Plugins — Licensing Notice
+
+Marketplace tooling, schemas, scripts, documentation, and templates in this
+repository are licensed under the MIT License (see `LICENSE` / `LICENSE-MIT.txt`).
+
+Each extension under `plugins/` carries its own `LICENSE` file and declares its
+SPDX identifier in `manifest.json`, which governs that extension.

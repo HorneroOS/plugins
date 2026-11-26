@@ -64,6 +64,13 @@ Item {
         command: ["xdg-open", target]
     }
 
+    function openItem(url: string): void {
+        if (/^https:\/\//.test(url)) {
+            openProc.target = url;
+            openProc.running = true;
+        }
+    }
+
     UiPopover {
         id: popover
 
@@ -124,10 +131,7 @@ Item {
                     glyph: "alert-circle"
                     text: String(modelData.repo || "") + " — " + String(modelData.title || "")
                     accessibleName: text
-                    onClicked: {
-                        openProc.target = String(modelData.url || "");
-                        openProc.running = true;
-                    }
+                    onClicked: root.openItem(String(modelData.url || ""))
                 }
             }
 
@@ -148,10 +152,7 @@ Item {
                     glyph: "eye"
                     text: String(modelData.repo || "") + " — " + String(modelData.title || "")
                     accessibleName: text
-                    onClicked: {
-                        openProc.target = String(modelData.url || "");
-                        openProc.running = true;
-                    }
+                    onClicked: root.openItem(String(modelData.url || ""))
                 }
             }
 
@@ -172,10 +173,7 @@ Item {
                     glyph: "activity"
                     text: String(modelData.repo || "") + " — " + String(modelData.title || "")
                     accessibleName: text
-                    onClicked: {
-                        openProc.target = String(modelData.url || "");
-                        openProc.running = true;
-                    }
+                    onClicked: root.openItem(String(modelData.url || ""))
                 }
             }
 

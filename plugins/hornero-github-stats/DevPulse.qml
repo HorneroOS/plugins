@@ -43,7 +43,7 @@ Item {
     }
 
     function openItem(url: string): void {
-        if (url.length > 0) {
+        if (/^https:\/\//.test(url)) {
             openProc.target = url;
             openProc.running = true;
         }

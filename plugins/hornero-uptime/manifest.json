@@ -2,7 +2,7 @@
   "schemaVersion": 3,
   "id": "hornero-uptime",
   "name": "Hornero Uptime",
-  "version": "3.0.2",
+  "version": "3.0.3",
   "description": "Bar indicator plus popover/dashboard session detail (uptime, boot time, idle time) from /proc/uptime with the declared cat command. No PluginKit uptime facade exists; error state instead of a fabricated zero.",
   "author": "HorneroOS contributors",
   "license": "MIT",
@@ -28,6 +28,10 @@
       "minShellVersion": "1.2.79"
     },
     "changelog": [
+      {
+        "version": "3.0.3",
+        "notes": "Use Hornero Glyph clock icon in compact/vertical mode and remove duplicate UiTooltip."
+      },
       {
         "version": "3.0.2",
         "notes": "Catalogue description no longer leads with an internal version; it says what the extension does first."

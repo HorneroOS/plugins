@@ -165,6 +165,8 @@ Item {
         id: lostExit
 
         interval: 400
+        repeat: false
+        running: false
         onTriggered: {
             if (root.pendingRun) {
                 root.pendingRun = false;
@@ -204,7 +206,7 @@ Item {
     Timer {
         interval: root.refreshSeconds * 1000
         repeat: true
-        running: true
+        running: root.visible
         onTriggered: root.refresh()
     }
 
