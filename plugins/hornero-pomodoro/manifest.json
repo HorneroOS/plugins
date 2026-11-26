@@ -2,7 +2,7 @@
   "schemaVersion": 3,
   "id": "hornero-pomodoro",
   "name": "Hornero Pomodoro",
-  "version": "4.0.1",
+  "version": "4.0.2",
   "description": "Pomodoro: a bar focus timer with short and long breaks, deadline-correct timing across sleep and reload, and an optional hook that switches the shell to the Focus experience while you focus and puts your mode back afterwards.",
   "author": "HorneroOS contributors",
   "license": "MIT",
@@ -104,6 +104,10 @@
   },
   "marketplace": {
     "changelog": [
+      {
+        "version": "4.0.2",
+        "notes": "Replace idle settings polling Timer with reactive PluginKit Settings.changed signal (HorneroOS/plugins#112)."
+      },
       {
         "version": "4.0.1",
         "notes": "Gate idle settings poll timer on popover open state and 30s interval."

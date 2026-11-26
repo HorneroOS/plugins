@@ -281,12 +281,13 @@ Item {
         }
     }
 
-    // Settings edited in Control Center apply to a timer that is not running.
-    Timer {
-        interval: 30000
-        repeat: true
-        running: !root.running && popover.opened
-        onTriggered: {
+    // Settings edited in Control Center apply reactively when the timer is not running (zero idle polling).
+    Connections {
+        target: pluginSettings
+
+        function onChanged(key, value) {
+            if (root.running)
+                return;
             const before = root.totalSeconds;
             root.loadSettings();
             if (!root.finished && root.flashes === 0 && root.totalSeconds !== before)
