@@ -309,47 +309,55 @@ Item {
     }
 
     function _parseNormalized(text: string): var {
-        const parsed = JSON.parse(text);
-        const data = (parsed && parsed.data) || {};
-        let recordsIn = data.records;
-        if (typeof recordsIn === "string")
-            recordsIn = JSON.parse(recordsIn);
-        if (!Array.isArray(recordsIn))
+        try {
+            const parsed = JSON.parse(text);
+            const data = (parsed && parsed.data) || {};
+            let recordsIn = data.records;
+            if (typeof recordsIn === "string")
+                recordsIn = JSON.parse(recordsIn);
+            if (!Array.isArray(recordsIn))
+                return null;
+            const valid = recordsIn.filter(r => r && typeof r.provider === "string" && typeof r.status === "string");
+            return valid.length > 0 ? valid : null;
+        } catch (e) {
             return null;
-        const valid = recordsIn.filter(r => r && typeof r.provider === "string" && typeof r.status === "string");
-        return valid.length > 0 ? valid : null;
+        }
     }
 
     function _parseLegacy(text: string): var {
-        const parsed = JSON.parse(text);
-        if (parsed && parsed.ok === false)
+        try {
+            const parsed = JSON.parse(text);
+            if (parsed && parsed.ok === false)
+                return null;
+            const data = (parsed && parsed.data) || parsed || {};
+            if (data.inputTokens === undefined && data.outputTokens === undefined && data.totalTokens === undefined)
+                return null;
+            const input = Number(data.inputTokens || 0);
+            const output = Number(data.outputTokens || 0);
+            const record = {
+                "provider": "javi-hermes",
+                "name": "Javi (Hermes)",
+                "account": "unknown",
+                "source": "assistant-usage-legacy",
+                "status": "ok",
+                "freshness": "unknown",
+                "inputTokens": input,
+                "outputTokens": output,
+                "totalTokens": Number(data.totalTokens || (input + output)),
+                "quota": "unknown",
+                "balance": "unknown",
+                "errors": []
+            };
+            if (data.sessions !== undefined)
+                record["sessions"] = Number(data.sessions);
+            if (data.apiCalls !== undefined)
+                record["apiCalls"] = Number(data.apiCalls);
+            if (typeof data.models === "string" && data.models.length > 0)
+                record["models"] = data.models;
+            return [record];
+        } catch (e) {
             return null;
-        const data = (parsed && parsed.data) || parsed || {};
-        if (data.inputTokens === undefined && data.outputTokens === undefined && data.totalTokens === undefined)
-            return null;
-        const input = Number(data.inputTokens || 0);
-        const output = Number(data.outputTokens || 0);
-        const record = {
-            "provider": "javi-hermes",
-            "name": "Javi (Hermes)",
-            "account": "unknown",
-            "source": "assistant-usage-legacy",
-            "status": "ok",
-            "freshness": "unknown",
-            "inputTokens": input,
-            "outputTokens": output,
-            "totalTokens": Number(data.totalTokens || (input + output)),
-            "quota": "unknown",
-            "balance": "unknown",
-            "errors": []
-        };
-        if (data.sessions !== undefined)
-            record["sessions"] = Number(data.sessions);
-        if (data.apiCalls !== undefined)
-            record["apiCalls"] = Number(data.apiCalls);
-        if (typeof data.models === "string" && data.models.length > 0)
-            record["models"] = data.models;
-        return [record];
+        }
     }
 
     Component.onCompleted: {

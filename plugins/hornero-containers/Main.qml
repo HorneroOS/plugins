@@ -91,14 +91,26 @@ Item {
             return [];
         const out = [];
         if (t.charAt(0) === "[") {
-            const arr = JSON.parse(t);
-            for (let i = 0; i < arr.length; i++)
-                out.push(normalise(arr[i], runtime));
+            try {
+                const arr = JSON.parse(t);
+                if (Array.isArray(arr)) {
+                    for (let i = 0; i < arr.length; i++)
+                        out.push(normalise(arr[i], runtime));
+                }
+            } catch (e) {
+                return [];
+            }
         } else {
             const lines = t.split("\n");
-            for (let i = 0; i < lines.length; i++)
-                if (lines[i].trim().length > 0)
-                    out.push(normalise(JSON.parse(lines[i]), runtime));
+            for (let i = 0; i < lines.length; i++) {
+                if (lines[i].trim().length > 0) {
+                    try {
+                        out.push(normalise(JSON.parse(lines[i]), runtime));
+                    } catch (e) {
+                        // Ignore malformed JSON lines.
+                    }
+                }
+            }
         }
         return out;
     }

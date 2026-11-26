@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
-  "generatedFrom": "f425db2f61a2bd4c04f2085df6c80040beba523b",
+  "generatedFrom": "6948698a56860bf7a689b69d943aad0bbd4ee7e4",
   "catalogSource": {
     "repo": "https://github.com/HorneroOS/plugins",
-    "rev": "f425db2f61a2bd4c04f2085df6c80040beba523b"
+    "rev": "6948698a56860bf7a689b69d943aad0bbd4ee7e4"
   },
   "plugins": [
     {
@@ -148,7 +148,7 @@
       },
       "trust": "official",
       "path": "plugins/hornero-ai-usage",
-      "sha256": "0d29ca5f3e9e9c8940792f37184da9b5d9dcae7d916d60af1e2589af518451a4",
+      "sha256": "11bf424332b4f4ebc78f99641f7e3fb80300d8a8719c44b0c0bad84a1fbf05b7",
       "pluginKit": 5,
       "marketplace": {
         "compatibility": {
@@ -757,7 +757,7 @@
       },
       "trust": "official",
       "path": "plugins/hornero-containers",
-      "sha256": "08df1fb9f1e714b5ef78a4bfb0f8c063a0debc29e9a45a4926aa5deacba4f5dd",
+      "sha256": "f895a738143d56a1c988672464209c2ea361114c7eeb337cdaa95d9b02c9a6ce",
       "marketplace": {
         "compatibility": {
           "minShellVersion": "1.0.0"
@@ -1522,7 +1522,7 @@
       },
       "trust": "official",
       "path": "plugins/hornero-github-stats",
-      "sha256": "d52bff62493eddc2c549d8238cffbeb5afe15bc2becdb74951d2b7ece2087fe7",
+      "sha256": "f89f152ce0396df45fd4059375c071a71fcc5b48fd88dfaa5b1b2fdb16cb0f67",
       "pluginKit": 5,
       "marketplace": {
         "compatibility": {

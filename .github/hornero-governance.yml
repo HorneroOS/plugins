@@ -1,0 +1,21 @@
+# Repo policy for the HorneroOS deterministic PR-governance engine.
+# Merged over safe defaults; see HorneroOS/.github governance/danger.
+
+version: 1
+kind: plugins
+visual_paths:
+  - "plugins/**/*.qml"
+  - "**/*.svg"
+policies:
+  large_threshold: 800
+  forbidden_paths:
+    - "**/.env"
+    - "**/.env.*"
+    - "**/*.pem"
+    - "**/*.key"
+    - "**/id_rsa*"
+    - "**/credentials*"
+    - "**/*secret*"
+  risky_paths:
+    - ".github/workflows/**"
+    - "scripts/**"
