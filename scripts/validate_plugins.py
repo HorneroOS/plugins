@@ -121,7 +121,23 @@ ALLOWED_IMPORTS = {
     "QtQuick", "QtQuick.Controls", "QtQuick.Layouts", "QtQml",
     "Quickshell", "Quickshell.Io", "Hornero.PluginKit",
 }
-FORBIDDEN_COMMANDS = {"sh", "bash", "dash", "zsh", "fish", "sudo", "doas", "su"}
+FORBIDDEN_COMMANDS = {
+    "sh", "bash", "dash", "zsh", "fish",
+    "sudo", "doas", "su", "pkexec",
+    "python", "python3", "perl", "ruby", "node", "curl", "wget",
+}
+DANGEROUS_CODE_PATTERNS = (
+    (re.compile(r"\bQuickshell\s*\.\s*execDetached\b"), "Quickshell.execDetached is forbidden in plugins"),
+    (re.compile(r"\bQt\s*\.\s*createQmlObject\b"), "Qt.createQmlObject is forbidden in plugins"),
+    (re.compile(r"\bQt\s*\.\s*createComponent\b"), "Qt.createComponent is forbidden in plugins"),
+    (re.compile(r"(?<![.\w])eval\s*\("), "eval() is forbidden in plugins"),
+    (re.compile(r"(?<![.\w])Function\s*\("), "Function() constructor is forbidden in plugins"),
+)
+
+
+def is_forbidden_command(cmd: str) -> bool:
+    low = cmd.lower()
+    return low in FORBIDDEN_COMMANDS or low.startswith("python")
 COMMAND_RE = re.compile(r"^[A-Za-z0-9_.+-]+$")
 HOST_RE = re.compile(r"^(?:[A-Za-z0-9](?:[A-Za-z0-9-]{0,61}[A-Za-z0-9])?\.)*[A-Za-z0-9](?:[A-Za-z0-9-]{0,61}[A-Za-z0-9])?$")
 SETTING_KEY_RE = re.compile(r"^[a-z][a-zA-Z0-9]{0,47}$")
@@ -621,7 +637,7 @@ def validate_surfaces(tag: str, manifest: dict, safe_files: set) -> list:
         if "instances" in surface:
             if not isinstance(surface["instances"], bool):
                 errors.append(f"{where}.instances must be a boolean")
-            elif surface["instances"] and manifest.get("pluginKit", 3) != 4:
+            elif surface["instances"] and manifest.get("pluginKit", 3) < 4:
                 errors.append(f'{where}.instances needs PluginKit 4; declare "pluginKit": 4')
         if "anchor" in surface and surface["anchor"] not in DESKTOP_ANCHORS:
             errors.append(f"{where}.anchor must be one of {', '.join(DESKTOP_ANCHORS)}")
@@ -780,7 +796,7 @@ def validate_capabilities(tag: str, caps: dict, schema_version=None, plugin_kit=
         if len(commands) != len(set(commands)):
             errors.append(f"{tag}: capabilities.processCommands must be unique")
         for cmd in commands:
-            if not COMMAND_RE.match(cmd) or cmd.lower() in FORBIDDEN_COMMANDS:
+            if not COMMAND_RE.match(cmd) or is_forbidden_command(cmd):
                 errors.append(f"{tag}: forbidden or malformed processCommands entry: {cmd}")
     hosts = caps["networkHosts"]
     if not isinstance(hosts, list) or not all(isinstance(h, str) for h in hosts):
@@ -935,16 +951,22 @@ def validate_qml_contract(tag: str, manifest: dict, code: str) -> list:
     declared_commands = caps.get("processCommands") or []
     declared_hosts = caps.get("networkHosts") or []
     declared_settings = caps.get("settings") or {}
+    source = strip_all_comments(code)
+    for pattern, message in DANGEROUS_CODE_PATTERNS:
+        if pattern.search(source):
+            errors.append(f"{tag}: {message}")
     for module in sorted(set(re.findall(r"(?m)^import\s+([A-Za-z][A-Za-z0-9_.]*)", code))):
         if module not in ALLOWED_IMPORTS:
             errors.append(f"{tag}: disallowed QML import: {module}")
-    if re.search(r"\bProcess\s*\{", code):
-        literals = re.findall(r'command:\s*\[\s*"([^"]+)"', code)
+    if re.search(r"\bProcess\s*\{", source):
+        if re.search(r"command:\s*\[\s*'", source):
+            errors.append(f"{tag}: Process.command must use double-quoted string literals, not single quotes")
+        literals = re.findall(r'command:\s*\[\s*"([^"]+)"', source)
         if not literals:
             errors.append(f"{tag}: Process usage must use a literal command array")
         for cmd in literals:
             base = cmd.rsplit("/", 1)[-1]
-            if base.lower() in FORBIDDEN_COMMANDS:
+            if is_forbidden_command(base):
                 errors.append(f"{tag}: Process uses forbidden executable: {cmd}")
             elif base not in declared_commands:
                 errors.append(f"{tag}: Process executable not declared in processCommands: {cmd}")
@@ -1177,11 +1199,17 @@ def validate_plugin_dir(plugin_dir: Path):
     if not entry.is_file():
         errors.append(f"{tag}: entrypoint missing: {manifest.get('entrypoint')}")
     code = ""
+    js_code = ""
     for name in files:
-        if isinstance(name, str) and name.endswith(".qml") and (plugin_dir / name).is_file():
-            code += (plugin_dir / name).read_text(errors="replace") + "\n"
+        if isinstance(name, str) and (plugin_dir / name).is_file():
+            if name.endswith(".qml"):
+                code += (plugin_dir / name).read_text(errors="replace") + "\n"
+            elif name.endswith((".js", ".mjs")):
+                js_code += (plugin_dir / name).read_text(errors="replace") + "\n"
+    all_code = code + js_code
+    if all_code:
+        errors += validate_qml_contract(tag, manifest, all_code)
     if code:
-        errors += validate_qml_contract(tag, manifest, code)
         errors += validate_signal_contract(tag, manifest, plugin_dir)
         errors += validate_translation_catalogs(tag, plugin_dir, manifest, code)
     return errors, manifest, code

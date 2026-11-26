@@ -2,7 +2,7 @@
   "schemaVersion": 3,
   "id": "hornero-device-battery",
   "name": "Hornero Device Battery",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Charge of the wireless things on your desk: game controllers, mice, keyboards, headsets, pens and phones, from UPower. Honest about devices that report no percentage.",
   "author": "HorneroOS contributors",
   "license": "MIT",
@@ -36,6 +36,10 @@
       "minShellVersion": "1.0.0"
     },
     "changelog": [
+      {
+        "version": "1.0.1",
+        "notes": "Gate refresh and one-shot timers on visible/active state."
+      },
       {
         "version": "1.0.0",
         "notes": "Initial release: wireless peripheral batteries (controllers, mice, keyboards, headsets, pens, phones) from UPower, as a dashboard card and a desktop widget."

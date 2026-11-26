@@ -2,7 +2,7 @@
   "schemaVersion": 3,
   "id": "hornero-forge-board",
   "name": "Hornero Forge Board",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "CI and pull-request status for the GitHub repositories you name, through the gh CLI session you already signed in. Read-only; stores and sees no token.",
   "author": "HorneroOS contributors",
   "license": "MIT",
@@ -36,6 +36,10 @@
       "minShellVersion": "1.0.0"
     },
     "changelog": [
+      {
+        "version": "1.0.2",
+        "notes": "Gate refresh and one-shot timers on visible/active state."
+      },
       {
         "version": "1.0.1",
         "notes": "Header no longer claims CI GREEN when gh is missing or signed out."

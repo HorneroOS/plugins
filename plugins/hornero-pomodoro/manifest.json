@@ -2,7 +2,7 @@
   "schemaVersion": 3,
   "id": "hornero-pomodoro",
   "name": "Hornero Pomodoro",
-  "version": "4.0.0",
+  "version": "4.0.1",
   "description": "Pomodoro: a bar focus timer with short and long breaks, deadline-correct timing across sleep and reload, and an optional hook that switches the shell to the Focus experience while you focus and puts your mode back afterwards.",
   "author": "HorneroOS contributors",
   "license": "MIT",
@@ -104,6 +104,10 @@
   },
   "marketplace": {
     "changelog": [
+      {
+        "version": "4.0.1",
+        "notes": "Gate idle settings poll timer on popover open state and 30s interval."
+      },
       {
         "version": "4.0.0",
         "notes": "Break cycle (short and long breaks, configurable set size, optional auto-start), Skip, a display readout with set meter, and an optional Experience hook that switches to Focus during focus phases and restores your previous mode. Stored session state is unchanged; the hook is off by default."

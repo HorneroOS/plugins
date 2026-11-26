@@ -222,6 +222,8 @@ Item {
         id: lostExit
 
         interval: 500
+        repeat: false
+        running: false
         onTriggered: {
             if (root.pendingStep.length > 0)
                 root.stepDone(root.pendingStep, -1);
@@ -231,7 +233,7 @@ Item {
     Timer {
         interval: root.refreshMinutes * 60000
         repeat: true
-        running: root.repoSetting.length > 0 && Theme.experience !== "gaming"
+        running: root.visible && root.repoSetting.length > 0 && Theme.experience !== "gaming"
         onTriggered: root.refresh()
     }
 

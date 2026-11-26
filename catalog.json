@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
-  "generatedFrom": "0d67225b6390545ae2fe22d2276681c76550c740",
+  "generatedFrom": "f425db2f61a2bd4c04f2085df6c80040beba523b",
   "catalogSource": {
     "repo": "https://github.com/HorneroOS/plugins",
-    "rev": "0d67225b6390545ae2fe22d2276681c76550c740"
+    "rev": "f425db2f61a2bd4c04f2085df6c80040beba523b"
   },
   "plugins": [
     {
@@ -15,7 +15,7 @@
       "license": "MIT",
       "homepage": "https://github.com/HorneroOS/plugins",
       "placement": "desktop",
-      "category": "utilities",
+      "category": "productivity",
       "capabilities": {
         "processCommands": [],
         "networkHosts": [],
@@ -110,7 +110,7 @@
       "license": "MIT",
       "homepage": "https://github.com/HorneroOS/plugins",
       "placement": "dashboard",
-      "category": "utilities",
+      "category": "developer",
       "capabilities": {
         "processCommands": [
           "horneroctl",
@@ -318,7 +318,7 @@
       "license": "MIT",
       "homepage": "https://github.com/HorneroOS/plugins",
       "placement": "bar",
-      "category": "utilities",
+      "category": "system",
       "capabilities": {
         "processCommands": [],
         "networkHosts": [],
@@ -452,7 +452,7 @@
       "license": "MIT",
       "homepage": "https://github.com/HorneroOS/plugins",
       "placement": "desktop",
-      "category": "utilities",
+      "category": "productivity",
       "capabilities": {
         "processCommands": [],
         "networkHosts": [],
@@ -710,7 +710,7 @@
       "license": "MIT",
       "homepage": "https://github.com/HorneroOS/plugins",
       "placement": "dashboard",
-      "category": "utilities",
+      "category": "developer",
       "capabilities": {
         "processCommands": [
           "podman",
@@ -801,13 +801,13 @@
     {
       "id": "hornero-countdown",
       "name": "Hornero Countdown",
-      "version": "3.1.1",
+      "version": "3.1.2",
       "description": "Bar timers: a countdown with 5/10/25 minute presets and a stopwatch behind one indicator, deadline and anchor based so sleep never loses time.",
       "author": "HorneroOS contributors",
       "license": "MIT",
       "homepage": "https://github.com/HorneroOS/plugins",
       "placement": "bar",
-      "category": "utilities",
+      "category": "productivity",
       "capabilities": {
         "processCommands": [],
         "networkHosts": [],
@@ -869,12 +869,16 @@
       },
       "trust": "official",
       "path": "plugins/hornero-countdown",
-      "sha256": "0eaa266a1c89d0a3feee4c1d8ec68b6956e87e5aa9cf920deb1f8a8d631014b7",
+      "sha256": "73d3f251fb866555a3faf5dd3284b2fb26528942f2a8b79c2076dfc281fcdc72",
       "marketplace": {
         "compatibility": {
           "minShellVersion": "1.0.0"
         },
         "changelog": [
+          {
+            "version": "3.1.2",
+            "notes": "Gate sub-second stopwatch and flash timers on active/visible state."
+          },
           {
             "version": "3.1.1",
             "notes": "Declare marketplace compatibility (minShellVersion); catalogue description no longer leads with an internal version."
@@ -917,13 +921,13 @@
     {
       "id": "hornero-device-battery",
       "name": "Hornero Device Battery",
-      "version": "1.0.0",
+      "version": "1.0.1",
       "description": "Charge of the wireless things on your desk: game controllers, mice, keyboards, headsets, pens and phones, from UPower. Honest about devices that report no percentage.",
       "author": "HorneroOS contributors",
       "license": "MIT",
       "homepage": "https://github.com/HorneroOS/plugins",
       "placement": "dashboard",
-      "category": "utilities",
+      "category": "system",
       "capabilities": {
         "processCommands": [
           "upower"
@@ -967,12 +971,16 @@
       },
       "trust": "official",
       "path": "plugins/hornero-device-battery",
-      "sha256": "0553fc6ad207ace3464e73b8625b32fabc3d99fb0c1219b730cf96963685ce66",
+      "sha256": "ce0af2d7637b59663df50349bb88234ce4d838aeda1975ea90792614436a3a3c",
       "marketplace": {
         "compatibility": {
           "minShellVersion": "1.0.0"
         },
         "changelog": [
+          {
+            "version": "1.0.1",
+            "notes": "Gate refresh and one-shot timers on visible/active state."
+          },
           {
             "version": "1.0.0",
             "notes": "Initial release: wireless peripheral batteries (controllers, mice, keyboards, headsets, pens, phones) from UPower, as a dashboard card and a desktop widget."
@@ -1011,7 +1019,7 @@
       "license": "MIT",
       "homepage": "https://github.com/HorneroOS/plugins",
       "placement": "dashboard",
-      "category": "utilities",
+      "category": "system",
       "capabilities": {
         "processCommands": [],
         "networkHosts": [],
@@ -1167,7 +1175,7 @@
       "license": "MIT",
       "homepage": "https://github.com/HorneroOS/plugins",
       "placement": "bar",
-      "category": "utilities",
+      "category": "media",
       "capabilities": {
         "processCommands": [],
         "networkHosts": [],
@@ -1260,13 +1268,13 @@
     {
       "id": "hornero-forge-board",
       "name": "Hornero Forge Board",
-      "version": "1.0.1",
+      "version": "1.0.2",
       "description": "CI and pull-request status for the GitHub repositories you name, through the gh CLI session you already signed in. Read-only; stores and sees no token.",
       "author": "HorneroOS contributors",
       "license": "MIT",
       "homepage": "https://github.com/HorneroOS/plugins",
       "placement": "dashboard",
-      "category": "utilities",
+      "category": "developer",
       "capabilities": {
         "processCommands": [
           "gh"
@@ -1311,12 +1319,16 @@
       },
       "trust": "official",
       "path": "plugins/hornero-forge-board",
-      "sha256": "f333a4d7c70f3f60ce7e2aafcbce9c4a8f4704cdbec186e31aa1012f954ad033",
+      "sha256": "0871072b2317450c05d0b2a7c27c1fc3339d0010a3d4781c04b67b42ed7619d0",
       "marketplace": {
         "compatibility": {
           "minShellVersion": "1.0.0"
         },
         "changelog": [
+          {
+            "version": "1.0.2",
+            "notes": "Gate refresh and one-shot timers on visible/active state."
+          },
           {
             "version": "1.0.1",
             "notes": "Header no longer claims CI GREEN when gh is missing or signed out."
@@ -1365,7 +1377,7 @@
       "license": "MIT",
       "homepage": "https://github.com/HorneroOS/plugins",
       "placement": "dashboard",
-      "category": "utilities",
+      "category": "developer",
       "capabilities": {
         "processCommands": [
           "git"
@@ -1453,20 +1465,22 @@
     {
       "id": "hornero-github-stats",
       "name": "Hornero Dev Pulse",
-      "version": "1.0.1",
+      "version": "1.0.2",
       "description": "Dev Pulse: GitHub development activity through your existing gh sign-in - contributions, pull requests, reviews, an actionable inbox, and an optional side-by-side with Agent Deck AI usage. Local-first; unknown metrics stay unknown.",
       "author": "HorneroOS contributors",
       "license": "MIT",
       "homepage": "https://github.com/HorneroOS/plugins",
       "placement": "dashboard",
-      "category": "utilities",
+      "category": "developer",
       "capabilities": {
         "processCommands": [
           "horneroctl",
           "qs",
           "xdg-open"
         ],
-        "networkHosts": [],
+        "networkHosts": [
+          "api.github.com"
+        ],
         "settings": {
           "refreshSeconds": {
             "type": "integer",
@@ -1508,13 +1522,17 @@
       },
       "trust": "official",
       "path": "plugins/hornero-github-stats",
-      "sha256": "99b5ac76e7e352aea3531a41640373938d287fb552585f2eaea1cacf41d5fe4d",
+      "sha256": "d52bff62493eddc2c549d8238cffbeb5afe15bc2becdb74951d2b7ece2087fe7",
       "pluginKit": 5,
       "marketplace": {
         "compatibility": {
           "minShellVersion": "1.2.79"
         },
         "changelog": [
+          {
+            "version": "1.0.2",
+            "notes": "Validate https:// URLs before invoking xdg-open and declare api.github.com in networkHosts."
+          },
           {
             "version": "1.0.1",
             "notes": "Fix the activity-window selector: the data layer id `data` was shadowed by Item.data inside delegates, so no window could be selected or changed; also fixes a Bar label parse error."
@@ -1541,8 +1559,14 @@
         {
           "kind": "program",
           "value": "xdg-open",
-          "en": "Opens the GitHub page of an inbox item (pull request or issue) in your browser when you activate it. Only that item's URL is opened.",
-          "es": "Abre la página de GitHub de un ítem de la bandeja (pull request o issue) en tu navegador cuando lo activás. Solo se abre la URL de ese ítem."
+          "en": "Opens the GitHub page of an inbox item (pull request or issue) in your browser when you activate it. Only https:// URLs are opened.",
+          "es": "Abre la página de GitHub de un ítem de la bandeja (pull request o issue) en tu navegador cuando lo activás. Solo se abren URLs https://."
+        },
+        {
+          "kind": "network",
+          "value": "api.github.com",
+          "en": "horneroctl github talks to api.github.com through your existing gh CLI sign-in to read contributions, pull requests and review requests.",
+          "es": "horneroctl github se conecta a api.github.com mediante tu sesión de gh CLI para leer contribuciones, pull requests y pedidos de revisión."
         },
         {
           "kind": "settings",
@@ -1555,13 +1579,13 @@
     {
       "id": "hornero-metronome",
       "name": "Hornero Metronome",
-      "version": "3.0.1",
+      "version": "3.0.2",
       "description": "Compact bar metronome with a popover (BPM slider plus minus/plus), deadline-scheduled beats that skip missed beats after sleep, and optional first-beat accent. No processes, no network.",
       "author": "HorneroOS contributors",
       "license": "MIT",
       "homepage": "https://github.com/HorneroOS/plugins",
       "placement": "bar",
-      "category": "utilities",
+      "category": "productivity",
       "capabilities": {
         "processCommands": [],
         "networkHosts": [],
@@ -1589,12 +1613,16 @@
       },
       "trust": "official",
       "path": "plugins/hornero-metronome",
-      "sha256": "96368e1c3ef3a6a250ef364bc803998e21126b08a40df1c054ff755afcf62119",
+      "sha256": "b9eb78ea4110f50661db0a70396beb4aad57ee256391bbd077dc2efc4fa7c38d",
       "marketplace": {
         "compatibility": {
           "minShellVersion": "1.0.0"
         },
         "changelog": [
+          {
+            "version": "3.0.2",
+            "notes": "Gate 50ms beat timer on visible state."
+          },
           {
             "version": "3.0.1",
             "notes": "Declare marketplace compatibility (minShellVersion); catalogue description no longer leads with an internal version."
@@ -1639,7 +1667,7 @@
       "license": "MIT",
       "homepage": "https://github.com/HorneroOS/plugins",
       "placement": "bar",
-      "category": "utilities",
+      "category": "media",
       "capabilities": {
         "processCommands": [],
         "networkHosts": [],
@@ -1915,7 +1943,7 @@
       "license": "MIT",
       "homepage": "https://github.com/HorneroOS/plugins",
       "placement": "bar",
-      "category": "utilities",
+      "category": "media",
       "capabilities": {
         "processCommands": [],
         "networkHosts": [],
@@ -1998,7 +2026,7 @@
     {
       "id": "hornero-pomodoro",
       "name": "Hornero Pomodoro",
-      "version": "4.0.0",
+      "version": "4.0.1",
       "description": "Pomodoro: a bar focus timer with short and long breaks, deadline-correct timing across sleep and reload, and an optional hook that switches the shell to the Focus experience while you focus and puts your mode back afterwards.",
       "author": "HorneroOS contributors",
       "license": "MIT",
@@ -2087,9 +2115,13 @@
       },
       "trust": "official",
       "path": "plugins/hornero-pomodoro",
-      "sha256": "2eb5803a81875f72f4c8cb5b385dafd7878195f4f21c5a80f38be6dd803aeaaa",
+      "sha256": "709b49c9a6eeafc5fed1704a1eaee577831bc7e20ed72e267962126b8e0e5812",
       "marketplace": {
         "changelog": [
+          {
+            "version": "4.0.1",
+            "notes": "Gate idle settings poll timer on popover open state and 30s interval."
+          },
           {
             "version": "4.0.0",
             "notes": "Break cycle (short and long breaks, configurable set size, optional auto-start), Skip, a display readout with set meter, and an optional Experience hook that switches to Focus during focus phases and restores your previous mode. Stored session state is unchanged; the hook is off by default."
@@ -2159,7 +2191,7 @@
       "license": "MIT",
       "homepage": "https://github.com/HorneroOS/plugins",
       "placement": "dashboard",
-      "category": "utilities",
+      "category": "developer",
       "capabilities": {
         "processCommands": [
           "ss"
@@ -2259,7 +2291,7 @@
       "license": "MIT",
       "homepage": "https://github.com/HorneroOS/plugins",
       "placement": "dashboard",
-      "category": "utilities",
+      "category": "productivity",
       "capabilities": {
         "processCommands": [],
         "networkHosts": [],
@@ -2340,7 +2372,7 @@
       "license": "MIT",
       "homepage": "https://github.com/HorneroOS/plugins",
       "placement": "bar",
-      "category": "utilities",
+      "category": "media",
       "capabilities": {
         "processCommands": [
           "horneroctl"
@@ -2452,7 +2484,7 @@
       "license": "MIT",
       "homepage": "https://github.com/HorneroOS/plugins",
       "placement": "dashboard",
-      "category": "utilities",
+      "category": "developer",
       "capabilities": {
         "processCommands": [
           "horneroctl"
@@ -2761,13 +2793,13 @@
     {
       "id": "hornero-uptime",
       "name": "Hornero Uptime",
-      "version": "3.0.2",
+      "version": "3.0.3",
       "description": "Bar indicator plus popover/dashboard session detail (uptime, boot time, idle time) from /proc/uptime with the declared cat command. No PluginKit uptime facade exists; error state instead of a fabricated zero.",
       "author": "HorneroOS contributors",
       "license": "MIT",
       "homepage": "https://github.com/HorneroOS/plugins",
       "placement": "bar",
-      "category": "utilities",
+      "category": "system",
       "capabilities": {
         "processCommands": [
           "cat"
@@ -2795,12 +2827,16 @@
       },
       "trust": "official",
       "path": "plugins/hornero-uptime",
-      "sha256": "04caccfc3886c60ef38cbbe5efe49f9b3547d0fd338c8b988c608dea3c3cbc91",
+      "sha256": "507f809f27d3ed8d9e8c297a10012a53c92c54b5377115ae26f03f16fc3985b1",
       "marketplace": {
         "compatibility": {
           "minShellVersion": "1.2.79"
         },
         "changelog": [
+          {
+            "version": "3.0.3",
+            "notes": "Use Hornero Glyph clock icon in compact/vertical mode and remove duplicate UiTooltip."
+          },
           {
             "version": "3.0.2",
             "notes": "Catalogue description no longer leads with an internal version; it says what the extension does first."
@@ -2859,7 +2895,7 @@
       "license": "MIT",
       "homepage": "https://github.com/HorneroOS/plugins",
       "placement": "bar",
-      "category": "utilities",
+      "category": "media",
       "capabilities": {
         "processCommands": [],
         "networkHosts": [],
@@ -3085,7 +3121,7 @@
       "license": "MIT",
       "homepage": "https://github.com/HorneroOS/plugins",
       "placement": "dashboard",
-      "category": "utilities",
+      "category": "productivity",
       "capabilities": {
         "processCommands": [],
         "networkHosts": [],

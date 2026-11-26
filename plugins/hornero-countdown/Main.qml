@@ -201,14 +201,14 @@ Item {
     Timer {
         interval: 100
         repeat: true
-        running: root.swRunning
+        running: root.swRunning && (root.visible || popover.opened)
         onTriggered: root.swSync()
     }
 
     Timer {
         interval: 600
         repeat: true
-        running: root.finished
+        running: root.finished && root.visible && !Theme.reducedMotion
         onTriggered: root.flashOn = !root.flashOn
     }
 

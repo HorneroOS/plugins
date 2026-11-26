@@ -2,7 +2,7 @@
   "schemaVersion": 3,
   "id": "hornero-metronome",
   "name": "Hornero Metronome",
-  "version": "3.0.1",
+  "version": "3.0.2",
   "description": "Compact bar metronome with a popover (BPM slider plus minus/plus), deadline-scheduled beats that skip missed beats after sleep, and optional first-beat accent. No processes, no network.",
   "author": "HorneroOS contributors",
   "license": "MIT",
@@ -52,6 +52,10 @@
       "minShellVersion": "1.0.0"
     },
     "changelog": [
+      {
+        "version": "3.0.2",
+        "notes": "Gate 50ms beat timer on visible state."
+      },
       {
         "version": "3.0.1",
         "notes": "Declare marketplace compatibility (minShellVersion); catalogue description no longer leads with an internal version."

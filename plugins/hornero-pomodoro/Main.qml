@@ -283,9 +283,9 @@ Item {
 
     // Settings edited in Control Center apply to a timer that is not running.
     Timer {
-        interval: 2000
+        interval: 30000
         repeat: true
-        running: !root.running
+        running: !root.running && popover.opened
         onTriggered: {
             const before = root.totalSeconds;
             root.loadSettings();
@@ -307,7 +307,7 @@ Item {
     Timer {
         interval: 600
         repeat: true
-        running: root.flashes > 0
+        running: root.flashes > 0 && root.visible
         onTriggered: {
             root.flashOn = !root.flashOn;
             if (root.flashOn) {
