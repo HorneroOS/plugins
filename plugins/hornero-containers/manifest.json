@@ -2,7 +2,7 @@
   "schemaVersion": 3,
   "id": "hornero-containers",
   "name": "Hornero Containers",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A read-only roster of your Podman and Docker containers: state, image, uptime and published ports. Never starts, stops or pulls anything. Says so plainly when no runtime answers.",
   "author": "HorneroOS contributors",
   "license": "MIT",
@@ -36,6 +36,10 @@
       "minShellVersion": "1.0.0"
     },
     "changelog": [
+      {
+        "version": "1.0.1",
+        "notes": "Guard JSON.parse against malformed payloads"
+      },
       {
         "version": "1.0.0",
         "notes": "Initial release: read-only Podman/Docker container roster with state, image, status and published ports, as a dashboard card and a desktop widget."
