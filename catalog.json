@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
-  "generatedFrom": "f425db2f61a2bd4c04f2085df6c80040beba523b",
+  "generatedFrom": "c25727c7a7fe8fdd7db6139d68bacb69d04ffd60",
   "catalogSource": {
     "repo": "https://github.com/HorneroOS/plugins",
-    "rev": "f425db2f61a2bd4c04f2085df6c80040beba523b"
+    "rev": "c25727c7a7fe8fdd7db6139d68bacb69d04ffd60"
   },
   "plugins": [
     {
@@ -104,7 +104,7 @@
     {
       "id": "hornero-ai-usage",
       "name": "Hornero AI Usage",
-      "version": "4.2.1",
+      "version": "4.2.2",
       "description": "Agent Deck: every discovered coding-agent subscription in one place - provider-reported quota windows with resets, plans, and local activity. Unavailable quotas are labelled unknown, never guessed.",
       "author": "HorneroOS contributors",
       "license": "MIT",
@@ -148,13 +148,17 @@
       },
       "trust": "official",
       "path": "plugins/hornero-ai-usage",
-      "sha256": "0d29ca5f3e9e9c8940792f37184da9b5d9dcae7d916d60af1e2589af518451a4",
+      "sha256": "bf51b66249b4f40256b082351f0ca9487c5b5420498725b8ce107c4320a235ec",
       "pluginKit": 5,
       "marketplace": {
         "compatibility": {
           "minShellVersion": "1.2.79"
         },
         "changelog": [
+          {
+            "version": "4.2.2",
+            "notes": "Guard JSON.parse against malformed payloads"
+          },
           {
             "version": "4.2.1",
             "notes": "Optional governed companion reaction when a verified quota crosses the warning threshold, and the All window now states it means all available daily history (up to 90 days)."
@@ -704,7 +708,7 @@
     {
       "id": "hornero-containers",
       "name": "Hornero Containers",
-      "version": "1.0.0",
+      "version": "1.0.1",
       "description": "A read-only roster of your Podman and Docker containers: state, image, uptime and published ports. Never starts, stops or pulls anything. Says so plainly when no runtime answers.",
       "author": "HorneroOS contributors",
       "license": "MIT",
@@ -757,12 +761,16 @@
       },
       "trust": "official",
       "path": "plugins/hornero-containers",
-      "sha256": "08df1fb9f1e714b5ef78a4bfb0f8c063a0debc29e9a45a4926aa5deacba4f5dd",
+      "sha256": "e401a72809b62546ad56242b673cad1b2b30771a893abdd78ebd20406e41b5d9",
       "marketplace": {
         "compatibility": {
           "minShellVersion": "1.0.0"
         },
         "changelog": [
+          {
+            "version": "1.0.1",
+            "notes": "Guard JSON.parse against malformed payloads"
+          },
           {
             "version": "1.0.0",
             "notes": "Initial release: read-only Podman/Docker container roster with state, image, status and published ports, as a dashboard card and a desktop widget."
@@ -1465,7 +1473,7 @@
     {
       "id": "hornero-github-stats",
       "name": "Hornero Dev Pulse",
-      "version": "1.0.2",
+      "version": "1.0.3",
       "description": "Dev Pulse: GitHub development activity through your existing gh sign-in - contributions, pull requests, reviews, an actionable inbox, and an optional side-by-side with Agent Deck AI usage. Local-first; unknown metrics stay unknown.",
       "author": "HorneroOS contributors",
       "license": "MIT",
@@ -1522,13 +1530,17 @@
       },
       "trust": "official",
       "path": "plugins/hornero-github-stats",
-      "sha256": "d52bff62493eddc2c549d8238cffbeb5afe15bc2becdb74951d2b7ece2087fe7",
+      "sha256": "10540c7e2a0370ee23ed458614091250fe6f370381ca2aa1f8ae51829ab444a0",
       "pluginKit": 5,
       "marketplace": {
         "compatibility": {
           "minShellVersion": "1.2.79"
         },
         "changelog": [
+          {
+            "version": "1.0.3",
+            "notes": "Guard JSON.parse against malformed payloads"
+          },
           {
             "version": "1.0.2",
             "notes": "Validate https:// URLs before invoking xdg-open and declare api.github.com in networkHosts."

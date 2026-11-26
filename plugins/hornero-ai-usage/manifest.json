@@ -3,7 +3,7 @@
   "pluginKit": 5,
   "id": "hornero-ai-usage",
   "name": "Hornero AI Usage",
-  "version": "4.2.1",
+  "version": "4.2.2",
   "description": "Agent Deck: every discovered coding-agent subscription in one place - provider-reported quota windows with resets, plans, and local activity. Unavailable quotas are labelled unknown, never guessed.",
   "author": "HorneroOS contributors",
   "license": "MIT",
@@ -83,6 +83,10 @@
       "minShellVersion": "1.2.79"
     },
     "changelog": [
+      {
+        "version": "4.2.2",
+        "notes": "Guard JSON.parse against malformed payloads"
+      },
       {
         "version": "4.2.1",
         "notes": "Optional governed companion reaction when a verified quota crosses the warning threshold, and the All window now states it means all available daily history (up to 90 days)."

@@ -182,12 +182,16 @@ Item {
     }
 
     function _parse(text: string): var {
-        const parsed = JSON.parse(text);
-        const data = (parsed && parsed.data) || {};
-        let recordsIn = data.records;
-        if (typeof recordsIn === "string")
-            recordsIn = JSON.parse(recordsIn);
-        return Array.isArray(recordsIn) ? recordsIn : null;
+        try {
+            const parsed = JSON.parse(text);
+            const data = (parsed && parsed.data) || {};
+            let recordsIn = data.records;
+            if (typeof recordsIn === "string")
+                recordsIn = JSON.parse(recordsIn);
+            return Array.isArray(recordsIn) ? recordsIn : null;
+        } catch (e) {
+            return null;
+        }
     }
 
     Component.onCompleted: {
