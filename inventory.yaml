@@ -544,3 +544,23 @@ capabilities:
     inspiration_notes: "First-party HorneroOS plugin written for this catalogue; GitHub data comes from the normalized horneroctl github contract (gh owns authentication). No upstream code is copied."
     hornero_equivalent: "plugins/hornero-github-stats"
     status: implemented
+  - id: hornero-tailscale
+    name: Hornero Tailscale
+    category: widgets
+    origin: {project: HorneroOS/plugins, url: "https://github.com/HorneroOS/plugins", license: MIT}
+    classification: hornero-original
+    license_status: verified
+    license_evidence: plugins/hornero-tailscale/LICENSE
+    inspiration_notes: "First-party HorneroOS plugin written for this catalogue; reads tailscale status --json and toggles tailscale up/down. No upstream code is copied."
+    hornero_equivalent: "plugins/hornero-tailscale"
+    status: implemented
+  - id: hornero-elsewhen
+    name: Hornero Elsewhen
+    category: dashboard
+    origin: {project: HorneroOS/plugins, url: "https://github.com/HorneroOS/plugins", license: MIT}
+    classification: hornero-original
+    license_status: verified
+    license_evidence: plugins/hornero-elsewhen/LICENSE
+    inspiration_notes: "First-party HorneroOS plugin written for this catalogue; pure-JS timezone converter with working-hour overlap for distributed teams. No upstream code is copied."
+    hornero_equivalent: "plugins/hornero-elsewhen"
+    status: implemented

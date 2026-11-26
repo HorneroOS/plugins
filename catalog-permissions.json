@@ -107,6 +107,12 @@
         "en": "horneroctl github talks to api.github.com through your existing gh CLI sign-in to read contributions, pull requests and review requests.",
         "es": "horneroctl github se conecta a api.github.com mediante tu sesión de gh CLI para leer contribuciones, pull requests y pedidos de revisión."
       }
+    },
+    "hornero-tailscale": {
+      "program:tailscale": {
+        "en": "Runs tailscale status --json to show connection state, tailnet IP, active exit node and online peers, and tailscale up/down when you click Connect or Disconnect.",
+        "es": "Ejecuta tailscale status --json para mostrar el estado de conexión, IP de tailnet, nodo de salida activo y pares en línea, y tailscale up/down cuando hacés clic en Conectar o Desconectar."
+      }
     }
   }
 }
