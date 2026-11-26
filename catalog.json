@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
-  "generatedFrom": "58dd6d732521b763dce68dc9ffc44fac41d12238",
+  "generatedFrom": "eb65f099d92bad8dd9ca4fddd1616236d67228c9",
   "catalogSource": {
     "repo": "https://github.com/HorneroOS/plugins",
-    "rev": "58dd6d732521b763dce68dc9ffc44fac41d12238"
+    "rev": "eb65f099d92bad8dd9ca4fddd1616236d67228c9"
   },
   "plugins": [
     {
@@ -1099,6 +1099,78 @@
           "value": "showFreeSpace, warnPercent",
           "en": "Stores only its own settings (showFreeSpace, warnPercent).",
           "es": "Guarda solo su propia configuración (showFreeSpace, warnPercent)."
+        }
+      ]
+    },
+    {
+      "id": "hornero-elsewhen",
+      "name": "Hornero Elsewhen",
+      "version": "1.0.0",
+      "description": "World timezone converter panel for distributed teams: scrub hours forward or back to compare meeting times and working-hour overlap across UTC, Americas, Europe and Asia. Pure-JS, no processes or network.",
+      "author": "HorneroOS contributors",
+      "license": "MIT",
+      "homepage": "https://github.com/HorneroOS/plugins",
+      "placement": "dashboard",
+      "category": "utilities",
+      "capabilities": {
+        "processCommands": [],
+        "networkHosts": [],
+        "settings": {
+          "twentyFourHour": {
+            "type": "boolean",
+            "default": true,
+            "description": "Use 24-hour times; off shows 12-hour AM/PM."
+          },
+          "workStartHour": {
+            "type": "integer",
+            "default": 9,
+            "minimum": 0,
+            "maximum": 23,
+            "description": "Start of working hours for team overlap highlights."
+          },
+          "workEndHour": {
+            "type": "integer",
+            "default": 18,
+            "minimum": 1,
+            "maximum": 24,
+            "description": "End of working hours for team overlap highlights."
+          },
+          "showOffHours": {
+            "type": "boolean",
+            "default": true,
+            "description": "Show cities currently outside working hours."
+          }
+        },
+        "providers": [
+          "time"
+        ]
+      },
+      "trust": "official",
+      "path": "plugins/hornero-elsewhen",
+      "sha256": "3c50d5c4fa1777164e752d943c1e09346660535faf232df5d22ccf4196267441",
+      "marketplace": {
+        "compatibility": {
+          "minShellVersion": "1.0.0"
+        },
+        "changelog": [
+          {
+            "version": "1.0.0",
+            "notes": "Initial release: interactive timezone converter across UTC, Americas, Europe and Asia with hour scrubber and working-hour overlap indicators."
+          }
+        ]
+      },
+      "permissions": [
+        {
+          "kind": "data",
+          "value": "time",
+          "en": "Reads the clock and calendar from the shell's shared data (read-only).",
+          "es": "Lee el reloj y el calendario de los datos compartidos del shell (solo lectura)."
+        },
+        {
+          "kind": "settings",
+          "value": "showOffHours, twentyFourHour, workEndHour, workStartHour",
+          "en": "Stores only its own settings (showOffHours, twentyFourHour, workEndHour, workStartHour).",
+          "es": "Guarda solo su propia configuración (showOffHours, twentyFourHour, workEndHour, workStartHour)."
         }
       ]
     },
@@ -2679,6 +2751,72 @@
           "value": "showCores, showDisk, showGpu, showTemperatures, temperatureUnit, warnPercent",
           "en": "Stores only its own settings (showCores, showDisk, showGpu, showTemperatures, temperatureUnit, warnPercent).",
           "es": "Guarda solo su propia configuración (showCores, showDisk, showGpu, showTemperatures, temperatureUnit, warnPercent)."
+        }
+      ]
+    },
+    {
+      "id": "hornero-tailscale",
+      "name": "Hornero Tailscale",
+      "version": "1.0.0",
+      "description": "Tailscale VPN status pill and dashboard card: connection state, tailnet IP, active exit node, online peers and one-click connect/disconnect toggle.",
+      "author": "HorneroOS contributors",
+      "license": "MIT",
+      "homepage": "https://github.com/HorneroOS/plugins",
+      "placement": "dashboard",
+      "category": "utilities",
+      "capabilities": {
+        "processCommands": [
+          "tailscale"
+        ],
+        "networkHosts": [],
+        "settings": {
+          "refreshSeconds": {
+            "type": "integer",
+            "default": 15,
+            "minimum": 5,
+            "maximum": 300,
+            "description": "Seconds between Tailscale status checks. Querying pauses in the Gaming experience."
+          },
+          "showPeers": {
+            "type": "boolean",
+            "default": true,
+            "description": "Show online peers in the dashboard card."
+          },
+          "maxPeers": {
+            "type": "integer",
+            "default": 6,
+            "minimum": 1,
+            "maximum": 20,
+            "description": "Maximum number of peers to list in the dashboard card."
+          }
+        }
+      },
+      "trust": "official",
+      "path": "plugins/hornero-tailscale",
+      "sha256": "1ede67cb50bc48b1694f89bb4ad3d8327555d8937971ea72fda8a9a0759c204b",
+      "marketplace": {
+        "compatibility": {
+          "minShellVersion": "1.0.0"
+        },
+        "changelog": [
+          {
+            "version": "1.0.0",
+            "notes": "Initial release: Tailscale status bar pill with popover and dashboard card showing connection state, Tailscale IP, active exit node, online peers and connect/disconnect toggle."
+          }
+        ]
+      },
+      "permissions": [
+        {
+          "kind": "program",
+          "value": "tailscale",
+          "en": "Runs tailscale status --json to show connection state, tailnet IP, active exit node and online peers, and tailscale up/down when you click Connect or Disconnect.",
+          "es": "Ejecuta tailscale status --json para mostrar el estado de conexión, IP de tailnet, nodo de salida activo y pares en línea, y tailscale up/down cuando hacés clic en Conectar o Desconectar."
+        },
+        {
+          "kind": "settings",
+          "value": "maxPeers, refreshSeconds, showPeers",
+          "en": "Stores only its own settings (maxPeers, refreshSeconds, showPeers).",
+          "es": "Guarda solo su propia configuración (maxPeers, refreshSeconds, showPeers)."
         }
       ]
     },

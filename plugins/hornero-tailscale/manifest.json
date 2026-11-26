@@ -1,0 +1,75 @@
+{
+  "schemaVersion": 3,
+  "id": "hornero-tailscale",
+  "name": "Hornero Tailscale",
+  "version": "1.0.0",
+  "description": "Tailscale VPN status pill and dashboard card: connection state, tailnet IP, active exit node, online peers and one-click connect/disconnect toggle.",
+  "author": "HorneroOS contributors",
+  "license": "MIT",
+  "homepage": "https://github.com/HorneroOS/plugins",
+  "entrypoint": "Main.qml",
+  "placement": "dashboard",
+  "surfaces": {
+    "dashboard": {
+      "entrypoint": "Main.qml",
+      "size": "standard",
+      "category": "Network"
+    },
+    "bar": {
+      "entrypoint": "Bar.qml",
+      "section": "status"
+    }
+  },
+  "translations": {
+    "sourceLocale": "en",
+    "locales": [
+      "es"
+    ],
+    "directory": "translations"
+  },
+  "marketplace": {
+    "compatibility": {
+      "minShellVersion": "1.0.0"
+    },
+    "changelog": [
+      {
+        "version": "1.0.0",
+        "notes": "Initial release: Tailscale status bar pill with popover and dashboard card showing connection state, Tailscale IP, active exit node, online peers and connect/disconnect toggle."
+      }
+    ]
+  },
+  "files": [
+    "Main.qml",
+    "Bar.qml",
+    "README.md",
+    "LICENSE",
+    "translations/es.json"
+  ],
+  "capabilities": {
+    "processCommands": [
+      "tailscale"
+    ],
+    "networkHosts": [],
+    "settings": {
+      "refreshSeconds": {
+        "type": "integer",
+        "default": 15,
+        "minimum": 5,
+        "maximum": 300,
+        "description": "Seconds between Tailscale status checks. Querying pauses in the Gaming experience."
+      },
+      "showPeers": {
+        "type": "boolean",
+        "default": true,
+        "description": "Show online peers in the dashboard card."
+      },
+      "maxPeers": {
+        "type": "integer",
+        "default": 6,
+        "minimum": 1,
+        "maximum": 20,
+        "description": "Maximum number of peers to list in the dashboard card."
+      }
+    }
+  }
+}

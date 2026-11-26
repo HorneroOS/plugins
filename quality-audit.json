@@ -1574,6 +1574,104 @@
         "reviewer": "not yet reviewed graphically",
         "date": "2026-11-25"
       }
+    },
+    {
+      "id": "hornero-tailscale",
+      "classification": "needs-upgrade",
+      "valueProposition": "Tailscale VPN status pill and dashboard card: connection state, tailnet IP, active exit node, online peers and one-click connect/disconnect toggle.",
+      "nativeOverlap": "No native Tailscale VPN control exists in Hornero Shell; hornero-network-scope covers generic interface telemetry only.",
+      "dimensions": {
+        "tooltips": {
+          "status": "pass",
+          "note": "Bar indicator, connect/disconnect and refresh controls carry PluginKit tooltipText (static probe)."
+        },
+        "accessibility": {
+          "status": "pass",
+          "note": "UiCard, UiButton and UiPopover carry accessibleName/Accessible.name values (static probe)."
+        },
+        "translation": {
+          "status": "pass",
+          "note": "All literals via PluginKit Translations; es catalog declared and complete for tr() literals (static probe)."
+        },
+        "settings": {
+          "status": "pass",
+          "note": "Typed refreshSeconds/showPeers/maxPeers settings declared and read via PluginKit Settings (static probe)."
+        },
+        "themeTokens": {
+          "status": "pass",
+          "note": "PluginKit Theme tokens only (static probe)."
+        },
+        "orientation": {
+          "status": "unverified",
+          "note": "Bar/dashboard follow hostCompact/hostOrientation conventions; not yet captured on a vertical rail."
+        },
+        "loadingErrorStates": {
+          "status": "unverified",
+          "note": "UiState loading and error states exist in QML; not yet verified graphically in a live shell."
+        },
+        "performance": {
+          "status": "unverified",
+          "note": "Timer pauses in Gaming experience; live idle cost not yet measured."
+        },
+        "screenshots": {
+          "status": "fail",
+          "note": "No screenshot yet: graphical review pending; no placeholder is shipped."
+        }
+      },
+      "issue": "https://github.com/HorneroOS/plugins/issues/107",
+      "graphicalReview": {
+        "reviewer": "not yet reviewed graphically",
+        "date": "2026-11-26"
+      }
+    },
+    {
+      "id": "hornero-elsewhen",
+      "classification": "needs-upgrade",
+      "valueProposition": "Interactive world timezone converter panel for distributed teams across UTC, Americas, Europe and Asia with hour scrubber and working-hour overlap highlights.",
+      "nativeOverlap": "hornero-world-clock displays live clocks for three cities; Elsewhen adds interactive +/- hour scrubbing and working-hour overlap indicators for meeting planning.",
+      "dimensions": {
+        "tooltips": {
+          "status": "pass",
+          "note": "All interactive scrubber buttons carry PluginKit tooltipText (static probe)."
+        },
+        "accessibility": {
+          "status": "pass",
+          "note": "UiCard and UiButton carry Accessible.name/accessibleName values (static probe)."
+        },
+        "translation": {
+          "status": "pass",
+          "note": "All literals via PluginKit Translations; es catalog declared and complete for tr() literals (static probe)."
+        },
+        "settings": {
+          "status": "pass",
+          "note": "Typed twentyFourHour/workStartHour/workEndHour/showOffHours settings declared and read via PluginKit Settings (static probe)."
+        },
+        "themeTokens": {
+          "status": "pass",
+          "note": "PluginKit Theme tokens only (static probe)."
+        },
+        "orientation": {
+          "status": "unverified",
+          "note": "UiStack follows hostOrientation/hostCompact; not yet captured in a live shell."
+        },
+        "loadingErrorStates": {
+          "status": "na",
+          "note": "Pure-JS computation over shared Time provider; no async loading or network error states."
+        },
+        "performance": {
+          "status": "unverified",
+          "note": "Zero private timers (Subscription to shared Time provider); live cost not yet measured."
+        },
+        "screenshots": {
+          "status": "fail",
+          "note": "No screenshot yet: graphical review pending; no placeholder is shipped."
+        }
+      },
+      "issue": "https://github.com/HorneroOS/plugins/issues/107",
+      "graphicalReview": {
+        "reviewer": "not yet reviewed graphically",
+        "date": "2026-11-26"
+      }
     }
   ]
 }

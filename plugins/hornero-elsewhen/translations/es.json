@@ -1,0 +1,14 @@
+{
+  "Elsewhen": "Elsewhen",
+  "AM": "AM",
+  "PM": "PM",
+  "Now": "Ahora",
+  "-1h": "-1h",
+  "+1h": "+1h",
+  "Shift comparison one hour earlier": "Desplazar la comparación una hora antes",
+  "Reset comparison to current time": "Restablecer la comparación a la hora actual",
+  "Shift comparison one hour later": "Desplazar la comparación una hora después",
+  "WORK": "LABORAL",
+  "OFF": "FUERA",
+  "Compare UTC, Americas, Europe and Asia. Working hours: %1:00–%2:00.": "Compará UTC, América, Europa y Asia. Horario laboral: %1:00–%2:00."
+}

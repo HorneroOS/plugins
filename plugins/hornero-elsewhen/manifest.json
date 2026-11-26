@@ -1,0 +1,76 @@
+{
+  "schemaVersion": 3,
+  "id": "hornero-elsewhen",
+  "name": "Hornero Elsewhen",
+  "version": "1.0.0",
+  "description": "World timezone converter panel for distributed teams: scrub hours forward or back to compare meeting times and working-hour overlap across UTC, Americas, Europe and Asia. Pure-JS, no processes or network.",
+  "author": "HorneroOS contributors",
+  "license": "MIT",
+  "homepage": "https://github.com/HorneroOS/plugins",
+  "entrypoint": "Main.qml",
+  "placement": "dashboard",
+  "surfaces": {
+    "dashboard": {
+      "entrypoint": "Main.qml",
+      "size": "standard",
+      "category": "Time"
+    }
+  },
+  "translations": {
+    "sourceLocale": "en",
+    "locales": [
+      "es"
+    ],
+    "directory": "translations"
+  },
+  "marketplace": {
+    "compatibility": {
+      "minShellVersion": "1.0.0"
+    },
+    "changelog": [
+      {
+        "version": "1.0.0",
+        "notes": "Initial release: interactive timezone converter across UTC, Americas, Europe and Asia with hour scrubber and working-hour overlap indicators."
+      }
+    ]
+  },
+  "files": [
+    "Main.qml",
+    "README.md",
+    "LICENSE",
+    "translations/es.json"
+  ],
+  "capabilities": {
+    "processCommands": [],
+    "networkHosts": [],
+    "settings": {
+      "twentyFourHour": {
+        "type": "boolean",
+        "default": true,
+        "description": "Use 24-hour times; off shows 12-hour AM/PM."
+      },
+      "workStartHour": {
+        "type": "integer",
+        "default": 9,
+        "minimum": 0,
+        "maximum": 23,
+        "description": "Start of working hours for team overlap highlights."
+      },
+      "workEndHour": {
+        "type": "integer",
+        "default": 18,
+        "minimum": 1,
+        "maximum": 24,
+        "description": "End of working hours for team overlap highlights."
+      },
+      "showOffHours": {
+        "type": "boolean",
+        "default": true,
+        "description": "Show cities currently outside working hours."
+      }
+    },
+    "providers": [
+      "time"
+    ]
+  }
+}
