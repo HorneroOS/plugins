@@ -54,7 +54,7 @@ Item {
                 visible: usage.failed
                 width: parent.width
                 kind: "error"
-                message: i18n.tr("AI usage unavailable: horneroctl returned no usable data.")
+                message: i18n.tr("AI usage is unavailable.")
             }
 
             Repeater {
@@ -212,7 +212,7 @@ Item {
                 width: parent.width
                 glyph: "refresh"
                 text: i18n.tr("Refresh")
-                tooltipText: i18n.tr("Reload AI usage from horneroctl")
+                tooltipText: i18n.tr("Reload AI usage")
                 accessibleName: i18n.tr("Refresh AI usage")
                 onClicked: usage.refresh(true)
             }

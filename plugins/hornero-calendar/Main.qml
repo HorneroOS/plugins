@@ -184,17 +184,13 @@ Item {
                     UiText {
                         anchors.centerIn: parent
                         role: "value"
+                        font.pointSize: Theme.font.size.small
+                        font.weight: cell.today ? Font.DemiBold : Font.Normal
                         color: cell.today ? Theme.palette.onSignal : root.isWeekend(cell.index % 7) ? Theme.palette.inkMuted : Theme.palette.ink
                         text: cell.modelData > 0 ? i18n.formatNumber(cell.modelData) : ""
                     }
                 }
             }
-        }
-
-        UiText {
-            width: parent.width
-            role: "caption"
-            text: i18n.tr("Dates only: no calendar events source yet.")
         }
     }
 }

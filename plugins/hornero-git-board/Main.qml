@@ -213,6 +213,10 @@ Item {
             }
         }
         onExited: (code, status) => {
+            if (!root.current) {
+                root.next();
+                return;
+            }
             const path = root.current.path;
             if (code !== 0) {
                 const failedEntry = root.parseStatus("");
@@ -254,6 +258,11 @@ Item {
         }
         onExited: (code, status) => {
             const entry = root.pending;
+            root.pending = null;
+            if (!entry) {
+                root.next();
+                return;
+            }
             if (code === 0) {
                 const parts = root.buffer.trim().split("\t");
                 entry.commit = parts[0] || "";

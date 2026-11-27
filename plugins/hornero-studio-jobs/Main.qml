@@ -25,6 +25,8 @@ Item {
     }
 
     function basename(path) {
+        if (path === undefined || path === null)
+            return "";
         const parts = String(path).split("/");
         return parts[parts.length - 1] || String(path);
     }
@@ -68,7 +70,12 @@ Item {
                 root.buffer += data;
             }
         }
-        onExited: {
+        onExited: (code, status) => {
+            if (code !== 0) {
+                root.jobs = [];
+                root.available = false;
+                return;
+            }
             try {
                 const env = JSON.parse(root.buffer.trim());
                 const data = (env && env.data) || {};
@@ -145,14 +152,14 @@ Item {
                 visible: !root.available
                 width: parent.width
                 kind: "error"
-                message: i18n.tr("Studio jobs are unavailable: horneroctl did not answer.")
+                message: i18n.tr("Studio jobs are unavailable.")
             }
 
             UiState {
                 visible: root.available && root.jobs.length === 0
                 width: parent.width
                 kind: "empty"
-                message: i18n.tr("No jobs yet. Start one with horneroctl studio jobs submit.")
+                message: i18n.tr("No Studio jobs yet.")
             }
 
             Repeater {

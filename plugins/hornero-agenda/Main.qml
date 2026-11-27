@@ -166,11 +166,5 @@ Item {
             usedLabel: i18n.tr("%1% of the year elapsed").arg(i18n.formatNumber(Math.round(100 * root.doy / root.diy)))
             Accessible.name: i18n.tr("Year progress")
         }
-
-        UiText {
-            width: parent.width
-            role: "caption"
-            text: i18n.tr("System clock dates only; no events source yet.")
-        }
     }
 }

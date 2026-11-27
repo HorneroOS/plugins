@@ -2,7 +2,7 @@
   "schemaVersion": 3,
   "id": "hornero-calendar",
   "name": "Hornero Calendar",
-  "version": "3.1.1",
+  "version": "3.1.2",
   "description": "A desktop widget with a display clock, the full date and a square-celled month grid over the shared time provider. Dates only; no events source.",
   "author": "HorneroOS contributors",
   "license": "MIT",
@@ -31,6 +31,10 @@
       "minShellVersion": "1.2.79"
     },
     "changelog": [
+      {
+        "version": "3.1.2",
+        "notes": "Remove limitation note from widget body and match native calendar numeral size"
+      },
       {
         "version": "3.1.1",
         "notes": "Catalogue description no longer leads with an internal version; it says what the extension does first."

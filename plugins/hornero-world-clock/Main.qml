@@ -60,8 +60,14 @@ Item {
     // loads and apply from the next reload, as in the other
     // 2.0 families.
     function citySetting(key, fallback) {
-        const value = pluginSettings.value(key, fallback);
-        return root.zoneTable()[value] ? value : fallback;
+        const table = root.zoneTable();
+        const value = String(pluginSettings.value(key, fallback) || "");
+        return Object.prototype.hasOwnProperty.call(table, value) ? value : fallback;
+    }
+
+    function zoneOrUtc(key) {
+        const table = root.zoneTable();
+        return Object.prototype.hasOwnProperty.call(table, key) ? table[key] : table["utc"];
     }
     readonly property var cityKeys: [citySetting("city1", "buenos-aires"), citySetting("city2", "madrid"), citySetting("city3", "tokyo")]
     readonly property bool showUtc: pluginSettings.value("showUtc", true) !== false
@@ -246,13 +252,13 @@ Item {
                             Layout.fillWidth: true
                             label: root.cityName(modelData)
                             value: {
-                                const p = root.zonedParts(Time.date, root.zoneTable()[modelData]);
+                                const p = root.zonedParts(Time.date, root.zoneOrUtc(modelData));
                                 return root.fmtHms(p.hours, p.minutes, p.seconds) + " (" + root.offsetLabel(p.offsetMin) + ")";
                             }
                         }
 
                         UiChip {
-                            visible: root.zonedParts(Time.date, root.zoneTable()[modelData]).dst
+                            visible: root.zonedParts(Time.date, root.zoneOrUtc(modelData)).dst
                             text: i18n.tr("DST")
                             tone: "signal"
                         }
@@ -262,18 +268,12 @@ Item {
                         width: parent.width
                         role: "caption"
                         text: {
-                            const p = root.zonedParts(Time.date, root.zoneTable()[modelData]);
+                            const p = root.zonedParts(Time.date, root.zoneOrUtc(modelData));
                             const rel = root.dayRelation(p, Time.date);
                             return root.zonedDateText(p) + (rel !== "" ? " · " + rel : "");
                         }
                     }
                 }
-            }
-
-            UiText {
-                width: parent.width
-                role: "caption"
-                text: i18n.tr("Offsets use built-in daylight-saving rules.")
             }
         }
     }

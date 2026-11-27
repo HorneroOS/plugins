@@ -92,12 +92,18 @@ Item {
                 root.buffer += data;
             }
         }
-        onExited: {
+        onExited: (code, status) => {
+            if (code !== 0) {
+                root.available = false;
+                root.mode = "";
+                root.performance = false;
+                return;
+            }
             try {
                 const env = JSON.parse(root.buffer.trim());
                 const data = (env && env.data) || {};
                 root.mode = String(data.audio_mode || "");
-                root.performance = data.performance_active === "true";
+                root.performance = data.performance_active === "true" || data.performance_active === true;
                 root.available = env.ok === true && root.mode.length > 0;
             } catch (e) {
                 root.available = false;
@@ -170,7 +176,7 @@ Item {
                 visible: !root.available
                 width: parent.width
                 kind: "error"
-                message: i18n.tr("Studio mode unavailable: horneroctl returned no usable studio mode.")
+                message: i18n.tr("Studio mode is unavailable.")
             }
 
             Column {
@@ -202,7 +208,7 @@ Item {
             UiText {
                 width: parent.width
                 role: "caption"
-                text: i18n.tr("Read-only. Switching modes stays in horneroctl and Control Center.")
+                text: i18n.tr("Read-only. Change modes in Control Center.")
             }
 
             UiActionRow {

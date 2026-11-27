@@ -17,6 +17,8 @@ Item {
 
     GithubData {
         id: pulse
+
+        active: root.visible
     }
 
     UiCard {
@@ -53,7 +55,7 @@ Item {
                 visible: pulse.failed
                 width: parent.width
                 role: "caption"
-                text: i18n.tr("GitHub unavailable via gh.")
+                text: i18n.tr("GitHub unavailable.")
             }
 
             UiActionRow {

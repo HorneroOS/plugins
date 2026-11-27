@@ -2,7 +2,7 @@
   "%1: %2": "%1: %2",
   "APPROVED": "APROBADO",
   "Add repositories as owner/name in Settings. Nothing is requested until you do.": "Agregá repositorios como dueño/nombre en Ajustes. No se pide nada hasta entonces.",
-  "Asking GitHub through gh…": "Consultando a GitHub mediante gh…",
+  "Checking GitHub…": "Consultando GitHub…",
   "CHANGES": "CAMBIOS",
   "CI FAILING": "CI FALLANDO",
   "CI GREEN": "CI EN VERDE",
@@ -10,10 +10,10 @@
   "DRAFT": "BORRADOR",
   "FAILING": "FALLANDO",
   "Forge Board": "Tablero de forja",
+  "GitHub CLI is not signed in. Sign in to GitHub CLI to view repository status.": "GitHub CLI no tiene sesión iniciada. Iniciá sesión en GitHub CLI para ver el estado del repositorio.",
+  "GitHub CLI was not found. Install and sign in to GitHub CLI.": "No se encontró GitHub CLI. Instalá e iniciá sesión en GitHub CLI.",
   "NO RUNS": "SIN EJECUCIONES",
   "PASSING": "APROBADO",
   "RUNNING": "EN CURSO",
-  "The `gh` CLI was not found. Install GitHub CLI and run `gh auth login`.": "No se encontró la CLI `gh`. Instalá GitHub CLI y ejecutá `gh auth login`.",
-  "UNKNOWN": "DESCONOCIDO",
-  "`gh` is not signed in. Run `gh auth login` in a terminal; this card never asks for or stores a token.": "`gh` no tiene sesión. Ejecutá `gh auth login` en una terminal; esta tarjeta nunca pide ni guarda un token."
+  "UNKNOWN": "DESCONOCIDO"
 }

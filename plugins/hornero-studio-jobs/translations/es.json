@@ -1,7 +1,7 @@
 {
-  "No jobs yet. Start one with horneroctl studio jobs submit.": "Todavía no hay trabajos. Iniciá uno con horneroctl studio jobs submit.",
+  "No Studio jobs yet.": "Todavía no hay trabajos de Studio.",
   "Studio jobs": "Trabajos de Studio",
-  "Studio jobs are unavailable: horneroctl did not answer.": "Los trabajos de Studio no están disponibles: horneroctl no respondió.",
+  "Studio jobs are unavailable.": "Los trabajos de Studio no están disponibles.",
   "cancelled": "cancelado",
   "failed": "falló",
   "queued": "en cola",

@@ -3,7 +3,7 @@
   "pluginKit": 5,
   "id": "hornero-github-stats",
   "name": "Hornero Dev Pulse",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Dev Pulse: GitHub development activity through your existing gh sign-in - contributions, pull requests, reviews, an actionable inbox, and an optional side-by-side with Agent Deck AI usage. Local-first; unknown metrics stay unknown.",
   "author": "HorneroOS contributors",
   "license": "MIT",
@@ -96,6 +96,10 @@
       "minShellVersion": "1.2.79"
     },
     "changelog": [
+      {
+        "version": "1.0.4",
+        "notes": "Fix _done race condition, guard exit codes and combo bounds, add vertical bar support, and clean copy"
+      },
       {
         "version": "1.0.3",
         "notes": "Guard JSON.parse against malformed payloads"

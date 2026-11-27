@@ -51,8 +51,9 @@ Item {
     // read when the indicator loads and apply from the next
     // reload, as in the other 2.0 families.
     readonly property string secondZone: {
-        const value = pluginSettings.value("barZone", "utc");
-        return root.zoneTable()[value] ? value : "utc";
+        const table = root.zoneTable();
+        const value = String(pluginSettings.value("barZone", "utc") || "");
+        return Object.prototype.hasOwnProperty.call(table, value) ? value : "utc";
     }
     readonly property bool showSeconds: pluginSettings.value("barShowSeconds", false) === true
     readonly property bool twentyFourHour: pluginSettings.value("twentyFourHour", true) !== false
@@ -166,7 +167,9 @@ Item {
     }
 
     function secondParts(date) {
-        return root.zonedParts(date, root.zoneTable()[root.secondZone]);
+        const table = root.zoneTable();
+        const zone = Object.prototype.hasOwnProperty.call(table, root.secondZone) ? table[root.secondZone] : table["utc"];
+        return root.zonedParts(date, zone);
     }
 
     function secondSuffix(parts) {
@@ -196,11 +199,11 @@ Item {
             const p = root.secondParts(Time.date);
             // A narrow rail stacks the local time as HH over mm like the native clock;
             // the second zone is in the tooltip and the popover.
-            if (root.hostCompact)
+            if (root.hostCompact || root.hostOrientation === "vertical")
                 return root.pad2(Time.date.getHours()) + "\n" + root.pad2(Time.date.getMinutes());
             return root.localTimeText(Time.date) + "\n" + root.fmtHms(p.hours, p.minutes, p.seconds) + " " + root.secondSuffix(p);
         }
-        tooltipText: popover.opened ? "" : (root.hostCompact ? i18n.tr("%1 local, %2 %3").arg(root.localTimeText(Time.date)).arg(root.cityName(root.secondZone)).arg(root.fmtHms(root.secondParts(Time.date).hours, root.secondParts(Time.date).minutes, root.secondParts(Time.date).seconds)) : i18n.tr("World Clock: activate for time zone details"))
+        tooltipText: popover.opened ? "" : ((root.hostCompact || root.hostOrientation === "vertical") ? i18n.tr("%1 local, %2 %3").arg(root.localTimeText(Time.date)).arg(root.cityName(root.secondZone)).arg(root.fmtHms(root.secondParts(Time.date).hours, root.secondParts(Time.date).minutes, root.secondParts(Time.date).seconds)) : i18n.tr("World Clock: activate for time zone details"))
         accessibleName: {
             const p = root.secondParts(Time.date);
             return i18n.tr("Local time %1, %2 time %3").arg(root.localTimeText(Time.date)).arg(root.cityName(root.secondZone)).arg(root.fmtHms(p.hours, p.minutes, p.seconds));
@@ -251,12 +254,6 @@ Item {
             UiText {
                 role: "caption"
                 text: root.differenceText(Time.date, root.secondParts(Time.date))
-            }
-
-            UiText {
-                width: parent.width
-                role: "caption"
-                text: i18n.tr("Daylight saving follows built-in rules.")
             }
         }
     }

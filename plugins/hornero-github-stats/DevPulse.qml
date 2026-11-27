@@ -32,6 +32,8 @@ Item {
 
     GithubData {
         id: pulse
+
+        active: root.visible
     }
 
     Process {
@@ -85,7 +87,7 @@ Item {
             visible: pulse.failed
             width: parent.width
             kind: "error"
-            message: i18n.tr("GitHub unavailable: install github-cli and run gh auth login, then Refresh.")
+            message: i18n.tr("GitHub unavailable. Sign in with GitHub CLI and refresh.")
         }
 
         UiState {
@@ -130,7 +132,11 @@ Item {
                 model: ["7d", "30d", "90d", "365d", i18n.tr("All")]
                 currentIndex: ["7", "30", "90", "365", "all"].indexOf(pulse.statsWindow)
                 accessibleName: i18n.tr("Activity window")
-                onActivated: index => pulse.setStatsWindow(["7", "30", "90", "365", "all"][index])
+                onActivated: index => {
+                    const windows = ["7", "30", "90", "365", "all"];
+                    if (index >= 0 && index < windows.length)
+                        pulse.setStatsWindow(windows[index]);
+                }
             }
         }
 
@@ -327,7 +333,9 @@ Item {
 
         // Optional Agent Deck comparison (temporal association only)
         Column {
-            visible: pulse.agentRecords.length > 0 && pulse.calendar !== null
+            readonly property var agentSeries: pulse.agentDailyValues(pulse.statsWindowDays)
+
+            visible: pulse.agentRecords.length > 0 && pulse.calendar !== null && agentSeries.length >= 2
             width: parent.width
             spacing: Theme.spacing.small
 
@@ -339,8 +347,8 @@ Item {
             UiSparkline {
                 width: parent.width
                 height: 40
-                values: pulse.agentDailyValues(pulse.statsWindowDays)
-                window: Math.max(2, pulse.agentDailyValues(pulse.statsWindowDays).length)
+                values: parent.agentSeries
+                window: Math.max(2, parent.agentSeries.length)
                 tone: "cue"
                 accessibleName: i18n.tr("Daily AI tokens (local scope)")
             }
@@ -356,7 +364,7 @@ Item {
             visible: pulse.hasData
             width: parent.width
             role: "caption"
-            text: i18n.tr("Coverage: GitHub contributions recognized by GitHub over the selected window, plus search totals by actual event date. Exports: horneroctl github export.")
+            text: i18n.tr("Coverage: GitHub contributions recognized over the selected window, plus search totals by actual event date.")
         }
     }
 }

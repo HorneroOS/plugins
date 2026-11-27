@@ -2,7 +2,7 @@
   "schemaVersion": 3,
   "id": "hornero-studio-jobs",
   "name": "Hornero Studio Jobs",
-  "version": "2.1.1",
+  "version": "2.1.2",
   "description": "Render and export job monitor for HorneroOS Studio: shows queued, running, finished and interrupted jobs from the typed horneroctl studio jobs contract. Read-only; jobs are submitted and cancelled from the CLI or Control Center.",
   "author": "HorneroOS contributors",
   "license": "MIT",
@@ -52,6 +52,10 @@
       "minShellVersion": "1.2.72"
     },
     "changelog": [
+      {
+        "version": "2.1.2",
+        "notes": "Check exit code, guard null path in basename, and remove raw CLI command from copy"
+      },
       {
         "version": "2.1.1",
         "notes": "Gate Studio jobs polling timer on root.visible and Gaming experience, refreshing on show (HorneroOS/plugins#112)."

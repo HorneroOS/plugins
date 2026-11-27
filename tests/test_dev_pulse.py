@@ -89,6 +89,28 @@ class DevPulseContractTests(unittest.TestCase):
         for needle in ("Dev Pulse", "Refresh", "DEVELOPMENT INBOX"):
             self.assertTrue(any(needle in k or needle in v for k, v in es.items()))
 
+    def test_error_handling_avoids_agent_race_and_checks_exit_code(self):
+        data = read("GithubData.qml")
+        self.assertIn("property bool _statsOk", data)
+        self.assertIn("property bool _inboxOk", data)
+        self.assertIn("const coreOk = root._statsOk && root._inboxOk", data)
+        self.assertNotIn("root._done(true)", data)
+        self.assertIn("parsed.ok === false", data)
+        self.assertGreaterEqual(data.count("exitCode === 0"), 3)
+        self.assertIn('running: root.active && Theme.experience !== "gaming"', data)
+
+    def test_vertical_bar_and_safe_combo_activation(self):
+        bar = read("Bar.qml")
+        self.assertIn('root.hostOrientation === "vertical"', bar)
+        self.assertIn('popover.opened ? "" :', bar)
+        self.assertIn('role: "subtitle"', bar)
+        page = read("DevPulse.qml")
+        self.assertIn("if (index >= 0 && index < windows.length)", page)
+        self.assertIn("agentSeries.length >= 2", page)
+        self.assertNotIn("horneroctl github export", page)
+        self.assertNotIn("gh auth login", page)
+        self.assertNotIn("gh auth login", bar)
+
 
 if __name__ == "__main__":
     unittest.main()

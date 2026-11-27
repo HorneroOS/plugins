@@ -56,6 +56,8 @@ Item {
     }
 
     function nameOf(d) {
+        if (!d)
+            return "?";
         if (typeof d === "string")
             return d;
         return String(d.mount || d.mountPoint || d.path || d.device || "?");
@@ -65,28 +67,30 @@ Item {
     function totalKiB(d) {
         if (!d || typeof d === "string")
             return 0;
-        return Number(d.total || d.totalBytes || d.size || d.capacity || 0);
+        const n = Number(d.total || d.totalBytes || d.size || d.capacity || 0);
+        return isFinite(n) && n > 0 ? n : 0;
     }
 
     function usedKiB(d) {
         if (!d || typeof d === "string")
             return 0;
-        if (d.used !== undefined && d.used !== null)
-            return Number(d.used);
-        if (d.usedBytes !== undefined && d.usedBytes !== null)
-            return Number(d.usedBytes);
+        if (d.used !== undefined && d.used !== null && isFinite(Number(d.used)))
+            return Math.max(0, Number(d.used));
+        if (d.usedBytes !== undefined && d.usedBytes !== null && isFinite(Number(d.usedBytes)))
+            return Math.max(0, Number(d.usedBytes));
         const total = totalKiB(d);
-        const free = Number(d.available || d.free || d.freeBytes || 0);
+        const freeRaw = Number(d.available || d.free || d.freeBytes || 0);
+        const free = isFinite(freeRaw) ? Math.max(0, freeRaw) : 0;
         return total > 0 ? Math.max(0, total - free) : 0;
     }
 
     function freeKiB(d) {
         if (!d || typeof d === "string")
             return 0;
-        if (d.free !== undefined && d.free !== null)
-            return Number(d.free);
-        if (d.available !== undefined && d.available !== null)
-            return Number(d.available);
+        if (d.free !== undefined && d.free !== null && isFinite(Number(d.free)))
+            return Math.max(0, Number(d.free));
+        if (d.available !== undefined && d.available !== null && isFinite(Number(d.available)))
+            return Math.max(0, Number(d.available));
         const total = totalKiB(d);
         return total > 0 ? Math.max(0, total - usedKiB(d)) : 0;
     }
@@ -94,11 +98,13 @@ Item {
     function fracOf(d) {
         if (d && typeof d !== "string") {
             const p = (d.perc !== undefined ? d.perc : (d.percent !== undefined ? d.percent : d.usedPerc));
-            if (p !== undefined && p !== null && isFinite(Number(p)))
-                return Number(p) > 1 ? Number(p) / 100 : Number(p);
+            if (p !== undefined && p !== null && isFinite(Number(p))) {
+                const raw = Number(p) > 1 ? Number(p) / 100 : Number(p);
+                return Math.max(0, Math.min(1, raw));
+            }
         }
         const total = totalKiB(d);
-        return total > 0 ? usedKiB(d) / total : 0;
+        return total > 0 ? Math.max(0, Math.min(1, usedKiB(d) / total)) : 0;
     }
 
     function fmtKiB(kib) {
@@ -221,13 +227,6 @@ Item {
                         text: i18n.tr("Free") + ": " + root.fmtKiB(root.freeKiB(modelData)) + " / " + root.fmtKiB(root.totalKiB(modelData))
                     }
                 }
-            }
-
-            UiText {
-                visible: root.disks().length > 0
-                width: parent.width
-                role: "caption"
-                text: i18n.tr("Drive health is not shown.")
             }
         }
     }

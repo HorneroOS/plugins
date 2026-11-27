@@ -153,9 +153,9 @@ Item {
             spacing: Theme.spacing.small
 
             UiStack {
+                visible: root.windHigh
                 orientation: root.hostOrientation
                 compact: root.hostCompact
-
 
                 UiChip {
                     visible: root.windHigh
@@ -168,18 +168,18 @@ Item {
                 visible: !Weather.locationConfigured
                 width: parent.width
                 kind: "empty"
-                message: i18n.tr("Weather location not configured. Set a location in the shell settings to see conditions here.")
+                message: i18n.tr("No weather location configured. Set a location in Settings.")
             }
 
             UiState {
-                visible: Weather.locationConfigured && Weather.lastError.length > 0 && !Weather.ready
+                visible: Weather.locationConfigured && (Weather.lastError || "").length > 0 && !Weather.ready
                 width: parent.width
                 kind: "error"
-                message: i18n.tr("Weather unavailable: %1").arg(Weather.lastError)
+                message: i18n.tr("Weather unavailable: %1").arg(Weather.lastError || "")
             }
 
             UiState {
-                visible: Weather.locationConfigured && Weather.lastError.length === 0 && !Weather.ready
+                visible: Weather.locationConfigured && (Weather.lastError || "").length === 0 && !Weather.ready
                 width: parent.width
                 kind: "loading"
                 message: i18n.tr("Loading weather...")
@@ -197,9 +197,9 @@ Item {
                 }
 
                 UiText {
-                    visible: Weather.description.length > 0
+                    visible: (Weather.description || "").length > 0
                     role: "body"
-                    text: Weather.description
+                    text: Weather.description || ""
                 }
 
                 UiStack {
@@ -277,7 +277,7 @@ Item {
                 }
 
                 Repeater {
-                    model: !root.compactDensity && Weather.forecast ? Math.min(root.forecastDays, Weather.forecast.length) : 0
+                    model: !root.compactDensity && Weather.forecast && typeof Weather.forecast.length === "number" ? Math.min(root.forecastDays, Weather.forecast.length) : 0
 
                     delegate: UiText {
                         required property int index
@@ -292,13 +292,6 @@ Item {
                     width: parent.width
                     label: i18n.tr("Forecast range")
                     value: root.forecastRange()
-                }
-
-                UiText {
-                    visible: root.detailedDensity
-                    width: parent.width
-                    role: "caption"
-                    text: i18n.tr("Shows the single configured location.")
                 }
             }
         }

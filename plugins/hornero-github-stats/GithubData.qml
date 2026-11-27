@@ -27,10 +27,13 @@ Item {
     property string account: ""
     property double lastUpdatedMs: 0
 
+    property bool active: true
     property string _statsBuffer: ""
     property string _inboxBuffer: ""
     property string _agentBuffer: ""
     property int _pending: 0
+    property bool _statsOk: false
+    property bool _inboxOk: false
     property int _backoff: 1
     property var _prevFailing: null
     property var _prevReview: null
@@ -87,8 +90,8 @@ Item {
 
     function summaryTotal(category: string): double {
         for (const r of root.inboxRecords)
-            if (r && r.kind === "inbox-summary" && r.category === category)
-                return Number(r.total || 0);
+            if (r && r.kind === "inbox-summary" && r.category === category && isFinite(Number(r.total)))
+                return Number(r.total);
         return -1;
     }
 
@@ -98,6 +101,8 @@ Item {
         const out = [];
         for (const part of record.recentDays.split(",")) {
             const bits = part.split(":");
+            if (bits.length < 2)
+                continue;
             const n = Number(bits[1]);
             if (isFinite(n) && bits[0].length === 10)
                 out.push({ "date": bits[0], "count": n });
@@ -127,10 +132,13 @@ Item {
             return;
         root.loading = true;
         root._pending = 3;
+        root._statsOk = false;
+        root._inboxOk = false;
         root._statsBuffer = "";
         root._inboxBuffer = "";
         root._agentBuffer = "";
-        const days = String(Math.max(7, root.statsWindowDays));
+        const windowDays = isFinite(root.statsWindowDays) ? root.statsWindowDays : 30;
+        const days = String(Math.max(7, windowDays));
         // Literal argv arrays only (the validator requires them);
         // empty filter values mean "no filter" to the backend.
         statsProc.command = force ? ["horneroctl", "github", "stats", "--days", days, "--org", root.orgFilter, "--repo", root.repoFilter, "--force-refresh", "--json"] : ["horneroctl", "github", "stats", "--days", days, "--org", root.orgFilter, "--repo", root.repoFilter, "--json"];
@@ -141,14 +149,15 @@ Item {
         agentProc.running = true;
     }
 
-    function _done(ok: bool): void {
+    function _done(): void {
         root._pending -= 1;
         if (root._pending > 0)
             return;
         root.loading = false;
-        if (ok || root.hasData) {
+        const coreOk = root._statsOk && root._inboxOk;
+        if (coreOk || root.hasData) {
             root.failed = false;
-            root.stale = !ok;
+            root.stale = !coreOk;
             root.lastUpdatedMs = Date.now();
             root._backoff = 1;
             root._reactDiff();
@@ -182,9 +191,13 @@ Item {
     }
 
     function _parse(text: string): var {
+        if (!text || text.length === 0)
+            return null;
         try {
             const parsed = JSON.parse(text);
-            const data = (parsed && parsed.data) || {};
+            if (!parsed || typeof parsed !== "object" || parsed.ok === false)
+                return null;
+            const data = parsed.data || {};
             let recordsIn = data.records;
             if (typeof recordsIn === "string")
                 recordsIn = JSON.parse(recordsIn);
@@ -204,7 +217,7 @@ Item {
     Timer {
         interval: root.refreshSeconds * 1000 * root._backoff
         repeat: true
-        running: true
+        running: root.active && Theme.experience !== "gaming"
         onTriggered: root.refresh(false)
     }
 
@@ -221,7 +234,7 @@ Item {
         onExited: exitCode => {
             let ok = false;
             try {
-                const recordsIn = root._parse(root._statsBuffer.trim());
+                const recordsIn = exitCode === 0 ? root._parse(root._statsBuffer.trim()) : null;
                 if (recordsIn && recordsIn.length > 0) {
                     root.statsRecords = recordsIn;
                     for (const r of recordsIn)
@@ -233,7 +246,8 @@ Item {
             } catch (e) {
                 ok = false;
             }
-            root._done(ok);
+            root._statsOk = ok;
+            root._done();
         }
     }
 
@@ -250,7 +264,7 @@ Item {
         onExited: exitCode => {
             let ok = false;
             try {
-                const recordsIn = root._parse(root._inboxBuffer.trim());
+                const recordsIn = exitCode === 0 ? root._parse(root._inboxBuffer.trim()) : null;
                 if (recordsIn) {
                     root.inboxRecords = recordsIn;
                     ok = true;
@@ -258,7 +272,8 @@ Item {
             } catch (e) {
                 ok = false;
             }
-            root._done(ok);
+            root._inboxOk = ok;
+            root._done();
         }
     }
 
@@ -275,13 +290,13 @@ Item {
         onExited: exitCode => {
             // Optional: Agent Deck data may be absent entirely.
             try {
-                const recordsIn = root._parse(root._agentBuffer.trim());
+                const recordsIn = exitCode === 0 ? root._parse(root._agentBuffer.trim()) : null;
                 if (recordsIn)
                     root.agentRecords = recordsIn.filter(r => r && typeof r.provider === "string");
             } catch (e) {
                 root.agentRecords = [];
             }
-            root._done(true);
+            root._done();
         }
     }
 }

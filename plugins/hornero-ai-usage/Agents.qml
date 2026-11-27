@@ -75,7 +75,7 @@ Item {
             UiButton {
                 glyph: "refresh"
                 text: i18n.tr("Refresh")
-                tooltipText: i18n.tr("Reload AI usage from horneroctl")
+                tooltipText: i18n.tr("Reload AI usage")
                 accessibleName: i18n.tr("Refresh AI usage")
                 onClicked: usage.refresh(true)
             }
@@ -168,7 +168,11 @@ Item {
                 currentIndex: ["7", "30", "60", "90", "all"].indexOf(usage.statsWindow)
                 accessibleName: i18n.tr("Activity window")
                 tooltipText: i18n.tr("Activity window")
-                onActivated: index => usage.setStatsWindow(["7", "30", "60", "90", "all"][index])
+                onActivated: index => {
+                    const windows = ["7", "30", "60", "90", "all"];
+                    if (index >= 0 && index < windows.length)
+                        usage.setStatsWindow(windows[index]);
+                }
             }
         }
 
@@ -226,7 +230,7 @@ Item {
             visible: usage.failed
             width: parent.width
             kind: "error"
-            message: i18n.tr("AI usage unavailable: horneroctl returned no usable data.")
+            message: i18n.tr("AI usage is unavailable.")
         }
 
         }

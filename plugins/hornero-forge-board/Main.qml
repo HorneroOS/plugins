@@ -166,6 +166,10 @@ Item {
     }
 
     function stepDone(step, code): void {
+        if (pendingStep !== step || !current) {
+            pendingStep = "";
+            return;
+        }
         pendingStep = "";
         if (step === "run") {
             if (code === 0)
@@ -276,21 +280,21 @@ Item {
             visible: root.loaded && root.missingGh && root.rows.length > 0
             width: parent.width
             kind: "error"
-            message: i18n.tr("The `gh` CLI was not found. Install GitHub CLI and run `gh auth login`.")
+            message: i18n.tr("GitHub CLI was not found. Install and sign in to GitHub CLI.")
         }
 
         UiState {
             visible: root.loaded && !root.missingGh && root.authProblem
             width: parent.width
             kind: "error"
-            message: i18n.tr("`gh` is not signed in. Run `gh auth login` in a terminal; this card never asks for or stores a token.")
+            message: i18n.tr("GitHub CLI is not signed in. Sign in to GitHub CLI to view repository status.")
         }
 
         UiState {
             visible: !root.loaded
             width: parent.width
             kind: "loading"
-            message: i18n.tr("Asking GitHub through gh…")
+            message: i18n.tr("Checking GitHub…")
         }
 
         Repeater {
@@ -343,7 +347,7 @@ Item {
                         Layout.fillWidth: true
                         visible: r.run.title !== undefined && r.run.title.length > 0
                         role: "caption"
-                        text: r.run.branch + " · " + r.run.title
+                        text: (r.run.branch && r.run.branch.length > 0 ? r.run.branch + " · " : "") + r.run.title
                         elide: Text.ElideRight
                         color: Theme.palette.inkFaint
                     }
