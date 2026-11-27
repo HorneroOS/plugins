@@ -36,12 +36,25 @@ review, and it is never a sandbox.
 
 ## What gets signed
 
-Exactly the payload hash already used everywhere
-(`scripts/gen_catalog.py` framing: for each name in
-sorted(`manifest.json` + `files`): `name NUL bytes NUL`, SHA-256).
-Signing anything else (e.g. a hand-written manifest digest) would
-fork the integrity story; one hash, three consumers: catalogue,
-local trust, author signature.
+There are two complementary Minisign surfaces, kept strictly separate:
+
+1. **Official catalogue (`catalog.json` + detached `catalog.json.minisig`)**:
+   - `catalog.json` carries `generatedFrom`, `catalogSource: { "repo": "https://github.com/HorneroOS/plugins", "rev": "<commit>" }`, and per-plugin `sha256` digests computed with `scripts/gen_catalog.py:payload_sha256` (`manifest.json` + sorted `files`, framed as `name NUL bytes NUL`).
+   - `scripts/gen_catalog.py --check` validates entry freshness and requires `catalogSource.repo` and `catalogSource.rev == generatedFrom` (without comparing `rev` to `HEAD`, so squash merges never falsely mark a catalogue stale).
+   - A maintainer signs the exact `catalog.json` bytes using a dedicated offline catalogue key (`minisign -S`), and `horneroctl` / `scripts/sign_catalog.py` verify the detached `.minisig`, strict JSON (no duplicate object keys), `catalogSource`, and every entry's canonical payload SHA-256 before trusting any entry:
+
+     ```sh
+     python3 scripts/sign_catalog.py --check
+     python3 scripts/sign_catalog.py --sign --secret-key /secure/path/hornero-catalog.key
+     python3 scripts/sign_catalog.py --verify --public-key /etc/hornero/catalog.pub --check-payloads
+     ```
+
+   - No unreleased production key or fingerprint is checked into git; CI tests `--sign`, `--verify`, and tamper rejection using ephemeral Minisign keys.
+
+2. **Per-author plugin signatures (`manifest.json["signing"]`)**:
+   - Covers the **files-only payload hash** (`scripts/sign_plugin.py:payload_sha256` / `horneroctl`'s `plugin_files_sha256`: sorted `manifest["files"]`, `manifest.json` excluded because the manifest carries the signature).
+   - Authors sign that 64-byte hex digest with `minisign -Sl` (legacy `Ed` framing) via `scripts/sign_plugin.py` or `scripts/sign_catalog.py --plugin <dir> --sign --secret-key <author.key> --public-key <author.pub> [--write-manifest]`, and verify with `scripts/sign_catalog.py --plugin <dir> --verify`.
+   - One canonical payload hash per consumer: `gen_catalog.py` / `horneroctl` catalogue install verify `manifest.json + files`; author `signing` verifies `files` only.
 
 ## Manifest and receipt changes (phase 2)
 
