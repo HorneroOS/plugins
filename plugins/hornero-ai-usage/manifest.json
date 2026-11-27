@@ -3,7 +3,7 @@
   "pluginKit": 5,
   "id": "hornero-ai-usage",
   "name": "Hornero AI Usage",
-  "version": "4.2.2",
+  "version": "4.2.3",
   "description": "Agent Deck: every discovered coding-agent subscription in one place - provider-reported quota windows with resets, plans, and local activity. Unavailable quotas are labelled unknown, never guessed.",
   "author": "HorneroOS contributors",
   "license": "MIT",
@@ -83,6 +83,10 @@
       "minShellVersion": "1.2.79"
     },
     "changelog": [
+      {
+        "version": "4.2.3",
+        "notes": "Gate local countdown tick timers in Agents and Bar on root.visible (HorneroOS/plugins#112)."
+      },
       {
         "version": "4.2.2",
         "notes": "Guard JSON.parse against malformed payloads"

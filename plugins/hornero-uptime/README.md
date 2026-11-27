@@ -1,57 +1,43 @@
 # Hornero Uptime
 
-Uptime 3.0 (manifest v3, PluginKit 3 on Hornero Signal, HorneroOS/plugins#31): one package, two
-surfaces showing session length from `/proc/uptime`.
+Uptime 3.0 (manifest v3, PluginKit 3 on Hornero Signal, HorneroOS/plugins#31, #112): one package, two
+surfaces showing live session length from the shared PluginKit `system` provider (`System.uptimeSeconds`).
 
-- **Bar** (`"placement": "bar"`, primary): the 1.x compact label
+- **Bar** (`"placement": "bar"`, primary): the compact label
   (`Up 2h 3m`). Activating it opens a host-owned `UiPopover`
-  (and re-reads) with uptime, idle time, the derived boot time
-  and a Refresh control.
+  with live uptime and the derived boot time.
 - **Dashboard** (`surfaces.dashboard`, `size: "compact"`,
   `category: "System"`): the same detail as a card.
 
-## Facade gap: no PluginKit uptime member
+## Native PluginKit provider (zero subprocesses)
 
-Verified against shell `docs/PLUGINS.md` and
-`plugin/qml/Hornero/PluginKit/{Power,System,Time,Providers}.qml`:
-`Power` is battery-only, `System` exposes no uptime field, `Time`
-is the wall clock and there is no uptime/session provider domain.
-So, exactly as in 1.x, each surface reads `/proc/uptime` with the
-declared `cat` command (`"processCommands": ["cat"]`) on load,
-on its refresh tick and on user activation/Refresh. Each surface
-runs in its own host Loader, so bar and dashboard keep separate
-reads; there is no shared lease to hold for this data. If the
-shell grows an uptime facade, this package should drop the
-process entirely.
+Both surfaces hold a shared `Subscription { domain: "system" }` lease
+and read `System.uptimeSeconds` (introduced in Hornero Shell 1.3.10),
+which the shell samples natively from `/proc/uptime` via `FileView`.
+No `Process`, `Timer`, or external command is used.
 
 ## States and derived values
 
-- **Loading**: before the first read finishes.
-- **Unavailable**: `/proc/uptime` unreadable, non-zero exit or
-  unparsable (first field not a finite positive number). The
-  bar shows "Uptime unavailable" (unless `showWhenUnavailable`
-  is off, then it takes no bar space) and the popover/card show
-  an error state. A fabricated zero is never displayed.
-- **Idle time** is the second `/proc/uptime` field: idle seconds
-  summed across CPUs, so it can exceed wall-clock time; when the
-  field is missing or invalid it reads "Unavailable".
-- **Booted at** is derived arithmetic (now minus uptime),
-  labelled "(derived)" — not a kernel boot timestamp.
+- **Waiting / Unavailable**: before a positive uptime value arrives
+  from `System.uptimeSeconds`. The bar shows "Uptime unavailable"
+  (unless `showWhenUnavailable` is off, then it takes no bar space)
+  and the popover/card show a loading state. A fabricated zero is
+  never displayed.
+- **Booted at** is derived arithmetic (`now - uptimeSeconds`), not a
+  kernel boot timestamp.
 
 ## Compatibility
 
-- No settings existed before 2.0, so no stored values migrate.
-  New typed settings default to the 1.x behaviour:
-  `refreshSeconds` (integer, default `60`), `showLabel`
-  (boolean, default `true`, the "Up" prefix) and
-  `showWhenUnavailable` (boolean, default `true`).
-- 1.x formatting is unchanged: `d/h/m` with days only when
-  non-zero and minutes always shown.
-- Installing this package needs a shell with PluginKit 3 (Hornero Signal): it declares
-  `schemaVersion: 3` and `capabilities.providers`, and earlier shells refuse or cannot render it.
+- Typed settings: `showLabel` (boolean, default `true`, the "Up"
+  prefix) and `showWhenUnavailable` (boolean, default `true`).
+- Formatting is unchanged: `d/h/m` with days only when non-zero and
+  minutes always shown.
+- Requires Hornero Shell `>= 1.3.10` (`System.uptimeSeconds` on the
+  shared `system` provider).
 
 Both surfaces use PluginKit `Ui*` primitives, host context,
 host-owned tooltip/popover, accessible names, Theme tokens and
 an Argentine Spanish catalog (`translations/es.json`). No
-network. Original HorneroOS code, MIT licensed. Plugin QML runs
-with your user privileges inside Quickshell; it is not sandboxed.
+subprocesses, no timers, no network. Original HorneroOS code, MIT
+licensed. Plugin QML runs with your user privileges inside Quickshell;
+it is not sandboxed.

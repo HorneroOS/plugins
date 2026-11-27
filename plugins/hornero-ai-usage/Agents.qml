@@ -34,7 +34,8 @@ Item {
     Timer {
         interval: 30000
         repeat: true
-        running: true
+        running: root.visible
+        triggeredOnStart: true
         onTriggered: root.nowMs = Date.now()
     }
 

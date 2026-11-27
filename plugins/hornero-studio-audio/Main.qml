@@ -78,7 +78,7 @@ Item {
     Timer {
         interval: root.refreshSeconds * 1000
         repeat: true
-        running: true
+        running: root.visible && Theme.experience !== "gaming"
         onTriggered: root.refresh()
     }
 

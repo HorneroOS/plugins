@@ -266,9 +266,12 @@ Item {
     Timer {
         interval: root.refreshSeconds * 1000
         repeat: true
-        running: root.repoSetting.length > 0 && Theme.experience !== "gaming"
+        running: root.visible && root.repoSetting.length > 0 && Theme.experience !== "gaming"
         onTriggered: root.refresh()
     }
+
+    onVisibleChanged: if (visible && root.repoSetting.length > 0 && Theme.experience !== "gaming")
+        refresh()
 
     // Re-scan when the repository list changes.
     onRepoSettingChanged: refreshDelay.restart()

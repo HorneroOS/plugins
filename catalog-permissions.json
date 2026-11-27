@@ -84,12 +84,6 @@
         "es": "Lista los trabajos de Studio con horneroctl studio jobs list (solo lectura)."
       }
     },
-    "hornero-uptime": {
-      "program:cat": {
-        "en": "Reads /proc/uptime with cat to show how long the machine has been on.",
-        "es": "Lee /proc/uptime con cat para mostrar cuánto tiempo lleva encendida la máquina."
-      }
-    },
     "hornero-github-stats": {
       "program:horneroctl": {
         "en": "Runs horneroctl github status/stats/inbox (read-only) and horneroctl agent usage for the optional Agent Deck comparison. horneroctl talks to GitHub through your existing gh sign-in; this extension never sees or stores a token.",
