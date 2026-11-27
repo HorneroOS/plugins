@@ -2,7 +2,7 @@
   "schemaVersion": 3,
   "id": "hornero-git-board",
   "name": "Hornero Git Board",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A read-only status board for the repositories you name: branch, ahead/behind, staged, changed, untracked and conflicted counts and the last commit. Local git only, no network, never writes.",
   "author": "HorneroOS contributors",
   "license": "MIT",
@@ -26,7 +26,9 @@
   },
   "translations": {
     "sourceLocale": "en",
-    "locales": ["es"],
+    "locales": [
+      "es"
+    ],
     "directory": "translations"
   },
   "marketplace": {
@@ -34,6 +36,10 @@
       "minShellVersion": "1.0.0"
     },
     "changelog": [
+      {
+        "version": "1.0.1",
+        "notes": "Gate repository polling timer on root.visible and refresh on show (HorneroOS/plugins#112)."
+      },
       {
         "version": "1.0.0",
         "notes": "Initial release: per-repository branch, upstream drift, working-tree counts and last commit from local git, as a dashboard card and a desktop widget."
@@ -47,7 +53,9 @@
     "translations/es.json"
   ],
   "capabilities": {
-    "processCommands": ["git"],
+    "processCommands": [
+      "git"
+    ],
     "networkHosts": [],
     "settings": {
       "repositories": {
@@ -73,7 +81,10 @@
       "sortBy": {
         "type": "enum",
         "default": "attention",
-        "options": ["attention", "path"],
+        "options": [
+          "attention",
+          "path"
+        ],
         "description": "Attention puts conflicted, dirty and unsynced repositories first; path keeps your order alphabetical."
       },
       "showLastCommit": {

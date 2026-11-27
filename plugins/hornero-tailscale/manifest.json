@@ -2,7 +2,7 @@
   "schemaVersion": 3,
   "id": "hornero-tailscale",
   "name": "Hornero Tailscale",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Tailscale VPN status pill and dashboard card: connection state, tailnet IP, active exit node, online peers and one-click connect/disconnect toggle.",
   "author": "HorneroOS contributors",
   "license": "MIT",
@@ -32,6 +32,10 @@
       "minShellVersion": "1.0.0"
     },
     "changelog": [
+      {
+        "version": "1.0.1",
+        "notes": "Gate Tailscale polling timers on root.visible and refresh dashboard card on show (HorneroOS/plugins#112)."
+      },
       {
         "version": "1.0.0",
         "notes": "Initial release: Tailscale status bar pill with popover and dashboard card showing connection state, Tailscale IP, active exit node, online peers and connect/disconnect toggle."

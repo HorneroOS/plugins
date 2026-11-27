@@ -36,7 +36,6 @@ EXPECTED_DEFAULTS = {
         "lowBatteryPercent": 20,
     },
     "hornero-uptime": {
-        "refreshSeconds": 60,
         "showLabel": True,
         "showWhenUnavailable": True,
     },
@@ -141,34 +140,22 @@ class UptimeLogic(unittest.TestCase):
 const fs = require("fs");
 const cases = JSON.parse(fs.readFileSync(process.argv[2], "utf8"));
 process.stdout.write(JSON.stringify(cases.map(c => [
-  fmt(c[0]), parseUptime(c[1]), bootEpochMs(c[2], c[0])])));
+  fmt(c[0]), bootEpochMs(c[1], c[0])])));
 """
 
-    def test_fmt_parse_and_boot_against_1x_oracle(self):
+    def test_fmt_and_boot_against_1x_oracle(self):
         cases = [
-            [0, "", 1_700_000_000_000],
-            [59, "59.9 12.0", 1_700_000_000_000],
-            [3661, "3661.5 100.25\n", 1_700_000_000_000],
-            [90061, "90061 0", 1_700_000_000_000],
-            [172800, "garbage", 1_700_000_000_000],
-            [3600, "3600", 1_700_000_000_000],
-            [3600, "0 5", 1_700_000_000_000],
+            [0, 1_700_000_000_000],
+            [59, 1_700_000_000_000],
+            [3661, 1_700_000_000_000],
+            [90061, 1_700_000_000_000],
+            [172800, 1_700_000_000_000],
+            [3600, 1_700_000_000_000],
         ]
-        expected = []
-        for seconds, text, now_ms in cases:
-            fields = text.split()
-            def field(i):
-                try:
-                    return float(fields[i])
-                except (IndexError, ValueError):
-                    return float("nan")
-            up, idle = field(0), field(1)
-            expected.append([
-                fmt_1x(seconds),
-                [int(up) if up > 0 else -1,
-                 int(idle) if idle >= 0 else -1],
-                now_ms - seconds * 1000,
-            ])
+        expected = [
+            [fmt_1x(seconds), now_ms - seconds * 1000]
+            for seconds, now_ms in cases
+        ]
         self.assertEqual(
             run_node("hornero-uptime", self.DRIVER, cases), expected)
 

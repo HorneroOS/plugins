@@ -1243,16 +1243,16 @@
     {
       "id": "hornero-uptime",
       "classification": "needs-upgrade",
-      "valueProposition": "Uptime 2.0 (#31): compact bar session-length indicator with an activation popover and dashboard card adding /proc/uptime idle time, the derived boot time (labelled derived) and a user Refresh, over the declared cat read kept because PluginKit exposes no uptime/boot facade member. Unreadable input is a real unavailable state, never a fabricated zero.",
-      "nativeOverlap": "Overlaps hornero-system-health/system-monitor territory on session facts; distinct value is the compact bar uptime plus idle-time and derived-boot detail from /proc/uptime, which no PluginKit facade exposes.",
+      "valueProposition": "Uptime 3.0 (#31, #112): compact bar session-length indicator with an activation popover and dashboard card showing live uptime and derived boot time over the shared PluginKit system provider (System.uptimeSeconds), with zero subprocesses or timers. Unreported uptime shows an explicit unavailable/loading state, never a fabricated zero.",
+      "nativeOverlap": "Overlaps hornero-system-health/system-monitor territory on session facts; distinct value is the compact bar uptime plus derived-boot detail over the shared system provider.",
       "dimensions": {
         "tooltips": {
           "status": "pass",
-          "note": "Indicator and Refresh controls carry PluginKit tooltipText plus a UiTooltip on the bar indicator (host-owned, static probe)."
+          "note": "Indicator button carries PluginKit tooltipText (host-owned, static probe)."
         },
         "accessibility": {
           "status": "pass",
-          "note": "UiButton/UiPopover accessibleName and Accessible.name on the dashboard card; activation and refresh are real buttons, no mouse-only MouseArea (static probe). Live AT-SPI behaviour is not verified."
+          "note": "UiButton/UiPopover accessibleName and Accessible.name on the dashboard card; activation is a real button, no mouse-only MouseArea (static probe). Live AT-SPI behaviour is not verified."
         },
         "translation": {
           "status": "pass",
@@ -1260,7 +1260,7 @@
         },
         "settings": {
           "status": "pass",
-          "note": "Typed refreshSeconds (integer, default 60, the 1.x cadence), showLabel and showWhenUnavailable (boolean, default true, the 1.x bar behaviour) settings declared in the manifest and read via PluginKit Settings; the plugin stored no settings before 2.0 (static probe)."
+          "note": "Typed showLabel and showWhenUnavailable (boolean, default true, the 1.x bar behaviour) settings declared in the manifest and read via PluginKit Settings (static probe)."
         },
         "themeTokens": {
           "status": "pass",
@@ -1276,7 +1276,7 @@
         },
         "loadingErrorStates": {
           "status": "unverified",
-          "note": "UiState loading covers the pre-first-read state and UiState error covers unreadable/unparsable /proc/uptime in popover and card; presentation has not been verified graphically in a live shell."
+          "note": "UiState loading covers the waiting/unavailable state before System.uptimeSeconds reports a positive value in popover and card; presentation has not been verified graphically in a live shell."
         },
         "performance": {
           "status": "pass",

@@ -6,11 +6,12 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 # Plugins whose popover/dashboard surface has footer actions. Agenda,
 # Calendar and Moon Phase became actionless Signal desktop widgets in
-# their 3.x rewrites, so they no longer belong here.
+# their 3.x rewrites, and hornero-uptime migrated to the live native
+# System.uptimeSeconds provider (shell >= 1.3.10) with no manual Refresh
+# action row, so they no longer belong here.
 MIGRATED = {
     "hornero-ai-usage": "Main.qml",
     "hornero-studio-audio": "Main.qml",
-    "hornero-uptime": "Main.qml",
 }
 
 

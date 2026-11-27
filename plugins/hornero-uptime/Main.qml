@@ -1,18 +1,14 @@
 import QtQuick
-import Quickshell.Io
 import Hornero.PluginKit
 
-// Uptime 2.0 bar surface (primary, HorneroOS/plugins#31):
-// PluginKit exposes no uptime/boot member -- Power is battery
-// only, System has no uptime field and Time is the wall clock
-// (shell plugin/qml/Hornero/PluginKit/{Power,System,Time}.qml) --
-// so, as in 1.x, this surface reads /proc/uptime with the
-// declared `cat` command on load, on its refresh tick and when
-// the user activates it. The first field is seconds since boot
-// and the second is idle seconds summed across CPUs. Unreadable
-// or unparsable input shows a real unavailable state; a
+// Uptime bar surface (primary, HorneroOS/plugins#31, #112):
+// Reads System.uptimeSeconds from the shared PluginKit `system`
+// provider (shell >= 1.3.10, backed by a zero-fork FileView over
+// /proc/uptime inside SystemUsage). Holds one `system` lease and
+// creates no subprocess or timer. Before a positive reading
+// arrives, an explicit unavailable/loading state is shown; a
 // fabricated zero is never displayed. Boot time is derived
-// arithmetic (now minus uptime), labelled as derived.
+// arithmetic (now minus uptime).
 Item {
     id: root
 
@@ -26,12 +22,6 @@ Item {
     property bool hostCompact: false
     property string hostScreenName: ""
 
-    property bool hasData: false
-    property bool failed: false
-    property int uptimeSeconds: 0
-    property int idleSeconds: -1
-    property string buffer: ""
-
     // LOGIC-BEGIN (kept verbatim in Dashboard.qml; pure logic only)
     function fmt(totalSeconds) {
         const d = Math.floor(totalSeconds / 86400);
@@ -44,24 +34,16 @@ Item {
         return m + "m";
     }
 
-    function parseUptime(text) {
-        const fields = String(text).trim().split(/\s+/);
-        const up = parseFloat(fields[0]);
-        const idle = parseFloat(fields[1]);
-        return [isFinite(up) && up > 0 ? Math.floor(up) : -1, isFinite(idle) && idle >= 0 ? Math.floor(idle) : -1];
-    }
-
     function bootEpochMs(nowMs, uptimeSeconds) {
         return nowMs - uptimeSeconds * 1000;
     }
     // LOGIC-END
 
-    function refresh(): void {
-        if (!uptimeProc.running) {
-            root.buffer = "";
-            uptimeProc.running = true;
-        }
+    readonly property int uptimeSeconds: {
+        const value = Number(System.uptimeSeconds);
+        return isFinite(value) && value > 0 ? Math.floor(value) : 0;
     }
+    readonly property bool hasData: uptimeSeconds > 0
 
     function bootText() {
         if (!hasData)
@@ -69,22 +51,19 @@ Item {
         return i18n.formatDateTime(new Date(bootEpochMs(Date.now(), uptimeSeconds)), "yyyy-MM-dd hh:mm");
     }
 
-    // Typed settings: defaults reproduce 1.x exactly (60 s reads,
-    // "Up" prefix, permanent unavailable label). The plugin
-    // stored no settings before 2.0, so nothing migrates.
-    readonly property int refreshSeconds: {
-        const value = Number(pluginSettings.value("refreshSeconds", 60));
-        return isFinite(value) && value >= 15 ? Math.min(600, Math.floor(value)) : 60;
-    }
+    // Typed settings: defaults preserve the 1.x bar presentation
+    // ("Up" prefix, visible unavailable label when no sample yet).
     readonly property bool showLabel: pluginSettings.value("showLabel", true) !== false
     readonly property bool showWhenUnavailable: pluginSettings.value("showWhenUnavailable", true) !== false
     readonly property bool shown: hasData || showWhenUnavailable
-    readonly property string statusText: failed ? i18n.tr("Uptime unavailable") : hasData ? (showLabel ? i18n.tr("Up %1").arg(fmt(uptimeSeconds)) : fmt(uptimeSeconds)) : i18n.tr("Up ...")
+    readonly property string statusText: hasData ? (showLabel ? i18n.tr("Up %1").arg(fmt(uptimeSeconds)) : fmt(uptimeSeconds)) : i18n.tr("Uptime unavailable")
 
     implicitWidth: shown ? stack.implicitWidth : 0
     implicitHeight: shown ? stack.implicitHeight : 0
 
-    Component.onCompleted: refresh()
+    Subscription {
+        domain: "system"
+    }
 
     Translations {
         id: i18n
@@ -96,38 +75,6 @@ Item {
         id: pluginSettings
 
         pluginId: "hornero-uptime"
-    }
-
-    Timer {
-        interval: root.refreshSeconds * 1000
-        repeat: true
-        running: true
-        onTriggered: root.refresh()
-    }
-
-    Process {
-        id: uptimeProc
-
-        command: ["cat", "/proc/uptime"]
-
-        stdout: SplitParser {
-            onRead: data => {
-                root.buffer += data;
-            }
-        }
-        onExited: exitCode => {
-            const parsed = root.parseUptime(root.buffer);
-            if (exitCode === 0 && parsed[0] > 0) {
-                root.uptimeSeconds = parsed[0];
-                root.idleSeconds = parsed[1];
-                root.hasData = true;
-                root.failed = false;
-            } else {
-                root.hasData = false;
-                root.failed = true;
-                root.idleSeconds = -1;
-            }
-        }
     }
 
     UiStack {
@@ -145,10 +92,7 @@ Item {
             text: root.hostCompact || root.hostOrientation === "vertical" ? "" : root.statusText
             tooltipText: root.statusText
             accessibleName: i18n.tr("Uptime details")
-            onClicked: {
-                popover.toggle();
-                root.refresh();
-            }
+            onClicked: popover.toggle()
         }
     }
 
@@ -168,17 +112,10 @@ Item {
             }
 
             UiState {
-                visible: !root.hasData && !root.failed
+                visible: !root.hasData
                 width: parent.width
                 kind: "loading"
-                message: i18n.tr("Reading /proc/uptime...")
-            }
-
-            UiState {
-                visible: root.failed
-                width: parent.width
-                kind: "error"
-                message: i18n.tr("Uptime is unavailable: /proc/uptime could not be read or parsed. No value is fabricated.")
+                message: i18n.tr("Waiting for uptime from the system provider. No value is fabricated.")
             }
 
             Column {
@@ -186,21 +123,10 @@ Item {
                 width: parent.width
                 spacing: Theme.spacing.small
 
-                UiStack {
-                    orientation: root.hostOrientation
-                    compact: root.hostCompact
-
-                    UiMetric {
-                        size: "value"
-                        label: i18n.tr("Uptime")
-                        value: root.fmt(root.uptimeSeconds)
-                    }
-
-                    UiMetric {
-                        size: "value"
-                        label: i18n.tr("Idle time")
-                        value: root.idleSeconds >= 0 ? root.fmt(root.idleSeconds) : i18n.tr("Unavailable")
-                    }
+                UiMetric {
+                    size: "value"
+                    label: i18n.tr("Uptime")
+                    value: root.fmt(root.uptimeSeconds)
                 }
 
                 UiMetric {
@@ -212,17 +138,8 @@ Item {
                 UiText {
                     width: parent.width
                     role: "caption"
-                    text: i18n.tr("Idle time adds up all CPUs, so it can exceed wall-clock time.")
+                    text: i18n.tr("Boot time is derived from live uptime reported by the shell.")
                 }
-            }
-
-            UiActionRow {
-                width: parent.width
-                glyph: "refresh"
-                text: i18n.tr("Refresh")
-                tooltipText: i18n.tr("Read /proc/uptime again")
-                accessibleName: i18n.tr("Refresh uptime")
-                onClicked: root.refresh()
             }
         }
     }

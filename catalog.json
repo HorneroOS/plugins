@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
-  "generatedFrom": "eb65f099d92bad8dd9ca4fddd1616236d67228c9",
+  "generatedFrom": "ba988dd01f5a28bb7082016a9e3c4afd0885f96a",
   "catalogSource": {
     "repo": "https://github.com/HorneroOS/plugins",
-    "rev": "eb65f099d92bad8dd9ca4fddd1616236d67228c9"
+    "rev": "ba988dd01f5a28bb7082016a9e3c4afd0885f96a"
   },
   "plugins": [
     {
@@ -104,7 +104,7 @@
     {
       "id": "hornero-ai-usage",
       "name": "Hornero AI Usage",
-      "version": "4.2.2",
+      "version": "4.2.3",
       "description": "Agent Deck: every discovered coding-agent subscription in one place - provider-reported quota windows with resets, plans, and local activity. Unavailable quotas are labelled unknown, never guessed.",
       "author": "HorneroOS contributors",
       "license": "MIT",
@@ -148,13 +148,17 @@
       },
       "trust": "official",
       "path": "plugins/hornero-ai-usage",
-      "sha256": "bf51b66249b4f40256b082351f0ca9487c5b5420498725b8ce107c4320a235ec",
+      "sha256": "fe88d77474e594dc3e6231b438b893ffac757654054e0a15a6cb3243872e5374",
       "pluginKit": 5,
       "marketplace": {
         "compatibility": {
           "minShellVersion": "1.2.79"
         },
         "changelog": [
+          {
+            "version": "4.2.3",
+            "notes": "Gate local countdown tick timers in Agents and Bar on root.visible (HorneroOS/plugins#112)."
+          },
           {
             "version": "4.2.2",
             "notes": "Guard JSON.parse against malformed payloads"
@@ -708,7 +712,7 @@
     {
       "id": "hornero-containers",
       "name": "Hornero Containers",
-      "version": "1.0.1",
+      "version": "1.0.2",
       "description": "A read-only roster of your Podman and Docker containers: state, image, uptime and published ports. Never starts, stops or pulls anything. Says so plainly when no runtime answers.",
       "author": "HorneroOS contributors",
       "license": "MIT",
@@ -761,12 +765,16 @@
       },
       "trust": "official",
       "path": "plugins/hornero-containers",
-      "sha256": "e401a72809b62546ad56242b673cad1b2b30771a893abdd78ebd20406e41b5d9",
+      "sha256": "67e5885287fc1e53158820686f68ccf8fa5e9b4f5997b4ca3ff15e7d28ed960f",
       "marketplace": {
         "compatibility": {
           "minShellVersion": "1.0.0"
         },
         "changelog": [
+          {
+            "version": "1.0.2",
+            "notes": "Gate container polling timer on root.visible and refresh on show (HorneroOS/plugins#112)."
+          },
           {
             "version": "1.0.1",
             "notes": "Guard JSON.parse against malformed payloads"
@@ -1111,7 +1119,7 @@
       "license": "MIT",
       "homepage": "https://github.com/HorneroOS/plugins",
       "placement": "dashboard",
-      "category": "utilities",
+      "category": "productivity",
       "capabilities": {
         "processCommands": [],
         "networkHosts": [],
@@ -1451,7 +1459,7 @@
     {
       "id": "hornero-git-board",
       "name": "Hornero Git Board",
-      "version": "1.0.0",
+      "version": "1.0.1",
       "description": "A read-only status board for the repositories you name: branch, ahead/behind, staged, changed, untracked and conflicted counts and the last commit. Local git only, no network, never writes.",
       "author": "HorneroOS contributors",
       "license": "MIT",
@@ -1507,12 +1515,16 @@
       },
       "trust": "official",
       "path": "plugins/hornero-git-board",
-      "sha256": "03ff19d4a97aa14108d6ebba94e155972c5c764946d9683fa5545dfac4c5ede8",
+      "sha256": "21a0e9c8097ccccd5b33ec05da426aeca60aa0fbc0d5b166ff80971a193c49d9",
       "marketplace": {
         "compatibility": {
           "minShellVersion": "1.0.0"
         },
         "changelog": [
+          {
+            "version": "1.0.1",
+            "notes": "Gate repository polling timer on root.visible and refresh on show (HorneroOS/plugins#112)."
+          },
           {
             "version": "1.0.0",
             "notes": "Initial release: per-repository branch, upstream drift, working-tree counts and last commit from local git, as a dashboard card and a desktop widget."
@@ -2273,7 +2285,7 @@
     {
       "id": "hornero-port-watch",
       "name": "Hornero Port Watch",
-      "version": "1.0.0",
+      "version": "1.0.1",
       "description": "What is listening on this machine, and what is free: ports, protocol, how far each bind reaches and the owning process when the kernel lets you see it. Watch the ports your projects need. Read-only, local.",
       "author": "HorneroOS contributors",
       "license": "MIT",
@@ -2335,12 +2347,16 @@
       },
       "trust": "official",
       "path": "plugins/hornero-port-watch",
-      "sha256": "ecd4d2ea549c1ac6b22becc69532f03cbf1a6cc13f2b38dd8dbc110b2252f75b",
+      "sha256": "4f6bd48ba55ab68d93ed05acc816398ba97151793b3b29fefe95f1fe06424495",
       "marketplace": {
         "compatibility": {
           "minShellVersion": "1.0.0"
         },
         "changelog": [
+          {
+            "version": "1.0.1",
+            "notes": "Gate socket polling timer on root.visible and refresh on show (HorneroOS/plugins#112)."
+          },
           {
             "version": "1.0.0",
             "notes": "Initial release: listening TCP/UDP ports with bind reach and owning process from `ss`, optional watched ports shown as free, as a dashboard card and a desktop widget."
@@ -2454,7 +2470,7 @@
     {
       "id": "hornero-studio-audio",
       "name": "Hornero Studio Audio",
-      "version": "3.0.2",
+      "version": "3.0.3",
       "description": "Bar indicator, popover and dashboard card for the Studio audio mode and Temporary Performance state from the typed horneroctl contract. Read-only; mode changes stay in the CLI and Control Center.",
       "author": "HorneroOS contributors",
       "license": "MIT",
@@ -2486,12 +2502,16 @@
       },
       "trust": "official",
       "path": "plugins/hornero-studio-audio",
-      "sha256": "b91ea1c78aa1203048b36b430120c2ee9a236507c44d9784283aef2d457f41a0",
+      "sha256": "97c31cbcee1bd1ea51a7ce11c31436468dc73bfe56035948a6c9cf2ff8bb636d",
       "marketplace": {
         "compatibility": {
           "minShellVersion": "1.2.79"
         },
         "changelog": [
+          {
+            "version": "3.0.3",
+            "notes": "Gate Studio audio polling timers on root.visible and Gaming experience, refreshing dashboard on show (HorneroOS/plugins#112)."
+          },
           {
             "version": "3.0.2",
             "notes": "Catalogue description no longer leads with an internal version; it says what the extension does first."
@@ -2566,7 +2586,7 @@
     {
       "id": "hornero-studio-jobs",
       "name": "Hornero Studio Jobs",
-      "version": "2.1.0",
+      "version": "2.1.1",
       "description": "Render and export job monitor for HorneroOS Studio: shows queued, running, finished and interrupted jobs from the typed horneroctl studio jobs contract. Read-only; jobs are submitted and cancelled from the CLI or Control Center.",
       "author": "HorneroOS contributors",
       "license": "MIT",
@@ -2607,12 +2627,16 @@
       },
       "trust": "official",
       "path": "plugins/hornero-studio-jobs",
-      "sha256": "16cfa7afec56e5cbe63ec04e309fdeab4ce61176a85896ccffd3af39d731e50f",
+      "sha256": "0060ac04152c715683f84556022f8ebf0d37de7595a697f241cceb86247403cf",
       "marketplace": {
         "compatibility": {
           "minShellVersion": "1.2.72"
         },
         "changelog": [
+          {
+            "version": "2.1.1",
+            "notes": "Gate Studio jobs polling timer on root.visible and Gaming experience, refreshing on show (HorneroOS/plugins#112)."
+          },
           {
             "version": "2.1.0",
             "notes": "Typed settings: refreshSeconds, maxRows, showAdapter, showFinished (defaults keep the 2.0 behaviour: 30 s, four rows, adapter shown, finished jobs kept)."
@@ -2757,13 +2781,13 @@
     {
       "id": "hornero-tailscale",
       "name": "Hornero Tailscale",
-      "version": "1.0.0",
+      "version": "1.0.1",
       "description": "Tailscale VPN status pill and dashboard card: connection state, tailnet IP, active exit node, online peers and one-click connect/disconnect toggle.",
       "author": "HorneroOS contributors",
       "license": "MIT",
       "homepage": "https://github.com/HorneroOS/plugins",
       "placement": "dashboard",
-      "category": "utilities",
+      "category": "system",
       "capabilities": {
         "processCommands": [
           "tailscale"
@@ -2793,12 +2817,16 @@
       },
       "trust": "official",
       "path": "plugins/hornero-tailscale",
-      "sha256": "1ede67cb50bc48b1694f89bb4ad3d8327555d8937971ea72fda8a9a0759c204b",
+      "sha256": "bdeafbc82ea57e08d88c040e76533446352effbac4b4ae2de3c6dfb8b0c0e607",
       "marketplace": {
         "compatibility": {
           "minShellVersion": "1.0.0"
         },
         "changelog": [
+          {
+            "version": "1.0.1",
+            "notes": "Gate Tailscale polling timers on root.visible and refresh dashboard card on show (HorneroOS/plugins#112)."
+          },
           {
             "version": "1.0.0",
             "notes": "Initial release: Tailscale status bar pill with popover and dashboard card showing connection state, Tailscale IP, active exit node, online peers and connect/disconnect toggle."
@@ -2947,26 +2975,20 @@
     {
       "id": "hornero-uptime",
       "name": "Hornero Uptime",
-      "version": "3.0.3",
-      "description": "Bar indicator plus popover/dashboard session detail (uptime, boot time, idle time) from /proc/uptime with the declared cat command. No PluginKit uptime facade exists; error state instead of a fabricated zero.",
+      "version": "3.0.4",
+      "description": "Bar indicator plus popover and dashboard session detail (live uptime and derived boot time) over the shared PluginKit system provider. Zero subprocesses; unavailable state instead of a fabricated zero.",
       "author": "HorneroOS contributors",
       "license": "MIT",
       "homepage": "https://github.com/HorneroOS/plugins",
       "placement": "bar",
       "category": "system",
       "capabilities": {
-        "processCommands": [
-          "cat"
-        ],
+        "processCommands": [],
         "networkHosts": [],
+        "providers": [
+          "system"
+        ],
         "settings": {
-          "refreshSeconds": {
-            "type": "integer",
-            "default": 60,
-            "minimum": 15,
-            "maximum": 600,
-            "description": "Seconds between /proc/uptime reads (the 1.x fixed 60-second cadence by default)."
-          },
           "showLabel": {
             "type": "boolean",
             "default": true,
@@ -2975,18 +2997,22 @@
           "showWhenUnavailable": {
             "type": "boolean",
             "default": true,
-            "description": "Keep the bar indicator visible, labelled unavailable, when /proc/uptime cannot be read (the 1.x behaviour); off hides it until a read succeeds."
+            "description": "Keep the bar indicator visible, labelled unavailable, when uptime is not yet reported; off hides it until a reading arrives."
           }
         }
       },
       "trust": "official",
       "path": "plugins/hornero-uptime",
-      "sha256": "507f809f27d3ed8d9e8c297a10012a53c92c54b5377115ae26f03f16fc3985b1",
+      "sha256": "c40d547f34ee9355b3ae1db821254e12d623bf3d4c194f4feff7dced1f15be21",
       "marketplace": {
         "compatibility": {
-          "minShellVersion": "1.2.79"
+          "minShellVersion": "1.3.10"
         },
         "changelog": [
+          {
+            "version": "3.0.4",
+            "notes": "Migrate off cat /proc/uptime subprocess polling to native PluginKit System.uptimeSeconds provider (HorneroOS/plugins#112)."
+          },
           {
             "version": "3.0.3",
             "notes": "Use Hornero Glyph clock icon in compact/vertical mode and remove duplicate UiTooltip."
@@ -3027,16 +3053,16 @@
       ],
       "permissions": [
         {
-          "kind": "program",
-          "value": "cat",
-          "en": "Reads /proc/uptime with cat to show how long the machine has been on.",
-          "es": "Lee /proc/uptime con cat para mostrar cuánto tiempo lleva encendida la máquina."
+          "kind": "data",
+          "value": "system",
+          "en": "Reads CPU, memory, temperature and disk use from the shell's shared data (read-only).",
+          "es": "Lee uso de CPU, memoria, temperatura y disco de los datos compartidos del shell (solo lectura)."
         },
         {
           "kind": "settings",
-          "value": "refreshSeconds, showLabel, showWhenUnavailable",
-          "en": "Stores only its own settings (refreshSeconds, showLabel, showWhenUnavailable).",
-          "es": "Guarda solo su propia configuración (refreshSeconds, showLabel, showWhenUnavailable)."
+          "value": "showLabel, showWhenUnavailable",
+          "en": "Stores only its own settings (showLabel, showWhenUnavailable).",
+          "es": "Guarda solo su propia configuración (showLabel, showWhenUnavailable)."
         }
       ]
     },

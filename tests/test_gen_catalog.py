@@ -135,6 +135,13 @@ class StoreFieldsTest(unittest.TestCase):
         self.assertEqual(source.get("rev"), self.built.get("generatedFrom"))
         self.assertEqual(len(source.get("rev", "")), 40)
 
+    def test_every_official_plugin_has_explicit_category(self):
+        plugin_ids = {p.name for p in gen_catalog.PLUGINS.iterdir() if p.is_dir()}
+        missing = sorted(plugin_ids - set(gen_catalog.CATEGORIES))
+        self.assertEqual(missing, [], f"Missing explicit CATEGORIES entries: {missing}")
+        self.assertEqual(self.by_id["hornero-tailscale"]["category"], "system")
+        self.assertEqual(self.by_id["hornero-elsewhen"]["category"], "productivity")
+
 
 if __name__ == "__main__":
     unittest.main()

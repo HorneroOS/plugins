@@ -2,8 +2,8 @@
   "schemaVersion": 3,
   "id": "hornero-uptime",
   "name": "Hornero Uptime",
-  "version": "3.0.3",
-  "description": "Bar indicator plus popover/dashboard session detail (uptime, boot time, idle time) from /proc/uptime with the declared cat command. No PluginKit uptime facade exists; error state instead of a fabricated zero.",
+  "version": "3.0.4",
+  "description": "Bar indicator plus popover and dashboard session detail (live uptime and derived boot time) over the shared PluginKit system provider. Zero subprocesses; unavailable state instead of a fabricated zero.",
   "author": "HorneroOS contributors",
   "license": "MIT",
   "homepage": "https://github.com/HorneroOS/plugins",
@@ -25,9 +25,13 @@
   },
   "marketplace": {
     "compatibility": {
-      "minShellVersion": "1.2.79"
+      "minShellVersion": "1.3.10"
     },
     "changelog": [
+      {
+        "version": "3.0.4",
+        "notes": "Migrate off cat /proc/uptime subprocess polling to native PluginKit System.uptimeSeconds provider (HorneroOS/plugins#112)."
+      },
       {
         "version": "3.0.3",
         "notes": "Use Hornero Glyph clock icon in compact/vertical mode and remove duplicate UiTooltip."
@@ -66,18 +70,12 @@
     "translations/es.json"
   ],
   "capabilities": {
-    "processCommands": [
-      "cat"
-    ],
+    "processCommands": [],
     "networkHosts": [],
+    "providers": [
+      "system"
+    ],
     "settings": {
-      "refreshSeconds": {
-        "type": "integer",
-        "default": 60,
-        "minimum": 15,
-        "maximum": 600,
-        "description": "Seconds between /proc/uptime reads (the 1.x fixed 60-second cadence by default)."
-      },
       "showLabel": {
         "type": "boolean",
         "default": true,
@@ -86,7 +84,7 @@
       "showWhenUnavailable": {
         "type": "boolean",
         "default": true,
-        "description": "Keep the bar indicator visible, labelled unavailable, when /proc/uptime cannot be read (the 1.x behaviour); off hides it until a read succeeds."
+        "description": "Keep the bar indicator visible, labelled unavailable, when uptime is not yet reported; off hides it until a reading arrives."
       }
     }
   }
