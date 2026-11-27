@@ -2,7 +2,7 @@
   "schemaVersion": 3,
   "id": "hornero-containers",
   "name": "Hornero Containers",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A read-only roster of your Podman and Docker containers: state, image, uptime and published ports. Never starts, stops or pulls anything. Says so plainly when no runtime answers.",
   "author": "HorneroOS contributors",
   "license": "MIT",
@@ -36,6 +36,10 @@
       "minShellVersion": "1.0.0"
     },
     "changelog": [
+      {
+        "version": "1.0.3",
+        "notes": "Use Theme.palette.inkMuted instead of inkFaint on readable text for Signal contrast"
+      },
       {
         "version": "1.0.2",
         "notes": "Gate container polling timer on root.visible and refresh on show (HorneroOS/plugins#112)."

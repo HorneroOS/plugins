@@ -349,7 +349,7 @@ Item {
                         role: "caption"
                         text: (r.run.branch && r.run.branch.length > 0 ? r.run.branch + " · " : "") + r.run.title
                         elide: Text.ElideRight
-                        color: Theme.palette.inkFaint
+                        color: Theme.palette.inkMuted
                     }
 
                     Repeater {

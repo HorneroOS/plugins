@@ -327,7 +327,7 @@ Item {
                         role: "caption"
                         text: c.image + (c.status.length > 0 ? " · " + c.status : "")
                         elide: Text.ElideRight
-                        color: Theme.palette.inkFaint
+                        color: Theme.palette.inkMuted
                     }
 
                     UiText {
@@ -348,7 +348,7 @@ Item {
             role: "caption"
             horizontalAlignment: Text.AlignHCenter
             text: i18n.tr("%1 more not shown").arg(root.all.length - root.shownRows.length)
-            color: Theme.palette.inkFaint
+            color: Theme.palette.inkMuted
         }
     }
 }

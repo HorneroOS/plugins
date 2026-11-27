@@ -307,7 +307,7 @@ Item {
                         Layout.preferredWidth: 64
                         role: "value"
                         text: String(s.port)
-                        color: s.listening ? Theme.palette.ink : Theme.palette.inkFaint
+                        color: s.listening ? Theme.palette.ink : Theme.palette.inkMuted
                     }
 
                     ColumnLayout {
@@ -319,7 +319,7 @@ Item {
                             role: "body"
                             elide: Text.ElideRight
                             text: !s.listening ? i18n.tr("free") : (root.showProcess ? (s.process.length > 0 ? s.process : i18n.tr("owner not visible")) : s.proto.toUpperCase())
-                            color: s.listening ? Theme.palette.ink : Theme.palette.inkFaint
+                            color: s.listening ? Theme.palette.ink : Theme.palette.inkMuted
                         }
 
                         UiText {
@@ -327,7 +327,7 @@ Item {
                             Layout.fillWidth: true
                             role: "caption"
                             text: s.proto + (root.showProcess && s.pid > 0 ? " · pid " + s.pid : "")
-                            color: Theme.palette.inkFaint
+                            color: Theme.palette.inkMuted
                         }
                     }
 
@@ -346,7 +346,7 @@ Item {
             role: "caption"
             horizontalAlignment: Text.AlignHCenter
             text: i18n.tr("%1 more not shown").arg(root.allMatching.length - root.shownRows.length)
-            color: Theme.palette.inkFaint
+            color: Theme.palette.inkMuted
         }
     }
 }
