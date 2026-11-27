@@ -135,22 +135,36 @@ package and enforces:
   state (e.g. `running: root.running && root.visible`) so idle or hidden
   plugins do not wake the shell unnecessarily.
 
-## Local development & hot-reload (`scripts/dev_preview.sh`)
+## Local development & hot-reload (`scripts/plugin_sdk.py` & `scripts/dev_preview.sh`)
 
-Start from `templates/starter-plugin/`:
+Scaffold a ready-to-validate `schemaVersion: 3` plugin (with `manifest.json`,
+`Main.qml`, `translations/es.json`, `README.md`, and `LICENSE`) using the
+Python SDK harness:
 
 ```sh
-cp -r templates/starter-plugin plugins/<your-id>
+python3 scripts/plugin_sdk.py new <your-id>
 ```
 
-Use `scripts/dev_preview.sh` to validate, install locally, and reload the
-running shell on every save:
+Validate a single plugin directory in under a second (runs `validate_plugins.py`,
+strict duplicate-key JSON checks, translation coverage, and `qmllint` when
+installed), or run the hot-reload watcher:
 
 ```sh
-# One-shot validate + install-local + reload
-scripts/dev_preview.sh plugins/<your-id>
+# Fast single-plugin check (<1s)
+python3 scripts/plugin_sdk.py check plugins/<your-id>
 
-# Watch mode: re-validates and reloads Quickshell on every file change
+# Watch mode: validates on save and triggers `qs ipc call plugins reload`
+python3 scripts/plugin_sdk.py watch plugins/<your-id>
+
+# Headless / one-shot dry-run check
+python3 scripts/plugin_sdk.py watch plugins/<your-id> --once --dry-run
+```
+
+If you prefer the minimal shell wrapper (or want `horneroctl install-local` +
+`inotifywait`), `scripts/dev_preview.sh` remains available:
+
+```sh
+scripts/dev_preview.sh plugins/<your-id>
 scripts/dev_preview.sh plugins/<your-id> --watch
 ```
 

@@ -9,8 +9,16 @@ gen_catalog = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(gen_catalog)
 
 
-def catalog(stamp, plugins):
-    return json.dumps({"schemaVersion": 1, "generatedFrom": stamp, "plugins": plugins})
+def catalog(stamp, plugins, source_repo="https://github.com/HorneroOS/plugins", source_rev=None):
+    return json.dumps({
+        "schemaVersion": 1,
+        "generatedFrom": stamp,
+        "catalogSource": {
+            "repo": source_repo,
+            "rev": stamp if source_rev is None else source_rev,
+        },
+        "plugins": plugins,
+    })
 
 
 class PluginKitLevelTest(unittest.TestCase):
@@ -33,6 +41,10 @@ class CatalogFreshnessTest(unittest.TestCase):
         self.built = {
             "schemaVersion": 1,
             "generatedFrom": "b" * 40,
+            "catalogSource": {
+                "repo": "https://github.com/HorneroOS/plugins",
+                "rev": "b" * 40,
+            },
             "plugins": [{"id": "hornero-example"}],
         }
 
@@ -57,6 +69,47 @@ class CatalogFreshnessTest(unittest.TestCase):
                 catalog("abc", [{"id": "hornero-example"}]), self.built
             )
         )
+
+    def test_missing_catalog_source_is_stale(self):
+        raw = json.dumps({
+            "schemaVersion": 1,
+            "generatedFrom": "a" * 40,
+            "plugins": [{"id": "hornero-example"}],
+        })
+        self.assertFalse(gen_catalog.catalog_is_current(raw, self.built))
+
+    def test_wrong_catalog_source_repo_is_stale(self):
+        self.assertFalse(
+            gen_catalog.catalog_is_current(
+                catalog(
+                    "a" * 40,
+                    [{"id": "hornero-example"}],
+                    source_repo="https://github.com/example/fork",
+                ),
+                self.built,
+            )
+        )
+
+    def test_mismatched_catalog_source_rev_is_stale(self):
+        self.assertFalse(
+            gen_catalog.catalog_is_current(
+                catalog("a" * 40, [{"id": "hornero-example"}], source_rev="c" * 40),
+                self.built,
+            )
+        )
+
+    def test_extra_catalog_source_field_is_stale(self):
+        raw = json.dumps({
+            "schemaVersion": 1,
+            "generatedFrom": "a" * 40,
+            "catalogSource": {
+                "repo": "https://github.com/HorneroOS/plugins",
+                "rev": "a" * 40,
+                "branch": "main",
+            },
+            "plugins": [{"id": "hornero-example"}],
+        })
+        self.assertFalse(gen_catalog.catalog_is_current(raw, self.built))
 
     def test_invalid_json_is_stale(self):
         self.assertFalse(gen_catalog.catalog_is_current("{nope", self.built))

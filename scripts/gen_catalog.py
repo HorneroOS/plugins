@@ -232,11 +232,12 @@ def build() -> dict:
 
 
 def catalog_is_current(existing_text: str, built: dict) -> bool:
-    """Freshness compares plugin entries, never the generatedFrom stamp.
+    """Freshness compares plugin entries and catalogSource, never commit hash equality.
 
     Squash merges rewrite the commit that last touched plugins/, so a
     byte comparison would report a just-merged catalog as stale forever.
-    The stamp must still be present and be a full commit id.
+    The stamp and catalogSource.rev must still be present, match each
+    other, and be full commit ids; catalogSource.repo must match built.
     """
     try:
         existing = json.loads(existing_text)
@@ -247,6 +248,20 @@ def catalog_is_current(existing_text: str, built: dict) -> bool:
     stamp = existing.get("generatedFrom")
     if not isinstance(stamp, str) or not re.fullmatch(r"[0-9a-f]{40}([0-9a-f]{24})?", stamp):
         return False
+    built_source = built.get("catalogSource")
+    if isinstance(built_source, dict):
+        source = existing.get("catalogSource")
+        if not isinstance(source, dict) or set(source) != {"repo", "rev"}:
+            return False
+        if source.get("repo") != built_source.get("repo"):
+            return False
+        source_rev = source.get("rev")
+        if (
+            not isinstance(source_rev, str)
+            or not re.fullmatch(r"[0-9a-f]{40}([0-9a-f]{24})?", source_rev)
+            or source_rev != stamp
+        ):
+            return False
     return (
         existing.get("schemaVersion") == built["schemaVersion"]
         and existing.get("plugins") == built["plugins"]
