@@ -44,8 +44,8 @@ Item {
         visible: pulse.hasData
         variant: "quiet"
         glyph: "activity"
-        text: root.hostCompact ? "" : root.indicatorLabel
-        tooltipText: i18n.tr("Dev Pulse: %1 open PRs, %2 failing, %3 review requests. Activate for details.").arg(i18n.formatNumber(Math.max(0, root.openPrs))).arg(i18n.formatNumber(pulse.failingItems.length)).arg(i18n.formatNumber(Math.max(0, root.reviewReq)))
+        text: root.hostCompact || root.hostOrientation === "vertical" ? "" : root.indicatorLabel
+        tooltipText: popover.opened ? "" : i18n.tr("Dev Pulse: %1 open PRs, %2 failing, %3 review requests. Activate for details.").arg(i18n.formatNumber(Math.max(0, root.openPrs))).arg(i18n.formatNumber(pulse.failingItems.length)).arg(i18n.formatNumber(Math.max(0, root.reviewReq)))
         accessibleName: i18n.tr("Dev Pulse GitHub activity")
         onClicked: popover.toggle()
     }
@@ -65,7 +65,7 @@ Item {
     }
 
     function openItem(url: string): void {
-        if (/^https:\/\//.test(url)) {
+        if (typeof url === "string" && /^https:\/\//.test(url)) {
             openProc.target = url;
             openProc.running = true;
         }
@@ -82,7 +82,7 @@ Item {
             spacing: Theme.spacing.small
 
             UiText {
-                role: "title"
+                role: "subtitle"
                 text: i18n.tr("Dev Pulse")
             }
 
@@ -90,7 +90,7 @@ Item {
                 visible: pulse.account.length > 0
                 width: parent.width
                 role: "caption"
-                text: i18n.tr("Signed in via gh as %1").arg(pulse.account)
+                text: i18n.tr("Signed in as %1").arg(pulse.account)
             }
 
             UiText {
@@ -104,7 +104,7 @@ Item {
                 visible: pulse.failed
                 width: parent.width
                 kind: "error"
-                message: i18n.tr("GitHub unavailable: check gh is installed and signed in (gh auth login).")
+                message: i18n.tr("GitHub unavailable. Sign in with GitHub CLI and refresh.")
             }
 
             UiMetric {

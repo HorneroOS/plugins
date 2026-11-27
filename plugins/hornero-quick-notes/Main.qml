@@ -79,8 +79,9 @@ Item {
     // NOTE-LOGIC-END
 
     function saveNote() {
-        saveTimer.stop();
-        const raw = noteArea.text;
+        if (saveTimer)
+            saveTimer.stop();
+        const raw = noteArea ? noteArea.text : "";
         root.truncated = root.noteTruncated(raw, 4096);
         const ok = pluginSettings.setValue("note", root.clampedNote(raw, 4096));
         root.saveState = ok === true ? "clean" : "error";
@@ -131,12 +132,6 @@ Item {
             width: parent.width
             spacing: Theme.spacing.small
 
-
-            UiChip {
-                text: i18n.tr("Persistent — saved and restored")
-                tone: "signal"
-            }
-
             UiTextArea {
                 id: noteArea
 
@@ -146,7 +141,7 @@ Item {
                 wrapMode: TextArea.Wrap
                 color: Theme.palette.ink
                 Accessible.name: i18n.tr("Quick note")
-                tooltipText: i18n.tr("Quick note (saved automatically; Ctrl+S saves now)")
+                tooltipText: i18n.tr("Quick note (Ctrl+S to save)")
                 onTextChanged: root.markDirty()
                 Keys.onPressed: (event) => {
                     if ((event.modifiers & Qt.ControlModifier) && event.key === Qt.Key_S) {
@@ -204,7 +199,7 @@ Item {
             UiChip {
                 visible: root.saveState !== "clean"
                 text: root.saveState === "error" ? i18n.tr("Save failed — edit or press Save now to retry") : i18n.tr("Unsaved changes")
-                tone: root.saveState === "alert" ? "alert" : "neutral"
+                tone: root.saveState === "error" ? "alert" : "neutral"
             }
 
             UiText {
@@ -226,12 +221,6 @@ Item {
                 role: "caption"
                 Accessible.name: i18n.tr("Character count %1 of %2").arg(i18n.formatNumber(noteArea.text.length)).arg(i18n.formatNumber(4096))
                 text: i18n.tr("%1 / %2 characters · %3 words").arg(i18n.formatNumber(noteArea.text.length)).arg(i18n.formatNumber(4096)).arg(i18n.formatNumber(root.wordCount(noteArea.text)))
-            }
-
-            UiText {
-                role: "caption"
-                width: parent.width
-                text: i18n.tr("Saved automatically.")
             }
         }
     }

@@ -2,7 +2,7 @@
   "schemaVersion": 3,
   "id": "hornero-world-clock",
   "name": "Hornero World Clock",
-  "version": "3.2.1",
+  "version": "3.2.2",
   "description": "Dashboard card with local, UTC and three selectable cities. Pure-JS rule-based offsets (fixed, EU, US and southern DST rules) labelled per row; no processes or network.",
   "author": "HorneroOS contributors",
   "license": "MIT",
@@ -32,6 +32,10 @@
       "minShellVersion": "1.0.0"
     },
     "changelog": [
+      {
+        "version": "3.2.2",
+        "notes": "Guard zone lookups, support vertical bar layout, and remove DST disclaimer from widget body"
+      },
       {
         "version": "3.2.1",
         "notes": "Catalogue description no longer leads with an internal version; it says what the extension does first."

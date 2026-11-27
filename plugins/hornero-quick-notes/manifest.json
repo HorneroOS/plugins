@@ -2,7 +2,7 @@
   "schemaVersion": 3,
   "id": "hornero-quick-notes",
   "name": "Hornero Quick Notes",
-  "version": "3.0.2",
+  "version": "3.0.3",
   "description": "Dashboard card with one persistent note saved through PluginKit Settings. Debounced autosave, Ctrl+S, flush on unload, clear confirmation, no processes or network.",
   "author": "HorneroOS contributors",
   "license": "MIT",
@@ -21,6 +21,10 @@
       "minShellVersion": "1.0.0"
     },
     "changelog": [
+      {
+        "version": "3.0.3",
+        "notes": "Fix error chip tone check, guard destruction save, and remove redundant persistence copy"
+      },
       {
         "version": "3.0.2",
         "notes": "Catalogue description no longer leads with an internal version; it says what the extension does first."

@@ -2,7 +2,6 @@
   "A nearly full disk can block updates and caches; free space on the flagged disk.": "Un disco casi lleno puede bloquear actualizaciones y cachés; liberá espacio en el disco marcado.",
   "Disk Usage": "Uso de disco",
   "Disks": "Discos",
-  "Drive health is not shown.": "La salud de los discos no se muestra.",
   "Free": "Libre",
   "Most full": "El más lleno",
   "Nearly full": "Casi lleno",

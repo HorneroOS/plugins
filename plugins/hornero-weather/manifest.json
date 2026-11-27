@@ -2,7 +2,7 @@
   "schemaVersion": 3,
   "id": "hornero-weather",
   "name": "Hornero Weather",
-  "version": "3.1.1",
+  "version": "3.1.2",
   "description": "Dashboard card and contextual bar indicator complementing native Weather with configurable density, a local wind-threshold alert and forecast detail from the PluginKit Weather facade only",
   "author": "HorneroOS contributors",
   "license": "MIT",
@@ -31,6 +31,10 @@
       "minShellVersion": "1.0.0"
     },
     "changelog": [
+      {
+        "version": "3.1.2",
+        "notes": "Collapse hidden wind chip container, guard nullable weather fields, and clean copy"
+      },
       {
         "version": "3.1.1",
         "notes": "Catalogue description no longer leads with an internal version; it says what the extension does first."

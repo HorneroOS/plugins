@@ -309,9 +309,13 @@ Item {
     }
 
     function _parseNormalized(text: string): var {
+        if (!text || text.length === 0)
+            return null;
         try {
             const parsed = JSON.parse(text);
-            const data = (parsed && parsed.data) || {};
+            if (!parsed || typeof parsed !== "object" || parsed.ok === false)
+                return null;
+            const data = parsed.data || {};
             let recordsIn = data.records;
             if (typeof recordsIn === "string")
                 recordsIn = JSON.parse(recordsIn);
@@ -386,10 +390,12 @@ Item {
         }
         onExited: exitCode => {
             let recordsIn = null;
-            try {
-                recordsIn = root._parseNormalized(root._agentBuffer.trim());
-            } catch (e) {
-                recordsIn = null;
+            if (exitCode === 0) {
+                try {
+                    recordsIn = root._parseNormalized(root._agentBuffer.trim());
+                } catch (e) {
+                    recordsIn = null;
+                }
             }
             if (recordsIn) {
                 root._apply(recordsIn, "normalized");
@@ -412,10 +418,12 @@ Item {
         }
         onExited: exitCode => {
             let recordsIn = null;
-            try {
-                recordsIn = root._parseLegacy(root._legacyBuffer.trim());
-            } catch (e) {
-                recordsIn = null;
+            if (exitCode === 0) {
+                try {
+                    recordsIn = root._parseLegacy(root._legacyBuffer.trim());
+                } catch (e) {
+                    recordsIn = null;
+                }
             }
             if (recordsIn)
                 root._apply(recordsIn, "legacy");

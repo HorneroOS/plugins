@@ -1,15 +1,15 @@
 {
   "schemaVersion": 1,
-  "generatedFrom": "ba988dd01f5a28bb7082016a9e3c4afd0885f96a",
+  "generatedFrom": "92b0ca02d1f9304678c8c0d7be49b41a139af9f4",
   "catalogSource": {
     "repo": "https://github.com/HorneroOS/plugins",
-    "rev": "ba988dd01f5a28bb7082016a9e3c4afd0885f96a"
+    "rev": "92b0ca02d1f9304678c8c0d7be49b41a139af9f4"
   },
   "plugins": [
     {
       "id": "hornero-agenda",
       "name": "Hornero Agenda",
-      "version": "3.0.2",
+      "version": "3.0.3",
       "description": "A desktop widget of date facts (day, ISO week, quarter, day of year, days remaining) with a year partition bar, from the shared time provider. Dates only; no events source.",
       "author": "HorneroOS contributors",
       "license": "MIT",
@@ -42,12 +42,16 @@
       },
       "trust": "official",
       "path": "plugins/hornero-agenda",
-      "sha256": "2ff1be168bdca9ac81d31f215c088fcb0802f56e9c59632f848f70f39c5ae02d",
+      "sha256": "6fe40f6074582ead4373a45530325c547291f3bb9621d88857976cd62e4a94b7",
       "marketplace": {
         "compatibility": {
           "minShellVersion": "1.2.79"
         },
         "changelog": [
+          {
+            "version": "3.0.3",
+            "notes": "Remove events-source limitation note from widget body"
+          },
           {
             "version": "3.0.2",
             "notes": "Catalogue description no longer leads with an internal version; it says what the extension does first."
@@ -104,7 +108,7 @@
     {
       "id": "hornero-ai-usage",
       "name": "Hornero AI Usage",
-      "version": "4.2.3",
+      "version": "4.2.4",
       "description": "Agent Deck: every discovered coding-agent subscription in one place - provider-reported quota windows with resets, plans, and local activity. Unavailable quotas are labelled unknown, never guessed.",
       "author": "HorneroOS contributors",
       "license": "MIT",
@@ -148,13 +152,17 @@
       },
       "trust": "official",
       "path": "plugins/hornero-ai-usage",
-      "sha256": "fe88d77474e594dc3e6231b438b893ffac757654054e0a15a6cb3243872e5374",
+      "sha256": "628952a017df856dda24128933675af2235fc729ae8d051b021d1fded56a7d63",
       "pluginKit": 5,
       "marketplace": {
         "compatibility": {
           "minShellVersion": "1.2.79"
         },
         "changelog": [
+          {
+            "version": "4.2.4",
+            "notes": "Guard process exit codes, combo bounds, vertical bar layout, and user-facing copy"
+          },
           {
             "version": "4.2.3",
             "notes": "Gate local countdown tick timers in Agents and Bar on root.visible (HorneroOS/plugins#112)."
@@ -454,7 +462,7 @@
     {
       "id": "hornero-calendar",
       "name": "Hornero Calendar",
-      "version": "3.1.1",
+      "version": "3.1.2",
       "description": "A desktop widget with a display clock, the full date and a square-celled month grid over the shared time provider. Dates only; no events source.",
       "author": "HorneroOS contributors",
       "license": "MIT",
@@ -506,12 +514,16 @@
       },
       "trust": "official",
       "path": "plugins/hornero-calendar",
-      "sha256": "a701d71d320a8419b3102eee810cbe0ff42345567c6ca1067e7e78c94fd0bc4d",
+      "sha256": "9090d34d8438fded2a6a6003d3aa9cfc647c252dd31cad0b48c4309acce1d899",
       "marketplace": {
         "compatibility": {
           "minShellVersion": "1.2.79"
         },
         "changelog": [
+          {
+            "version": "3.1.2",
+            "notes": "Remove limitation note from widget body and match native calendar numeral size"
+          },
           {
             "version": "3.1.1",
             "notes": "Catalogue description no longer leads with an internal version; it says what the extension does first."
@@ -1029,7 +1041,7 @@
     {
       "id": "hornero-disk-usage",
       "name": "Hornero Disk Usage",
-      "version": "3.0.2",
+      "version": "3.0.3",
       "description": "Every physical disk as a partition bar with a dimension line, free space and a near-full flag from the shared system provider. Read-only.",
       "author": "HorneroOS contributors",
       "license": "MIT",
@@ -1059,12 +1071,16 @@
       },
       "trust": "official",
       "path": "plugins/hornero-disk-usage",
-      "sha256": "d2f84baa699caef3a8549df340c64f767d391d87e0a0d155be48cf6e5489f883",
+      "sha256": "961dfd06603c4b165edb35e880da0e50865a0b517661c6f83300ff66355c5bbd",
       "marketplace": {
         "compatibility": {
           "minShellVersion": "1.0.0"
         },
         "changelog": [
+          {
+            "version": "3.0.3",
+            "notes": "Guard malformed disk metrics and remove limitation note from widget body"
+          },
           {
             "version": "3.0.2",
             "notes": "Catalogue description no longer leads with an internal version; it says what the extension does first."
@@ -1356,7 +1372,7 @@
     {
       "id": "hornero-forge-board",
       "name": "Hornero Forge Board",
-      "version": "1.0.2",
+      "version": "1.0.3",
       "description": "CI and pull-request status for the GitHub repositories you name, through the gh CLI session you already signed in. Read-only; stores and sees no token.",
       "author": "HorneroOS contributors",
       "license": "MIT",
@@ -1407,12 +1423,16 @@
       },
       "trust": "official",
       "path": "plugins/hornero-forge-board",
-      "sha256": "0871072b2317450c05d0b2a7c27c1fc3339d0010a3d4781c04b67b42ed7619d0",
+      "sha256": "5a3f81766d1539aaac81ba44d33bf01cc1e7c1d9a610cb5d4ec3a1e6996e47a2",
       "marketplace": {
         "compatibility": {
           "minShellVersion": "1.0.0"
         },
         "changelog": [
+          {
+            "version": "1.0.3",
+            "notes": "Guard stepDone state against missing current item and polish GitHub status copy"
+          },
           {
             "version": "1.0.2",
             "notes": "Gate refresh and one-shot timers on visible/active state."
@@ -1459,7 +1479,7 @@
     {
       "id": "hornero-git-board",
       "name": "Hornero Git Board",
-      "version": "1.0.1",
+      "version": "1.0.2",
       "description": "A read-only status board for the repositories you name: branch, ahead/behind, staged, changed, untracked and conflicted counts and the last commit. Local git only, no network, never writes.",
       "author": "HorneroOS contributors",
       "license": "MIT",
@@ -1515,12 +1535,16 @@
       },
       "trust": "official",
       "path": "plugins/hornero-git-board",
-      "sha256": "21a0e9c8097ccccd5b33ec05da426aeca60aa0fbc0d5b166ff80971a193c49d9",
+      "sha256": "6aa1956c26eabeb4a68a2eb7a79745a9bdfea9c6d9147f077bf29e5c19101b44",
       "marketplace": {
         "compatibility": {
           "minShellVersion": "1.0.0"
         },
         "changelog": [
+          {
+            "version": "1.0.2",
+            "notes": "Guard null queue/pending state on git process exit"
+          },
           {
             "version": "1.0.1",
             "notes": "Gate repository polling timer on root.visible and refresh on show (HorneroOS/plugins#112)."
@@ -1557,7 +1581,7 @@
     {
       "id": "hornero-github-stats",
       "name": "Hornero Dev Pulse",
-      "version": "1.0.3",
+      "version": "1.0.4",
       "description": "Dev Pulse: GitHub development activity through your existing gh sign-in - contributions, pull requests, reviews, an actionable inbox, and an optional side-by-side with Agent Deck AI usage. Local-first; unknown metrics stay unknown.",
       "author": "HorneroOS contributors",
       "license": "MIT",
@@ -1614,13 +1638,17 @@
       },
       "trust": "official",
       "path": "plugins/hornero-github-stats",
-      "sha256": "10540c7e2a0370ee23ed458614091250fe6f370381ca2aa1f8ae51829ab444a0",
+      "sha256": "7024e8fd2de7b8f2065c3af69447e66912b0164d5a5517ab70e0551809aef689",
       "pluginKit": 5,
       "marketplace": {
         "compatibility": {
           "minShellVersion": "1.2.79"
         },
         "changelog": [
+          {
+            "version": "1.0.4",
+            "notes": "Fix _done race condition, guard exit codes and combo bounds, add vertical bar support, and clean copy"
+          },
           {
             "version": "1.0.3",
             "notes": "Guard JSON.parse against malformed payloads"
@@ -2389,7 +2417,7 @@
     {
       "id": "hornero-quick-notes",
       "name": "Hornero Quick Notes",
-      "version": "3.0.2",
+      "version": "3.0.3",
       "description": "Dashboard card with one persistent note saved through PluginKit Settings. Debounced autosave, Ctrl+S, flush on unload, clear confirmation, no processes or network.",
       "author": "HorneroOS contributors",
       "license": "MIT",
@@ -2422,12 +2450,16 @@
       },
       "trust": "official",
       "path": "plugins/hornero-quick-notes",
-      "sha256": "3359df83af21b5616d47d1e850891a71978b1fa13fda3031e563ba42b51bbba0",
+      "sha256": "7de3026980b0286b3f97a7264803091b099f55555477ab10fdefbbba764a4ba4",
       "marketplace": {
         "compatibility": {
           "minShellVersion": "1.0.0"
         },
         "changelog": [
+          {
+            "version": "3.0.3",
+            "notes": "Fix error chip tone check, guard destruction save, and remove redundant persistence copy"
+          },
           {
             "version": "3.0.2",
             "notes": "Catalogue description no longer leads with an internal version; it says what the extension does first."
@@ -2470,7 +2502,7 @@
     {
       "id": "hornero-studio-audio",
       "name": "Hornero Studio Audio",
-      "version": "3.0.3",
+      "version": "3.0.4",
       "description": "Bar indicator, popover and dashboard card for the Studio audio mode and Temporary Performance state from the typed horneroctl contract. Read-only; mode changes stay in the CLI and Control Center.",
       "author": "HorneroOS contributors",
       "license": "MIT",
@@ -2502,12 +2534,16 @@
       },
       "trust": "official",
       "path": "plugins/hornero-studio-audio",
-      "sha256": "97c31cbcee1bd1ea51a7ce11c31436468dc73bfe56035948a6c9cf2ff8bb636d",
+      "sha256": "3989d1a77d7e06baca97a54645afd1aa2c51da55986282217d47000c07daa6b1",
       "marketplace": {
         "compatibility": {
           "minShellVersion": "1.2.79"
         },
         "changelog": [
+          {
+            "version": "3.0.4",
+            "notes": "Check exit codes, handle boolean performance flag, and remove horneroctl jargon from copy"
+          },
           {
             "version": "3.0.3",
             "notes": "Gate Studio audio polling timers on root.visible and Gaming experience, refreshing dashboard on show (HorneroOS/plugins#112)."
@@ -2586,7 +2622,7 @@
     {
       "id": "hornero-studio-jobs",
       "name": "Hornero Studio Jobs",
-      "version": "2.1.1",
+      "version": "2.1.2",
       "description": "Render and export job monitor for HorneroOS Studio: shows queued, running, finished and interrupted jobs from the typed horneroctl studio jobs contract. Read-only; jobs are submitted and cancelled from the CLI or Control Center.",
       "author": "HorneroOS contributors",
       "license": "MIT",
@@ -2627,12 +2663,16 @@
       },
       "trust": "official",
       "path": "plugins/hornero-studio-jobs",
-      "sha256": "0060ac04152c715683f84556022f8ebf0d37de7595a697f241cceb86247403cf",
+      "sha256": "3842cc9e31aa23d833ae875e56eebedb2559bbe44577ca3a3bfe80f02880fbf1",
       "marketplace": {
         "compatibility": {
           "minShellVersion": "1.2.72"
         },
         "changelog": [
+          {
+            "version": "2.1.2",
+            "notes": "Check exit code, guard null path in basename, and remove raw CLI command from copy"
+          },
           {
             "version": "2.1.1",
             "notes": "Gate Studio jobs polling timer on root.visible and Gaming experience, refreshing on show (HorneroOS/plugins#112)."
@@ -3155,7 +3195,7 @@
     {
       "id": "hornero-weather",
       "name": "Hornero Weather",
-      "version": "3.1.1",
+      "version": "3.1.2",
       "description": "Dashboard card and contextual bar indicator complementing native Weather with configurable density, a local wind-threshold alert and forecast detail from the PluginKit Weather facade only",
       "author": "HorneroOS contributors",
       "license": "MIT",
@@ -3227,12 +3267,16 @@
       },
       "trust": "official",
       "path": "plugins/hornero-weather",
-      "sha256": "441da7a9e9560ed7833b75e2f0832629202c14d6b7998210ad534712f489ebc7",
+      "sha256": "d3636a3df4e6b17e7e4f34a3ec516e88a33be3e923f23d3251aab5a13be30131",
       "marketplace": {
         "compatibility": {
           "minShellVersion": "1.0.0"
         },
         "changelog": [
+          {
+            "version": "3.1.2",
+            "notes": "Collapse hidden wind chip container, guard nullable weather fields, and clean copy"
+          },
           {
             "version": "3.1.1",
             "notes": "Catalogue description no longer leads with an internal version; it says what the extension does first."
@@ -3295,7 +3339,7 @@
     {
       "id": "hornero-world-clock",
       "name": "Hornero World Clock",
-      "version": "3.2.1",
+      "version": "3.2.2",
       "description": "Dashboard card with local, UTC and three selectable cities. Pure-JS rule-based offsets (fixed, EU, US and southern DST rules) labelled per row; no processes or network.",
       "author": "HorneroOS contributors",
       "license": "MIT",
@@ -3414,12 +3458,16 @@
       },
       "trust": "official",
       "path": "plugins/hornero-world-clock",
-      "sha256": "a99af4bc47d8cfe8e2fb0199e6c191bce3af5014d5cc84eee3b6c56a9aecfdc8",
+      "sha256": "d4b847fd8516c08b39e8adb78f48aa2dc6b8d4a3dcb619c6d0071220324ba92b",
       "marketplace": {
         "compatibility": {
           "minShellVersion": "1.0.0"
         },
         "changelog": [
+          {
+            "version": "3.2.2",
+            "notes": "Guard zone lookups, support vertical bar layout, and remove DST disclaimer from widget body"
+          },
           {
             "version": "3.2.1",
             "notes": "Catalogue description no longer leads with an internal version; it says what the extension does first."

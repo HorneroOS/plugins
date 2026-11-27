@@ -12,15 +12,13 @@
   "Erase the stored note permanently": "Borrar la nota guardada definitivamente",
   "Keep the note": "Conservar la nota",
   "Note truncated to %1 characters; only the first %1 are saved.": "Nota recortada a %1 caracteres; solo se guardan los primeros %1.",
-  "Persistent — saved and restored": "Persistente: se guarda y se restaura",
   "Quick Notes": "Notas rápidas",
   "Quick note": "Nota rápida",
-  "Quick note (saved automatically; Ctrl+S saves now)": "Nota rápida (se guarda automáticamente; Ctrl+S guarda ahora)",
+  "Quick note (Ctrl+S to save)": "Nota rápida (Ctrl+S para guardar)",
   "Save failed — edit or press Save now to retry": "No se pudo guardar: editá o tocá Guardar ahora para reintentar",
   "Save note now": "Guardar la nota ahora",
   "Save now": "Guardar ahora",
   "Save the note now (Ctrl+S in the editor)": "Guardar la nota ahora (Ctrl+S en el editor)",
-  "Saved automatically.": "Se guarda automáticamente.",
   "Unsaved changes": "Cambios sin guardar",
   "Write a note...": "Escribí una nota..."
 }

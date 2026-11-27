@@ -2,7 +2,7 @@
   "schemaVersion": 3,
   "id": "hornero-agenda",
   "name": "Hornero Agenda",
-  "version": "3.0.2",
+  "version": "3.0.3",
   "description": "A desktop widget of date facts (day, ISO week, quarter, day of year, days remaining) with a year partition bar, from the shared time provider. Dates only; no events source.",
   "author": "HorneroOS contributors",
   "license": "MIT",
@@ -31,6 +31,10 @@
       "minShellVersion": "1.2.79"
     },
     "changelog": [
+      {
+        "version": "3.0.3",
+        "notes": "Remove events-source limitation note from widget body"
+      },
       {
         "version": "3.0.2",
         "notes": "Catalogue description no longer leads with an internal version; it says what the extension does first."

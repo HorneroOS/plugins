@@ -46,8 +46,8 @@ Item {
         variant: "quiet"
         glyph: !Weather.locationConfigured || !Weather.ready ? "cloud-off" : root.sunIndicator ? "sunset" : "cloud"
         // Glyph plus the temperature; without data the glyph and tooltip say so.
-        text: Weather.locationConfigured && Weather.ready && !root.hostCompact ? (root.sunIndicator ? i18n.tr("%1 / %2").arg(Weather.sunrise).arg(Weather.sunset) : Weather.temp) : ""
-        tooltipText: !Weather.locationConfigured ? i18n.tr("Weather: set a location in the shell settings") : Weather.ready ? i18n.tr("Weather %1: activate for details").arg(Weather.temp) : i18n.tr("Weather: activate for details")
+        text: Weather.locationConfigured && Weather.ready && !root.hostCompact && root.hostOrientation !== "vertical" ? (root.sunIndicator ? i18n.tr("%1 / %2").arg(Weather.sunrise).arg(Weather.sunset) : Weather.temp) : ""
+        tooltipText: popover.opened ? "" : (!Weather.locationConfigured ? i18n.tr("Weather: set a location in Settings") : Weather.ready ? i18n.tr("Weather %1: activate for details").arg(Weather.temp) : i18n.tr("Weather: activate for details"))
         accessibleName: i18n.tr("Weather details")
         onClicked: popover.toggle()
     }
@@ -71,18 +71,18 @@ Item {
                 visible: !Weather.locationConfigured
                 width: parent.width
                 kind: "empty"
-                message: i18n.tr("Weather location not configured. Set a location in the shell settings to see conditions here.")
+                message: i18n.tr("No weather location configured. Set a location in Settings.")
             }
 
             UiState {
-                visible: Weather.locationConfigured && Weather.lastError.length > 0 && !Weather.ready
+                visible: Weather.locationConfigured && (Weather.lastError || "").length > 0 && !Weather.ready
                 width: parent.width
                 kind: "error"
-                message: i18n.tr("Weather unavailable: %1").arg(Weather.lastError)
+                message: i18n.tr("Weather unavailable: %1").arg(Weather.lastError || "")
             }
 
             UiState {
-                visible: Weather.locationConfigured && Weather.lastError.length === 0 && !Weather.ready
+                visible: Weather.locationConfigured && (Weather.lastError || "").length === 0 && !Weather.ready
                 width: parent.width
                 kind: "loading"
                 message: i18n.tr("Loading weather...")
@@ -100,9 +100,9 @@ Item {
                 }
 
                 UiText {
-                    visible: Weather.description.length > 0
+                    visible: (Weather.description || "").length > 0
                     role: "body"
-                    text: Weather.description
+                    text: Weather.description || ""
                 }
 
                 UiMetric {

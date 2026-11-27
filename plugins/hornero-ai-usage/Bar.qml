@@ -51,8 +51,8 @@ Item {
         visible: usage.anyOk
         variant: "quiet"
         glyph: "robot"
-        text: root.hostCompact ? "" : usage.worstPercent >= 0 ? "%1 %".arg(i18n.formatNumber(Math.round(usage.worstPercent))) : i18n.formatNumber(usage.subCount > 0 ? usage.subCount : usage.okCount)
-        tooltipText: usage.worstPercent >= 0 ? i18n.tr("Agent quotas: tightest is %1 at %2%. Activate for details.").arg(usage.worstLabel).arg(i18n.formatNumber(Math.round(usage.worstPercent))) : i18n.tr("Agent usage: activate for provider details")
+        text: root.hostCompact || root.hostOrientation === "vertical" ? "" : usage.worstPercent >= 0 ? "%1 %".arg(i18n.formatNumber(Math.round(usage.worstPercent))) : i18n.formatNumber(usage.subCount > 0 ? usage.subCount : usage.okCount)
+        tooltipText: popover.opened ? "" : (usage.worstPercent >= 0 ? i18n.tr("Agent quotas: tightest is %1 at %2%. Activate for details.").arg(usage.worstLabel).arg(i18n.formatNumber(Math.round(usage.worstPercent))) : i18n.tr("Agent usage: activate for provider details"))
         accessibleName: usage.worstPercent >= 0 ? i18n.tr("Agent quotas, tightest %1 percent used").arg(i18n.formatNumber(Math.round(usage.worstPercent))) : i18n.tr("Agent usage details")
         onClicked: popover.toggle()
     }
@@ -96,7 +96,7 @@ Item {
                 visible: usage.failed
                 width: parent.width
                 kind: "error"
-                message: i18n.tr("AI usage unavailable: horneroctl returned no usable data.")
+                message: i18n.tr("AI usage is unavailable.")
             }
 
             UiStack {
@@ -216,7 +216,7 @@ Item {
                 width: parent.width
                 glyph: "refresh"
                 text: i18n.tr("Refresh")
-                tooltipText: i18n.tr("Reload AI usage from horneroctl")
+                tooltipText: i18n.tr("Reload AI usage")
                 accessibleName: i18n.tr("Refresh AI usage")
                 onClicked: usage.refresh(true)
             }

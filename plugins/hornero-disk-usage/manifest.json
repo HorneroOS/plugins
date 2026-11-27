@@ -2,7 +2,7 @@
   "schemaVersion": 3,
   "id": "hornero-disk-usage",
   "name": "Hornero Disk Usage",
-  "version": "3.0.2",
+  "version": "3.0.3",
   "description": "Every physical disk as a partition bar with a dimension line, free space and a near-full flag from the shared system provider. Read-only.",
   "author": "HorneroOS contributors",
   "license": "MIT",
@@ -28,6 +28,10 @@
       "minShellVersion": "1.0.0"
     },
     "changelog": [
+      {
+        "version": "3.0.3",
+        "notes": "Guard malformed disk metrics and remove limitation note from widget body"
+      },
       {
         "version": "3.0.2",
         "notes": "Catalogue description no longer leads with an internal version; it says what the extension does first."

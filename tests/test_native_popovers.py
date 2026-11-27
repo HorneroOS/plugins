@@ -4,7 +4,9 @@ import json
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-POPOVERS = ["hornero-studio-audio", "hornero-pomodoro"]
+# Pomodoro 4 graduated to an interactive timer/progress layout in #81;
+# studio-audio keeps the read-only native popout pattern.
+POPOVERS = ["hornero-studio-audio"]
 
 
 def test_popovers_use_native_pattern():
