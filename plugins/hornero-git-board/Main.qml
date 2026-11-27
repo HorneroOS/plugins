@@ -462,7 +462,7 @@ Item {
                         role: "caption"
                         text: repo.commit + (repo.when.length > 0 ? " · " + repo.when : "")
                         elide: Text.ElideRight
-                        color: Theme.palette.inkFaint
+                        color: Theme.palette.inkMuted
                     }
                 }
             }
@@ -474,7 +474,7 @@ Item {
             role: "caption"
             horizontalAlignment: Text.AlignHCenter
             text: i18n.tr("Everything is committed and in step. Cosy.")
-            color: Theme.palette.inkFaint
+            color: Theme.palette.inkMuted
         }
 
         UiText {
@@ -483,7 +483,7 @@ Item {
             role: "caption"
             horizontalAlignment: Text.AlignHCenter
             text: i18n.tr("%1 more not shown").arg(root.hiddenCount)
-            color: Theme.palette.inkFaint
+            color: Theme.palette.inkMuted
         }
     }
 }

@@ -2,7 +2,7 @@
   "schemaVersion": 3,
   "id": "hornero-toolbox",
   "name": "Hornero Toolbox",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Seven everyday tools in one Signal card: calculator, unit converter (with data sizes), base converter, colour with WCAG contrast, date maths, JSON format/minify and text transforms. Local arithmetic only.",
   "author": "HorneroOS contributors",
   "license": "MIT",
@@ -28,6 +28,10 @@
       "minShellVersion": "1.0.0"
     },
     "changelog": [
+      {
+        "version": "1.0.1",
+        "notes": "Use Theme.palette.inkMuted instead of inkFaint on readable text for Signal contrast"
+      },
       {
         "version": "1.0.0",
         "notes": "Initial release: replaces Calculator, Unit Converter, Base Converter, Colour Converter, Date Calculator, JSON Tools and Text Tools with one tabbed card. Adds imperial lengths, ounces, grams, data sizes and WCAG contrast. Settings of the old extensions do not carry over (new id)."

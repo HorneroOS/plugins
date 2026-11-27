@@ -326,7 +326,7 @@ Item {
                 width: parent.width
                 role: "caption"
                 text: i18n.tr("Not a valid expression yet.")
-                color: Theme.palette.inkFaint
+                color: Theme.palette.inkMuted
             }
 
             Grid {
@@ -673,7 +673,7 @@ Item {
                 role: "caption"
                 text: i18n.tr("Real calendar dates only; the arithmetic uses UTC so daylight saving never shifts a result.")
                 wrapMode: Text.WordWrap
-                color: Theme.palette.inkFaint
+                color: Theme.palette.inkMuted
             }
         }
 
@@ -789,7 +789,7 @@ Item {
                 width: parent.width
                 role: "caption"
                 text: i18n.tr("%1 characters, %2 words, %3 lines").arg(textIn.text.length).arg(root.countWordsText(textIn.text)).arg(root.countLinesText(textIn.text))
-                color: Theme.palette.inkFaint
+                color: Theme.palette.inkMuted
             }
         }
     }

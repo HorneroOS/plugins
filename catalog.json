@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
-  "generatedFrom": "92b0ca02d1f9304678c8c0d7be49b41a139af9f4",
+  "generatedFrom": "0c1e061f3e3120a1a47b71647d5148875d57d56f",
   "catalogSource": {
     "repo": "https://github.com/HorneroOS/plugins",
-    "rev": "92b0ca02d1f9304678c8c0d7be49b41a139af9f4"
+    "rev": "0c1e061f3e3120a1a47b71647d5148875d57d56f"
   },
   "plugins": [
     {
@@ -462,7 +462,7 @@
     {
       "id": "hornero-calendar",
       "name": "Hornero Calendar",
-      "version": "3.1.2",
+      "version": "3.1.3",
       "description": "A desktop widget with a display clock, the full date and a square-celled month grid over the shared time provider. Dates only; no events source.",
       "author": "HorneroOS contributors",
       "license": "MIT",
@@ -514,12 +514,16 @@
       },
       "trust": "official",
       "path": "plugins/hornero-calendar",
-      "sha256": "9090d34d8438fded2a6a6003d3aa9cfc647c252dd31cad0b48c4309acce1d899",
+      "sha256": "1c9e217ab6749a9cf54823271f21010a98b8946aa0b77f1383723d6d0f9f7541",
       "marketplace": {
         "compatibility": {
           "minShellVersion": "1.2.79"
         },
         "changelog": [
+          {
+            "version": "3.1.3",
+            "notes": "Use Theme.palette.inkMuted instead of inkFaint on readable text for Signal contrast"
+          },
           {
             "version": "3.1.2",
             "notes": "Remove limitation note from widget body and match native calendar numeral size"
@@ -724,7 +728,7 @@
     {
       "id": "hornero-containers",
       "name": "Hornero Containers",
-      "version": "1.0.2",
+      "version": "1.0.3",
       "description": "A read-only roster of your Podman and Docker containers: state, image, uptime and published ports. Never starts, stops or pulls anything. Says so plainly when no runtime answers.",
       "author": "HorneroOS contributors",
       "license": "MIT",
@@ -777,12 +781,16 @@
       },
       "trust": "official",
       "path": "plugins/hornero-containers",
-      "sha256": "67e5885287fc1e53158820686f68ccf8fa5e9b4f5997b4ca3ff15e7d28ed960f",
+      "sha256": "68021bf39aa8a2f32291c159573378847283de2d6af4d0e9180e03b74a9a79b8",
       "marketplace": {
         "compatibility": {
           "minShellVersion": "1.0.0"
         },
         "changelog": [
+          {
+            "version": "1.0.3",
+            "notes": "Use Theme.palette.inkMuted instead of inkFaint on readable text for Signal contrast"
+          },
           {
             "version": "1.0.2",
             "notes": "Gate container polling timer on root.visible and refresh on show (HorneroOS/plugins#112)."
@@ -949,7 +957,7 @@
     {
       "id": "hornero-device-battery",
       "name": "Hornero Device Battery",
-      "version": "1.0.1",
+      "version": "1.0.2",
       "description": "Charge of the wireless things on your desk: game controllers, mice, keyboards, headsets, pens and phones, from UPower. Honest about devices that report no percentage.",
       "author": "HorneroOS contributors",
       "license": "MIT",
@@ -999,12 +1007,16 @@
       },
       "trust": "official",
       "path": "plugins/hornero-device-battery",
-      "sha256": "ce0af2d7637b59663df50349bb88234ce4d838aeda1975ea90792614436a3a3c",
+      "sha256": "244714a7fd96ba4836632e673f1672c7a9f48c885c32b0bbcb808ea38298e747",
       "marketplace": {
         "compatibility": {
           "minShellVersion": "1.0.0"
         },
         "changelog": [
+          {
+            "version": "1.0.2",
+            "notes": "Use Theme.palette.inkMuted instead of inkFaint on readable text for Signal contrast"
+          },
           {
             "version": "1.0.1",
             "notes": "Gate refresh and one-shot timers on visible/active state."
@@ -1372,7 +1384,7 @@
     {
       "id": "hornero-forge-board",
       "name": "Hornero Forge Board",
-      "version": "1.0.3",
+      "version": "1.0.4",
       "description": "CI and pull-request status for the GitHub repositories you name, through the gh CLI session you already signed in. Read-only; stores and sees no token.",
       "author": "HorneroOS contributors",
       "license": "MIT",
@@ -1423,12 +1435,16 @@
       },
       "trust": "official",
       "path": "plugins/hornero-forge-board",
-      "sha256": "5a3f81766d1539aaac81ba44d33bf01cc1e7c1d9a610cb5d4ec3a1e6996e47a2",
+      "sha256": "41a57bc49c80a8504dfa28976458f29576071046e525a0df2eb02debf641a6af",
       "marketplace": {
         "compatibility": {
           "minShellVersion": "1.0.0"
         },
         "changelog": [
+          {
+            "version": "1.0.4",
+            "notes": "Use Theme.palette.inkMuted instead of inkFaint on readable text for Signal contrast"
+          },
           {
             "version": "1.0.3",
             "notes": "Guard stepDone state against missing current item and polish GitHub status copy"
@@ -1479,7 +1495,7 @@
     {
       "id": "hornero-git-board",
       "name": "Hornero Git Board",
-      "version": "1.0.2",
+      "version": "1.0.3",
       "description": "A read-only status board for the repositories you name: branch, ahead/behind, staged, changed, untracked and conflicted counts and the last commit. Local git only, no network, never writes.",
       "author": "HorneroOS contributors",
       "license": "MIT",
@@ -1535,12 +1551,16 @@
       },
       "trust": "official",
       "path": "plugins/hornero-git-board",
-      "sha256": "6aa1956c26eabeb4a68a2eb7a79745a9bdfea9c6d9147f077bf29e5c19101b44",
+      "sha256": "06db53f265d06b0c8fc09933d046bd90e2d72b1da3effbe7945db08924e3f929",
       "marketplace": {
         "compatibility": {
           "minShellVersion": "1.0.0"
         },
         "changelog": [
+          {
+            "version": "1.0.3",
+            "notes": "Use Theme.palette.inkMuted instead of inkFaint on readable text for Signal contrast"
+          },
           {
             "version": "1.0.2",
             "notes": "Guard null queue/pending state on git process exit"
@@ -2313,7 +2333,7 @@
     {
       "id": "hornero-port-watch",
       "name": "Hornero Port Watch",
-      "version": "1.0.1",
+      "version": "1.0.2",
       "description": "What is listening on this machine, and what is free: ports, protocol, how far each bind reaches and the owning process when the kernel lets you see it. Watch the ports your projects need. Read-only, local.",
       "author": "HorneroOS contributors",
       "license": "MIT",
@@ -2375,12 +2395,16 @@
       },
       "trust": "official",
       "path": "plugins/hornero-port-watch",
-      "sha256": "4f6bd48ba55ab68d93ed05acc816398ba97151793b3b29fefe95f1fe06424495",
+      "sha256": "67e61ea4b0b509b5a31ff2460b0146b120aecfe7c65460474a11d88c3c41f2fe",
       "marketplace": {
         "compatibility": {
           "minShellVersion": "1.0.0"
         },
         "changelog": [
+          {
+            "version": "1.0.2",
+            "notes": "Use Theme.palette.inkMuted instead of inkFaint on readable text for Signal contrast"
+          },
           {
             "version": "1.0.1",
             "notes": "Gate socket polling timer on root.visible and refresh on show (HorneroOS/plugins#112)."
@@ -2891,7 +2915,7 @@
     {
       "id": "hornero-toolbox",
       "name": "Hornero Toolbox",
-      "version": "1.0.0",
+      "version": "1.0.1",
       "description": "Seven everyday tools in one Signal card: calculator, unit converter (with data sizes), base converter, colour with WCAG contrast, date maths, JSON format/minify and text transforms. Local arithmetic only.",
       "author": "HorneroOS contributors",
       "license": "MIT",
@@ -2983,12 +3007,16 @@
       },
       "trust": "official",
       "path": "plugins/hornero-toolbox",
-      "sha256": "5b0378f74c97f575a4a2bd97d1294648b68091db35752c1b46896dbfe1ddf5af",
+      "sha256": "0c68e15993729ddaf16f250671bfd52e45793a85596c7884204eafb25ae30587",
       "marketplace": {
         "compatibility": {
           "minShellVersion": "1.0.0"
         },
         "changelog": [
+          {
+            "version": "1.0.1",
+            "notes": "Use Theme.palette.inkMuted instead of inkFaint on readable text for Signal contrast"
+          },
           {
             "version": "1.0.0",
             "notes": "Initial release: replaces Calculator, Unit Converter, Base Converter, Colour Converter, Date Calculator, JSON Tools and Text Tools with one tabbed card. Adds imperial lengths, ounces, grams, data sizes and WCAG contrast. Settings of the old extensions do not carry over (new id)."

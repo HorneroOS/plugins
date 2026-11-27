@@ -320,7 +320,7 @@ Item {
                                 role: "caption"
                                 text: d.model
                                 elide: Text.ElideRight
-                                color: Theme.palette.inkFaint
+                                color: Theme.palette.inkMuted
                             }
                         }
 

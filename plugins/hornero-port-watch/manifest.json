@@ -2,7 +2,7 @@
   "schemaVersion": 3,
   "id": "hornero-port-watch",
   "name": "Hornero Port Watch",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "What is listening on this machine, and what is free: ports, protocol, how far each bind reaches and the owning process when the kernel lets you see it. Watch the ports your projects need. Read-only, local.",
   "author": "HorneroOS contributors",
   "license": "MIT",
@@ -36,6 +36,10 @@
       "minShellVersion": "1.0.0"
     },
     "changelog": [
+      {
+        "version": "1.0.2",
+        "notes": "Use Theme.palette.inkMuted instead of inkFaint on readable text for Signal contrast"
+      },
       {
         "version": "1.0.1",
         "notes": "Gate socket polling timer on root.visible and refresh on show (HorneroOS/plugins#112)."

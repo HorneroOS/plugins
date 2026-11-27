@@ -159,7 +159,7 @@ Item {
                     width: root.cellWidth
                     horizontalAlignment: Text.AlignHCenter
                     role: "eyebrow"
-                    color: root.isWeekend(index) ? Theme.palette.inkFaint : Theme.palette.inkMuted
+                    color: Theme.palette.inkMuted
                     text: modelData
                 }
             }
