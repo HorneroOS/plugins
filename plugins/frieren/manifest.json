@@ -1,0 +1,66 @@
+{
+  "schemaVersion": 3,
+  "pluginKit": 6,
+  "dataOnly": true,
+  "id": "frieren",
+  "name": "Frieren",
+  "version": "0.1.0",
+  "description": "A calm elven mage companion for a quiet desktop.",
+  "author": "jd-apprentice",
+  "license": "MIT",
+  "homepage": "https://github.com/HorneroOS/plugins",
+  "entrypoint": "Main.qml",
+  "placement": "background",
+  "marketplace": {
+    "compatibility": {
+      "minShellVersion": "1.3.7"
+    },
+    "changelog": [
+      {
+        "version": "0.1.0",
+        "notes": "First data-only Frieren companion pack (default + nocturna skins, PluginKit 6)."
+      }
+    ]
+  },
+  "files": [
+    "Main.qml",
+    "README.md",
+    "LICENSE",
+    "companions/frieren/companion.json",
+    "companions/frieren/frames/idle-01.png",
+    "companions/frieren/frames/happy-01.png",
+    "companions/frieren/frames/sad-01.png",
+    "companions/frieren/frames/think-01.png",
+    "companions/frieren/frames/sleep-01.png",
+    "companions/frieren/frames/reading-01.png",
+    "companions/frieren/frames/celebrate-01.png",
+    "companions/frieren/frames/cast-01.png",
+    "companions/frieren/frames/walk-01.png",
+    "companions/frieren/frames/walk-02.png",
+    "companions/frieren/frames/blink-01.png",
+    "companions/frieren/frames/greet-01.png",
+    "companions/frieren/frames/talk-01.png",
+    "companions/frieren/frames/listen-01.png",
+    "companions/frieren/frames/nocturna-idle-01.png",
+    "companions/frieren/frames/nocturna-greet-01.png",
+    "companions/frieren/frames/appear-01.png",
+    "companions/frieren/frames/leave-01.png",
+    "companions/frieren/frames/deny-01.png",
+    "companions/frieren/frames/look-01.png"
+  ],
+  "capabilities": {
+    "processCommands": [],
+    "networkHosts": [],
+    "settings": {}
+  },
+  "contributes": {
+    "companions": [
+      {
+        "id": "frieren",
+        "title": "Frieren",
+        "definition": "companions/frieren/companion.json",
+        "preview": "companions/frieren/frames/idle-01.png"
+      }
+    ]
+  }
+}
