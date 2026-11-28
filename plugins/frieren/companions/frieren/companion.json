@@ -1,0 +1,293 @@
+{
+  "schemaVersion": 1,
+  "id": "frieren",
+  "version": "0.1.0",
+  "names": {
+    "en": "Frieren",
+    "es": "Frieren"
+  },
+  "descriptions": {
+    "en": "A calm elven mage for a quiet desktop.",
+    "es": "Una maga elfa tranquila para un escritorio sin apuro."
+  },
+  "archetype": "elf",
+  "provenance": {
+    "author": "jd-apprentice",
+    "license": "Fan art of Frieren, character (c) Kanehito Yamada / Tsukasa Abe / Shogakukan. Submitted to the Hornero catalogue at the upstream maintainer's request.",
+    "tool": "Sprites reframed from 228x256 poses to a shared 512x512 canvas (content bottom-aligned to ground); walk/blink/greet/talk/listen/appear/leave/deny/look/nocturna frames generated with Muse image generation from the idle pose"
+  },
+  "preview": "companions/frieren/frames/idle-01.png",
+  "canvas": {
+    "width": 512,
+    "height": 512,
+    "anchors": {
+      "ground": [
+        256,
+        472
+      ],
+      "center": [
+        256,
+        256
+      ]
+    }
+  },
+  "defaultSkin": "default",
+  "capabilities": [
+    "grounded",
+    "walk",
+    "sleep",
+    "greet"
+  ],
+  "skins": {
+    "default": {
+      "names": {
+        "en": "White and gold robe",
+        "es": "Tunica blanca y dorada"
+      },
+      "animations": {
+        "idle": {
+          "loop": true,
+          "anchor": "ground",
+          "frames": [
+            {
+              "file": "companions/frieren/frames/idle-01.png",
+              "ms": 900
+            }
+          ]
+        },
+        "greet": {
+          "loop": false,
+          "anchor": "ground",
+          "frames": [
+            {
+              "file": "companions/frieren/frames/greet-01.png",
+              "ms": 900
+            }
+          ],
+          "next": "idle"
+        },
+        "blink": {
+          "loop": false,
+          "anchor": "ground",
+          "frames": [
+            {
+              "file": "companions/frieren/frames/blink-01.png",
+              "ms": 180
+            }
+          ],
+          "next": "idle"
+        },
+        "talk": {
+          "loop": true,
+          "anchor": "ground",
+          "frames": [
+            {
+              "file": "companions/frieren/frames/talk-01.png",
+              "ms": 400
+            }
+          ]
+        },
+        "listen": {
+          "loop": true,
+          "anchor": "ground",
+          "frames": [
+            {
+              "file": "companions/frieren/frames/listen-01.png",
+              "ms": 900
+            }
+          ]
+        },
+        "walk": {
+          "loop": true,
+          "anchor": "ground",
+          "frames": [
+            {
+              "file": "companions/frieren/frames/walk-01.png",
+              "ms": 380
+            },
+            {
+              "file": "companions/frieren/frames/walk-02.png",
+              "ms": 380
+            }
+          ]
+        },
+        "sleep": {
+          "loop": true,
+          "anchor": "ground",
+          "frames": [
+            {
+              "file": "companions/frieren/frames/sleep-01.png",
+              "ms": 900
+            }
+          ]
+        },
+        "rest": {
+          "loop": true,
+          "anchor": "ground",
+          "frames": [
+            {
+              "file": "companions/frieren/frames/reading-01.png",
+              "ms": 900
+            }
+          ]
+        },
+        "think": {
+          "loop": false,
+          "anchor": "ground",
+          "frames": [
+            {
+              "file": "companions/frieren/frames/think-01.png",
+              "ms": 900
+            }
+          ],
+          "next": "idle"
+        },
+        "work": {
+          "loop": true,
+          "anchor": "ground",
+          "frames": [
+            {
+              "file": "companions/frieren/frames/reading-01.png",
+              "ms": 900
+            },
+            {
+              "file": "companions/frieren/frames/cast-01.png",
+              "ms": 900
+            }
+          ]
+        },
+        "celebrate": {
+          "loop": false,
+          "anchor": "ground",
+          "frames": [
+            {
+              "file": "companions/frieren/frames/celebrate-01.png",
+              "ms": 900
+            }
+          ],
+          "next": "idle"
+        },
+        "worry": {
+          "loop": false,
+          "anchor": "ground",
+          "frames": [
+            {
+              "file": "companions/frieren/frames/sad-01.png",
+              "ms": 900
+            }
+          ],
+          "next": "idle"
+        },
+        "approve": {
+          "loop": false,
+          "anchor": "ground",
+          "frames": [
+            {
+              "file": "companions/frieren/frames/happy-01.png",
+              "ms": 900
+            }
+          ],
+          "next": "idle"
+        },
+        "appear": {
+          "loop": false,
+          "anchor": "ground",
+          "frames": [
+            {
+              "file": "companions/frieren/frames/appear-01.png",
+              "ms": 900
+            }
+          ],
+          "next": "idle"
+        },
+        "leave": {
+          "loop": false,
+          "anchor": "ground",
+          "frames": [
+            {
+              "file": "companions/frieren/frames/leave-01.png",
+              "ms": 900
+            }
+          ],
+          "next": "idle"
+        },
+        "deny": {
+          "loop": false,
+          "anchor": "ground",
+          "frames": [
+            {
+              "file": "companions/frieren/frames/deny-01.png",
+              "ms": 900
+            }
+          ],
+          "next": "idle"
+        },
+        "look": {
+          "loop": false,
+          "anchor": "ground",
+          "frames": [
+            {
+              "file": "companions/frieren/frames/look-01.png",
+              "ms": 900
+            }
+          ],
+          "next": "idle"
+        }
+      }
+    },
+    "nocturna": {
+      "names": {
+        "en": "Nocturne indigo",
+        "es": "Indigo nocturno"
+      },
+      "animations": {
+        "idle": {
+          "loop": true,
+          "anchor": "ground",
+          "frames": [
+            {
+              "file": "companions/frieren/frames/nocturna-idle-01.png",
+              "ms": 900
+            }
+          ]
+        },
+        "greet": {
+          "loop": false,
+          "anchor": "ground",
+          "frames": [
+            {
+              "file": "companions/frieren/frames/nocturna-greet-01.png",
+              "ms": 900
+            }
+          ],
+          "next": "idle"
+        }
+      }
+    }
+  },
+  "personality": {
+    "default": "gentle",
+    "options": [
+      {
+        "id": "gentle",
+        "names": {
+          "en": "Gentle",
+          "es": "Amable"
+        },
+        "traits": [
+          "calm",
+          "gentle"
+        ],
+        "lines": {
+          "greet": {
+            "en": "Hello.",
+            "es": "Hola."
+          }
+        }
+      }
+    ]
+  },
+  "assistantCompatibility": [
+    "none"
+  ]
+}

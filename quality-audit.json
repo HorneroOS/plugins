@@ -1527,6 +1527,51 @@
       }
     },
     {
+      "id": "frieren",
+      "classification": "needs-upgrade",
+      "issue": "https://github.com/HorneroOS/plugins/issues/100",
+      "valueProposition": "Data-only elven mage companion (default + nocturna skins) with a calm 19-animation vocabulary; fan art submitted at the maintainer's request.",
+      "nativeOverlap": "Rendered by the shell's native data-companion host (PluginKit 6); no package code runs.",
+      "dimensions": {
+        "tooltips": {
+          "status": "na",
+          "note": "Data-only package: no package QML, settings or chrome; the native host owns this dimension."
+        },
+        "accessibility": {
+          "status": "na",
+          "note": "Data-only package: no package QML, settings or chrome; the native host owns this dimension."
+        },
+        "translation": {
+          "status": "na",
+          "note": "Data-only package: no package QML, settings or chrome; the native host owns this dimension."
+        },
+        "settings": {
+          "status": "na",
+          "note": "Data-only package: no package QML, settings or chrome; the native host owns this dimension."
+        },
+        "themeTokens": {
+          "status": "na",
+          "note": "Data-only package: no package QML, settings or chrome; the native host owns this dimension."
+        },
+        "orientation": {
+          "status": "na",
+          "note": "Data-only package: no package QML, settings or chrome; the native host owns this dimension."
+        },
+        "loadingErrorStates": {
+          "status": "unverified",
+          "note": "Malformed definitions are omitted with registry diagnostics (static probe)."
+        },
+        "performance": {
+          "status": "unverified",
+          "note": "One visibility-gated timer per sprite; benchmark pending."
+        },
+        "screenshots": {
+          "status": "fail",
+          "note": "No live-shell capture yet; pending maintainer VM test (draft PR)."
+        }
+      }
+    },
+    {
       "id": "hornero-github-stats",
       "classification": "needs-upgrade",
       "valueProposition": "Dev Pulse: GitHub contributions, PR/issue totals by actual event date, per-repo activity, an actionable inbox (open PRs, review requests, assigned issues, failing checks) and an optional Agent Deck temporal comparison, through horneroctl github records. Unknown metrics are omitted, never zero-filled.",

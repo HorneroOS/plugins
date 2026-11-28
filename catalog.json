@@ -1,11 +1,43 @@
 {
   "schemaVersion": 1,
-  "generatedFrom": "0c1e061f3e3120a1a47b71647d5148875d57d56f",
+  "generatedFrom": "f7ecae90c5fd82d92c230875e3b6014ea6851868",
   "catalogSource": {
     "repo": "https://github.com/HorneroOS/plugins",
-    "rev": "0c1e061f3e3120a1a47b71647d5148875d57d56f"
+    "rev": "f7ecae90c5fd82d92c230875e3b6014ea6851868"
   },
   "plugins": [
+    {
+      "id": "frieren",
+      "name": "Frieren",
+      "version": "0.1.0",
+      "description": "A calm elven mage companion for a quiet desktop.",
+      "author": "jd-apprentice",
+      "license": "MIT",
+      "homepage": "https://github.com/HorneroOS/plugins",
+      "placement": "background",
+      "category": "utilities",
+      "capabilities": {
+        "processCommands": [],
+        "networkHosts": [],
+        "settings": {}
+      },
+      "trust": "official",
+      "path": "plugins/frieren",
+      "sha256": "071afb0c4da798365e8c2b43469b10f6a2f0ea8925d09ca6a1613dca5d123461",
+      "pluginKit": 6,
+      "marketplace": {
+        "compatibility": {
+          "minShellVersion": "1.3.7"
+        },
+        "changelog": [
+          {
+            "version": "0.1.0",
+            "notes": "First data-only Frieren companion pack (default + nocturna skins, PluginKit 6)."
+          }
+        ]
+      },
+      "permissions": []
+    },
     {
       "id": "hornero-agenda",
       "name": "Hornero Agenda",

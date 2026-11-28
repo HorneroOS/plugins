@@ -534,6 +534,16 @@ capabilities:
     inspiration_notes: "First-party HorneroOS data-only companion; original generated artwork, no upstream code or art is copied."
     hornero_equivalent: "plugins/hornero-bitin"
     status: implemented
+  - id: frieren
+    name: Frieren
+    category: companion
+    origin: {project: HorneroOS/plugins, url: "https://github.com/HorneroOS/plugins", license: MIT}
+    classification: implemented
+    license_status: verified
+    license_evidence: plugins/frieren/LICENSE
+    inspiration_notes: "Community data-only companion; fan art of Frieren, character (c) Kanehito Yamada / Tsukasa Abe / Shogakukan, submitted to the catalogue at the upstream maintainer's request; no upstream code is copied."
+    hornero_equivalent: "plugins/frieren"
+    status: implemented
   - id: hornero-github-stats
     name: Hornero Dev Pulse
     category: dashboard
